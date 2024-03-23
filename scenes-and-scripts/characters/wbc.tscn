@@ -37,3 +37,7 @@ move_speed = 50.0
 [node name="Follow" type="Node" parent="StateMachine" node_paths=PackedStringArray("friend")]
 script = ExtResource("3_fn5ni")
 friend = NodePath("../..")
+
+[connection signal="transitioned" from="StateMachine/Attack" to="StateMachine" method="on_state_transitioned"]
+[connection signal="transitioned" from="StateMachine/Idle" to="StateMachine" method="on_state_transitioned"]
+[connection signal="transitioned" from="StateMachine/Follow" to="StateMachine" method="on_state_transitioned"]
