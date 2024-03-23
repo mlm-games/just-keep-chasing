@@ -100,3 +100,9 @@ func _input(_event: InputEvent):
 	if config.prevent_input_on_transitions and is_displayed():
 		# prevent all input events
 		get_viewport().set_input_as_handled()
+
+
+#region My transitions
+func circle_in():
+	anim.play("circle-in-anim")
+#endregion

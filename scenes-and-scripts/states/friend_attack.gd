@@ -7,6 +7,6 @@ func Enter():
  
 func state_process(_delta: float):
 	#Have to have a consume animation for wbc (white blood cell)
-	friend.get_parent().remove_child(self)
+	friend.get_parent().call_deferred("remove_child", friend)
 	friend.queue_free()
 	enemy.queue_free()
