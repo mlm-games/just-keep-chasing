@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://ceihsgdeeb3kj"
-path="res://.godot/imported/misc_menu_3.wav-47f6ea7e6f96a36f7cc180240f2b799b.sample"
+path="res://.godot/imported/misc_menu_3.wav-5121e40dd7a4d6cd20a9a0c867e5bb3a.sample"
 
 [deps]
 
-source_file="res://just-keep-chasing/assets/music/GUI_Sound_Effects_by_Lokif/misc_menu_3.wav"
-dest_files=["res://.godot/imported/misc_menu_3.wav-47f6ea7e6f96a36f7cc180240f2b799b.sample"]
+source_file="res://assets/music/GUI_Sound_Effects_by_Lokif/misc_menu_3.wav"
+dest_files=["res://.godot/imported/misc_menu_3.wav-5121e40dd7a4d6cd20a9a0c867e5bb3a.sample"]
 
 [params]
 

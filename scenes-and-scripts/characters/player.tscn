@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://b3mf65fcnvmvu"]
 
-[ext_resource type="Script" path="res://just-keep-chasing/scenes-and-scripts/characters/Player.gd" id="1_cvyhv"]
-[ext_resource type="Texture2D" uid="uid://dtwpm3uclaspj" path="res://just-keep-chasing/assets/sprites/icon.png" id="2_k0jsn"]
-[ext_resource type="PackedScene" uid="uid://bk4fraugaremc" path="res://just-keep-chasing/scenes-and-scripts/weapons-related/pistol.tscn" id="3_al27l"]
-[ext_resource type="PackedScene" uid="uid://3gohb2peicf" path="res://just-keep-chasing/scenes-and-scripts/weapons-related/machine_gun.tscn" id="3_f5va0"]
-[ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://just-keep-chasing/scenes-and-scripts/components/hitbox_component.tscn" id="4_pwyjt"]
-[ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://just-keep-chasing/resources/theme/theme-main.tres" id="6_8qvmc"]
-[ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://just-keep-chasing/scenes-and-scripts/components/health_component.tscn" id="6_bedk8"]
+[ext_resource type="Script" path="res://scenes-and-scripts/characters/Player.gd" id="1_cvyhv"]
+[ext_resource type="Texture2D" uid="uid://dtwpm3uclaspj" path="res://assets/sprites/icon.png" id="2_k0jsn"]
+[ext_resource type="PackedScene" uid="uid://bk4fraugaremc" path="res://scenes-and-scripts/weapons-related/pistol.tscn" id="3_al27l"]
+[ext_resource type="PackedScene" uid="uid://3gohb2peicf" path="res://scenes-and-scripts/weapons-related/machine_gun.tscn" id="3_f5va0"]
+[ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes-and-scripts/components/hitbox_component.tscn" id="4_pwyjt"]
+[ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="6_8qvmc"]
+[ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes-and-scripts/components/health_component.tscn" id="6_bedk8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d6keb"]
 radius = 38.0132

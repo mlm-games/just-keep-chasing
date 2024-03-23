@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://4fyoq8npekf0"]
 
-[ext_resource type="Script" path="res://just-keep-chasing/scenes-and-scripts/gameplay/world.gd" id="1_li0ht"]
-[ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://just-keep-chasing/scenes-and-scripts/gameplay/pause-layer/pause-layer.tscn" id="2_mk7kn"]
-[ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://just-keep-chasing/scenes-and-scripts/characters/player.tscn" id="3_vhnxw"]
-[ext_resource type="PackedScene" uid="uid://byks0f5xqnv20" path="res://just-keep-chasing/scenes-and-scripts/tree.tscn" id="4_l562g"]
-[ext_resource type="Script" path="res://just-keep-chasing/scenes-and-scripts/saver_loader.gd" id="5_m8xuy"]
-[ext_resource type="PackedScene" uid="uid://cp7bdncv26bbl" path="res://just-keep-chasing/scenes-and-scripts/characters/wbc.tscn" id="6_scc53"]
+[ext_resource type="Script" path="res://scenes-and-scripts/gameplay/world.gd" id="1_li0ht"]
+[ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes-and-scripts/gameplay/pause-layer/pause-layer.tscn" id="2_mk7kn"]
+[ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes-and-scripts/characters/player.tscn" id="3_vhnxw"]
+[ext_resource type="PackedScene" uid="uid://byks0f5xqnv20" path="res://scenes-and-scripts/tree.tscn" id="4_l562g"]
+[ext_resource type="Script" path="res://scenes-and-scripts/saver_loader.gd" id="5_m8xuy"]
+[ext_resource type="PackedScene" uid="uid://cp7bdncv26bbl" path="res://scenes-and-scripts/characters/wbc.tscn" id="6_scc53"]
 
 [sub_resource type="Curve2D" id="Curve2D_xsefa"]
 _data = {

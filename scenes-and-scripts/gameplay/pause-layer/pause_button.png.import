@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://byniue2cdd2yv"
-path="res://.godot/imported/pause_button.png-69746e85add5973723156a90ad1e6707.ctex"
+path="res://.godot/imported/pause_button.png-c274f2c038340edaf62f213e486b52d8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://just-keep-chasing/scenes-and-scripts/gameplay/pause-layer/pause_button.png"
-dest_files=["res://.godot/imported/pause_button.png-69746e85add5973723156a90ad1e6707.ctex"]
+source_file="res://scenes-and-scripts/gameplay/pause-layer/pause_button.png"
+dest_files=["res://.godot/imported/pause_button.png-c274f2c038340edaf62f213e486b52d8.ctex"]
 
 [params]
 

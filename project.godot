@@ -12,23 +12,19 @@ config_version=5
 
 config/name="Just Keep Chasing (vampire survivors style)"
 config/version="0.0.1"
-run/main_scene="res://just-keep-chasing/scenes-and-scripts/menu/menu.tscn"
+run/main_scene="res://scenes-and-scripts/menu/menu.tscn"
 config/features=PackedStringArray("4.2")
 boot_splash/bg_color=Color(0.0862745, 0.0862745, 0.0862745, 1)
-boot_splash/image="res://just-keep-chasing/assets/splash.png"
-config/icon="res://just-keep-chasing/assets/sprites/Gun-sprite.png"
-
-[audio]
-
-buses/default_bus_layout="res://just-keep-chasing/default_bus_layout.tres"
+boot_splash/image="res://assets/splash.png"
+config/icon="res://assets/sprites/Gun-sprite.png"
 
 [autoload]
 
-DebugShortcuts="*res://just-keep-chasing/addons/ggt-debug-shortcuts/autoload/debug_shortcuts.tscn"
-Game="*res://just-keep-chasing/addons/ggt-core/game.gd"
-Transitions="*res://just-keep-chasing/addons/ggt-core/transitions/transitions.tscn"
-Scenes="*res://just-keep-chasing/addons/ggt-core/scenes/scenes.gd"
-Utils="*res://just-keep-chasing/addons/ggt-core/utils/utils.gd"
+DebugShortcuts="*res://addons/ggt-debug-shortcuts/autoload/debug_shortcuts.tscn"
+Game="*res://addons/ggt-core/game.gd"
+Transitions="*res://addons/ggt-core/transitions/transitions.tscn"
+Scenes="*res://addons/ggt-core/scenes/scenes.gd"
+Utils="*res://addons/ggt-core/utils/utils.gd"
 
 [category]
 
@@ -41,11 +37,11 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ggt-core/plugin.cfg", "res://addons/ggt-debug-shortcuts/plugin.cfg")
+enabled=PackedStringArray()
 
 [gui]
 
-theme/custom="res://just-keep-chasing/resources/theme/theme-main.tres"
+theme/custom="res://resources/theme/theme-main.tres"
 
 [input]
 

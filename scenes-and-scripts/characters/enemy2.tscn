@@ -1,11 +1,11 @@
 [gd_scene load_steps=13 format=3 uid="uid://q2ch1upupt84"]
 
-[ext_resource type="Script" path="res://just-keep-chasing/scenes-and-scripts/characters/enemy.gd" id="1_arqkv"]
-[ext_resource type="Texture2D" uid="uid://buqj8udj42uq6" path="res://just-keep-chasing/assets/sprites/slime.png" id="2_fgdun"]
-[ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://just-keep-chasing/scenes-and-scripts/components/hitbox_component.tscn" id="3_bg28f"]
-[ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://just-keep-chasing/scenes-and-scripts/components/health_component.tscn" id="4_uyc4d"]
-[ext_resource type="Script" path="res://just-keep-chasing/scenes-and-scripts/states/state_machine.gd" id="5_y65yd"]
-[ext_resource type="Script" path="res://just-keep-chasing/scenes-and-scripts/states/enemy_follow.gd" id="6_fte2u"]
+[ext_resource type="Script" path="res://scenes-and-scripts/characters/enemy.gd" id="1_arqkv"]
+[ext_resource type="Texture2D" uid="uid://buqj8udj42uq6" path="res://assets/sprites/slime.png" id="2_fgdun"]
+[ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes-and-scripts/components/hitbox_component.tscn" id="3_bg28f"]
+[ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes-and-scripts/components/health_component.tscn" id="4_uyc4d"]
+[ext_resource type="Script" path="res://scenes-and-scripts/states/state_machine.gd" id="5_y65yd"]
+[ext_resource type="Script" path="res://scenes-and-scripts/states/enemy_follow.gd" id="6_fte2u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
 size = Vector2(44, 40)

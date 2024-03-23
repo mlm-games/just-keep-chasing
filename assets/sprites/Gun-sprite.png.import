@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bambopn2wqgdd"
-path="res://.godot/imported/Gun-sprite.png-a708c94788ec28f5c18f645f0822ffe9.ctex"
+path="res://.godot/imported/Gun-sprite.png-b91ae0cd2b5f7465bcb338fb446aadbf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://just-keep-chasing/assets/sprites/Gun-sprite.png"
-dest_files=["res://.godot/imported/Gun-sprite.png-a708c94788ec28f5c18f645f0822ffe9.ctex"]
+source_file="res://assets/sprites/Gun-sprite.png"
+dest_files=["res://.godot/imported/Gun-sprite.png-b91ae0cd2b5f7465bcb338fb446aadbf.ctex"]
 
 [params]
 

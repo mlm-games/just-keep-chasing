@@ -21,3 +21,6 @@ func state_process(_delta: float):
 		transitioned.emit(self, "attack")
 		
 
+
+
+

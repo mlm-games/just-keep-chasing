@@ -36,6 +36,5 @@ func state_physics_process(_delta: float):
 			friend.velocity = Vector2.ZERO
 	if enemy != null:
 		var direction = enemy.global_position - friend.global_position
-		print(direction.length())
 		if direction.length() < 1500:
 			transitioned.emit(self, "Follow")

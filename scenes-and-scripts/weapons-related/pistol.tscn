@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bk4fraugaremc"]
 
-[ext_resource type="Script" path="res://just-keep-chasing/scenes-and-scripts/weapons-related/pistol.gd" id="1_vd3nw"]
-[ext_resource type="Texture2D" uid="uid://bambopn2wqgdd" path="res://just-keep-chasing/assets/sprites/Gun-sprite.png" id="2_qsjjy"]
+[ext_resource type="Script" path="res://scenes-and-scripts/weapons-related/pistol.gd" id="1_vd3nw"]
+[ext_resource type="Texture2D" uid="uid://bambopn2wqgdd" path="res://assets/sprites/Gun-sprite.png" id="2_qsjjy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
 radius = 600.053

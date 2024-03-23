@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://da2t6lyf41wty"
-path="res://.godot/imported/open-sans-bold.ttf-7d2972898aeab7409b1877e6e69a42fc.fontdata"
+path="res://.godot/imported/open-sans-bold.ttf-57e3060dd99c5c2d620352989d7b033a.fontdata"
 
 [deps]
 
-source_file="res://just-keep-chasing/assets/fonts/open-sans/open-sans-bold.ttf"
-dest_files=["res://.godot/imported/open-sans-bold.ttf-7d2972898aeab7409b1877e6e69a42fc.fontdata"]
+source_file="res://assets/fonts/open-sans/open-sans-bold.ttf"
+dest_files=["res://.godot/imported/open-sans-bold.ttf-57e3060dd99c5c2d620352989d7b033a.fontdata"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bmiu5h0got4jq"
-path="res://.godot/imported/14._i_am_not_clumsy.mp3-5e65e551edd702dee855959e767091be.mp3str"
+path="res://.godot/imported/14._i_am_not_clumsy.mp3-025da0300a7c81f0d6d2ea0da1266efd.mp3str"
 
 [deps]
 
-source_file="res://just-keep-chasing/assets/music/14._i_am_not_clumsy.mp3"
-dest_files=["res://.godot/imported/14._i_am_not_clumsy.mp3-5e65e551edd702dee855959e767091be.mp3str"]
+source_file="res://assets/music/14._i_am_not_clumsy.mp3"
+dest_files=["res://.godot/imported/14._i_am_not_clumsy.mp3-025da0300a7c81f0d6d2ea0da1266efd.mp3str"]
 
 [params]
 
