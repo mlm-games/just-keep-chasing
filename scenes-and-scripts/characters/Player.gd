@@ -1,19 +1,32 @@
 extends CharacterBody2D
 
-@export var speed = Vector2(250,250)
+@export var speed = 250
 @export var guns: Array[PackedScene] = []
 
 var gun_no: int = 0
+var upgraded: bool = true
 
 @onready var health_component: HealthComponent = %HealthComponent
-
+#HACK: upgrade to the slow time powerup doesnt slow the player down but everything else
 
 func _physics_process(_delta):
-	#Movement
-	%ProgressBar.value = health_component.current_health
 	var direction = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
-	velocity = direction.normalized() * speed
+	if upgraded:
+		# Adjust player speed based on time scale
+		var adjusted_speed = speed / Engine.time_scale
+		velocity = direction.normalized() * Vector2(adjusted_speed,adjusted_speed)
+	else:
+		velocity = direction.normalized() * Vector2(speed,speed)
+	
+	%ProgressBar.value = health_component.current_health
+	
+	
 	move_and_slide()
+	
+	
+	
+	
+
 
 
 func _on_health_component_player_died() -> void:
@@ -28,17 +41,18 @@ func _on_health_component_player_died() -> void:
 		await get_tree().create_timer(0.3).timeout
 	get_tree().quit() #just for now
 
+func powerup_collected() -> void:
+	print("powerup obtained ")
+
 
 func _on_health_component_taking_damage() -> void:
 	Utils.screen_shake(0.1, 0.5, %Camera2D)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("switch-weapon"):
-		if (gun_no < guns.size() - 1):
-			gun_no += 1
-		else:
-			gun_no = 0
-		print(gun_no)
+		#Scrolling through weapons
+		gun_no = (gun_no + 1) % guns.size()
+		print("Gun no: ", gun_no)
 		get_tree().call_group("Weapons","queue_free")
 		var gun_instance = guns[gun_no].instantiate()
 		self.add_child(gun_instance)

@@ -6,8 +6,10 @@ func Enter():
 	pass
  
 func state_process(_delta: float):
+	var direction
 	enemy = find_closest_enemy()
-	var direction = enemy.global_position - friend.global_position
+	if enemy:
+		direction = enemy.global_position - friend.global_position
 	
 	if direction.length() > 5:
 		friend.velocity = direction.normalized() * move_speed
