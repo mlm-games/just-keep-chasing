@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene load_steps=13 format=3 uid="uid://4fyoq8npekf0"]
 
 [ext_resource type="Script" path="res://scenes-and-scripts/gameplay/world.gd" id="1_li0ht"]
 [ext_resource type="Resource" uid="uid://c3hm2e8euscc1" path="res://scenes-and-scripts/powerups/slow_time_powerup.tres" id="2_52a6m"]
@@ -6,10 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://byg2ihb05tf4" path="res://assets/og_background_pic.png" id="3_6lnso"]
 [ext_resource type="Resource" uid="uid://kcnotr5g6npm" path="res://scenes-and-scripts/powerups/screen_blast_powerup.tres" id="3_o14jb"]
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes-and-scripts/characters/player.tscn" id="3_vhnxw"]
+[ext_resource type="Resource" uid="uid://dsp1inl6s1qal" path="res://scenes-and-scripts/powerups/heal_powerup.tres" id="4_hp0xe"]
 [ext_resource type="PackedScene" uid="uid://byks0f5xqnv20" path="res://scenes-and-scripts/tree.tscn" id="4_l562g"]
 [ext_resource type="Script" path="res://scenes-and-scripts/saver_loader.gd" id="5_m8xuy"]
 [ext_resource type="PackedScene" uid="uid://cp7bdncv26bbl" path="res://scenes-and-scripts/characters/wbc.tscn" id="6_scc53"]
-[ext_resource type="PackedScene" uid="uid://cme2e7v3yy8ol" path="res://scenes-and-scripts/slow_time_powerup.tscn" id="8_k2l23"]
+[ext_resource type="PackedScene" uid="uid://cme2e7v3yy8ol" path="res://scenes-and-scripts/powerups/slow_time_powerup.tscn" id="8_k2l23"]
 
 [sub_resource type="Curve2D" id="Curve2D_xsefa"]
 _data = {
@@ -19,7 +20,7 @@ point_count = 5
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_li0ht")
-powerups = Array[Resource("res://scenes-and-scripts/powerups/powerup.gd")]([ExtResource("2_52a6m"), ExtResource("3_o14jb")])
+powerups = Array[Resource("res://scenes-and-scripts/powerups/powerup.gd")]([ExtResource("2_52a6m"), ExtResource("3_o14jb"), ExtResource("4_hp0xe")])
 
 [node name="PauseLayer" parent="." instance=ExtResource("2_mk7kn")]
 layer = 20
@@ -56,6 +57,7 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 wait_time = 2.0
 autostart = true
 

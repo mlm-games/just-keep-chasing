@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Powerup" load_steps=3 format=3 uid="uid://dsp1inl6s1qal"]
+
+[ext_resource type="Script" path="res://scenes-and-scripts/powerups/powerup.gd" id="1_hi1hb"]
+[ext_resource type="PackedScene" uid="uid://cdjdqnkbytbwr" path="res://scenes-and-scripts/powerups/heal_powerup.tscn" id="1_woqvf"]
+
+[resource]
+script = ExtResource("1_hi1hb")
+name = "Heal"
+scene = ExtResource("1_woqvf")
+item_id = "heal_powerup"

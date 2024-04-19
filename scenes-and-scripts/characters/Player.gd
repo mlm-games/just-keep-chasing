@@ -22,11 +22,6 @@ func _physics_process(_delta):
 	
 	
 	move_and_slide()
-	
-	
-	
-	
-
 
 
 func _on_health_component_player_died() -> void:
@@ -41,10 +36,6 @@ func _on_health_component_player_died() -> void:
 		await get_tree().create_timer(0.3).timeout
 	get_tree().quit() #just for now
 
-func powerup_collected() -> void:
-	print("powerup obtained ")
-
-
 func _on_health_component_taking_damage() -> void:
 	Utils.screen_shake(0.1, 0.5, %Camera2D)
 
@@ -52,7 +43,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("switch-weapon"):
 		#Scrolling through weapons
 		gun_no = (gun_no + 1) % guns.size()
-		print("Gun no: ", gun_no)
 		get_tree().call_group("Weapons","queue_free")
 		var gun_instance = guns[gun_no].instantiate()
 		self.add_child(gun_instance)
@@ -74,3 +64,4 @@ func on_load_game(saved_data: CharacterSaveData):
 	if saved_data:
 		global_position = saved_data.global_position
 		health_component.current_health = saved_data.current_health
+

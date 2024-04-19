@@ -28,6 +28,7 @@ func _on_enemy_spawn_timer_timeout() -> void:
 	out_of_view_spawn_location.progress_ratio = randf()
 	enemy_instance.global_position = out_of_view_spawn_location.global_position
 	%EnemiesNode.add_child(enemy_instance)
+	%EnemySpawnTimer.wait_time -= 0.005
 
 
 func _on_powerup_spawn_timer_timeout() -> void:
@@ -38,6 +39,7 @@ func _on_powerup_spawn_timer_timeout() -> void:
 	%PowerupsNode.add_child(powerup_instance)
 
 
+func _unhandled_input(_event: InputEvent) -> void:
 	#Powerup 1
 	if Input.is_action_just_pressed("slow_time_powerup") && GameState.slow_time_powerup_count > 0:
 		Engine.time_scale = 0.5
@@ -47,9 +49,15 @@ func _on_powerup_spawn_timer_timeout() -> void:
 	
 	#Powerup 2
 	if Input.is_action_just_pressed("screen_blast_powerup") && GameState.screen_blast_powerup_count > 0:
+		GameState.screen_blast_powerup_count-=1
 		for enemy in get_tree().get_nodes_in_group("Enemies"):
 			enemy.queue_free()
-
+	
+	#Powerup 3
+	if Input.is_action_just_pressed("heal") and GameState.heal_powerup_count > 0:
+		GameState.heal_powerup_count-=1
+		var player = get_tree().get_first_node_in_group("Player")
+		player.health_component.heal(20)
 
 
 
