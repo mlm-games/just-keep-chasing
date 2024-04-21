@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://p3ijv0nq3035"]
+
+[ext_resource type="Script" path="res://scenes/menu/HUD.gd" id="1_ldp5k"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_ldp5k")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TimerLabel" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 73.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 35
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 2
