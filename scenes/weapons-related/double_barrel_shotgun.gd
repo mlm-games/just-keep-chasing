@@ -2,7 +2,7 @@ class_name DoubleBarrelShotgun extends Shotgun
 
 func _ready() -> void:
 	pellet_damage = 3
-	pellets_per_shot = 7
+	pellets_per_shot = 5
 	gun_capacity = 2
 	pellet_spread = 15
 	super._ready()

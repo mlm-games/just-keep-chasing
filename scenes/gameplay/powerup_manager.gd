@@ -1,8 +1,9 @@
 extends Node2D
-
+#HACK:A gamemode, You can only move a certain amt in a certain amt of time, (experiment until its fun)
 
 func _unhandled_input(_event: InputEvent) -> void:
 	#Powerup 1
+	print(GameState.heal_powerup, GameState.slow_time_powerup, GameState.screen_blast_powerup)
 	if Input.is_action_just_pressed("slow_time_powerup") && GameState.slow_time_powerup > 0:
 		Engine.time_scale = 0.5
 		GameState.slow_time_powerup-=1
