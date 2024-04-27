@@ -2,7 +2,7 @@ extends Control
 
 @onready var btn_play = $MarginContainer/Control/VBoxContainer/PlayButton
 @onready var btn_exit = $MarginContainer/Control/VBoxContainer/ExitButton
-
+#HACK: hold r to restart, press r to reload
 
 func _ready():
 	# needed for gamepads to work

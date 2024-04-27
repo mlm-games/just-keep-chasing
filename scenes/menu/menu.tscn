@@ -51,7 +51,7 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4")
 theme_override_font_sizes/font_size = 60
-text = "Just keep chasing"
+text = "GAME_TITLE"
 uppercase = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
@@ -76,7 +76,7 @@ focus_neighbor_bottom = NodePath("../ExitButton")
 focus_next = NodePath("../ExitButton")
 theme = ExtResource("2_b641b")
 disabled = true
-text = "RESUME"
+text = "MENU_LABEL_CONTINUE"
 
 [node name="PlayButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
@@ -84,14 +84,14 @@ layout_mode = 2
 focus_neighbor_bottom = NodePath("../ExitButton")
 focus_next = NodePath("../ExitButton")
 theme = ExtResource("2_b641b")
-text = "START"
+text = "MENU_LABEL_NEW_GAME"
 
 [node name="ExitButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 focus_neighbor_top = NodePath("../PlayButton")
 focus_previous = NodePath("../PlayButton")
-text = "EXIT"
+text = "MENU_LABEL_EXIT"
 
 [node name="Version" type="VBoxContainer" parent="MarginContainer/Control"]
 visible = false

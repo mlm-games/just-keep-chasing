@@ -94,6 +94,10 @@ reload={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://locale/translations.en.translation")
+
 [layer_names]
 
 2d_physics/layer_1="World"
