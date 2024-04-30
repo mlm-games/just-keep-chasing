@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://p3ijv0nq3035"]
+[gd_scene load_steps=7 format=3 uid="uid://p3ijv0nq3035"]
 
 [ext_resource type="Script" path="res://scenes/menu/HUD.gd" id="1_ldp5k"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/stop_time_powerup_icon.png" id="2_vgwca"]
 [ext_resource type="Texture2D" uid="uid://ddkwkn3fyh6qq" path="res://assets/screen_blast_powerup_icon.png" id="3_ytqdl"]
+[ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes/gameplay/pause-layer/pause-layer.tscn" id="4_qi6kt"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_co5na"]
 
@@ -55,6 +56,7 @@ layout_mode = 2
 [node name="SlowTimeButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 text = "1"
 icon = ExtResource("2_vgwca")
 icon_alignment = 1
@@ -64,12 +66,14 @@ expand_icon = true
 [node name="ScreenBlastButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 icon = ExtResource("3_ytqdl")
 expand_icon = true
 
 [node name="HealButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
 icon = SubResource("PlaceholderTexture2D_q362x")
 expand_icon = true
 
@@ -77,6 +81,9 @@ expand_icon = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 9.28
+
+[node name="PauseLayer" parent="." instance=ExtResource("4_qi6kt")]
+layer = 1
 
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/SlowTimeButton" to="." method="_on_slow_time_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/ScreenBlastButton" to="." method="_on_screen_blast_button_pressed"]

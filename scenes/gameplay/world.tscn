@@ -1,8 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene load_steps=15 format=3 uid="uid://4fyoq8npekf0"]
 
 [ext_resource type="Script" path="res://scenes/gameplay/world.gd" id="1_li0ht"]
 [ext_resource type="Resource" uid="uid://c3hm2e8euscc1" path="res://scenes/powerups/slow_time_powerup.tres" id="2_52a6m"]
-[ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes/gameplay/pause-layer/pause-layer.tscn" id="2_mk7kn"]
 [ext_resource type="Texture2D" uid="uid://byg2ihb05tf4" path="res://assets/og_background_pic.png" id="3_6lnso"]
 [ext_resource type="Resource" uid="uid://kcnotr5g6npm" path="res://scenes/powerups/screen_blast_powerup.tres" id="3_o14jb"]
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes/characters/player.tscn" id="3_vhnxw"]
@@ -25,13 +24,11 @@ point_count = 5
 script = ExtResource("1_li0ht")
 powerups = Array[Resource("res://scenes/powerups/powerup.gd")]([ExtResource("2_52a6m"), ExtResource("3_o14jb"), ExtResource("4_hp0xe")])
 
-[node name="PauseLayer" parent="." instance=ExtResource("2_mk7kn")]
+[node name="HUD" parent="." instance=ExtResource("6_vltvt")]
 layer = 20
 
-[node name="HUD" parent="." instance=ExtResource("6_vltvt")]
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -1
+layer = -99
 
 [node name="BackgroundRect" type="TextureRect" parent="CanvasLayer"]
 modulate = Color(0.364706, 0.364706, 0.364706, 1)

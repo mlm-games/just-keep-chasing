@@ -48,6 +48,20 @@ func _unhandled_input(event: InputEvent) -> void:
 		self.add_child(gun_instance)
 
 
+#Make guns go off 
+	if event.is_action_pressed("throw_weapon"):
+		var weapon = get_tree().get_first_node_in_group("Weapons")
+		weapon.reparent(get_tree().root)
+		#weapon.remove_from_group("Weapons")
+		#weapon.add_to_group("Dropped Weapons")
+
+	if event.is_action_pressed("pick_up_weapon"):
+		pass
+		#var weapon = get_tree().get_first_node_in_group("Dropped Weapon")
+		#self.add_child(weapon)
+		#weapon.remove_from_group("Weapons")
+
+
 func on_save_game(saved_data:Array[SaveData]):
 	if health_component.is_alive():
 		var my_data = CharacterSaveData.new()
@@ -64,4 +78,3 @@ func on_load_game(saved_data: CharacterSaveData):
 	if saved_data:
 		global_position = saved_data.global_position
 		health_component.current_health = saved_data.current_health
-

@@ -14,6 +14,7 @@ metadata/_edit_group_ = true
 shape = SubResource("CircleShape2D_rxdp3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.740056, 0.677608, 0.94874, 1)
 position = Vector2(0.5, -0.499999)
 scale = Vector2(0.0693359, 0.0634766)
 texture = ExtResource("2_n55r0")
