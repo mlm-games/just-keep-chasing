@@ -1,10 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene load_steps=18 format=3 uid="uid://4fyoq8npekf0"]
 
 [ext_resource type="Script" path="res://scenes/gameplay/world.gd" id="1_li0ht"]
 [ext_resource type="Resource" uid="uid://c3hm2e8euscc1" path="res://scenes/powerups/slow_time_powerup.tres" id="2_52a6m"]
+[ext_resource type="PackedScene" uid="uid://bk4fraugaremc" path="res://scenes/weapons-related/pistol.tscn" id="2_si53n"]
 [ext_resource type="Texture2D" uid="uid://byg2ihb05tf4" path="res://assets/og_background_pic.png" id="3_6lnso"]
 [ext_resource type="Resource" uid="uid://kcnotr5g6npm" path="res://scenes/powerups/screen_blast_powerup.tres" id="3_o14jb"]
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes/characters/player.tscn" id="3_vhnxw"]
+[ext_resource type="PackedScene" uid="uid://3gohb2peicf" path="res://scenes/weapons-related/machine_gun.tscn" id="3_yilem"]
+[ext_resource type="PackedScene" uid="uid://rks5cvegm0tb" path="res://scenes/weapons-related/double_barrel_shotgun.tscn" id="4_hdduu"]
 [ext_resource type="Resource" uid="uid://dsp1inl6s1qal" path="res://scenes/powerups/heal_powerup.tres" id="4_hp0xe"]
 [ext_resource type="PackedScene" uid="uid://byks0f5xqnv20" path="res://scenes/tree.tscn" id="4_l562g"]
 [ext_resource type="Script" path="res://scenes/saver_loader.gd" id="5_m8xuy"]
@@ -22,6 +25,7 @@ point_count = 5
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_li0ht")
+guns = Array[PackedScene]([ExtResource("2_si53n"), ExtResource("3_yilem"), ExtResource("4_hdduu")])
 powerups = Array[Resource("res://scenes/powerups/powerup.gd")]([ExtResource("2_52a6m"), ExtResource("3_o14jb"), ExtResource("4_hp0xe")])
 
 [node name="HUD" parent="." instance=ExtResource("6_vltvt")]
@@ -40,6 +44,7 @@ grow_vertical = 2
 texture = ExtResource("3_6lnso")
 
 [node name="Player" parent="." instance=ExtResource("3_vhnxw")]
+unique_name_in_owner = true
 position = Vector2(581, 323)
 collision_layer = 3
 

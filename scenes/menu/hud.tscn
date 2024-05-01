@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://p3ijv0nq3035"]
+[gd_scene load_steps=9 format=3 uid="uid://p3ijv0nq3035"]
 
 [ext_resource type="Script" path="res://scenes/menu/HUD.gd" id="1_ldp5k"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/stop_time_powerup_icon.png" id="2_vgwca"]
 [ext_resource type="Texture2D" uid="uid://ddkwkn3fyh6qq" path="res://assets/screen_blast_powerup_icon.png" id="3_ytqdl"]
 [ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes/gameplay/pause-layer/pause-layer.tscn" id="4_qi6kt"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="5_6lg4h"]
+[ext_resource type="Texture2D" uid="uid://bambopn2wqgdd" path="res://assets/sprites/Gun-sprite.png" id="6_e60p3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_co5na"]
 
@@ -55,6 +56,7 @@ layout_direction = 3
 layout_mode = 2
 
 [node name="SlowTimeButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -65,6 +67,7 @@ vertical_icon_alignment = 0
 expand_icon = true
 
 [node name="ScreenBlastButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -72,6 +75,7 @@ icon = ExtResource("3_ytqdl")
 expand_icon = true
 
 [node name="HealButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -89,6 +93,16 @@ layer = 1
 [node name="Virtual Joystick" parent="." instance=ExtResource("5_6lg4h")]
 visible = false
 
+[node name="GunsButton" type="TouchScreenButton" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.804743, 0.804743, 0.804743, 1)
+position = Vector2(1085, 0)
+scale = Vector2(2.09375, 2.0625)
+texture_normal = ExtResource("6_e60p3")
+action = "switch-weapon"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/SlowTimeButton" to="." method="_on_slow_time_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/ScreenBlastButton" to="." method="_on_screen_blast_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/HealButton" to="." method="_on_heal_button_pressed"]
+[connection signal="pressed" from="GunsButton" to="." method="_on_guns_button_pressed"]

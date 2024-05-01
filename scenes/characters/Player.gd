@@ -1,25 +1,21 @@
 extends CharacterBody2D
 
 @export var speed = 250
-@export var guns: Array[PackedScene] = []
 
-var gun_no: int = 0
-var upgraded: bool = true
 
 @onready var health_component: HealthComponent = %HealthComponent
 #HACK: upgrade to the slow time powerup doesnt slow the player down but everything else
 
 func _physics_process(_delta):
 	var direction = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
-	if upgraded:
-		# Adjust player speed based on time scale
-		var adjusted_speed = speed / Engine.time_scale
-		velocity = direction.normalized() * Vector2(adjusted_speed,adjusted_speed)
-	else:
-		velocity = direction.normalized() * Vector2(speed,speed)
+	#if upgraded:
+		## Adjust player speed based on time scale
+		#var adjusted_speed = speed / Engine.time_scale
+		#velocity = direction.normalized() * Vector2(adjusted_speed,adjusted_speed)
+	#else:
+	velocity = direction.normalized() * Vector2(speed,speed)
 	
 	%ProgressBar.value = health_component.current_health
-	
 	
 	move_and_slide()
 
@@ -38,28 +34,6 @@ func _on_health_component_player_died() -> void:
 
 func _on_health_component_taking_damage() -> void:
 	Utils.screen_shake(0.1, 0.5, %Camera2D)
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("switch-weapon"):
-		#Scrolling through weapons
-		gun_no = (gun_no + 1) % guns.size()
-		get_tree().call_group("Weapons","queue_free")
-		var gun_instance = guns[gun_no].instantiate()
-		self.add_child(gun_instance)
-
-
-#Make guns go off 
-	if event.is_action_pressed("throw_weapon"):
-		var weapon = get_tree().get_first_node_in_group("Weapons")
-		weapon.reparent(get_tree().root)
-		#weapon.remove_from_group("Weapons")
-		#weapon.add_to_group("Dropped Weapons")
-
-	if event.is_action_pressed("pick_up_weapon"):
-		pass
-		#var weapon = get_tree().get_first_node_in_group("Dropped Weapon")
-		#self.add_child(weapon)
-		#weapon.remove_from_group("Weapons")
 
 
 func on_save_game(saved_data:Array[SaveData]):

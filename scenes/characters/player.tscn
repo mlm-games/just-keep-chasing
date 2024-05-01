@@ -1,11 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://b3mf65fcnvmvu"]
+[gd_scene load_steps=9 format=3 uid="uid://b3mf65fcnvmvu"]
 
 [ext_resource type="Script" path="res://scenes/characters/Player.gd" id="1_cvyhv"]
 [ext_resource type="Texture2D" uid="uid://dtwpm3uclaspj" path="res://assets/sprites/icon.png" id="2_k0jsn"]
 [ext_resource type="PackedScene" uid="uid://bk4fraugaremc" path="res://scenes/weapons-related/pistol.tscn" id="3_al27l"]
-[ext_resource type="PackedScene" uid="uid://3gohb2peicf" path="res://scenes/weapons-related/machine_gun.tscn" id="3_f5va0"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="4_pwyjt"]
-[ext_resource type="PackedScene" uid="uid://rks5cvegm0tb" path="res://scenes/weapons-related/double_barrel_shotgun.tscn" id="4_xbq48"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="6_8qvmc"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="6_bedk8"]
 
@@ -21,7 +19,6 @@ motion_mode = 1
 platform_on_leave = 2
 platform_floor_layers = 4294967292
 script = ExtResource("1_cvyhv")
-guns = Array[PackedScene]([ExtResource("3_al27l"), ExtResource("3_f5va0"), ExtResource("4_xbq48")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

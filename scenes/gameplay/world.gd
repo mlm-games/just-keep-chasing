@@ -1,5 +1,10 @@
 extends Node2D
 
+@export var guns: Array[PackedScene] = []
+
+var gun_no: int = 0
+var upgraded: bool = true
+
   
 #TODO: change the name to some virus related thingy
 #TODO: Collision bouncing in the direction of collision direction for specific bullets?
@@ -38,6 +43,28 @@ func _on_powerup_spawn_timer_timeout() -> void:
 	powerup_instance.global_position = out_of_view_spawn_location.global_position
 	%PowerupsNode.add_child(powerup_instance)
 
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("switch-weapon"):
+		#Scrolling through weapons
+		gun_no = (gun_no + 1) % guns.size()
+		get_tree().call_group("Weapons","queue_free")
+		var gun_instance = guns[gun_no].instantiate()
+		%Player.add_child(gun_instance)
+
+
+#Make guns go off 
+	if event.is_action_pressed("throw_weapon"):
+		var weapon = get_tree().get_first_node_in_group("Weapons")
+		weapon.reparent(get_tree().root)
+		#weapon.remove_from_group("Weapons")
+		#weapon.add_to_group("Dropped Weapons")
+
+	if event.is_action_pressed("pick_up_weapon"):
+		pass
+		#var weapon = get_tree().get_first_node_in_group("Dropped Weapon")
+		#self.add_child(weapon)
+		#weapon.remove_from_group("Weapons")
 
 
 
