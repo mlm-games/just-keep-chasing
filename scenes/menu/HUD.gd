@@ -25,4 +25,4 @@ func _on_heal_button_pressed() -> void:
 func _on_guns_button_pressed() -> void:
 	pass # Replace with function body.
 	#%GunsButton.texture_normal = gun
-	#Input.action_press("switch-weapon")
+
