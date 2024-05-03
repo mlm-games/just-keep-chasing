@@ -62,10 +62,10 @@ libraries = {
 
 [node name="Sprite2D" type="Sprite2D" parent="PivotPoint"]
 unique_name_in_owner = true
-modulate = Color(0.333333, 0.333333, 0, 1)
 texture_filter = 1
 position = Vector2(70.174, 15.1176)
 rotation = 12.5664
+scale = Vector2(0.075, 0.1)
 texture = ExtResource("2_fwune")
 
 [node name="BulletSpawnPoint" type="Marker2D" parent="PivotPoint/Sprite2D"]
