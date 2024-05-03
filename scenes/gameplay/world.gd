@@ -23,8 +23,9 @@ var upgraded: bool = true
 #	attraction_velocity += direction * speed
 
 @export var powerups: Array[Powerup] = []
-
+@onready var hud : HUD = %HUD
 @onready var out_of_view_spawn_location : PathFollow2D = %OutOfViewSpawnLocation
+@onready var player : Player = %Player
 
 
 func _on_enemy_spawn_timer_timeout() -> void:
@@ -51,21 +52,48 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_tree().call_group("Weapons","queue_free")
 		var gun_instance = guns[gun_no].instantiate()
 		%Player.add_child(gun_instance)
-
-
+	
 #Make guns go off 
 	if event.is_action_pressed("throw_weapon"):
 		var weapon = get_tree().get_first_node_in_group("Weapons")
 		weapon.reparent(get_tree().root)
 		#weapon.remove_from_group("Weapons")
 		#weapon.add_to_group("Dropped Weapons")
-
+	
 	if event.is_action_pressed("pick_up_weapon"):
 		pass
 		#var weapon = get_tree().get_first_node_in_group("Dropped Weapon")
 		#self.add_child(weapon)
 		#weapon.remove_from_group("Weapons")
+		
+	if event.is_action_pressed("slow_time_powerup"):
+		use_powerup("slow_time_powerup")
+	elif event.is_action_pressed("screen_blast_powerup"):
+		use_powerup("screen_blast_powerup")
+	elif event.is_action_pressed("heal"):
+		use_powerup("heal")
+
+func update_hud():
+	hud.update_buttons_count()
 
 
+func use_powerup(powerup: String) -> void:
+	match powerup:
+		"slow_time_powerup":
+			if player.slow_time_powerup > 0:
+				Engine.time_scale = 0.5
+				player.slow_time_powerup -= 1
+				await get_tree().create_timer(2.0).timeout
+				Engine.time_scale = 1.0
+		"screen_blast_powerup":
+			if player.screen_blast_powerup > 0:
+				player.screen_blast_powerup -= 1
+				for enemy in get_tree().get_nodes_in_group("Enemies"):
+					enemy.queue_free()
+		"heal":
+			if player.heal_powerup > 0:
+				player.heal_powerup -= 1
+				player.health_component.heal(20)
+	hud.update_buttons_count()
 
 

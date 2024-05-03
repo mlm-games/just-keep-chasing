@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://rks5cvegm0tb"]
 
 [ext_resource type="Script" path="res://scenes/weapons-related/double_barrel_shotgun.gd" id="1_ak5kx"]
-[ext_resource type="Texture2D" uid="uid://bambopn2wqgdd" path="res://assets/sprites/Gun-sprite.png" id="2_fksjb"]
+[ext_resource type="Texture2D" uid="uid://dccuva7i61u0n" path="res://assets/double_barrel_shotgun.png" id="2_fwune"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
 radius = 600.053
@@ -66,8 +66,7 @@ modulate = Color(0.333333, 0.333333, 0, 1)
 texture_filter = 1
 position = Vector2(70.174, 15.1176)
 rotation = 12.5664
-scale = Vector2(4.3639, 1.94482)
-texture = ExtResource("2_fksjb")
+texture = ExtResource("2_fwune")
 
 [node name="BulletSpawnPoint" type="Marker2D" parent="PivotPoint/Sprite2D"]
 unique_name_in_owner = true

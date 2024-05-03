@@ -1,11 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://cdjdqnkbytbwr"]
 
 [ext_resource type="Script" path="res://scenes/powerups/powerup_manager.gd" id="1_p7fcp"]
+[ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/heal_powerup.png" id="2_aokpj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
 radius = 21.3776
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_u2d4b"]
 
 [node name="HealPowerup" type="Area2D"]
 modulate = Color(0.360784, 1, 0.364706, 1)
@@ -16,8 +15,8 @@ metadata/_edit_group_ = true
 shape = SubResource("CircleShape2D_rxdp3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-4.76837e-07, 4.76837e-07)
-scale = Vector2(26, 24)
-texture = SubResource("PlaceholderTexture2D_u2d4b")
+position = Vector2(1.5, 2.95)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_aokpj")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

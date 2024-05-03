@@ -29,6 +29,7 @@ guns = Array[PackedScene]([ExtResource("2_si53n"), ExtResource("3_yilem"), ExtRe
 powerups = Array[Resource("res://scenes/powerups/powerup.gd")]([ExtResource("2_52a6m"), ExtResource("3_o14jb"), ExtResource("4_hp0xe")])
 
 [node name="HUD" parent="." instance=ExtResource("6_vltvt")]
+unique_name_in_owner = true
 layer = 20
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

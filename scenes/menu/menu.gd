@@ -9,7 +9,6 @@ func _ready():
 	btn_play.grab_focus()
 	if OS.has_feature('web'):
 		btn_exit.queue_free() # exit button dosn't make sense on HTML5
-	print(GameSaveData.new().music)
 
 
 func _on_PlayButton_pressed() -> void:

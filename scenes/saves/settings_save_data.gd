@@ -1,4 +1,4 @@
-class_name GameSaveData extends SaveData
+class_name SettingsSaveData extends SaveData
 
 @export var shake_screen : bool = true
 @export var music : bool = true

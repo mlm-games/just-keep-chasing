@@ -1,6 +1,12 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
+
+
 
 @export var speed = 250
+
+var slow_time_powerup: int = 0
+var screen_blast_powerup: int = 0
+var heal_powerup: int = 0
 
 
 @onready var health_component: HealthComponent = %HealthComponent
@@ -52,3 +58,13 @@ func on_load_game(saved_data: CharacterSaveData):
 	if saved_data:
 		global_position = saved_data.global_position
 		health_component.current_health = saved_data.current_health
+
+func powerup_collected(powerup_name) -> void:
+	match powerup_name:
+		"SlowTimePowerup":
+			slow_time_powerup += 1
+		"ScreenBlastPowerup":
+			screen_blast_powerup += 1
+		"HealPowerup":
+			heal_powerup += 1
+	get_parent().update_hud()
