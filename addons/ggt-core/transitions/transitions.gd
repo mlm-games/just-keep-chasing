@@ -105,4 +105,7 @@ func _input(_event: InputEvent):
 #region My transitions
 func circle_in():
 	anim.play("circle-in-anim")
+
+func circle_out():
+	anim.play("circle-out-anim")
 #endregion

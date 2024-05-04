@@ -1,20 +1,17 @@
-extends Node2D
-
-@export var guns: Array[PackedScene] = []
-
-var gun_no: int = 0
-var upgraded: bool = true
-
-  
+#FIXME: Dropping all guns and pressing space
+#hack: (not imp due to diff bullet speeds) Changing bullet icons like nuclear throne will feel like bullets are doing different dmg
 #TODO: change the name to some virus related thingy
 #TODO: Collision bouncing in the direction of collision direction for specific bullets?
 #heartbeast video for making the sawblades balloon game (Collision bouncing in the direction of collision direction)
 #Powerups only in singleplayer
+#HACK: create a class firespeedtimer which is extended so that in ready fn nothing needs to be repeated by default
 #TODO: Add the description based on u being an antibody trying to fight off the rampant bacteria and viruses (has a lot of potential for different diseases, in cancer mode u fight other antibodies as a nanobot trying to stop them from killing the wrong bacteria? (i dont properly know how cancer works)
 # when new difficulty is unlocked for all kinds of viruses, achievement can be like: little did he know, the stronger ones were good at hiding 
-
-#For state change see bitlytic video on it.
-#FOr collectibles, you can do the collection like how vampire survivors does it, call a state change fron idle to follow and let it get attracted at a certain speed after moving away for a second
+#HACK:A gamemode, You can only move a certain amt in a certain amt of time, (experiment until its fun)
+#HACK: The powerup has a initial velocity to the opposite direction of the player and it then accelerates toward the player upto a limit speed.
+#HACK: Player's gun doesnt slow down on slow_time powerup upgraded
+#HACK: For collectibles, you can do the collection like how vampire survivors does it, call a state change fron idle to follow and let it get attracted at a certain speed after moving away for a second
+#TODO: Replace all 4 gun.gd, pistol.gd, machinegun.gd stuff (or 3)
 #Example: 
 #initial_speed = -300
 #attraction_velocity: Vector2
@@ -22,78 +19,121 @@ var upgraded: bool = true
 #	attraction_velocity = initial_speed * direction
 #	attraction_velocity += direction * speed
 
-@export var powerups: Array[Powerup] = []
-@onready var hud : HUD = %HUD
-@onready var out_of_view_spawn_location : PathFollow2D = %OutOfViewSpawnLocation
-@onready var player : Player = %Player
+extends Node2D
 
+const ENEMY_SCENE_PATH = "res://scenes/characters/enemy%d.tscn"
+
+@export var guns: Array[PackedScene] = []
+@export var powerups: Array[Powerup] = []
+
+@onready var hud: HUD = %HUD
+@onready var out_of_view_spawn_location: PathFollow2D = %OutOfViewSpawnLocation
+@onready var player: Player = %Player
+@onready var enemies_node: Node2D = %EnemiesNode
+@onready var powerups_node: Node2D = %PowerupsNode
+@onready var enemy_spawn_timer: Timer = %EnemySpawnTimer
+@onready var powerup_spawn_timer: Timer = %PowerupSpawnTimer
+
+enum PowerupType {
+	SLOW_TIME,
+	SCREEN_BLAST,
+	HEAL
+}
+
+var enemy_spawn_type_range = Vector2(1, 2)
+var current_gun_index: int = 0
+var thrown_guns: Array[PackedScene] = []
 
 func _on_enemy_spawn_timer_timeout() -> void:
-	var enemy_scene = load("res://scenes/characters/enemy"+str(randi_range(1,2))+".tscn")
-	var enemy_instance = enemy_scene.instantiate()
-	out_of_view_spawn_location.progress_ratio = randf()
-	enemy_instance.global_position = out_of_view_spawn_location.global_position
-	%EnemiesNode.add_child(enemy_instance)
-	%EnemySpawnTimer.wait_time -= 0.005
-
+	spawn_enemy()
+	if hud.elapsed_time > 120:
+		enemy_spawn_type_range.y = 3
+	else:
+		enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.005, 0.1)
 
 func _on_powerup_spawn_timer_timeout() -> void:
-	var powerup = powerups.pick_random().scene
-	var powerup_instance = powerup.instantiate()
-	out_of_view_spawn_location.progress_ratio = randf()
-	powerup_instance.global_position = out_of_view_spawn_location.global_position
-	%PowerupsNode.add_child(powerup_instance)
-
+	if hud.elapsed_time > 1:
+		powerup_spawn_timer.start()
+	spawn_powerup()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("switch-weapon"):
-		#Scrolling through weapons
-		gun_no = (gun_no + 1) % guns.size()
-		get_tree().call_group("Weapons","queue_free")
-		var gun_instance = guns[gun_no].instantiate()
-		%Player.add_child(gun_instance)
-	
-#Make guns go off 
-	if event.is_action_pressed("throw_weapon"):
-		var weapon = get_tree().get_first_node_in_group("Weapons")
-		weapon.reparent(get_tree().root)
-		#weapon.remove_from_group("Weapons")
-		#weapon.add_to_group("Dropped Weapons")
-	
-	if event.is_action_pressed("pick_up_weapon"):
-		pass
-		#var weapon = get_tree().get_first_node_in_group("Dropped Weapon")
-		#self.add_child(weapon)
-		#weapon.remove_from_group("Weapons")
-		
-	if event.is_action_pressed("slow_time_powerup"):
-		use_powerup("slow_time_powerup")
+		switch_weapon()
+	elif event.is_action_pressed("throw_weapon"):
+		throw_weapon()
+	elif event.is_action_pressed("pick_up_weapon"):
+		pick_up_weapon()
+	elif event.is_action_pressed("slow_time_powerup"):
+		use_powerup(PowerupType.SLOW_TIME)
 	elif event.is_action_pressed("screen_blast_powerup"):
-		use_powerup("screen_blast_powerup")
+		use_powerup(PowerupType.SCREEN_BLAST)
 	elif event.is_action_pressed("heal"):
-		use_powerup("heal")
+		use_powerup(PowerupType.HEAL)
 
-func update_hud():
+func spawn_enemy() -> void:
+	var enemy_scene = load(ENEMY_SCENE_PATH % randi_range(enemy_spawn_type_range.x, enemy_spawn_type_range.y))
+	var enemy_instance = enemy_scene.instantiate()
+	out_of_view_spawn_location.progress_ratio = randf()
+	enemy_instance.global_position = out_of_view_spawn_location.global_position
+	enemies_node.add_child(enemy_instance)
+
+func spawn_powerup() -> void:
+	var powerup = get_random_powerup()
+	var powerup_instance = powerup.scene.instantiate()
+	out_of_view_spawn_location.progress_ratio = randf()
+	powerup_instance.global_position = out_of_view_spawn_location.global_position
+	powerups_node.add_child(powerup_instance)
+
+func get_random_powerup() -> Powerup:
+	var powerup = powerups.pick_random()
+	if powerup.name == "Screen Blast" and randf() < 0.5:
+		powerup = get_random_powerup()
+	elif powerup.name == "Heal" and randf() < 0.25:
+		powerup = powerups[0]
+	return powerup
+
+func switch_weapon() -> void:
+	current_gun_index = (current_gun_index + 1) % guns.size()
+	get_tree().call_group("Weapons", "queue_free")
+	var gun_instance = guns[current_gun_index].instantiate()
+	player.add_child(gun_instance)
+
+func throw_weapon() -> void:
+	var thrown_weapon = get_tree().get_first_node_in_group("Weapons")
+	var thrown_weapon_scene = guns[current_gun_index]
+	if thrown_weapon:
+		guns.erase(thrown_weapon_scene)
+	thrown_guns.append(thrown_weapon_scene)
+	thrown_weapon.reparent(self)
+	thrown_weapon.remove_from_group("Weapons")
+	thrown_weapon.add_to_group("Dropped Weapons")
+
+func pick_up_weapon() -> void:
+	if thrown_guns.size() > 0:
+		var weapon = get_tree().get_first_node_in_group("Dropped Weapons")
+		add_child(weapon)
+		weapon.remove_from_group("Dropped Weapons")
+		weapon.add_to_group("Weapons")
+		get_tree().call_group("Weapons", "queue_free")
+
+func update_hud() -> void:
 	hud.update_buttons_count()
 
-
-func use_powerup(powerup: String) -> void:
-	match powerup:
-		"slow_time_powerup":
+func use_powerup(powerup_type: int) -> void:
+	match powerup_type:
+		PowerupType.SLOW_TIME:
 			if player.slow_time_powerup > 0:
-				Engine.time_scale = 0.5
 				player.slow_time_powerup -= 1
+				Engine.time_scale = 0.75
 				await get_tree().create_timer(2.0).timeout
 				Engine.time_scale = 1.0
-		"screen_blast_powerup":
+		PowerupType.SCREEN_BLAST:
 			if player.screen_blast_powerup > 0:
 				player.screen_blast_powerup -= 1
-				for enemy in get_tree().get_nodes_in_group("Enemies"):
-					enemy.queue_free()
-		"heal":
+			for enemy in get_tree().get_nodes_in_group("Enemies"):
+				enemy.queue_free()
+		PowerupType.HEAL:
 			if player.heal_powerup > 0:
 				player.heal_powerup -= 1
 				player.health_component.heal(20)
-	hud.update_buttons_count()
-
-
+	update_hud()

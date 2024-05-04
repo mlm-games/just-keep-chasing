@@ -1,17 +1,17 @@
 [gd_scene load_steps=13 format=3 uid="uid://q2ch1upupt84"]
 
-[ext_resource type="Script" path="res://scenes/characters/enemy.gd" id="1_arqkv"]
+[ext_resource type="Script" path="res://scenes/characters/slime_enemy.gd" id="1_arqkv"]
 [ext_resource type="Texture2D" uid="uid://buqj8udj42uq6" path="res://assets/sprites/slime.png" id="2_fgdun"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="3_bg28f"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_uyc4d"]
 [ext_resource type="Script" path="res://scenes/states/state_machine.gd" id="5_y65yd"]
 [ext_resource type="Script" path="res://scenes/states/enemy_follow.gd" id="6_fte2u"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
-size = Vector2(44, 40)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pnp1"]
 size = Vector2(56, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
+size = Vector2(44, 40)
 
 [sub_resource type="Animation" id="Animation_0xt00"]
 length = 0.001
@@ -76,8 +76,20 @@ motion_mode = 1
 platform_on_leave = 2
 platform_floor_layers = 4294967292
 script = ExtResource("1_arqkv")
-speed = 120.0
+speed = 110.0
 metadata/_edit_group_ = true
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_uyc4d")]
+max_health = 13.0
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_bg28f")]
+unique_name_in_owner = true
+collision_layer = 4
+collision_mask = 3
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("RectangleShape2D_8pnp1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.94, 0.88)
@@ -86,17 +98,6 @@ texture = ExtResource("2_fgdun")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_mgdpr")
-
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_bg28f")]
-collision_layer = 4
-collision_mask = 3
-health_component = NodePath("../HealthComponent")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-shape = SubResource("RectangleShape2D_8pnp1")
-
-[node name="HealthComponent" parent="." instance=ExtResource("4_uyc4d")]
-max_health = 13.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

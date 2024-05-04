@@ -1,10 +1,7 @@
-class_name Bullet extends Area2D
+class_name FireBullet extends Bullet
 
-@export var speed :float
-var travelled_distance := 0.0
-var bullet_range := 1000
-@export var bullet_damage :float
-var bullet_attack := Attack.new()
+@export var damage_over_time: float
+@export var dot_duration: float
 
 func _physics_process(delta: float) -> void:
 	var direction = Vector2.RIGHT.rotated(rotation)
@@ -17,5 +14,8 @@ func _physics_process(delta: float) -> void:
 func _on_area_entered(body: Node2D) -> void:
 	if body is HitboxComponent:
 		bullet_attack.attack_damage = bullet_damage
+		bullet_attack.damage_over_time = damage_over_time
+		bullet_attack.dot_duration = dot_duration
 		body.damage(bullet_attack)
+		body.dot(damage_over_time, 3)
 	queue_free()

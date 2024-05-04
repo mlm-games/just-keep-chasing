@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://3gohb2peicf"]
+[gd_scene load_steps=8 format=3 uid="uid://3gohb2peicf"]
 
 [ext_resource type="Script" path="res://scenes/weapons-related/machine_gun.gd" id="1_0uu0s"]
+[ext_resource type="Resource" uid="uid://dxbf0dcaymdme" path="res://scenes/weapons-related/bullet.tres" id="2_0nf6x"]
 [ext_resource type="Texture2D" uid="uid://bambopn2wqgdd" path="res://assets/sprites/Gun-sprite.png" id="2_w1bi5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
@@ -48,6 +49,7 @@ _data = {
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_0uu0s")
+bullet = ExtResource("2_0nf6x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_we32q")

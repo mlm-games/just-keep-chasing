@@ -1,17 +1,19 @@
 [gd_scene load_steps=13 format=3 uid="uid://cteveg3uqp4j7"]
 
-[ext_resource type="Script" path="res://scenes/characters/enemy.gd" id="1_41wcf"]
-[ext_resource type="Texture2D" uid="uid://buqj8udj42uq6" path="res://assets/sprites/slime.png" id="2_8v1wt"]
-[ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="3_bsixf"]
-[ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_vv0f2"]
-[ext_resource type="Script" path="res://scenes/states/state_machine.gd" id="5_qqoio"]
-[ext_resource type="Script" path="res://scenes/states/enemy_follow.gd" id="6_t31i4"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
-size = Vector2(54.6667, 53.3333)
+[ext_resource type="Script" path="res://scenes/characters/slime_enemy.gd" id="1_38jhi"]
+[ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="2_nwvig"]
+[ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="3_82vi8"]
+[ext_resource type="Script" path="res://scenes/states/state_machine.gd" id="4_0c3i1"]
+[ext_resource type="Script" path="res://scenes/states/enemy_follow.gd" id="5_nocuo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pnp1"]
 size = Vector2(68.6667, 70.6667)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_c5db5"]
+load_path = "res://.godot/imported/slime.png-ef39d3a984e40a937a22dc6f527ce7e0.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
+size = Vector2(54.6667, 53.3333)
 
 [sub_resource type="Animation" id="Animation_0xt00"]
 length = 0.001
@@ -69,36 +71,40 @@ _data = {
 "follow-y": SubResource("Animation_2n6dd")
 }
 
-[node name="Enemy2" type="CharacterBody2D" groups=["Enemies"]]
+[node name="SlowBigEnemy" type="CharacterBody2D" groups=["Enemies"]]
 position = Vector2(363, 235)
 scale = Vector2(1.5, 1.5)
 motion_mode = 1
 platform_on_leave = 2
 platform_floor_layers = 4294967292
-script = ExtResource("1_41wcf")
+script = ExtResource("1_38jhi")
 speed = 75.0
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(5.83333, 3.66666)
-scale = Vector2(1.05667, 0.953333)
-texture = ExtResource("2_8v1wt")
+[node name="HealthComponent" parent="." instance=ExtResource("3_82vi8")]
+max_health = 30.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(5.33334, 8.66667)
-shape = SubResource("RectangleShape2D_mgdpr")
-
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_bsixf")]
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("2_nwvig")]
+unique_name_in_owner = true
 collision_layer = 4
 collision_mask = 3
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+visible = false
 position = Vector2(6.33334, 7.33333)
 shape = SubResource("RectangleShape2D_8pnp1")
 
-[node name="HealthComponent" parent="." instance=ExtResource("4_vv0f2")]
-max_health = 20.0
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.611765, 1, 1)
+position = Vector2(5.83333, 3.66666)
+scale = Vector2(1.05667, 0.953333)
+texture = SubResource("CompressedTexture2D_c5db5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(5.33334, 8.66667)
+shape = SubResource("RectangleShape2D_mgdpr")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -108,10 +114,10 @@ libraries = {
 speed_scale = 2.0
 
 [node name="StateMachine" type="Node" parent="."]
-script = ExtResource("5_qqoio")
+script = ExtResource("4_0c3i1")
 
 [node name="Follow" type="Node" parent="StateMachine"]
-script = ExtResource("6_t31i4")
+script = ExtResource("5_nocuo")
 
 [connection signal="area_entered" from="HitboxComponent" to="." method="_on_hitbox_component_area_entered"]
 [connection signal="area_exited" from="HitboxComponent" to="." method="_on_hitbox_component_area_exited"]

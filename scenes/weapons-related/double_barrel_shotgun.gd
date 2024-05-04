@@ -6,14 +6,16 @@ func _ready() -> void:
 	gun_capacity = 2
 	pellet_spread = 15
 	super._ready()
-	bullets_fired = gun_capacity
+	pellets_fired = gun_capacity
+
+func _on_area_entered(area: Area2D) -> void:
+	enemies_in_range.append(area)
+	if enemies_in_range.size() == 1:
+		set_physics_process(true)
+
+func _on_area_exited(area: Area2D) -> void:
+	enemies_in_range.erase(area)
+	if enemies_in_range.is_empty():
+		set_physics_process(false)
 
 
-
-func get_targets_in_range() -> Array:
-	var targets = []
-	var objects = get_tree().get_nodes_in_group("On Screen Enemies")
-	for object in objects:
-		if object.global_position.distance_to(global_position) <= shooting_range:
-			targets.append(object)
-	return targets

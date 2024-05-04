@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene load_steps=17 format=3 uid="uid://4fyoq8npekf0"]
 
 [ext_resource type="Script" path="res://scenes/gameplay/world.gd" id="1_li0ht"]
 [ext_resource type="Resource" uid="uid://c3hm2e8euscc1" path="res://scenes/powerups/slow_time_powerup.tres" id="2_52a6m"]
@@ -13,9 +13,8 @@
 [ext_resource type="Script" path="res://scenes/saver_loader.gd" id="5_m8xuy"]
 [ext_resource type="PackedScene" uid="uid://cp7bdncv26bbl" path="res://scenes/characters/wbc.tscn" id="6_scc53"]
 [ext_resource type="PackedScene" uid="uid://p3ijv0nq3035" path="res://scenes/menu/hud.tscn" id="6_vltvt"]
-[ext_resource type="Script" path="res://scenes/gameplay/powerup_manager.gd" id="8_evt3o"]
 [ext_resource type="PackedScene" uid="uid://cme2e7v3yy8ol" path="res://scenes/powerups/slow_time_powerup.tscn" id="8_k2l23"]
-[ext_resource type="Script" path="res://scenes/gameplay/enemies_node.gd" id="9_4rtcf"]
+[ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes/gameplay/pause-layer/pause-layer.tscn" id="9_gj2be"]
 
 [sub_resource type="Curve2D" id="Curve2D_xsefa"]
 _data = {
@@ -28,10 +27,6 @@ script = ExtResource("1_li0ht")
 guns = Array[PackedScene]([ExtResource("2_si53n"), ExtResource("3_yilem"), ExtResource("4_hdduu")])
 powerups = Array[Resource("res://scenes/powerups/powerup.gd")]([ExtResource("2_52a6m"), ExtResource("3_o14jb"), ExtResource("4_hp0xe")])
 
-[node name="HUD" parent="." instance=ExtResource("6_vltvt")]
-unique_name_in_owner = true
-layer = 20
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -99
 
@@ -43,6 +38,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_6lnso")
+
+[node name="PauseLayer" parent="." instance=ExtResource("9_gj2be")]
+layer = 20
+
+[node name="HUD" parent="." instance=ExtResource("6_vltvt")]
+unique_name_in_owner = true
+layer = 20
 
 [node name="Player" parent="." instance=ExtResource("3_vhnxw")]
 unique_name_in_owner = true
@@ -60,13 +62,9 @@ rotation = -0.00231124
 
 [node name="EnemiesNode" type="Node2D" parent="."]
 unique_name_in_owner = true
-script = ExtResource("9_4rtcf")
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="EnemiesNode"]
 
 [node name="PowerupsNode" type="Node2D" parent="."]
 unique_name_in_owner = true
-script = ExtResource("8_evt3o")
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -74,8 +72,8 @@ wait_time = 2.0
 autostart = true
 
 [node name="PowerupSpawnTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 wait_time = 25.0
-autostart = true
 
 [node name="Tree" parent="." instance=ExtResource("4_l562g")]
 position = Vector2(1002, 52)

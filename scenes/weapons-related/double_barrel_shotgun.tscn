@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://rks5cvegm0tb"]
+[gd_scene load_steps=8 format=3 uid="uid://rks5cvegm0tb"]
 
 [ext_resource type="Script" path="res://scenes/weapons-related/double_barrel_shotgun.gd" id="1_ak5kx"]
+[ext_resource type="Resource" uid="uid://x7ehhb3f5w4s" path="res://scenes/weapons-related/pellet.tres" id="2_2lnlu"]
 [ext_resource type="Texture2D" uid="uid://dccuva7i61u0n" path="res://assets/double_barrel_shotgun.png" id="2_fwune"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
@@ -48,6 +49,7 @@ _data = {
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_ak5kx")
+pellet = ExtResource("2_2lnlu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_we32q")
@@ -63,14 +65,14 @@ libraries = {
 [node name="Sprite2D" type="Sprite2D" parent="PivotPoint"]
 unique_name_in_owner = true
 texture_filter = 1
-position = Vector2(70.174, 15.1176)
+position = Vector2(46.7991, 15.1169)
 rotation = 12.5664
-scale = Vector2(0.075, 0.1)
+scale = Vector2(0.0506511, 0.1)
 texture = ExtResource("2_fwune")
 
 [node name="BulletSpawnPoint" type="Marker2D" parent="PivotPoint/Sprite2D"]
 unique_name_in_owner = true
-position = Vector2(8, -5)
+position = Vector2(773.938, -41.1806)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

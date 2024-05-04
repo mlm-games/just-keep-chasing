@@ -3,7 +3,7 @@ const GUN_CAPACITY := 5
 var reload_time := 0.5
 var bullets_fired := 0
 ## Represents gun range
-var bullet_scene = preload("res://scenes/weapons-related/bullet.tscn")
+var bullet = Projectiles
 var time_between_shots = 0.25
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
@@ -41,10 +41,10 @@ func _on_fire_speed_timer_timeout() -> void:
 		fire_bullet()
 
 func fire_bullet() -> void:
-	var bullet = bullet_scene.instantiate()
-	bullet.global_position = %BulletSpawnPoint.global_position
-	bullet.global_rotation = %BulletSpawnPoint.global_rotation
-	get_tree().current_scene.add_child(bullet)
+	var bullet_instance = bullet.instantiate()
+	bullet_instance.global_position = %BulletSpawnPoint.global_position
+	bullet_instance.global_rotation = %BulletSpawnPoint.global_rotation
+	get_tree().current_scene.add_child(bullet_instance)
 	bullets_fired += 1
 
 

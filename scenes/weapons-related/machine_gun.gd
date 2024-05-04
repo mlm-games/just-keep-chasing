@@ -2,9 +2,10 @@ extends Area2D
 @export var gun_capacity := 30
 var reload_time := 3.0
 var bullets_fired := 0
-## Represents gun range
-var bullet_scene = preload("res://scenes/weapons-related/bullet.tscn")
-var time_between_shots = 0.15
+var bullet_speed := 750
+var bullet_range := 1500
+@export var bullet: Projectiles
+var time_between_shots = 0.1
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
 
@@ -31,6 +32,8 @@ func _physics_process(_delta: float) -> void:
 			sprite_2d.flip_v = true
 		else:
 			sprite_2d.flip_v = false
+		if rotation > 3*PI/2:
+			rotation = -PI/2
 		if %FireSpeedTimer.is_stopped():
 			%FireSpeedTimer.start()
 
@@ -41,10 +44,12 @@ func _on_fire_speed_timer_timeout() -> void:
 		fire_bullet()
 
 func fire_bullet() -> void:
-	var bullet = bullet_scene.instantiate()
-	bullet.global_position = %BulletSpawnPoint.global_position
-	bullet.global_rotation = %BulletSpawnPoint.global_rotation
-	get_tree().current_scene.add_child(bullet)
+	var bullet_instance = bullet.scene.instantiate()
+	bullet_instance.global_position = %BulletSpawnPoint.global_position
+	bullet_instance.global_rotation = %BulletSpawnPoint.global_rotation
+	bullet_instance.speed = bullet_speed
+	bullet_instance.bullet_range = bullet_range
+	get_tree().current_scene.add_child(bullet_instance)
 	bullets_fired += 1
 
 func reload_gun() -> void:

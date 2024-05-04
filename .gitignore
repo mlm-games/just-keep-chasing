@@ -17,3 +17,4 @@ builds/**/*
 
 # sh files
 release.sh
+personal/

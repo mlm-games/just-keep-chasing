@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://b3mf65fcnvmvu"]
 
-[ext_resource type="Script" path="res://scenes/characters/Player.gd" id="1_cvyhv"]
+[ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_cvyhv"]
 [ext_resource type="Texture2D" uid="uid://dtwpm3uclaspj" path="res://assets/sprites/icon.png" id="2_k0jsn"]
 [ext_resource type="PackedScene" uid="uid://bk4fraugaremc" path="res://scenes/weapons-related/pistol.tscn" id="3_al27l"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="4_pwyjt"]

@@ -18,3 +18,5 @@ script = ExtResource("1_h8jbq")
 [node name="ToggleFullscreen" parent="." instance=ExtResource("3_o3see")]
 
 [node name="RestartCurrentScene" parent="." instance=ExtResource("4_40m28")]
+
+[node name="FastForwardGame" type="Node" parent="."]

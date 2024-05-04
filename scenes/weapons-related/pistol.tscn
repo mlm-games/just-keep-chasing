@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bk4fraugaremc"]
+[gd_scene load_steps=8 format=3 uid="uid://bk4fraugaremc"]
 
 [ext_resource type="Script" path="res://scenes/weapons-related/pistol.gd" id="1_vd3nw"]
 [ext_resource type="Texture2D" uid="uid://bambopn2wqgdd" path="res://assets/sprites/Gun-sprite.png" id="2_qsjjy"]
+[ext_resource type="Resource" uid="uid://dxbf0dcaymdme" path="res://scenes/weapons-related/bullet.tres" id="2_w17x3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
 radius = 600.053
@@ -47,6 +48,7 @@ _data = {
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_vd3nw")
+bullet = ExtResource("2_w17x3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_we32q")
