@@ -1,6 +1,6 @@
 extends Area2D
 
-var pellet_spread := 10.0
+var pellet_spread := 0.0
 @export var speed: float
 var travelled_distance := 0.0
 var pellet_range := 500

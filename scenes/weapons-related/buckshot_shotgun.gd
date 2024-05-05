@@ -1,7 +1,4 @@
-class_name Shotgun extends BaseWeapon
-
-@export var pellets_per_shot: int 
-@export var pellet_spread: float
+class_name BuckshotShotgun extends Shotgun
 
 func spawn_bullet() -> void:
 	if ammo > 0:
@@ -11,6 +8,6 @@ func spawn_bullet() -> void:
 			pellet_instance.global_rotation_degrees = _bullet_spawn_point.global_rotation_degrees + randf_range(-pellet_spread, pellet_spread)
 			get_tree().current_scene.add_child(pellet_instance)
 		ammo -= 1  
-		if ammo == 0:
+		if ammo < 1:
 			reload()
 

@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://3gohb2peicf"]
+[gd_scene load_steps=8 format=3 uid="uid://ceb1hgsm04rux"]
 
-[ext_resource type="Script" path="res://scenes/weapons-related/machine_gun.gd" id="1_0uu0s"]
-[ext_resource type="Resource" uid="uid://dxbf0dcaymdme" path="res://scenes/weapons-related/bullet.tres" id="2_0nf6x"]
-[ext_resource type="Texture2D" uid="uid://bambopn2wqgdd" path="res://assets/sprites/Gun-sprite.png" id="2_w1bi5"]
+[ext_resource type="Script" path="res://scenes/weapons-related/birdshot_shotgun.gd" id="1_b880i"]
+[ext_resource type="Resource" uid="uid://b6aweocd3n4f" path="res://scenes/weapons-related/birdshot.tres" id="2_xoaa2"]
+[ext_resource type="Texture2D" uid="uid://dccuva7i61u0n" path="res://assets/double_barrel_shotgun.png" id="3_qvbpk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
 radius = 600.053
@@ -45,15 +45,17 @@ _data = {
 "reload": SubResource("Animation_mxhbq")
 }
 
-[node name="MachineGun" type="Area2D" groups=["Weapons"]]
+[node name="BirdshotShotgun" type="Area2D" groups=["Weapons"]]
 collision_layer = 0
 collision_mask = 4
-script = ExtResource("1_0uu0s")
-bullet = ExtResource("2_0nf6x")
-reload_time = 3.0
-max_ammo = 30
-targeting_range = 1000.0
-fire_rate = 0.15
+script = ExtResource("1_b880i")
+pellets_per_shot = 15
+pellet_spread = 45.0
+bullet = ExtResource("2_xoaa2")
+reload_time = 0.5
+max_ammo = 1
+targeting_range = 600.0
+fire_rate = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_we32q")
@@ -68,23 +70,21 @@ libraries = {
 
 [node name="Sprite2D" type="Sprite2D" parent="PivotPoint"]
 unique_name_in_owner = true
-modulate = Color(0.333333, 0.333333, 0, 1)
+modulate = Color(0, 0, 0, 1)
 texture_filter = 1
-position = Vector2(56, 0)
+position = Vector2(46.7991, 15.1169)
 rotation = 12.5664
-scale = Vector2(1.3125, 1)
-texture = ExtResource("2_w1bi5")
+scale = Vector2(0.0506511, 0.1)
+texture = ExtResource("3_qvbpk")
 
 [node name="BulletSpawnPoint" type="Marker2D" parent="PivotPoint/Sprite2D"]
 unique_name_in_owner = true
-position = Vector2(8, -5)
-
-[node name="FireRateTimer" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 0.15
-one_shot = true
+position = Vector2(773.938, -41.1806)
 
 [node name="ReloadTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="FireRateTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 
 [connection signal="area_entered" from="." to="." method="_on_base_weapon_area_entered"]

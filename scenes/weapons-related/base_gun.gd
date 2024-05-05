@@ -7,6 +7,7 @@ class_name BaseWeapon extends Area2D
 @export var targeting_range: float
 @export var fire_rate: float
 
+
 @onready var _bullet_spawn_point: Marker2D = %BulletSpawnPoint
 @onready var _reload_timer: Timer = %ReloadTimer
 @onready var _fire_rate_timer: Timer = %FireRateTimer
@@ -57,6 +58,8 @@ func aim_at_enemy() -> void:
 		var target_enemy = _enemies_in_range[0]
 		var direction = (target_enemy.global_position - global_position).normalized()
 		rotation = direction.angle()
+		rotation = wrapf(rotation, -PI/2, 3*PI/2)
+		
 
 func _on_base_weapon_area_entered(area: Area2D) -> void:
 #	if area.get_parent().is_in_group("Enemies") and area.global_position.distance_to(global_position) <= targeting_range:
@@ -69,3 +72,5 @@ func _on_base_weapon_area_exited(area: Area2D) -> void:
 func _on_fire_rate_timer_timeout() -> void:
 	if not _enemies_in_range.is_empty() and ammo > 0:
 		spawn_bullet()
+	else: 
+		reload()

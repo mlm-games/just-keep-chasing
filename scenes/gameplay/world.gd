@@ -1,4 +1,9 @@
 #FIXME: Dropping all guns and pressing space
+#FIXME: Gun rotating weirdly
+#FIXME: Dropping weapons when there is no weapon in hand
+#HACK: Use prophyliptics to make anti-bodies/ buy anti-bodies?
+#hack: the final secret boss is the rogue multiplying xenobot (like how cancer cells are just rogue human cells) (could make a lore story based on this...)
+#HACK: The guns are similar to items in godotneers data model vid, can make an icon also for touchscreenbutton/changeGunButton
 #hack: (not imp due to diff bullet speeds) Changing bullet icons like nuclear throne will feel like bullets are doing different dmg
 #TODO: change the name to some virus related thingy
 #TODO: Collision bouncing in the direction of collision direction for specific bullets?

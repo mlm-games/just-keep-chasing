@@ -6,7 +6,7 @@ signal player_died
 signal taking_damage
 signal health_changed(new_health)
 
-@export var max_health: float = 10.0
+@export var max_health: float 
 var current_health: float
 
 func _ready() -> void:

@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Just Keep Chasing (vampire survivors style) (have to change later) to a virus related thing or description related"
-config/description="You are an Generative AI nanobot and are tasked to kill some viruses in the human's body... whose pico guns can auto-fire without ur need but some are needed to be reloaded or their ammo box should be restocked..."
+config/name="Nanobot's Survival"
+config/description="You are an advanced AI nanobot and are tasked to kill some viruses in the human's body... whose pico guns can auto-fire without ur need but some are needed to be reloaded or their ammo box should be restocked..."
 config/version="0.0.1"
 run/main_scene="res://scenes/menu/menu.tscn"
 config/features=PackedStringArray("4.2")
