@@ -1,3 +1,6 @@
+#hack: Display ammo_count and reload status?
+#hack: touch_button_changing_icons...
+
 class_name HUD extends CanvasLayer
 
 const TIMER_FORMAT = "%02d:%02d"
@@ -15,20 +18,21 @@ func _on_timer_timeout() -> void:
 	update_timer_label()
 
 func update_timer_label() -> void:
+	@warning_ignore("integer_division")
 	var minutes = elapsed_time / 60
 	var seconds = elapsed_time % 60
 	timer_label.text = TIMER_FORMAT % [minutes, seconds]
 
 func _on_slow_time_button_pressed() -> void:
-	get_parent().use_powerup(get_parent().PowerupType.SLOW_TIME)
+	get_parent().use_powerup(0)
 	update_slow_time_button()
 
 func _on_screen_blast_button_pressed() -> void:
-	get_parent().use_powerup(get_parent().PowerupType.SCREEN_BLAST)
+	get_parent().use_powerup(1)
 	update_screen_blast_button()
 
 func _on_heal_button_pressed() -> void:
-	get_parent().use_powerup(get_parent().PowerupType.HEAL)
+	get_parent().use_powerup(2)
 	update_heal_button()
 
 func _on_guns_button_pressed() -> void:
@@ -38,12 +42,12 @@ func update_buttons_count() -> void:
 	update_slow_time_button()
 	update_screen_blast_button()
 	update_heal_button()
-
+#Fix enums
 func update_slow_time_button() -> void:
-	slow_time_button.text = str(player.slow_time_powerup)
+	slow_time_button.text = str(player.powerups[0])
 
 func update_screen_blast_button() -> void:
-	screen_blast_button.text = str(player.screen_blast_powerup)
+	screen_blast_button.text = str(player.powerups[1])
 
 func update_heal_button() -> void:
-	heal_button.text = str(player.heal_powerup)
+	heal_button.text = str(player.powerups[2])

@@ -9,7 +9,7 @@ radius = 21.3776
 [node name="HealPowerup" type="Area2D"]
 modulate = Color(0.360784, 1, 0.364706, 1)
 script = ExtResource("1_p7fcp")
-powerup_type = "heal"
+powerup_type = 2
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

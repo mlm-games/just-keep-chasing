@@ -34,12 +34,6 @@ const ENEMY_SCENE_PATH = "res://scenes/characters/enemy%d.tscn"
 @onready var enemy_spawn_timer: Timer = %EnemySpawnTimer
 @onready var powerup_spawn_timer: Timer = %PowerupSpawnTimer
 
-enum PowerupType {
-	SLOW_TIME,
-	SCREEN_BLAST,
-	HEAL
-}
-
 var enemy_spawn_type_range = Vector2(1, 2)
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
@@ -64,11 +58,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("pick_up_weapon"):
 		pick_up_weapon()
 	elif event.is_action_pressed("slow_time_powerup"):
-		use_powerup(PowerupType.SLOW_TIME)
+		use_powerup(GameState.PowerupType.SLOW_TIME)
 	elif event.is_action_pressed("screen_blast_powerup"):
-		use_powerup(PowerupType.SCREEN_BLAST)
+		use_powerup(GameState.PowerupType.SCREEN_BLAST)
 	elif event.is_action_pressed("heal"):
-		use_powerup(PowerupType.HEAL)
+		use_powerup(GameState.PowerupType.HEAL)
 
 func spawn_enemy() -> void:
 	var enemy_scene = load(ENEMY_SCENE_PATH % randi_range(enemy_spawn_type_range.x, enemy_spawn_type_range.y))
@@ -121,19 +115,19 @@ func update_hud() -> void:
 
 func use_powerup(powerup_type: int) -> void:
 	match powerup_type:
-		PowerupType.SLOW_TIME:
-			if player.slow_time_powerup > 0:
-				player.slow_time_powerup -= 1
+		GameState.PowerupType.SLOW_TIME:
+			if player.powerups[0] > 0:
+				player.powerups[0] -= 1
 				Engine.time_scale = 0.75
 				await get_tree().create_timer(2.0).timeout
 				Engine.time_scale = 1.0
-		PowerupType.SCREEN_BLAST:
-			if player.screen_blast_powerup > 0:
-				player.screen_blast_powerup -= 1
-			for enemy in get_tree().get_nodes_in_group("Enemies"):
-				enemy.queue_free()
-		PowerupType.HEAL:
-			if player.heal_powerup > 0:
-				player.heal_powerup -= 1
+		GameState.PowerupType.SCREEN_BLAST:
+			if player.powerups[1] > 0:
+				player.powerups[1] -= 1
+				for enemy in get_tree().get_nodes_in_group("Enemies"):
+					enemy.queue_free()
+		GameState.PowerupType.HEAL:
+			if player.powerups[2] > 0:
+				player.powerups[2] -= 1
 				player.health_component.heal(20)
 	update_hud()
