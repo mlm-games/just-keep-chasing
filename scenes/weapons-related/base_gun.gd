@@ -70,7 +70,8 @@ func _on_base_weapon_area_exited(area: Area2D) -> void:
 		_enemies_in_range.erase(area)
 
 func _on_fire_rate_timer_timeout() -> void:
-	if not _enemies_in_range.is_empty() and ammo > 0:
+	if not _enemies_in_range.is_empty():
 		spawn_bullet()
-	else: 
-		reload()
+		if ammo <= 0:
+			reload()
+

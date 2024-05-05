@@ -32,7 +32,7 @@ func _on_health_component_player_died() -> void:
 		transitions.circle_in()
 		await transitions.anim.animation_finished
 		await get_tree().create_timer(0.3).timeout
-		get_tree().quit()
+		#get_tree().quit()
 		transitions.circle_out()
 
 func _on_health_component_taking_damage() -> void:

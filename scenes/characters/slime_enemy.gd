@@ -1,8 +1,11 @@
+#FIXME: Multiple bullets hitting the same enemy causes research points to be multiplied
+
 class_name SlimeEnemy extends CharacterBody2D
 
 const ANIMATION_FOLLOW_X = "follow-x"
 const ANIMATION_FOLLOW_Y = "follow-y"
 
+@export var research_point_value : int
 @export var speed: float
 @export var contact_attack_damage: int = 20
 

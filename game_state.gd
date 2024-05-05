@@ -15,6 +15,7 @@ var player_score: int = 0
 var player_lives: int = 3
 
 # Game-related properties
+var research_points_count : int = 0
 var current_level: int = 1
 var is_game_paused: bool = false
 var is_game_over: bool = false
@@ -34,6 +35,7 @@ var is_fullscreen: bool = false
 
 # Methods for managing game state
 func reset_game() -> void:
+	research_points_count = 0
 	player_health = player_max_health
 	player_score = 0
 	player_lives = 3

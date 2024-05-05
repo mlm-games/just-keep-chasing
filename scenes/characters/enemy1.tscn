@@ -73,6 +73,7 @@ motion_mode = 1
 platform_on_leave = 2
 platform_floor_layers = 4294967292
 script = ExtResource("1_ocsmm")
+research_point_value = 1
 speed = 125.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

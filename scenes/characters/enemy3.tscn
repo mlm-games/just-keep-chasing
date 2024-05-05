@@ -78,6 +78,7 @@ motion_mode = 1
 platform_on_leave = 2
 platform_floor_layers = 4294967292
 script = ExtResource("1_38jhi")
+research_point_value = 5
 speed = 75.0
 metadata/_edit_group_ = true
 
@@ -91,7 +92,6 @@ collision_mask = 3
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-visible = false
 position = Vector2(6.33334, 7.33333)
 shape = SubResource("RectangleShape2D_8pnp1")
 
@@ -102,7 +102,6 @@ scale = Vector2(1.05667, 0.953333)
 texture = SubResource("CompressedTexture2D_c5db5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(5.33334, 8.66667)
 shape = SubResource("RectangleShape2D_mgdpr")
 

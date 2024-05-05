@@ -76,6 +76,7 @@ motion_mode = 1
 platform_on_leave = 2
 platform_floor_layers = 4294967292
 script = ExtResource("1_arqkv")
+research_point_value = 2
 speed = 110.0
 metadata/_edit_group_ = true
 
