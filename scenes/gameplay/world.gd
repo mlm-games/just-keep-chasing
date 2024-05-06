@@ -17,6 +17,10 @@
 #HACK: Player's gun doesnt slow down on slow_time powerup upgraded
 #HACK: For collectibles, you can do the collection like how vampire survivors does it, call a state change fron idle to follow and let it get attracted at a certain speed after moving away for a second
 #TODO: Replace all 4 gun.gd, pistol.gd, machinegun.gd stuff (or 3)
+#TODO: Use inherited scenes for powerups.
+#TODO: Add a powerup that makes the player invincible for a certain amount of time
+#TODO: Add a upgrade that makes you damage enemies on contact
+
 #Example: 
 #initial_speed = -300
 #attraction_velocity: Vector2
