@@ -20,6 +20,7 @@
 #TODO: Use inherited scenes for powerups.
 #TODO: Add a powerup that makes the player invincible for a certain amount of time
 #TODO: Add a upgrade that makes you damage enemies on contact
+#TODO: Change change_scene to file to packed
 
 #Example: 
 #initial_speed = -300

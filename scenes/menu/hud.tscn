@@ -22,6 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="TimerLabel" type="Label" parent="Control"]
 unique_name_in_owner = true
@@ -53,13 +54,13 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_co5na")
 layout_direction = 3
 layout_mode = 2
 
-[node name="SlowTimeButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
+[node name="HealButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "0"
-icon = ExtResource("2_vgwca")
+icon = ExtResource("4_lcl0g")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
@@ -75,13 +76,13 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="HealButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
+[node name="SlowTimeButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "0"
-icon = ExtResource("4_lcl0g")
+icon = ExtResource("2_vgwca")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
@@ -103,7 +104,7 @@ texture_normal = ExtResource("6_e60p3")
 action = "switch-weapon"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="pressed" from="Control/PanelContainer/HBoxContainer/SlowTimeButton" to="." method="_on_slow_time_button_pressed"]
-[connection signal="pressed" from="Control/PanelContainer/HBoxContainer/ScreenBlastButton" to="." method="_on_screen_blast_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/HealButton" to="." method="_on_heal_button_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/HBoxContainer/ScreenBlastButton" to="." method="_on_screen_blast_button_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/HBoxContainer/SlowTimeButton" to="." method="_on_slow_time_button_pressed"]
 [connection signal="pressed" from="GunsButton" to="." method="_on_guns_button_pressed"]

@@ -27,13 +27,10 @@ func _on_health_component_player_died() -> void:
 	hide()
 	process_mode = Node.PROCESS_MODE_DISABLED
 	await get_tree().create_timer(0.5).timeout
-	var transitions = get_node_or_null("/root/Transitions")
-	if transitions:
-		transitions.circle_in()
-		await transitions.anim.animation_finished
-		await get_tree().create_timer(0.3).timeout
-		#get_tree().quit()
-		transitions.circle_out()
+	Transitions.circle_in()
+	await Transitions.anim.animation_finished
+	await get_tree().create_timer(0.3).timeout
+	get_tree().change_scene_to_file("res://scenes/game_over_screen.tscn")
 
 func _on_health_component_taking_damage() -> void:
 	Utils.screen_shake(0.1, 0.5, camera)
