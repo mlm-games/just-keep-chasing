@@ -44,16 +44,20 @@ const ENEMY_SCENE_PATH = "res://scenes/characters/enemy%d.tscn"
 @onready var enemy_spawn_timer: Timer = %EnemySpawnTimer
 @onready var powerup_spawn_timer: Timer = %PowerupSpawnTimer
 
-var enemy_spawn_type_range = Vector2(1, 2)
+var enemy_spawn_type_range = Vector2(1, 1)
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	spawn_enemy()
-	if hud.elapsed_time > 120:
+	if hud.elapsed_time == 120:
+		enemy_spawn_type_range.y = 2
+		enemy_spawn_timer.wait_time = 1.9
+	elif hud.elapsed_time == 240:
 		enemy_spawn_type_range.y = 3
+		enemy_spawn_timer.wait_time = 1.8
 	else:
-		enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.005, 0.1)
+		enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.1)
 
 func _on_powerup_spawn_timer_timeout() -> void:
 	if hud.elapsed_time > 1:

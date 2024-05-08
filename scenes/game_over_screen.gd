@@ -6,5 +6,4 @@ func _ready() -> void:
 	Transitions.circle_out()
 
 func _on_retry_button_pressed() -> void:
-	pass
 	get_tree().change_scene_to_file("res://scenes/menu/menu.tscn")

@@ -4,6 +4,7 @@
 class_name HUD extends CanvasLayer
 
 const TIMER_FORMAT = "%02d:%02d"
+var attached = false
 
 @onready var slow_time_button: Button = %SlowTimeButton
 @onready var screen_blast_button: Button = %ScreenBlastButton
@@ -51,3 +52,10 @@ func update_screen_blast_button() -> void:
 
 func update_heal_button() -> void:
 	heal_button.text = str(player.powerups[2])
+
+func _process(delta: float) -> void:
+	if elapsed_time == 300:
+		if !attached:
+			attached = true
+			var win_scene = load("res://scenes/win_screen.tscn").instantiate()
+			add_child(win_scene)
