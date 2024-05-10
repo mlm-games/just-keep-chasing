@@ -205,5 +205,3 @@ jobs:
           name: android-arm32
           path: builds/android-arm32
           retention-days: 1
-
-          PACKAGE: itch.zip
