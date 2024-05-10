@@ -163,7 +163,7 @@ jobs:
     name: Android ARM64 Export
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:4.1.1
+      image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -187,7 +187,7 @@ jobs:
     name: Android ARM32 Export
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:4.1.1
+      image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
         uses: actions/checkout@v1

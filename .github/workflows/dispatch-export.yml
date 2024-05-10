@@ -179,3 +179,51 @@ jobs:
           ITCH_GAME: ${{ secrets.ITCH_GAME }}
           ITCH_USER: ${{ secrets.ITCH_USER }}
           PACKAGE: itch.zip
+
+  export_android_arm64:
+    name: Android ARM64 Export
+    runs-on: ubuntu-20.04
+    if: ${{ github.event.inputs.export_platform == 'android' || github.event.inputs.export_platform == 'all' }}
+    container:
+      image: barichello/godot-ci:4.2.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+          mv -v /root/.local/share/godot/templates/* ~/.local/share/godot/export_templates/
+      - name: Android ARM64 Build
+        run: |
+          mkdir -v -p builds/android-arm64
+          godot --headless --export-release "Android ARM64" ./builds/android-arm64/$EXPORT_NAME.apk
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-arm64
+          path: builds/android-arm64
+          retention-days: 1
+
+  export_android_arm32:
+    name: Android ARM32 Export
+    runs-on: ubuntu-20.04
+    if: ${{ github.event.inputs.export_platform == 'android' || github.event.inputs.export_platform == 'all' }}
+    container:
+      image: barichello/godot-ci:4.2.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+          mv -v /root/.local/share/godot/templates/* ~/.local/share/godot/export_templates/
+      - name: Android ARM32 Build
+        run: |
+          mkdir -v -p builds/android-arm32
+          godot --headless --export-release "Android ARM32" ./builds/android-arm32/$EXPORT_NAME.apk
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-arm32
+          path: builds/android-arm32
+          retention-days: 1
