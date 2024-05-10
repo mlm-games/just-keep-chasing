@@ -57,7 +57,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-        lfs: true
+          lfs: true
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
@@ -94,7 +94,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-        lfs: true
+          lfs: true
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
@@ -140,7 +140,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-        lfs: true
+          lfs: true
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
@@ -176,7 +176,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-        lfs: true
+          lfs: true
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
@@ -202,7 +202,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-        lfs: true
+          lfs: true
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
