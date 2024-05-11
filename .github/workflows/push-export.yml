@@ -1,13 +1,11 @@
-name: "Push Export"
-on:
-  push:
-    branches:
-      - main
-      # - "feature/**"
+name: "godot-ci export"
+on: push
+
 env:
   GODOT_VERSION: 4.2.2
   EXPORT_NAME: godot-game-template
-  ITCH_IO: false #set to true if you want to enable automatic itch.io deploy
+  PROJECT_PATH: .
+  ITCH_IO: false # set to true if you want to enable automatic itch.io deploy
 
 jobs:
   export-windows:
@@ -23,22 +21,21 @@ jobs:
           lfs: true
       - name: Setup
         run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+          mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Windows Build
         run: |
-          mkdir -v -p builds/windows
-          godot --headless --export-release --verbose "Windows Desktop" ./builds/windows/$EXPORT_NAME.exe
+          mkdir -v -p build/windows
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: windows
-          path: builds/windows
-          retention-days: 1
+          path: build/windows
       - name: Zip Folder
-        run: zip -r itch.zip builds/windows
+        run: zip -r itch.zip build/windows
       - name: Deploy to itch.io
-        if: ${{ env.ITCH_IO=='true' }}
         uses: josephbmanley/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
@@ -60,22 +57,21 @@ jobs:
           lfs: true
       - name: Setup
         run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+          mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Linux Build
         run: |
-          mkdir -v -p builds/linux
-          godot --headless --export-release --verbose "Linux/X11" ./builds/linux/$EXPORT_NAME.x86_64
+          mkdir -v -p build/linux
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: linux
-          path: builds/linux
-          retention-days: 1
+          path: build/linux
       - name: Zip Folder
-        run: zip -r itch.zip builds/linux
+        run: zip -r itch.zip build/linux
       - name: Deploy to itch.io
-        if: ${{ env.ITCH_IO=='true' }}
         uses: josephbmanley/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
@@ -92,36 +88,34 @@ jobs:
       image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           lfs: true
       - name: Setup
         run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+          mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Web Build
         run: |
-          mkdir -v -p builds/web
-          godot --headless --export-release --verbose "Web" ./builds/web/index.html
+          mkdir -v -p build/web
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "HTML5" ../build/web/index.html
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: web
-          path: builds/web
-          retention-days: 1
-      # Installing rsync is needed in order to deploy to GitHub Pages. Without it, the build will fail.
+          path: build/web
       - name: Install rsync 📚
         run: |
           apt-get update && apt-get install -y rsync
       - name: Deploy to GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: builds/web # The folder the action should deploy.
+          branch: gh-pages
+          folder: build/web
       - name: Zip Folder
-        run: zip -r itch.zip builds/web
+        run: zip -r itch.zip build/web
       - name: Deploy to itch.io
-        if: ${{ env.ITCH_IO=='true' }}
         uses: josephbmanley/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
@@ -131,41 +125,41 @@ jobs:
           PACKAGE: itch.zip
 
   export-mac:
-    if: false # currently broken, see https://github.com/crystal-bit/godot-game-template/issues/82
+    if: false 
     name: Mac Export
     runs-on: ubuntu-20.04
     container:
       image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           lfs: true
       - name: Setup
         run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+          mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Mac Build
         run: |
-          mkdir -v -p builds/mac
-          godot --headless --export-release --verbose "macOS" ./builds/mac/$EXPORT_NAME.zip
+          mkdir -v -p build/mac
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Mac OSX" ../build/mac/$EXPORT_NAME.zip
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: mac
-          path: builds/mac
-          retention-days: 1
+          path: build/mac
       - name: Zip Folder
-        run: zip -r itch.zip builds/mac
+        run: zip -r itch.zip build/mac
       - name: Deploy to itch.io
-        if: ${{ env.ITCH_IO=='true' }}
         uses: josephbmanley/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           CHANNEL: mac
           ITCH_GAME: ${{ secrets.ITCH_GAME }}
           ITCH_USER: ${{ secrets.ITCH_USER }}
-  
+          PACKAGE: itch.zip
+
   export-android-arm64:
     if: false
     name: Android ARM64 Export
@@ -174,24 +168,38 @@ jobs:
       image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           lfs: true
       - name: Setup
         run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+          mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Android ARM64 Build
         run: |
-          mkdir -v -p builds/android-arm64
-          godot --headless --export-release --verbose "Android ARM64" ./builds/android-arm64/$EXPORT_NAME.apk
+          mkdir -v -p build/android-arm64
+          cd $PROJECT_PATH
+          sed -i "s|export/android/java_sdk_path=.*|export/android/java_sdk_path=\"${JAVA_HOME}\"|" $GODOT_CFG
+          sed -i -e 's:\(^.*android_sdk_path\)\s*=.*$:\1 = "$SDK$":' $GODOT_CFG
+          sed -i -e '/custom_template\/release/s|=.*|="$Godot$/bin/android_release.apk"|' export_presets.cfg
+          sed -i -e '/custom_template\/debug/s|=.*|="$Godot$/bin/android_debug.apk"|' export_presets.cfg
+          godot --headless --export-release --verbose "Android ARM64" ../build/android-arm64/$EXPORT_NAME.apk
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: android-arm64
-          path: builds/android-arm64
-          retention-days: 1
-  
+          path: build/android-arm64
+      - name: Zip Folder
+        run: zip -r itch.zip build/android-arm64
+      - name: Deploy to itch.io
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: android-arm64
+          ITCH_GAME: ${{ secrets.ITCH_GAME }}
+          ITCH_USER: ${{ secrets.ITCH_USER }}
+          PACKAGE: itch.zip
+
   export-android-arm32:
     if: false
     name: Android ARM32 Export
@@ -200,20 +208,74 @@ jobs:
       image: barichello/godot-ci:4.2.2
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           lfs: true
       - name: Setup
         run: |
-          mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+          mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Android ARM32 Build
         run: |
-          mkdir -v -p builds/android-arm32
-          godot --headless --export-release --verbose "Android ARM32" ./builds/android-arm32/$EXPORT_NAME.apk
+          mkdir -v -p build/android-arm32
+          cd $PROJECT_PATH
+          sed -i "s|export/android/java_sdk_path=.*|export/android/java_sdk_path=\"${JAVA_HOME}\"|" $GODOT_CFG
+          sed -i -e 's:\(^.*android_sdk_path\)\s*=.*$:\1 = "$SDK$":' $GODOT_CFG
+          sed -i -e '/custom_template\/release/s|=.*|="$Godot$/bin/android_release.apk"|' export_presets.cfg
+          sed -i -e '/custom_template\/debug/s|=.*|="$Godot$/bin/android_debug.apk"|' export_presets.cfg
+          godot --headless --export-release --verbose "Android ARM32" ../build/android-arm32/$EXPORT_NAME.apk
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: android-arm32
-          path: builds/android-arm32
-          retention-days: 1
+          path: build/android-arm32
+      - name: Zip Folder
+        run: zip -r itch.zip build/android-arm32
+      - name: Deploy to itch.io
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: android-arm32
+          ITCH_GAME: ${{ secrets.ITCH_GAME }}
+          ITCH_USER: ${{ secrets.ITCH_USER }}
+          PACKAGE: itch.zip
+
+  export-android:
+    if: false
+    name: Android Export
+    runs-on: ubuntu-20.04
+    container:
+      image: barichello/godot-ci:4.2.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: Android Build
+        run: |
+          mkdir -v -p build/android
+          cd $PROJECT_PATH
+          sed -i "s|export/android/java_sdk_path=.*|export/android/java_sdk_path=\"${JAVA_HOME}\"|" $GODOT_CFG
+          sed -i -e 's:\(^.*android_sdk_path\)\s*=.*$:\1 = "$SDK$":' $GODOT_CFG
+          sed -i -e '/custom_template\/release/s|=.*|="$Godot$/bin/android_release.apk"|' export_presets.cfg
+          sed -i -e '/custom_template\/debug/s|=.*|="$Godot$/bin/android_debug.apk"|' export_presets.cfg
+          godot --headless --export-release --verbose "Android" ../build/android/$EXPORT_NAME.apk
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android
+          path: build/android
+      - name: Zip Folder
+        run: zip -r itch.zip build/android
+      - name: Deploy to itch.io
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: android
+          ITCH_GAME: ${{ secrets.ITCH_GAME }}
+          ITCH_USER: ${{ secrets.ITCH_USER }}
+          PACKAGE: itch.zip
