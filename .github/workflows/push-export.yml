@@ -9,7 +9,7 @@ env:
 
 jobs:
   export-windows:
-    if: true
+    if: false
     name: Windows Export
     runs-on: ubuntu-20.04
     container:
@@ -45,7 +45,7 @@ jobs:
           PACKAGE: itch.zip
 
   export-linux:
-    if: true
+    if: false
     name: Linux Export
     runs-on: ubuntu-20.04
     container:
