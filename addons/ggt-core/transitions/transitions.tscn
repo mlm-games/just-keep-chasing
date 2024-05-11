@@ -412,7 +412,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
-[node name="PowerUpRect" type="ColorRect" parent="."]
+[node name="DeathRect" type="ColorRect" parent="."]
 modulate = Color(0, 0, 0, 1)
 material = SubResource("ShaderMaterial_om4aa")
 anchors_preset = 15

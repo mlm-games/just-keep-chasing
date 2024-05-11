@@ -24,11 +24,11 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
-          mv -v /root/.local/share/godot/templates/* ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Windows Build
         run: |
           mkdir -v -p builds/windows
-          godot --headless --export-release "Windows Desktop" ./builds/windows/$EXPORT_NAME.exe
+          godot --headless --export-release --verbose "Windows Desktop" ./builds/windows/$EXPORT_NAME.exe
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -61,11 +61,11 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
-          mv -v /root/.local/share/godot/templates/* ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Linux Build
         run: |
           mkdir -v -p builds/linux
-          godot -v --headless --export-release "Linux/X11" ./builds/linux/$EXPORT_NAME.x86_64
+          godot --headless --export-release --verbose "Linux/X11" ./builds/linux/$EXPORT_NAME.x86_64
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -98,11 +98,11 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
-          mv -v /root/.local/share/godot/templates/* ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Web Build
         run: |
           mkdir -v -p builds/web
-          godot -v --headless --export-release "Web" ./builds/web/index.html
+          godot --headless --export-release --verbose "Web" ./builds/web/index.html
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -144,11 +144,11 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
-          mv -v /root/.local/share/godot/templates/* ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Mac Build
         run: |
           mkdir -v -p builds/mac
-          godot --headless -v --export-release "macOS" ./builds/mac/$EXPORT_NAME.zip
+          godot --headless --export-release --verbose "macOS" ./builds/mac/$EXPORT_NAME.zip
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -180,11 +180,11 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
-          mv -v /root/.local/share/godot/templates/* ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Android ARM64 Build
         run: |
           mkdir -v -p builds/android-arm64
-          godot --headless --export-release "Android ARM64" ./builds/android-arm64/$EXPORT_NAME.apk
+          godot --headless --export-release --verbose "Android ARM64" ./builds/android-arm64/$EXPORT_NAME.apk
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -206,11 +206,11 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
-          mv -v /root/.local/share/godot/templates/* ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Android ARM32 Build
         run: |
           mkdir -v -p builds/android-arm32
-          godot --headless --export-release "Android ARM32" ./builds/android-arm32/$EXPORT_NAME.apk
+          godot --headless --export-release --verbose "Android ARM32" ./builds/android-arm32/$EXPORT_NAME.apk
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:

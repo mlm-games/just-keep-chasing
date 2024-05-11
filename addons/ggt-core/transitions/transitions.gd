@@ -89,7 +89,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 
 func _on_AnimationPlayer_animation_started(anim_name):
-	if anim_name == "transition-in":
+	if anim_name == "transition-in" or anim_name == "circle_in-anim":
 		emit_signal("transition_started", anim_name)
 		if config.pause_scenes_on_transitions:
 			get_tree().paused = true
