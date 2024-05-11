@@ -13,17 +13,17 @@ func _ready():
 	white_rect.visible = false
 	shader_rect.visible = false
 
-func change_scene_with_transition(anim_name: String,scene_path: String):
+func change_scene_with_transition(scene_path: String, anim_name: String = "fadeToBlack"):
 	transition(anim_name)
 	await screen_covered
 	get_tree().change_scene_to_file(scene_path)
 
-func change_scene_with_transition_packed(anim_name: String,scene: PackedScene):
+func change_scene_with_transition_packed(scene: PackedScene, anim_name: String = "fadeToBlack"):
 	transition(anim_name)
 	await screen_covered
 	get_tree().change_scene_to_packed(scene)
 
-func transition(anim_name):
+func transition(anim_name: String = "fadeToBlack"):
 	match anim_name:
 		"fadeToBlack":
 			transition_rect.visible = true
@@ -31,8 +31,8 @@ func transition(anim_name):
 		"slightFlash":
 			white_rect.visible = true
 			effects_player.play(anim_name)
-		"circle-in":
-			transition_rect.visible = true
+		"circleIn":
+			shader_rect.visible = true
 			transition_player.play(anim_name)
 
 
@@ -43,7 +43,6 @@ func _on_animation_player_animation_finished(anim_name):
 			transition_player.play("fadeToNormal")
 		"fadeToNormal":
 			transition_rect.hide()
-			get_tree().paused = false
 		"slightFlash":
 			white_rect.hide()
 		"circleIn":
@@ -51,16 +50,16 @@ func _on_animation_player_animation_finished(anim_name):
 			transition_player.play("circleOut")
 		"circleOut":
 			shader_rect.hide()
-			get_tree().paused = false
 
 func _input(_event: InputEvent) -> void:
 	if transition_player.is_playing():
 		get_viewport().set_input_as_handled()
 
-func screen_shake(duration: float, amplitude: float, camera: Camera2D):
+func screen_shake(duration: float, amplitude: float, camera: Camera2D = get_viewport().get_camera_2d()):
 	var tween = create_tween()
 	var original_position = camera.position
 	for i in range(int(duration * 60)):  # Assuming 60 FPS
-		var offset = Vector2(randf() * amplitude * 2 - amplitude, 0)
-		tween.tween_property(camera, "position", original_position + offset, 1.0 / 60)  # Tween for 1 frame
+		var camera_offset = Vector2(randf() * amplitude * 2 - amplitude, 0)
+		tween.tween_property(camera, "position", original_position + camera_offset, 1.0 / 60)  # Tween for 1 frame
 	tween.tween_property(camera, "position", original_position, 1.0 / 60)  # Return to original position
+

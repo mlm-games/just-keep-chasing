@@ -53,5 +53,6 @@ unique_name_in_owner = true
 
 [node name="Pistol" parent="." instance=ExtResource("3_al27l")]
 
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
 [connection signal="player_died" from="HealthComponent" to="." method="_on_health_component_player_died"]
 [connection signal="taking_damage" from="HealthComponent" to="." method="_on_health_component_taking_damage"]

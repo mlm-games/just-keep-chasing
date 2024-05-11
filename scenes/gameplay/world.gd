@@ -1,3 +1,4 @@
+#FIXME: Bullets hitting enemies multiple times give multiple coins (at the time of death only)
 #FIXME: Dropping all guns and pressing space
 #FIXME: Gun rotating weirdly
 #FIXME: Dropping weapons when there is no weapon in hand
@@ -57,7 +58,7 @@ func _on_enemy_spawn_timer_timeout() -> void:
 		enemy_spawn_type_range.y = 3
 		enemy_spawn_timer.wait_time = 1.8
 	else:
-		enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.1)
+		enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
 
 func _on_powerup_spawn_timer_timeout() -> void:
 	if hud.elapsed_time > 1:

@@ -17,6 +17,7 @@ var elapsed_time = 0
 func _on_timer_timeout() -> void:
 	elapsed_time += 1
 	update_timer_label()
+	check_win_condition()
 
 func update_timer_label() -> void:
 	@warning_ignore("integer_division")
@@ -53,9 +54,12 @@ func update_screen_blast_button() -> void:
 func update_heal_button() -> void:
 	heal_button.text = str(player.powerups[2])
 
-func _process(delta: float) -> void:
+func check_win_condition() -> void:
 	if elapsed_time == 300:
 		if !attached:
 			attached = true
+			ScreenEffects.transition("circleIn")
+			await ScreenEffects.transition_player.animation_finished
 			var win_scene = load("res://scenes/win_screen.tscn").instantiate()
 			add_child(win_scene)
+			ScreenEffects.transition("circleOut")

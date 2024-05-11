@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://p3ijv0nq3035"]
+[gd_scene load_steps=9 format=3 uid="uid://p3ijv0nq3035"]
 
 [ext_resource type="Script" path="res://scenes/menu/HUD.gd" id="1_ldp5k"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/stop_time_powerup_icon.png" id="2_vgwca"]
@@ -6,11 +6,16 @@
 [ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/heal_powerup.png" id="4_lcl0g"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="5_6lg4h"]
 [ext_resource type="Texture2D" uid="uid://bambopn2wqgdd" path="res://assets/sprites/Gun-sprite.png" id="6_e60p3"]
+[ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes/gameplay/pause-layer/pause-layer.tscn" id="7_avxcw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_co5na"]
 
 [node name="HUD" type="CanvasLayer" groups=["HUD"]]
+process_mode = 3
 script = ExtResource("1_ldp5k")
+
+[node name="PauseLayer" parent="." instance=ExtResource("7_avxcw")]
+layer = 2
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
@@ -104,6 +109,9 @@ size_flags_stretch_ratio = 9.28
 
 [node name="Virtual Joystick" parent="." instance=ExtResource("5_6lg4h")]
 visible = false
+offset_top = -257.0
+offset_right = 247.0
+offset_bottom = 0.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="Control/GunsButton" to="." method="_on_guns_button_pressed"]
