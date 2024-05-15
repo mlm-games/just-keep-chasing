@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://scenes/gameplay/world.gd" id="1_li0ht"]
 [ext_resource type="Resource" uid="uid://c3hm2e8euscc1" path="res://scenes/powerups/slow_time_powerup.tres" id="2_52a6m"]
 [ext_resource type="PackedScene" uid="uid://bk4fraugaremc" path="res://scenes/weapons-related/pistol.tscn" id="2_si53n"]
-[ext_resource type="Texture2D" uid="uid://byg2ihb05tf4" path="res://assets/og_background_pic.png" id="3_6lnso"]
 [ext_resource type="Resource" uid="uid://kcnotr5g6npm" path="res://scenes/powerups/screen_blast_powerup.tres" id="3_o14jb"]
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes/characters/player.tscn" id="3_vhnxw"]
 [ext_resource type="PackedScene" uid="uid://3gohb2peicf" path="res://scenes/weapons-related/machine_gun.tscn" id="3_yilem"]
@@ -18,6 +17,7 @@
 [ext_resource type="Script" path="res://scenes/powerups/powerup.gd" id="7_62e17"]
 [ext_resource type="PackedScene" uid="uid://dbggwktk75btw" path="res://scenes/weapons-related/pump_action_shotgun.tscn" id="7_orse0"]
 [ext_resource type="PackedScene" uid="uid://cme2e7v3yy8ol" path="res://scenes/powerups/slow_time_powerup.tscn" id="8_k2l23"]
+[ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/bg_main.png" id="18_r7okl"]
 
 [sub_resource type="Curve2D" id="Curve2D_xsefa"]
 _data = {
@@ -29,18 +29,6 @@ point_count = 5
 script = ExtResource("1_li0ht")
 guns = Array[PackedScene]([ExtResource("2_si53n"), ExtResource("3_yilem"), ExtResource("4_hdduu"), ExtResource("5_mr61w"), ExtResource("6_68gcx"), ExtResource("7_orse0")])
 powerups = Array[ExtResource("7_62e17")]([ExtResource("2_52a6m"), ExtResource("3_o14jb"), ExtResource("4_hp0xe")])
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -99
-
-[node name="BackgroundRect" type="TextureRect" parent="CanvasLayer"]
-modulate = Color(0.364706, 0.364706, 0.364706, 1)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_6lnso")
 
 [node name="HUD" parent="." instance=ExtResource("6_vltvt")]
 unique_name_in_owner = true
@@ -97,6 +85,33 @@ collision_mask = 4
 position = Vector2(309, 223)
 collision_layer = 0
 collision_mask = 2
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Control"]
+layer = -1
+follow_viewport_enabled = true
+
+[node name="BackgroundParallax2D" type="Parallax2D" parent="Control/CanvasLayer"]
+rotation = -6.28319
+scroll_scale = Vector2(0.625, 0.625)
+repeat_size = Vector2(1156, 896)
+
+[node name="BackgroundRect" type="TextureRect" parent="Control/CanvasLayer/BackgroundParallax2D"]
+modulate = Color(0.860369, 0.860369, 0.860369, 1)
+offset_left = 2.0
+offset_top = -189.0
+offset_right = 1179.0
+offset_bottom = 709.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("18_r7okl")
+stretch_mode = 1
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="timeout" from="PowerupSpawnTimer" to="." method="_on_powerup_spawn_timer_timeout"]

@@ -45,6 +45,7 @@ const ENEMY_SCENE_PATH = "res://scenes/characters/enemy%d.tscn"
 @onready var enemy_spawn_timer: Timer = %EnemySpawnTimer
 @onready var powerup_spawn_timer: Timer = %PowerupSpawnTimer
 
+var enemy_health_mult = 1 
 var enemy_spawn_type_range = Vector2(1, 1)
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
@@ -59,6 +60,8 @@ func _on_enemy_spawn_timer_timeout() -> void:
 		enemy_spawn_timer.wait_time = 1.8
 	else:
 		enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
+		if enemy_spawn_timer.wait_time == 0.5:
+			enemy_health_mult += 0.1
 
 func _on_powerup_spawn_timer_timeout() -> void:
 	if hud.elapsed_time > 1:
@@ -82,6 +85,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func spawn_enemy() -> void:
 	var enemy_scene = load(ENEMY_SCENE_PATH % randi_range(enemy_spawn_type_range.x, enemy_spawn_type_range.y))
 	var enemy_instance = enemy_scene.instantiate()
+	enemy_instance.get_node("HealthComponent").max_health *= enemy_health_mult
 	out_of_view_spawn_location.progress_ratio = randf()
 	enemy_instance.global_position = out_of_view_spawn_location.global_position
 	enemies_node.add_child(enemy_instance)
