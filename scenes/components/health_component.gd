@@ -1,5 +1,3 @@
-#hack: update health bar in hud
-
 class_name HealthComponent extends Node2D
 
 signal player_died

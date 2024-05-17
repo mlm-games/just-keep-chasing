@@ -15,6 +15,10 @@ var powerups = {
 func _physics_process(_delta):
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	velocity = direction.normalized() * Vector2(speed, speed)
+	if velocity.x > 0:
+		%Sprite2D.flip_h = true
+	elif velocity.x < 0:
+		%Sprite2D.flip_h = false
 	move_and_slide()
 
 func _on_health_component_player_died() -> void:
