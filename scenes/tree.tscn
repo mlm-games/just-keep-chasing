@@ -1,6 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://byks0f5xqnv20"]
 
-[ext_resource type="Texture2D" uid="uid://1by2pj6y114l" path="res://assets/tree.png" id="1_mx0k4"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_mifu7"]
+size = Vector2(100, 100)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m0n0c"]
 radius = 14.0
@@ -10,7 +11,7 @@ height = 36.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.805882, 0.781395)
-texture = ExtResource("1_mx0k4")
+texture = SubResource("PlaceholderTexture2D_mifu7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 123)

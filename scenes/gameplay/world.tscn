@@ -98,17 +98,13 @@ layer = -1
 follow_viewport_enabled = true
 
 [node name="BackgroundParallax2D" type="Parallax2D" parent="Control/CanvasLayer"]
-rotation = -6.28319
 scroll_scale = Vector2(0.625, 0.625)
-repeat_size = Vector2(1156, 896)
-autoscroll = Vector2(-300, -100)
+repeat_size = Vector2(1152, 896)
 
 [node name="BackgroundRect" type="TextureRect" parent="Control/CanvasLayer/BackgroundParallax2D"]
-modulate = Color(0.860369, 0.860369, 0.860369, 1)
-offset_left = 2.0
-offset_top = -189.0
-offset_right = 1179.0
-offset_bottom = 709.0
+modulate = Color(0.858824, 0.858824, 0.858824, 0.498039)
+offset_right = 1152.0
+offset_bottom = 896.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("18_r7okl")

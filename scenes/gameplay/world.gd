@@ -23,6 +23,7 @@
 #TODO: Add a upgrade that makes you damage enemies on contact
 #TODO: Change change_scene to file to packed
 #TODO: Add a WorldEnvironiment node to make the colors look good against the parallax image
+#TODO: Shotgun, time and freq should match 1 cycle of screen left and right like in the vid (for screenshake)
 
 #Example: 
 #initial_speed = -300
