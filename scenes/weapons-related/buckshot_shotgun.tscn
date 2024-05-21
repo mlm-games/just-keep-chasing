@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/weapons-related/buckshot_shotgun.gd" id="1_q3gqq"]
 [ext_resource type="Resource" uid="uid://bp33e7dwodxsb" path="res://scenes/weapons-related/buckshot.tres" id="2_77tjx"]
-[ext_resource type="Texture2D" uid="uid://dccuva7i61u0n" path="res://assets/double_barrel_shotgun.png" id="3_gocsp"]
+[ext_resource type="Texture2D" uid="uid://bjpnnh3ql7pt5" path="res://assets/sprites/mini-buck-shotgun.png" id="3_ag6k1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
 radius = 600.053
@@ -71,16 +71,15 @@ libraries = {
 
 [node name="Sprite2D" type="Sprite2D" parent="PivotPoint"]
 unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.309804)
 texture_filter = 1
-position = Vector2(46.7991, 15.1169)
+position = Vector2(73.2997, 15.1177)
 rotation = 12.5664
-scale = Vector2(0.0506511, 0.1)
-texture = ExtResource("3_gocsp")
+scale = Vector2(0.10241, 0.1)
+texture = ExtResource("3_ag6k1")
 
 [node name="BulletSpawnPoint" type="Marker2D" parent="PivotPoint/Sprite2D"]
 unique_name_in_owner = true
-position = Vector2(773.938, -41.1806)
+position = Vector2(407.188, -61.1888)
 
 [node name="ReloadTimer" type="Timer" parent="."]
 unique_name_in_owner = true

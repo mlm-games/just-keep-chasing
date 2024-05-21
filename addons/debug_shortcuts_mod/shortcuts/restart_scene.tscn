@@ -9,7 +9,8 @@ func _unhandled_input(event):
 		if event.is_action_pressed(\"debug_restart_game\"):
 			if event.ctrl_pressed:
 				ScreenEffects.change_scene_with_transition(\"res://scenes/menu/menu.tscn\")
-			get_tree().reload_current_scene()
+			else:
+				get_tree().reload_current_scene()
 "
 
 [node name="RestartCurrentScene" type="Node"]

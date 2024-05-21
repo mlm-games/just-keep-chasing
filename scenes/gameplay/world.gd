@@ -22,6 +22,7 @@
 #TODO: Add a powerup that makes the player invincible for a certain amount of time
 #TODO: Add a upgrade that makes you damage enemies on contact
 #TODO: Change change_scene to file to packed
+#TODO: Add a WorldEnvironiment node to make the colors look good against the parallax image
 
 #Example: 
 #initial_speed = -300
