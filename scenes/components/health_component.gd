@@ -6,7 +6,7 @@ signal health_changed(new_health: float)
 
 @export var max_health: float 
 var current_health: float
-
+var dying: bool = false
 
 func _ready() -> void:
 	current_health = max_health
@@ -38,7 +38,8 @@ func check_health() -> void:
 	if current_health <= 0:
 		if get_parent().is_in_group("Player"):
 			player_died.emit()
-		if get_parent().is_in_group("Enemies"):
+		if get_parent().is_in_group("Enemies") and not dying:
+			dying = true
 			GameState.research_points_count += get_parent().research_point_value
 			print(GameState.research_points_count)
 			get_parent().queue_free()

@@ -1,29 +1,26 @@
 #FIXME: Bullets hitting enemies multiple times give multiple coins (at the time of death only)
-#FIXME: Dropping all guns and pressing space
 #FIXME: Gun rotating weirdly
-#FIXME: Dropping weapons when there is no weapon in hand
 #HACK: Use prophyliptics to make anti-bodies/ buy anti-bodies?
 #hack: the final secret boss is the rogue multiplying xenobot (like how cancer cells are just rogue human cells) (could make a lore story based on this...)
 #HACK: The guns are similar to items in godotneers data model vid, can make an icon also for touchscreenbutton/changeGunButton
 #hack: (not imp due to diff bullet speeds) Changing bullet icons like nuclear throne will feel like bullets are doing different dmg
 #TODO: change the name to some virus related thingy
-#TODO: Collision bouncing in the direction of collision direction for specific bullets?
+#hack: Collision bouncing in the direction of collision direction for specific bullets?
 #heartbeast video for making the sawblades balloon game (Collision bouncing in the direction of collision direction)
 #Powerups only in singleplayer
-#HACK: create a class firespeedtimer which is extended so that in ready fn nothing needs to be repeated by default
 #TODO: Add the description based on u being an antibody trying to fight off the rampant bacteria and viruses (has a lot of potential for different diseases, in cancer mode u fight other antibodies as a nanobot trying to stop them from killing the wrong bacteria? (i dont properly know how cancer works)
 # when new difficulty is unlocked for all kinds of viruses, achievement can be like: little did he know, the stronger ones were good at hiding 
 #HACK:A gamemode, You can only move a certain amt in a certain amt of time, (experiment until its fun)
 #HACK: The powerup has a initial velocity to the opposite direction of the player and it then accelerates toward the player upto a limit speed.
 #HACK: Player's gun doesnt slow down on slow_time powerup upgraded
 #HACK: For collectibles, you can do the collection like how vampire survivors does it, call a state change fron idle to follow and let it get attracted at a certain speed after moving away for a second
-#TODO: Replace all 4 gun.gd, pistol.gd, machinegun.gd stuff (or 3)
-#TODO: Use inherited scenes for powerups.
+#hack: Use inherited scenes for powerups.
 #TODO: Add a powerup that makes the player invincible for a certain amount of time
 #TODO: Add a upgrade that makes you damage enemies on contact
 #TODO: Change change_scene to file to packed
 #TODO: Add a WorldEnvironiment node to make the colors look good against the parallax image
 #TODO: Shotgun, time and freq should match 1 cycle of screen left and right like in the vid (for screenshake)
+#TODO: Slight zoom-in when collecting a powerup, zoom-out after collection, (zoom in screeneffects)
 
 #Example: 
 #initial_speed = -300
@@ -108,20 +105,23 @@ func get_random_powerup() -> Powerup:
 	return powerup
 
 func switch_weapon() -> void:
-	current_gun_index = (current_gun_index + 1) % guns.size()
-	get_tree().call_group("Weapons", "queue_free")
-	var gun_instance = guns[current_gun_index].instantiate()
-	player.add_child(gun_instance)
+	if guns.size() != 0:
+		current_gun_index = (current_gun_index + 1) % guns.size()
+		get_tree().call_group("Weapons", "queue_free")
+		var gun_instance = guns[current_gun_index].instantiate()
+		player.add_child(gun_instance)
 
 func throw_weapon() -> void:
-	var thrown_weapon = get_tree().get_first_node_in_group("Weapons")
-	var thrown_weapon_scene = guns[current_gun_index]
-	if thrown_weapon:
-		guns.erase(thrown_weapon_scene)
-	thrown_guns.append(thrown_weapon_scene)
-	thrown_weapon.reparent(self)
-	thrown_weapon.remove_from_group("Weapons")
-	thrown_weapon.add_to_group("Dropped Weapons")
+	if guns.size() != 0:
+		var thrown_weapon = get_tree().get_first_node_in_group("Weapons")
+		var thrown_weapon_scene = guns[current_gun_index]
+		if thrown_weapon:
+			guns.erase(thrown_weapon_scene)
+		thrown_guns.append(thrown_weapon_scene)
+		thrown_weapon.reparent(self)
+		thrown_weapon.remove_from_group("Weapons")
+		thrown_weapon.add_to_group("Dropped Weapons")
+		switch_weapon()
 
 func pick_up_weapon() -> void:
 	if thrown_guns.size() > 0:

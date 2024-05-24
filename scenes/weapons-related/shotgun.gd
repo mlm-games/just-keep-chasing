@@ -1,8 +1,8 @@
-class_name Shotgun extends BaseWeapon
+class_name Shotgun extends BaseGun
 
 @export var pellets_per_shot: int 
 @export var pellet_spread: float
-@export var screen_shake_duration : float = 0.1
+@export var screen_shake_frequency : float = 10
 @export var screen_shake_amplitude : float = 0.5
 
 func spawn_bullet() -> void:
@@ -13,7 +13,7 @@ func spawn_bullet() -> void:
 			pellet_instance.global_rotation_degrees = _bullet_spawn_point.global_rotation_degrees + randf_range(-pellet_spread, pellet_spread)
 			get_tree().current_scene.add_child(pellet_instance)
 		ammo -= 1 
-		ScreenEffects.screen_shake(screen_shake_duration, screen_shake_amplitude) 
+		ScreenEffects.smooth_screen_shake(screen_shake_frequency, screen_shake_amplitude) 
 		if ammo == 0:
 			reload()
 

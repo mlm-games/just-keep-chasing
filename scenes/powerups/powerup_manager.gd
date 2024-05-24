@@ -1,4 +1,4 @@
-extends Area2D
+extends PickUp
 @export var powerup_type : int
 
 func _on_body_entered(body: Node2D) -> void:

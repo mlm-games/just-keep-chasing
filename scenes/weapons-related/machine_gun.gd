@@ -1,1 +1,1 @@
-class_name MachineGun extends BaseWeapon
+class_name MachineGun extends BaseGun

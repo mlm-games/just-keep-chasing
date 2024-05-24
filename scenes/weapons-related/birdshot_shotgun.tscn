@@ -51,6 +51,7 @@ collision_mask = 4
 script = ExtResource("1_b880i")
 pellets_per_shot = 15
 pellet_spread = 45.0
+screen_shake_frequency = 100.0
 screen_shake_amplitude = 0.25
 bullet = ExtResource("2_xoaa2")
 reload_time = 0.5
