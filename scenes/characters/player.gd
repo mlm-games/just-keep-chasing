@@ -25,27 +25,27 @@ func _on_health_component_player_died() -> void:
 	hide()
 	process_mode = Node.PROCESS_MODE_DISABLED
 	await get_tree().create_timer(0.5).timeout
-	ScreenEffects.change_scene_with_transition("res://scenes/game_over_screen.tscn", "circleIn")
+	ScreenEffects.change_scene_with_transition("res://scenes/UI/game_over_screen.tscn", "circleIn")
 
 func _on_health_component_taking_damage() -> void:
 	ScreenEffects.screen_shake(0.1, 0.5, camera)
 
-func on_save_game(saved_data: Array[SaveData]):
-	if health_component.is_alive():
-		var my_data = CharacterSaveData.new()
-		my_data.position = global_position
-		my_data.current_health = health_component.current_health
-		saved_data.append(my_data)
-
-func before_load_game():
-	if health_component.is_alive():
-		get_parent().remove_child(self)
-		queue_free()
-
-func on_load_game(saved_data: CharacterSaveData):
-	if saved_data:
-		global_position = saved_data.global_position
-		health_component.current_health = saved_data.current_health
+#func on_save_game(saved_data: Array[SaveData]):
+	#if health_component.is_alive():
+		#var my_data = CharacterSaveData.new()
+		#my_data.position = global_position
+		#my_data.current_health = health_component.current_health
+		#saved_data.append(my_data)
+#
+#func before_load_game():
+	#if health_component.is_alive():
+		#get_parent().remove_child(self)
+		#queue_free()
+#
+#func on_load_game(saved_data: CharacterSaveData):
+	#if saved_data:
+		#global_position = saved_data.global_position
+		#health_component.current_health = saved_data.current_health
 
 func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1

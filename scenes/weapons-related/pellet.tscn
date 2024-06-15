@@ -1,8 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bgfkmosx2fllk"]
 
 [ext_resource type="Script" path="res://scenes/weapons-related/pellet.gd" id="1_i3r3f"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_iueja"]
+[ext_resource type="Texture2D" uid="uid://bogbptl8oh8pv" path="res://assets/sprites/shotgun-shell.png" id="2_xuxft"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2ap0v"]
 radius = 9.84886
@@ -18,9 +17,10 @@ pellet_damage = 2.0
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.838897, 0.838897, 0.838897, 1)
 position = Vector2(0, 2.38419e-07)
-scale = Vector2(16, 10)
-texture = SubResource("PlaceholderTexture2D_iueja")
+scale = Vector2(0.07, 0.24)
+texture = ExtResource("2_xuxft")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_2ap0v")

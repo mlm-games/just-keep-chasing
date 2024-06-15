@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://24v2w4t8hgkl"]
+[gd_scene load_steps=5 format=3 uid="uid://24v2w4t8hgkl"]
 
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="1_etbkl"]
+[ext_resource type="Script" path="res://scenes/UI/upgrades_layer.gd" id="1_f2f6q"]
 [ext_resource type="LabelSettings" uid="uid://c7d047estc02" path="res://resources/theme/label-settings-default.tres" id="2_fr6u5"]
-[ext_resource type="PackedScene" uid="uid://dq2rptl6lv3tc" path="res://item_slot.tscn" id="3_sx6la"]
+[ext_resource type="PackedScene" uid="uid://dq2rptl6lv3tc" path="res://scenes/UI/upgrade_slot.tscn" id="3_sx6la"]
 
 [node name="Upgrades" type="CanvasLayer"]
+script = ExtResource("1_f2f6q")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -59,15 +61,19 @@ theme_override_constants/separation = 100
 alignment = 1
 
 [node name="SpacerControl2" type="Control" parent="Control/VBoxContainer/OptionsContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="MarginContainer" parent="Control/VBoxContainer/OptionsContainer" instance=ExtResource("3_sx6la")]
+[node name="UpgradeContainer1" parent="Control/VBoxContainer/OptionsContainer" instance=ExtResource("3_sx6la")]
+visible = false
 layout_mode = 2
 
-[node name="MarginContainer2" parent="Control/VBoxContainer/OptionsContainer" instance=ExtResource("3_sx6la")]
+[node name="UpgradeContainer2" parent="Control/VBoxContainer/OptionsContainer" instance=ExtResource("3_sx6la")]
+visible = false
 layout_mode = 2
 
-[node name="MarginContainer3" parent="Control/VBoxContainer/OptionsContainer" instance=ExtResource("3_sx6la")]
+[node name="UpgradeContainer3" parent="Control/VBoxContainer/OptionsContainer" instance=ExtResource("3_sx6la")]
+visible = false
 layout_mode = 2
 
 [node name="SpacerControl" type="Control" parent="Control/VBoxContainer/OptionsContainer"]

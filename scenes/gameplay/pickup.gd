@@ -10,8 +10,6 @@ var _current_speed: = 500.0
 # Have to use data models
 @onready var sprite 
 
-func _ready() -> void:
-	monitorable = false
 
 func set_texture(texture: Resource) -> void:
 	if sprite != null:

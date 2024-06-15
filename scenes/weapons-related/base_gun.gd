@@ -74,4 +74,3 @@ func _on_fire_rate_timer_timeout() -> void:
 		spawn_bullet()
 		if ammo <= 0:
 			reload()
-

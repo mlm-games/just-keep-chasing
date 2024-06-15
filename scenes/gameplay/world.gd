@@ -1,4 +1,3 @@
-#FIXME: Bullets hitting enemies multiple times give multiple coins (at the time of death only)
 #FIXME: Gun rotating weirdly
 #HACK: Use prophyliptics to make anti-bodies/ buy anti-bodies?
 #hack: the final secret boss is the rogue multiplying xenobot (like how cancer cells are just rogue human cells) (could make a lore story based on this...)
@@ -19,9 +18,8 @@
 #TODO: Add a upgrade that makes you damage enemies on contact
 #TODO: Change change_scene to file to packed
 #TODO: Add a WorldEnvironiment node to make the colors look good against the parallax image
-#TODO: Shotgun, time and freq should match 1 cycle of screen left and right like in the vid (for screenshake)
-#TODO: Slight zoom-in when collecting a powerup, zoom-out after collection, (zoom in screeneffects)
-
+#TODO: Slight zoom-in when collecting a upgrade, zoom-out after collection, (zoom in screeneffects)
+#hack: if memory available (>90%), let upgrades layer stay, or else free from memory.
 #Example: 
 #initial_speed = -300
 #attraction_velocity: Vector2
@@ -74,12 +72,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		throw_weapon()
 	elif event.is_action_pressed("pick_up_weapon"):
 		pick_up_weapon()
-	elif event.is_action_pressed("slow_time_powerup"):
-		use_powerup(GameState.PowerupType.SLOW_TIME)
-	elif event.is_action_pressed("screen_blast_powerup"):
-		use_powerup(GameState.PowerupType.SCREEN_BLAST)
-	elif event.is_action_pressed("heal"):
-		use_powerup(GameState.PowerupType.HEAL)
 
 func spawn_enemy() -> void:
 	var enemy_scene = load(ENEMY_SCENE_PATH % randi_range(enemy_spawn_type_range.x, enemy_spawn_type_range.y))
@@ -152,3 +144,4 @@ func use_powerup(powerup_type: int) -> void:
 				player.powerups[2] -= 1
 				player.health_component.heal(20)
 	update_hud()
+#TODO: add upgrade layer spawner

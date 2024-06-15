@@ -10,7 +10,7 @@ var attached = false
 @onready var screen_blast_button: Button = %ScreenBlastButton
 @onready var heal_button: Button = %HealButton
 @onready var timer_label: Label = %TimerLabel
-@onready var player = get_tree().get_first_node_in_group("Player")
+@onready var player : Player = get_tree().get_first_node_in_group("Player")
 
 var elapsed_time = 0
 
@@ -60,6 +60,6 @@ func check_win_condition() -> void:
 			attached = true
 			ScreenEffects.transition("circleIn")
 			await ScreenEffects.transition_player.animation_finished
-			var win_scene = load("res://scenes/win_screen.tscn").instantiate()
+			var win_scene = load("res://scenes/UI/win_screen.tscn").instantiate()
 			add_child(win_scene)
 			ScreenEffects.transition("circleOut")

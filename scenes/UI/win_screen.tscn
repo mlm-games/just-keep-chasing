@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://degok78oygxw3"]
 
-[ext_resource type="Script" path="res://scenes/win_screen.gd" id="1_8e61f"]
+[ext_resource type="Script" path="res://scenes/UI/win_screen.gd" id="1_8e61f"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="2_dfho5"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_rkvi0"]
@@ -22,7 +22,7 @@ grow_vertical = 2
 script = ExtResource("1_8e61f")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(0, 0, 0, 0.345098)
+modulate = Color(0, 0, 0, 0.541176)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

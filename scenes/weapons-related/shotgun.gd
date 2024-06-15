@@ -16,4 +16,3 @@ func spawn_bullet() -> void:
 		ScreenEffects.smooth_screen_shake(screen_shake_frequency, screen_shake_amplitude) 
 		if ammo == 0:
 			reload()
-

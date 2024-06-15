@@ -9,6 +9,3 @@ func _on_body_entered(body: Node2D) -> void:
 func collect_powerup(player: Player) -> void:
 	player.powerup_collected(powerup_type)
 		# Additional powerup collection logic or effects can be added here
-
-
-

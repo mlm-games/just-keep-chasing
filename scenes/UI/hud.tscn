@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://p3ijv0nq3035"]
+[gd_scene load_steps=15 format=3 uid="uid://p3ijv0nq3035"]
 
-[ext_resource type="Script" path="res://scenes/menu/HUD.gd" id="1_ldp5k"]
+[ext_resource type="Script" path="res://scenes/UI/HUD.gd" id="1_ldp5k"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/stop_time_powerup_icon.png" id="2_vgwca"]
 [ext_resource type="Texture2D" uid="uid://ddkwkn3fyh6qq" path="res://assets/screen_blast_powerup_icon.png" id="3_ytqdl"]
 [ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/heal_powerup.png" id="4_lcl0g"]
@@ -10,6 +10,24 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_co5na"]
 
+[sub_resource type="InputEventAction" id="InputEventAction_p3uv4"]
+action = &"heal"
+
+[sub_resource type="Shortcut" id="Shortcut_obu6i"]
+events = [SubResource("InputEventAction_p3uv4")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_jrr4l"]
+action = &"screen_blast_powerup"
+
+[sub_resource type="Shortcut" id="Shortcut_ev6n8"]
+events = [SubResource("InputEventAction_jrr4l")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_hq20a"]
+action = &"slow_time_powerup"
+
+[sub_resource type="Shortcut" id="Shortcut_gkms4"]
+events = [SubResource("InputEventAction_hq20a")]
+
 [node name="HUD" type="CanvasLayer" groups=["HUD"]]
 process_mode = 3
 script = ExtResource("1_ldp5k")
@@ -18,6 +36,7 @@ script = ExtResource("1_ldp5k")
 layer = 2
 
 [node name="Timer" type="Timer" parent="."]
+process_mode = 1
 autostart = true
 
 [node name="Control" type="Control" parent="."]
@@ -74,6 +93,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
+shortcut = SubResource("Shortcut_obu6i")
 text = "0"
 icon = ExtResource("4_lcl0g")
 icon_alignment = 1
@@ -85,6 +105,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
+shortcut = SubResource("Shortcut_ev6n8")
 text = "0"
 icon = ExtResource("3_ytqdl")
 icon_alignment = 1
@@ -96,6 +117,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
+shortcut = SubResource("Shortcut_gkms4")
 text = "0"
 icon = ExtResource("2_vgwca")
 icon_alignment = 1
