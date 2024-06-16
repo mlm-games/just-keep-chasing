@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmw0epi5dsppp"
-path="res://.godot/imported/heal_powerup.png-9572dfb71fa4e28a34e7edfbbe1f2011.ctex"
+uid="uid://c36ulwt7082av"
+path="res://.godot/imported/birdshot_shotgun.png-246f65e6acdce330d1ce8eb44b272ca6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/heal_powerup.png"
-dest_files=["res://.godot/imported/heal_powerup.png-9572dfb71fa4e28a34e7edfbbe1f2011.ctex"]
+source_file="res://assets/sprites/birdshot_shotgun.png"
+dest_files=["res://.godot/imported/birdshot_shotgun.png-246f65e6acdce330d1ce8eb44b272ca6.ctex"]
 
 [params]
 

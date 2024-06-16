@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byg2ihb05tf4"
-path="res://.godot/imported/og_background_pic.png-5909e478470362371311440427097aa6.ctex"
+uid="uid://dmw0epi5dsppp"
+path="res://.godot/imported/heal_powerup.png-d7894d2c44e82d4b84c4e40aa3d3c796.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/og_background_pic.png"
-dest_files=["res://.godot/imported/og_background_pic.png-5909e478470362371311440427097aa6.ctex"]
+source_file="res://assets/sprites/heal_powerup.png"
+dest_files=["res://.godot/imported/heal_powerup.png-d7894d2c44e82d4b84c4e40aa3d3c796.ctex"]
 
 [params]
 

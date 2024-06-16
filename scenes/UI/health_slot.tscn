@@ -1,8 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bv8js3tpt7pu"]
+[gd_scene load_steps=5 format=3 uid="uid://bv8js3tpt7pu"]
 
 [ext_resource type="PackedScene" uid="uid://dq2rptl6lv3tc" path="res://scenes/UI/upgrade_slot.tscn" id="1_mcjub"]
+[ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="2_bmtdx"]
+[ext_resource type="Resource" uid="uid://cprp5hhsgf30d" path="res://resources/default_stat_modifiers/health.tres" id="3_egnjw"]
+[ext_resource type="Script" path="res://resources/default_stat_modifiers/stats_modifier_base.gd" id="3_fkfaa"]
 
 [node name="SlotContainer" instance=ExtResource("1_mcjub")]
+theme = ExtResource("2_bmtdx")
+stats = Array[ExtResource("3_fkfaa")]([ExtResource("3_egnjw")])
 
 [node name="TextureRect" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer" index="0"]
 modulate = Color(1, 1, 0.282353, 1)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6df1pxb6h2bi"
-path="res://.godot/imported/player.png-be2216fcaabb5c62aa2466cd9a5726a8.ctex"
+uid="uid://dccuva7i61u0n"
+path="res://.godot/imported/double_barrel_shotgun.png-2f84eb260201d6df0729f71b54473dde.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player.png"
-dest_files=["res://.godot/imported/player.png-be2216fcaabb5c62aa2466cd9a5726a8.ctex"]
+source_file="res://assets/sprites/double_barrel_shotgun.png"
+dest_files=["res://.godot/imported/double_barrel_shotgun.png-2f84eb260201d6df0729f71b54473dde.ctex"]
 
 [params]
 

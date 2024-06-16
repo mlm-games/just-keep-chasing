@@ -12,7 +12,7 @@ enum PowerupType {
 var player_health: float = 100.0
 var player_max_health: float = 100.0
 var player_score: int = 0
-var player_lives: int = 3
+var player_lives: int = 1
 
 # Game-related properties
 var research_points_count : int = 0

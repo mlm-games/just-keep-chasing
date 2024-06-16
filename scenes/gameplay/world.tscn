@@ -17,7 +17,7 @@
 [ext_resource type="Script" path="res://scenes/powerups/powerup.gd" id="7_62e17"]
 [ext_resource type="PackedScene" uid="uid://dbggwktk75btw" path="res://scenes/weapons-related/pump_action_shotgun.tscn" id="7_orse0"]
 [ext_resource type="PackedScene" uid="uid://cme2e7v3yy8ol" path="res://scenes/powerups/slow_time_powerup.tscn" id="8_k2l23"]
-[ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/bg_main.png" id="18_r7okl"]
+[ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="18_r7okl"]
 
 [sub_resource type="Curve2D" id="Curve2D_xsefa"]
 _data = {

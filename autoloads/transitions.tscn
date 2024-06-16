@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://c7j5jqynag4uw"]
 
 [ext_resource type="Script" path="res://autoloads/transitions.gd" id="1_mlxrt"]
-[ext_resource type="Shader" path="res://resources/circletransition.gdshader" id="2_bdbvc"]
+[ext_resource type="Shader" path="res://resources/shaders/circletransition.gdshader" id="2_bdbvc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6dxx3"]
 
