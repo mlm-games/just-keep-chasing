@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://byks0f5xqnv20"]
+
+[ext_resource type="Texture2D" uid="uid://diwwf4nywvgku" path="res://assets/sprites/cell-blockade.png" id="1_delmf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m0n0c"]
+radius = 33.0
+height = 68.0
+
+[node name="Blockade" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("1_delmf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_m0n0c")

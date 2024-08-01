@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://dwyjyfw01chxg"]
+
+[ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/sprites/heal_powerup.png" id="1_h1mls"]
+[ext_resource type="Script" path="res://resources/augments/augmentations.gd" id="1_ydscn"]
+[ext_resource type="Script" path="res://resources/default_stat_modifiers/stats_modifier_base.gd" id="3_c1bpb"]
+[ext_resource type="Resource" uid="uid://cprp5hhsgf30d" path="res://resources/default_stat_modifiers/health.tres" id="4_cubj0"]
+
+[resource]
+script = ExtResource("1_ydscn")
+augment_icon = ExtResource("1_h1mls")
+augment_price = 20
+augment_id = "heal_and_health"
+stats_to_modify = Array[ExtResource("3_c1bpb")]([ExtResource("4_cubj0")])

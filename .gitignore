@@ -17,4 +17,6 @@ builds/**/*
 
 # sh files
 release.sh
-personal/
+
+# Other offline folders
+temp/

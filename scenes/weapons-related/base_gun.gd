@@ -1,4 +1,4 @@
-class_name BaseWeapon extends Area2D
+class_name BaseGun extends Area2D
 
 @export var bullet: Projectiles
 @export var reload_time: float
@@ -6,7 +6,7 @@ class_name BaseWeapon extends Area2D
 @export var ammo: int = max_ammo
 @export var targeting_range: float
 @export var fire_rate: float
-
+#@export var recoil_dist: float = 5
 
 @onready var _bullet_spawn_point: Marker2D = %BulletSpawnPoint
 @onready var _reload_timer: Timer = %ReloadTimer
@@ -74,4 +74,3 @@ func _on_fire_rate_timer_timeout() -> void:
 		spawn_bullet()
 		if ammo <= 0:
 			reload()
-

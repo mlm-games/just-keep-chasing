@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Powerup" load_steps=4 format=3 uid="uid://kcnotr5g6npm"]
 
 [ext_resource type="PackedScene" uid="uid://1qfj5ki5rdpb" path="res://scenes/powerups/screen_blast_powerup.tscn" id="1_dsiv5"]
-[ext_resource type="Texture2D" uid="uid://ddkwkn3fyh6qq" path="res://assets/screen_blast_powerup_icon.png" id="1_mfa1o"]
+[ext_resource type="Texture2D" uid="uid://ddkwkn3fyh6qq" path="res://assets/sprites/screen_blast_powerup_icon.png" id="1_mfa1o"]
 [ext_resource type="Script" path="res://scenes/powerups/powerup.gd" id="1_vpbps"]
 
 [resource]

@@ -1,3 +1,4 @@
+#FIXME: Gives multiple points when multiple bullets hit at same time
 #Hack: Slow time powerup use using GammeState.halt
 #Hack: modify line 93 to get collectRadius collisionshape node so that it can be modified to increase range
 class_name ResearchPoints extends Node2D

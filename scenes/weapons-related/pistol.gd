@@ -1,3 +1,1 @@
-class_name Pistol extends BaseWeapon
-
-
+class_name Pistol extends BaseGun

@@ -15,43 +15,42 @@ var powerups = {
 func _physics_process(_delta):
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	velocity = direction.normalized() * Vector2(speed, speed)
-		
-	update_progress_bar()
-		
+	if velocity.x > 0:
+		%Sprite2D.flip_h = true
+	elif velocity.x < 0:
+		%Sprite2D.flip_h = false
 	move_and_slide()
-
-func update_progress_bar() -> void:
-	progress_bar.value = health_component.current_health
 
 func _on_health_component_player_died() -> void:
 	hide()
 	process_mode = Node.PROCESS_MODE_DISABLED
 	await get_tree().create_timer(0.5).timeout
-	Transitions.circle_in()
-	await Transitions.anim.animation_finished
-	await get_tree().create_timer(0.3).timeout
-	get_tree().change_scene_to_file("res://scenes/game_over_screen.tscn")
+	ScreenEffects.change_scene_with_transition("res://scenes/UI/game_over_screen.tscn", "circleIn")
 
 func _on_health_component_taking_damage() -> void:
-	Utils.screen_shake(0.1, 0.5, camera)
+	ScreenEffects.screen_shake(0.1, 0.5, camera)
 
-func on_save_game(saved_data: Array[SaveData]):
-	if health_component.is_alive():
-		var my_data = CharacterSaveData.new()
-		my_data.position = global_position
-		my_data.current_health = health_component.current_health
-		saved_data.append(my_data)
-
-func before_load_game():
-	if health_component.is_alive():
-		get_parent().remove_child(self)
-		queue_free()
-
-func on_load_game(saved_data: CharacterSaveData):
-	if saved_data:
-		global_position = saved_data.global_position
-		health_component.current_health = saved_data.current_health
+#func on_save_game(saved_data: Array[SaveData]):
+	#if health_component.is_alive():
+		#var my_data = CharacterSaveData.new()
+		#my_data.position = global_position
+		#my_data.current_health = health_component.current_health
+		#saved_data.append(my_data)
+#
+#func before_load_game():
+	#if health_component.is_alive():
+		#get_parent().remove_child(self)
+		#queue_free()
+#
+#func on_load_game(saved_data: CharacterSaveData):
+	#if saved_data:
+		#global_position = saved_data.global_position
+		#health_component.current_health = saved_data.current_health
 
 func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1
 	get_parent().update_hud()
+
+
+func _on_health_component_health_changed(new_health: float) -> void:
+	%ProgressBar.value = new_health

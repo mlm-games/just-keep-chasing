@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cme2e7v3yy8ol"]
 
 [ext_resource type="Script" path="res://scenes/powerups/powerup_manager.gd" id="1_tar1e"]
-[ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/stop_time_powerup_icon.png" id="2_n55r0"]
+[ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="2_n55r0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
 radius = 21.3776

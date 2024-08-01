@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://b3mf65fcnvmvu"]
 
 [ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_cvyhv"]
-[ext_resource type="Texture2D" uid="uid://dtwpm3uclaspj" path="res://assets/sprites/icon.png" id="2_k0jsn"]
+[ext_resource type="Texture2D" uid="uid://6df1pxb6h2bi" path="res://assets/sprites/player.png" id="2_vw3ki"]
 [ext_resource type="PackedScene" uid="uid://bk4fraugaremc" path="res://scenes/weapons-related/pistol.tscn" id="3_al27l"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="4_pwyjt"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="6_8qvmc"]
@@ -22,9 +22,12 @@ script = ExtResource("1_cvyhv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-texture = ExtResource("2_k0jsn")
+scale = Vector2(0.23, 0.23)
+texture = ExtResource("2_vw3ki")
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, -15)
 shape = SubResource("CircleShape2D_d6keb")
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_pwyjt")]
@@ -34,6 +37,7 @@ collision_mask = 4
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(-2, -20)
 shape = SubResource("CircleShape2D_8iqyn")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
@@ -53,5 +57,6 @@ unique_name_in_owner = true
 
 [node name="Pistol" parent="." instance=ExtResource("3_al27l")]
 
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
 [connection signal="player_died" from="HealthComponent" to="." method="_on_health_component_player_died"]
 [connection signal="taking_damage" from="HealthComponent" to="." method="_on_health_component_taking_damage"]

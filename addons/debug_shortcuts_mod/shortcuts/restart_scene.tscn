@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce7ecoqd7usa0"]
+
+[sub_resource type="GDScript" id="GDScript_syia6"]
+script/source = "extends Node
+
+
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.is_action_pressed(\"debug_restart_game\"):
+			if event.ctrl_pressed:
+				ScreenEffects.change_scene_with_transition(\"res://scenes/menu/menu.tscn\")
+			else:
+				get_tree().reload_current_scene()
+"
+
+[node name="RestartCurrentScene" type="Node"]
+script = SubResource("GDScript_syia6")

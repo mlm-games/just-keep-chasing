@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/weapons-related/machine_gun.gd" id="1_0uu0s"]
 [ext_resource type="Resource" uid="uid://dxbf0dcaymdme" path="res://scenes/weapons-related/bullet.tres" id="2_0nf6x"]
-[ext_resource type="Texture2D" uid="uid://bambopn2wqgdd" path="res://assets/sprites/Gun-sprite.png" id="2_w1bi5"]
+[ext_resource type="Texture2D" uid="uid://cqnmxanph02hs" path="res://assets/sprites/mini-smg.png" id="3_458y1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
 radius = 600.053
@@ -68,16 +68,15 @@ libraries = {
 
 [node name="Sprite2D" type="Sprite2D" parent="PivotPoint"]
 unique_name_in_owner = true
-modulate = Color(0.333333, 0.333333, 0, 1)
 texture_filter = 1
-position = Vector2(56, 0)
+position = Vector2(44, 10)
 rotation = 12.5664
-scale = Vector2(1.3125, 1)
-texture = ExtResource("2_w1bi5")
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("3_458y1")
 
 [node name="BulletSpawnPoint" type="Marker2D" parent="PivotPoint/Sprite2D"]
 unique_name_in_owner = true
-position = Vector2(8, -5)
+position = Vector2(322.219, -111.12)
 
 [node name="FireRateTimer" type="Timer" parent="."]
 unique_name_in_owner = true

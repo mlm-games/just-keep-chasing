@@ -1,0 +1,98 @@
+[gd_scene load_steps=5 format=3 uid="uid://24v2w4t8hgkl"]
+
+[ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="1_etbkl"]
+[ext_resource type="Script" path="res://scenes/UI/upgrades_layer.gd" id="1_f2f6q"]
+[ext_resource type="LabelSettings" uid="uid://c7d047estc02" path="res://resources/theme/label-settings-default.tres" id="2_fr6u5"]
+[ext_resource type="PackedScene" uid="uid://dq2rptl6lv3tc" path="res://scenes/UI/upgrade_slot.tscn" id="3_sx6la"]
+
+[node name="Upgrades" type="CanvasLayer"]
+layer = 50
+script = ExtResource("1_f2f6q")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_etbkl")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="ProphylacticsLabel" type="Label" parent="Control/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -14.0
+offset_right = 29.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Shop"
+label_settings = ExtResource("2_fr6u5")
+
+[node name="Panel2" type="Panel" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="OptionsContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="SpacerControl2" type="Control" parent="Control/VBoxContainer/OptionsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="UpgradeContainer1" parent="Control/VBoxContainer/OptionsContainer" instance=ExtResource("3_sx6la")]
+visible = false
+layout_mode = 2
+
+[node name="UpgradeContainer2" parent="Control/VBoxContainer/OptionsContainer" instance=ExtResource("3_sx6la")]
+visible = false
+layout_mode = 2
+
+[node name="UpgradeContainer3" parent="Control/VBoxContainer/OptionsContainer" instance=ExtResource("3_sx6la")]
+visible = false
+layout_mode = 2
+
+[node name="SpacerControl" type="Control" parent="Control/VBoxContainer/OptionsContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CloseButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "close"
+text = "CLOSE"
+
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
