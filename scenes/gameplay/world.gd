@@ -1,4 +1,6 @@
 #FIXME: Gun rotating weirdly
+#FIXME: Change the pause workings to make it more reliable, so that we can add the upgrade screen as a pop up
+#HACK: Add upgrade screen pop up like a transition
 #HACK: Use prophyliptics to make anti-bodies/ buy anti-bodies?
 #hack: the final secret boss is the rogue multiplying xenobot (like how cancer cells are just rogue human cells) (could make a lore story based on this...)
 #HACK: The guns are similar to items in godotneers data model vid, can make an icon also for touchscreenbutton/changeGunButton

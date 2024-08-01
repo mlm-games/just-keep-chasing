@@ -15,8 +15,6 @@ config/description="You are an advanced AI nanobot and are tasked to kill some v
 config/version="0.0.1"
 run/main_scene="res://scenes/UI/menu.tscn"
 config/features=PackedStringArray("4.3")
-boot_splash/bg_color=Color(0.0862745, 0.0862745, 0.0862745, 1)
-boot_splash/image="res://assets/sprites/splash.png"
 config/icon="res://assets/sprites/Gun-sprite.png"
 
 [autoload]
@@ -133,5 +131,4 @@ locale/translations=PackedStringArray("res://locale/translations.en.translation"
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=0
 textures/vram_compression/import_etc2_astc=true

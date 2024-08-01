@@ -4,7 +4,7 @@
 class_name HUD extends CanvasLayer
 
 const TIMER_FORMAT = "%02d:%02d"
-var attached = false
+var pop_up_on_screen = false
 
 @onready var slow_time_button: Button = %SlowTimeButton
 @onready var screen_blast_button: Button = %ScreenBlastButton
@@ -17,7 +17,8 @@ var elapsed_time = 0
 func _on_timer_timeout() -> void:
 	elapsed_time += 1
 	update_timer_label()
-	check_win_condition()
+	check_time_condition()
+	pop_up_on_screen = false
 
 func update_timer_label() -> void:
 	@warning_ignore("integer_division")
@@ -54,10 +55,18 @@ func update_screen_blast_button() -> void:
 func update_heal_button() -> void:
 	heal_button.text = str(player.powerups[2])
 
-func check_win_condition() -> void:
+func check_time_condition() -> void:
+	##Temp Upgrade condition
+	if elapsed_time == 120:
+		var upgrades_scene = load("res://scenes/UI/upgrades_layer.tscn").instantiate()
+		#hack: Add it like a pop up like a 0.01 sec anim?
+		add_child(upgrades_scene)
+			
+	
+	##Win condition
 	if elapsed_time == 300:
-		if !attached:
-			attached = true
+		if !pop_up_on_screen:
+			pop_up_on_screen = true
 			ScreenEffects.transition("circleIn")
 			await ScreenEffects.transition_player.animation_finished
 			var win_scene = load("res://scenes/UI/win_screen.tscn").instantiate()

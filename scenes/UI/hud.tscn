@@ -34,6 +34,7 @@ script = ExtResource("1_ldp5k")
 
 [node name="PauseLayer" parent="." instance=ExtResource("7_avxcw")]
 layer = 2
+visible = false
 
 [node name="Timer" type="Timer" parent="."]
 process_mode = 1

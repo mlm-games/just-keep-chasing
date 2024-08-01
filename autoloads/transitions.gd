@@ -13,17 +13,18 @@ func _ready():
 	white_rect.visible = false
 	shader_rect.visible = false
 
-func change_scene_with_transition(scene_path: String, anim_name: String = "fadeToBlack"):
+func change_scene_with_transition(scene_path: String, anim_name: String = "fadeToBlack", pop_up: bool = false):
 	transition(anim_name)
 	await screen_covered
-	get_tree().change_scene_to_file(scene_path)
+	if !pop_up:
+		get_tree().change_scene_to_file(scene_path)
 
 func change_scene_with_transition_packed(scene: PackedScene, anim_name: String = "fadeToBlack"):
 	transition(anim_name)
 	await screen_covered
 	get_tree().change_scene_to_packed(scene)
 
-func transition(anim_name: String = "fadeToBlack"):
+func transition(anim_name: String = "fadeToBlack", pop_up: bool = false):
 	match anim_name:
 		"fadeToBlack":
 			transition_rect.visible = true
@@ -34,9 +35,12 @@ func transition(anim_name: String = "fadeToBlack"):
 		"circleIn":
 			shader_rect.visible = true
 			transition_player.play(anim_name)
+	if pop_up:
+		pass
 
 
-func _on_animation_player_animation_finished(anim_name):
+
+func _on_animation_player_animation_finished(anim_name: String):
 	match anim_name:
 		"fadeToBlack":
 			screen_covered.emit()

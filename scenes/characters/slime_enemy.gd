@@ -1,4 +1,4 @@
-#FIXME: Multiple bullets hitting the same enemy causes research points to be multiplied
+
 
 class_name SlimeEnemy extends CharacterBody2D
 

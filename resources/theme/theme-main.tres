@@ -47,6 +47,7 @@ corner_radius_bottom_left = 8
 
 [resource]
 default_font_size = 20
+Button/constants/align_to_largest_stylebox = 1
 Button/styles/normal = SubResource("StyleBoxFlat_0k0c8")
 LabelSmall/base_type = &"Label"
 LabelSmall/font_sizes/font_size = 16

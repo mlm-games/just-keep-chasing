@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dq2rptl6lv3tc" path="res://scenes/UI/upgrade_slot.tscn" id="3_sx6la"]
 
 [node name="Upgrades" type="CanvasLayer"]
+layer = 50
 script = ExtResource("1_f2f6q")
 
 [node name="Control" type="Control" parent="."]
@@ -28,9 +29,11 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control"]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="Control/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
@@ -49,7 +52,7 @@ offset_right = 29.0
 offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "#FIXME"
+text = "Shop"
 label_settings = ExtResource("2_fr6u5")
 
 [node name="Panel2" type="Panel" parent="Control/VBoxContainer"]
@@ -78,3 +81,18 @@ layout_mode = 2
 
 [node name="SpacerControl" type="Control" parent="Control/VBoxContainer/OptionsContainer"]
 layout_mode = 2
+
+[node name="Control" type="Control" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CloseButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "close"
+text = "CLOSE"
+
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

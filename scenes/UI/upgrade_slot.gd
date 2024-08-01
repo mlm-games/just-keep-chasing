@@ -7,9 +7,9 @@ signal slot_clicked
 var panel_entered : bool = false
 
 func _ready() -> void:
-	if stats != []:
-		%TextureRect.texture = stats[0].stat_icon
-		
+#	if stats != []:
+#		%TextureRect.texture = stats[0].stat_icon
+	pass
 
 
 func _on_panel_mouse_entered() -> void:
