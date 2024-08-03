@@ -16,7 +16,7 @@ speed = 750.0
 bullet_damage = 2.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 0.72549, 1, 1)
+modulate = Color(1, 1, 0, 1)
 rotation = 1.5708
 scale = Vector2(0.11, 0.03)
 texture = ExtResource("2_xedda")

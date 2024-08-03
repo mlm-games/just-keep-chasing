@@ -62,6 +62,7 @@ autostart = true
 [node name="PowerupSpawnTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 25.0
+autostart = true
 
 [node name="Tree" parent="." instance=ExtResource("4_l562g")]
 position = Vector2(1002, 52)

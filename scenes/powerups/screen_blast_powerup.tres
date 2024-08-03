@@ -7,6 +7,5 @@
 [resource]
 script = ExtResource("1_vpbps")
 name = "Screen Blast"
-scene = ExtResource("1_dsiv5")
-item_id = "screen_blast_powerup"
 icon = ExtResource("1_mfa1o")
+scene = ExtResource("1_dsiv5")
