@@ -1,8 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dqnb688fw4wpi"]
 
+[ext_resource type="Texture2D" uid="uid://c7x4mr7uu8mk0" path="res://assets/sprites/currency1.png" id="1_7ihb4"]
 [ext_resource type="LabelSettings" uid="uid://i8bl646qytw4" path="res://resources/theme/currency_label_settings.tres" id="1_wcoud"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4dckw"]
 
 [node name="PriceContainer" type="HBoxContainer"]
 offset_right = 78.0
@@ -13,7 +12,7 @@ size_flags_horizontal = 4
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 10
+theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 
@@ -21,7 +20,8 @@ theme_override_constants/margin_bottom = 0
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 size_flags_vertical = 4
-texture = SubResource("PlaceholderTexture2D_4dckw")
+texture = ExtResource("1_7ihb4")
+expand_mode = 5
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 layout_mode = 2

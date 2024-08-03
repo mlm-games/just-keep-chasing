@@ -93,6 +93,7 @@ alignment = 1
 [node name="CloseButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 tooltip_text = "close"
+theme_override_constants/align_to_largest_stylebox = 1
 text = "CLOSE"
 
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
