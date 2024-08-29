@@ -47,7 +47,7 @@ func check_health() -> void:
 		if get_parent().is_in_group("Enemies") and not dying:
 			dying = true
 			GameState.research_points += get_parent().research_point_value
-			print(GameState.research_points)
+			get_tree().get_first_node_in_group("HUD").update_currency_label()
 			get_parent().queue_free()
 
 func disable_for_secs(secs: float) -> void:

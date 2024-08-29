@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://p3ijv0nq3035"]
+[gd_scene load_steps=19 format=3 uid="uid://p3ijv0nq3035"]
 
 [ext_resource type="Script" path="res://scenes/UI/HUD.gd" id="1_ldp5k"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="2_vgwca"]
@@ -10,11 +10,11 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_co5na"]
 
-[sub_resource type="InputEventAction" id="InputEventAction_hq20a"]
-action = &"slow_time_powerup"
+[sub_resource type="InputEventAction" id="InputEventAction_h1hsc"]
+action = &"invincible_powerup"
 
-[sub_resource type="Shortcut" id="Shortcut_gkms4"]
-events = [SubResource("InputEventAction_hq20a")]
+[sub_resource type="Shortcut" id="Shortcut_qjvlw"]
+events = [SubResource("InputEventAction_h1hsc")]
 
 [sub_resource type="Gradient" id="Gradient_b4762"]
 colors = PackedColorArray(0.497474, 0.497474, 0.497474, 1, 0.782969, 0.583659, 0.750949, 1)
@@ -35,6 +35,12 @@ action = &"screen_blast_powerup"
 
 [sub_resource type="Shortcut" id="Shortcut_ev6n8"]
 events = [SubResource("InputEventAction_jrr4l")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_hq20a"]
+action = &"slow_time_powerup"
+
+[sub_resource type="Shortcut" id="Shortcut_1gu8p"]
+events = [SubResource("InputEventAction_hq20a")]
 
 [node name="HUD" type="CanvasLayer" groups=["HUD"]]
 process_mode = 3
@@ -70,34 +76,16 @@ text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="CurrencyLabel" type="Label" parent="Control"]
+[node name="CurrencyLabel" type="RichTextLabel" parent="Control"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -73.0
-offset_right = 130.0
+offset_right = 470.0
 grow_vertical = 0
-theme_override_font_sizes/font_size = 35
-text = "Kills: "
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="PointsLabel" type="Label" parent="Control"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -45.0
-offset_right = 45.0
-offset_bottom = 73.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 35
-text = "00:00"
-horizontal_alignment = 1
-vertical_alignment = 2
+bbcode_enabled = true
 
 [node name="PanelContainer" type="PanelContainer" parent="Control"]
 layout_mode = 1
@@ -121,7 +109,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
-shortcut = SubResource("Shortcut_gkms4")
+shortcut = SubResource("Shortcut_qjvlw")
 text = "0"
 icon = SubResource("GradientTexture2D_edugu")
 icon_alignment = 1
@@ -157,7 +145,7 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
-shortcut = SubResource("Shortcut_gkms4")
+shortcut = SubResource("Shortcut_1gu8p")
 text = "0"
 icon = ExtResource("2_vgwca")
 icon_alignment = 1
@@ -177,15 +165,12 @@ offset_bottom = 114.0
 grow_horizontal = 2
 alignment = 2
 
-[node name="GunsButton" type="Button" parent="Control/HBoxContainer"]
+[node name="GunsButton" type="TouchScreenButton" parent="Control/HBoxContainer"]
 unique_name_in_owner = true
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Ammo: "
-icon = ExtResource("6_e60p3")
-icon_alignment = 1
-vertical_icon_alignment = 0
+position = Vector2(1036, 4)
+scale = Vector2(3.625, 2.625)
+texture_normal = ExtResource("6_e60p3")
 
 [node name="Virtual Joystick" parent="." instance=ExtResource("5_6lg4h")]
 visible = false

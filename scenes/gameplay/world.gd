@@ -95,11 +95,9 @@ func spawn_powerup() -> void:
 
 func get_random_powerup() -> Powerup:
 	#TODO: Replace randfs in the powertype scene itself
-	var powerup = powerups.pick_random()
-	if powerup.name == "Screen Blast" and randf() < 0.5:
+	var powerup: Powerup = powerups.pick_random()
+	if powerup.spawn_chance < randf():
 		powerup = get_random_powerup()
-	elif powerup.name == "Heal" and randf() < 0.25:
-		powerup = powerups[0]
 	return powerup
 
 func switch_weapon() -> void:
@@ -122,35 +120,32 @@ func throw_weapon() -> void:
 		switch_weapon()
 
 func pick_up_weapon() -> void:
+	#Todo: Whne near the gun, it is highlighted, so that it can be clicked.
+	print(thrown_guns.size())
 	if thrown_guns.size() > 0:
 		var weapon = get_tree().get_first_node_in_group("Dropped Weapons")
 		add_child(weapon)
 		weapon.remove_from_group("Dropped Weapons")
 		weapon.add_to_group("Weapons")
 		get_tree().call_group("Weapons", "queue_free")
+		guns.append(thrown_guns.pop_back())
+	else:
+		switch_weapon()
 
-func update_hud() -> void:
-	hud.update_buttons_count()
 
 func use_powerup(powerup_type: int) -> void:
-	match powerup_type:
-		GameState.PowerupType.SLOW_TIME:
-			if GameState.powerups[0] > 0:
-				GameState.powerups[0] -= 1
-				Engine.time_scale = 0.75
+	if GameState.powerups[powerup_type] > 0:
+		GameState.powerups[powerup_type] -= 1
+		match powerup_type:
+			GameState.PowerupType.SLOW_TIME:
+				Engine.time_scale = 0.75 # Could do -= and += 0.25
 				await get_tree().create_timer(2.0).timeout
 				Engine.time_scale = 1.0
-		GameState.PowerupType.SCREEN_BLAST:
-			if GameState.powerups[1] > 0:
-				GameState.powerups[1] -= 1
+			GameState.PowerupType.SCREEN_BLAST:
 				for enemy in get_tree().get_nodes_in_group("Enemies"):
 					enemy.queue_free()
-		GameState.PowerupType.HEAL:
-			if GameState.powerups[2] > 0:
-				GameState.powerups[2] -= 1
+			GameState.PowerupType.HEAL:
 				player.health_component.heal(20)
-		GameState.PowerupType.INVINCIBLE:
-			if GameState.powerups[3] >= 0:
-				GameState.powerups[3] -= 1
+			GameState.PowerupType.INVINCIBLE:
 				player.health_component.disable_for_secs(20)
-	update_hud()
+		hud.update_hud()

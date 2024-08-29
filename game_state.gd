@@ -43,7 +43,7 @@ var is_fullscreen: bool = false
 
 func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1
-	#update_hud()
+	get_node("/root/World/HUD").update_hud()
 
 
 # Methods for managing game state

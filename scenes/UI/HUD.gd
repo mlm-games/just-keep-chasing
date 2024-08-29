@@ -1,8 +1,7 @@
 #TODO: Write down all the stats you want to add, then do the modifiaction of stats affecting part, now just perform other tasks, in anytype note down.
 #hack: Display ammo_count (reload status optional)
 #hack: touch_button_changing_icons...
-#TODO: add upgrade layer spawner
-
+#Todo: WBC movement and texture like a ameoba(looks and anims in the direction of mov..)
 class_name HUD extends CanvasLayer
 
 const TIMER_FORMAT = "%02d:%02d"
@@ -14,8 +13,10 @@ var pop_up_on_screen = false
 @onready var invincible_button : Button = %InvincibleButton
 @onready var timer_label: Label = %TimerLabel
 @onready var player : Player = get_tree().get_first_node_in_group("Player")
+@onready var currency_label: RichTextLabel = %CurrencyLabel
 
 var elapsed_time = 0
+const RESEARCH_TEXTURE = "assets/sprites/currency1.png"
 
 func update_timer_label() -> void:
 	@warning_ignore("integer_division")
@@ -23,11 +24,14 @@ func update_timer_label() -> void:
 	var seconds = elapsed_time % 60
 	timer_label.text = TIMER_FORMAT % [minutes, seconds]
 
-func update_buttons_count() -> void:
+func update_hud() -> void:
 	update_slow_time_button()
 	update_screen_blast_button()
 	update_heal_button()
+	update_invincible_button()
 
+func update_currency_label() -> void:
+	currency_label.text = "[img=50]assets/sprites/currency1.png[/img]" + str(GameState.research_points)
 #Fixme: Use enums or There should be another way to remove these redundant functions below
 func update_slow_time_button() -> void:
 	slow_time_button.text = str(GameState.powerups[0])
@@ -88,5 +92,8 @@ func _on_invincible_button_pressed() -> void:
 	update_invincible_button()
 
 func _on_guns_button_pressed() -> void:
+	Input.action_press("switch-weapon")
+	await get_tree().create_timer(0.01).timeout
+	Input.action_release("switch-weapon")
 	pass  # Hack: THe pic changes to the currently held gun
 #endregion
