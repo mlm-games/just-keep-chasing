@@ -1,5 +1,7 @@
-#hack: Display ammo_count and reload status?
+#TODO: Write down all the stats you want to add, then do the modifiaction of stats affecting part, now just perform other tasks, in anytype note down.
+#hack: Display ammo_count (reload status optional)
 #hack: touch_button_changing_icons...
+#TODO: add upgrade layer spawner
 
 class_name HUD extends CanvasLayer
 
@@ -9,16 +11,11 @@ var pop_up_on_screen = false
 @onready var slow_time_button: Button = %SlowTimeButton
 @onready var screen_blast_button: Button = %ScreenBlastButton
 @onready var heal_button: Button = %HealButton
+@onready var invincible_button : Button = %InvincibleButton
 @onready var timer_label: Label = %TimerLabel
 @onready var player : Player = get_tree().get_first_node_in_group("Player")
 
 var elapsed_time = 0
-
-func _on_timer_timeout() -> void:
-	elapsed_time += 1
-	update_timer_label()
-	check_time_condition()
-	pop_up_on_screen = false
 
 func update_timer_label() -> void:
 	@warning_ignore("integer_division")
@@ -26,40 +23,30 @@ func update_timer_label() -> void:
 	var seconds = elapsed_time % 60
 	timer_label.text = TIMER_FORMAT % [minutes, seconds]
 
-func _on_slow_time_button_pressed() -> void:
-	get_parent().use_powerup(0)
-	update_slow_time_button()
-
-func _on_screen_blast_button_pressed() -> void:
-	get_parent().use_powerup(1)
-	update_screen_blast_button()
-
-func _on_heal_button_pressed() -> void:
-	get_parent().use_powerup(2)
-	update_heal_button()
-
-func _on_guns_button_pressed() -> void:
-	pass  # Replace with function body.
-
 func update_buttons_count() -> void:
 	update_slow_time_button()
 	update_screen_blast_button()
 	update_heal_button()
-#Fix enums
+
+#Fixme: Use enums or There should be another way to remove these redundant functions below
 func update_slow_time_button() -> void:
-	slow_time_button.text = str(player.powerups[0])
+	slow_time_button.text = str(GameState.powerups[0])
 
 func update_screen_blast_button() -> void:
-	screen_blast_button.text = str(player.powerups[1])
+	screen_blast_button.text = str(GameState.powerups[1])
 
 func update_heal_button() -> void:
-	heal_button.text = str(player.powerups[2])
+	heal_button.text = str(GameState.powerups[2])
+
+func update_invincible_button() -> void:
+	invincible_button.text = str(GameState.powerups[3])
 
 func check_time_condition() -> void:
-	##Temp Upgrade condition
-	if elapsed_time == 120:
+	#Temp Upgrade condition
+	if elapsed_time >= 120 and GameState.research_points % GameData.upgrade_shop_spawn_divisor == 0:
+		GameData.upgrade_shop_spawn_divisor += 10 + (10 * (elapsed_time * 0.001))
 		var upgrades_scene = load("res://scenes/UI/upgrades_layer.tscn").instantiate()
-		#hack: Add it like a pop up like a 0.01 sec anim?
+		#hack: Add it like a pop up like a 0.01 sec anim? also some kind of sound for sure
 		add_child(upgrades_scene)
 			
 	
@@ -72,3 +59,34 @@ func check_time_condition() -> void:
 			var win_scene = load("res://scenes/UI/win_screen.tscn").instantiate()
 			add_child(win_scene)
 			ScreenEffects.transition("circleOut")
+
+#region Signals
+
+func _on_timer_timeout() -> void:
+	elapsed_time += 1
+	update_timer_label()
+	check_time_condition()
+	pop_up_on_screen = false
+#Fixme: Getting the character upgrade screen and te game win screen causes the game to run normally with the game end screen after closing the upgrade screen.
+
+func _on_slow_time_button_pressed() -> void:
+	get_parent().use_powerup(0)
+	update_slow_time_button()
+
+
+func _on_screen_blast_button_pressed() -> void:
+	get_parent().use_powerup(1)
+	update_screen_blast_button()
+
+
+func _on_heal_button_pressed() -> void:
+	get_parent().use_powerup(2)
+	update_heal_button()
+
+func _on_invincible_button_pressed() -> void:
+	get_parent().use_powerup(3)
+	update_invincible_button()
+
+func _on_guns_button_pressed() -> void:
+	pass  # Hack: THe pic changes to the currently held gun
+#endregion

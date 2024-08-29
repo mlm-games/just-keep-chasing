@@ -12,19 +12,19 @@ func _ready() -> void:
 		_upgrade_slot.slot_clicked.connect(on_slot_clicked.bind(_upgrade_slot))
 
 func on_slot_clicked(slot):
-	if GameState.research_points_count >= 5:
-		GameState.research_points_count -= 5
-		apply_effect(slot.stats)
+	if GameState.research_points >= 5:
+		GameState.research_points -= 5
+		#apply_effect(slot.stats)
 		slot.queue_free()
 #TODO: Do it using augments...
 
 
-func apply_effect(stats) -> void:
-	for stat in stats:
-		match stat.key:
-			"max_health":
-				GameState.player_max_health += stats[0].value
-	print(GameState.player_max_health)
+#func apply_effect(stats) -> void:
+	#for stat in stats:
+		#match stat.key:
+			#"max_health":
+				#Player.max_health += stats[0].value
+	#print(GameState.player_max_health)
 
 
 func _input(event: InputEvent) -> void:

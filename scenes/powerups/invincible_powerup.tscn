@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bidsmwlr7ccb2"]
+
+[ext_resource type="PackedScene" uid="uid://x2gb17exe2xq" path="res://scenes/powerups/powerup.tscn" id="1_m4wdj"]
+
+[node name="Powerup" instance=ExtResource("1_m4wdj")]
+powerup_type = 3

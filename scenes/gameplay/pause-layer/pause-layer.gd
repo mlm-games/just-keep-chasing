@@ -1,4 +1,3 @@
-#FIXME: Button not working, only esc key.
 extends CanvasLayer
 
 @onready var pause := self
@@ -63,4 +62,4 @@ func _on_PauseButton_pressed():
 func _on_main_menu_pressed():
 	if get_tree().paused:
 		get_tree().paused = false
-	ScreenEffects.change_scene_with_transition("res://scenes/menu/menu.tscn")
+	ScreenEffects.change_scene_with_transition("res://scenes/UI/menu.tscn")

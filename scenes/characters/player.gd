@@ -2,12 +2,6 @@ class_name Player extends CharacterBody2D
 
 @export var speed = 250
 
-var powerups = {
-	GameState.PowerupType.SLOW_TIME: 0,
-	GameState.PowerupType.SCREEN_BLAST: 0,
-	GameState.PowerupType.HEAL: 0
-}
-
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var camera: Camera2D = %Camera2D
 @onready var progress_bar: ProgressBar = %ProgressBar
@@ -47,9 +41,6 @@ func _on_health_component_taking_damage() -> void:
 		#global_position = saved_data.global_position
 		#health_component.current_health = saved_data.current_health
 
-func powerup_collected(powerup_type: int) -> void:
-	powerups[powerup_type] += 1
-	get_parent().update_hud()
 
 
 func _on_health_component_health_changed(new_health: float) -> void:

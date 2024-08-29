@@ -2,6 +2,6 @@
 
 [ext_resource type="Script" path="res://scenes/components/health_component.gd" id="1_c6b3v"]
 
-[node name="HealthComponent" type="Node2D"]
+[node name="HealthComponent" type="Node"]
 script = ExtResource("1_c6b3v")
 max_health = 100.0

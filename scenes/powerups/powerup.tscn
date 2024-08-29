@@ -1,10 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://x2gb17exe2xq"]
 
 [ext_resource type="Script" path="res://scenes/powerups/powerup_manager.gd" id="1_hl65c"]
-[ext_resource type="Texture2D" uid="uid://ddkwkn3fyh6qq" path="res://assets/sprites/screen_blast_powerup_icon.png" id="2_rdf63"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
 radius = 21.3776
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7gkke"]
 
 [node name="Powerup" type="Area2D"]
 script = ExtResource("1_hl65c")
@@ -15,8 +16,8 @@ shape = SubResource("CircleShape2D_rxdp3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.347817, 0.347817, 0.347817, 1)
-position = Vector2(-4.76837e-07, -4.5)
-scale = Vector2(0.09, 0.0927734)
-texture = ExtResource("2_rdf63")
+position = Vector2(-0.5, -1.3113e-06)
+scale = Vector2(33, 34)
+texture = SubResource("PlaceholderTexture2D_7gkke")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

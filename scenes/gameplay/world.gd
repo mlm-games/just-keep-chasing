@@ -1,11 +1,10 @@
-#FIXME: Gun rotating weirdly
-#FIXME: Change the pause workings to make it more reliable, so that we can add the upgrade screen as a pop up
+#Fixme: Gun rotating weirdly
+#Fixme: Dying when paused is a softlock!
 #HACK: Add upgrade screen pop up like a transition
 #HACK: Use prophyliptics to make anti-bodies/ buy anti-bodies?
 #hack: the final secret boss is the rogue multiplying xenobot (like how cancer cells are just rogue human cells) (could make a lore story based on this...)
 #HACK: The guns are similar to items in godotneers data model vid, can make an icon also for touchscreenbutton/changeGunButton
 #hack: (not imp due to diff bullet speeds) Changing bullet icons like nuclear throne will feel like bullets are doing different dmg
-#TODO: change the name to some virus related thingy
 #hack: Collision bouncing in the direction of collision direction for specific bullets?
 #heartbeast video for making the sawblades balloon game (Collision bouncing in the direction of collision direction)
 #Powerups only in singleplayer
@@ -13,12 +12,11 @@
 # when new difficulty is unlocked for all kinds of viruses, achievement can be like: little did he know, the stronger ones were good at hiding 
 #HACK:A gamemode, You can only move a certain amt in a certain amt of time, (experiment until its fun)
 #HACK: The powerup has a initial velocity to the opposite direction of the player and it then accelerates toward the player upto a limit speed.
-#HACK: Player's gun doesnt slow down on slow_time powerup upgraded
+#HACK: Player's gun doesnt slow down on slow_time powerup [upgraded!]
 #HACK: For collectibles, you can do the collection like how vampire survivors does it, call a state change fron idle to follow and let it get attracted at a certain speed after moving away for a second
 #hack: Use inherited scenes for powerups.
 #TODO: Add a powerup that makes the player invincible for a certain amount of time
 #TODO: Add a upgrade that makes you damage enemies on contact
-#TODO: Change change_scene to file to packed
 #TODO: Add a WorldEnvironiment node to make the colors look good against the parallax image
 #TODO: Slight zoom-in when collecting a upgrade, zoom-out after collection, (zoom in screeneffects)
 #hack: if memory available (>90%), let upgrades layer stay, or else free from memory.
@@ -28,7 +26,12 @@
 #func follow():
 #	attraction_velocity = initial_speed * direction
 #	attraction_velocity += direction * speed
-
+#HACK: Give a first timer tutorial where how T works is told by a video? and Add a fast moving enemy in the end so the player dies, and for every new gun he gets, he will defeat a new wave (previously not impossible, but insane)
+#TODO: An awesome way to unlock guns is by making them unlockable by having to play a mini 2 min round with them, and finish it without dying?
+#Todo: Bazooka, destroys obstacles and gives health
+#HACK: Use the canvascolor node to change environiment colors when new waves appear...
+#HACK: A tickbox in pause menu that hides all buttons except pause button.
+#TODO: Change the upgrade layer from spawning based to enemy kill based (+10 every time it appears and goes)
 extends Node2D
 
 const ENEMY_SCENE_PATH = "res://scenes/characters/enemy%d.tscn"
@@ -91,6 +94,7 @@ func spawn_powerup() -> void:
 	powerups_node.add_child(powerup_instance)
 
 func get_random_powerup() -> Powerup:
+	#TODO: Replace randfs in the powertype scene itself
 	var powerup = powerups.pick_random()
 	if powerup.name == "Screen Blast" and randf() < 0.5:
 		powerup = get_random_powerup()
@@ -131,19 +135,22 @@ func update_hud() -> void:
 func use_powerup(powerup_type: int) -> void:
 	match powerup_type:
 		GameState.PowerupType.SLOW_TIME:
-			if player.powerups[0] > 0:
-				player.powerups[0] -= 1
+			if GameState.powerups[0] > 0:
+				GameState.powerups[0] -= 1
 				Engine.time_scale = 0.75
 				await get_tree().create_timer(2.0).timeout
 				Engine.time_scale = 1.0
 		GameState.PowerupType.SCREEN_BLAST:
-			if player.powerups[1] > 0:
-				player.powerups[1] -= 1
+			if GameState.powerups[1] > 0:
+				GameState.powerups[1] -= 1
 				for enemy in get_tree().get_nodes_in_group("Enemies"):
 					enemy.queue_free()
 		GameState.PowerupType.HEAL:
-			if player.powerups[2] > 0:
-				player.powerups[2] -= 1
+			if GameState.powerups[2] > 0:
+				GameState.powerups[2] -= 1
 				player.health_component.heal(20)
+		GameState.PowerupType.INVINCIBLE:
+			if GameState.powerups[3] >= 0:
+				GameState.powerups[3] -= 1
+				player.health_component.disable_for_secs(20)
 	update_hud()
-#TODO: add upgrade layer spawner

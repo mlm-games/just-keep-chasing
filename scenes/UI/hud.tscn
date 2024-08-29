@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://p3ijv0nq3035"]
+[gd_scene load_steps=17 format=3 uid="uid://p3ijv0nq3035"]
 
 [ext_resource type="Script" path="res://scenes/UI/HUD.gd" id="1_ldp5k"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="2_vgwca"]
@@ -9,6 +9,20 @@
 [ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes/gameplay/pause-layer/pause-layer.tscn" id="7_avxcw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_co5na"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_hq20a"]
+action = &"slow_time_powerup"
+
+[sub_resource type="Shortcut" id="Shortcut_gkms4"]
+events = [SubResource("InputEventAction_hq20a")]
+
+[sub_resource type="Gradient" id="Gradient_b4762"]
+colors = PackedColorArray(0.497474, 0.497474, 0.497474, 1, 0.782969, 0.583659, 0.750949, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_edugu"]
+gradient = SubResource("Gradient_b4762")
+fill_from = Vector2(0.0366972, 0.93578)
+fill_to = Vector2(1, 0.0321101)
 
 [sub_resource type="InputEventAction" id="InputEventAction_p3uv4"]
 action = &"heal"
@@ -22,19 +36,11 @@ action = &"screen_blast_powerup"
 [sub_resource type="Shortcut" id="Shortcut_ev6n8"]
 events = [SubResource("InputEventAction_jrr4l")]
 
-[sub_resource type="InputEventAction" id="InputEventAction_hq20a"]
-action = &"slow_time_powerup"
-
-[sub_resource type="Shortcut" id="Shortcut_gkms4"]
-events = [SubResource("InputEventAction_hq20a")]
-
 [node name="HUD" type="CanvasLayer" groups=["HUD"]]
 process_mode = 3
 script = ExtResource("1_ldp5k")
 
 [node name="PauseLayer" parent="." instance=ExtResource("7_avxcw")]
-layer = 2
-visible = false
 
 [node name="Timer" type="Timer" parent="."]
 process_mode = 1
@@ -49,15 +55,36 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="GunsButton" type="TouchScreenButton" parent="Control"]
-unique_name_in_owner = true
-modulate = Color(0.804743, 0.804743, 0.804743, 1)
-position = Vector2(1085, 0)
-scale = Vector2(2.09375, 2.0625)
-texture_normal = ExtResource("6_e60p3")
-action = "switch-weapon"
-
 [node name="TimerLabel" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -45.0
+offset_right = 45.0
+offset_bottom = 73.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 35
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="CurrencyLabel" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -73.0
+offset_right = 130.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 35
+text = "Kills: "
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="PointsLabel" type="Label" parent="Control"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 5
@@ -88,6 +115,18 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_co5na")
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer"]
 layout_direction = 3
 layout_mode = 2
+
+[node name="InvincibleButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+shortcut = SubResource("Shortcut_gkms4")
+text = "0"
+icon = SubResource("GradientTexture2D_edugu")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
 [node name="HealButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -130,6 +169,24 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 9.28
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 114.0
+grow_horizontal = 2
+alignment = 2
+
+[node name="GunsButton" type="Button" parent="Control/HBoxContainer"]
+unique_name_in_owner = true
+modulate = Color(0.804743, 0.804743, 0.804743, 1)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Ammo: "
+icon = ExtResource("6_e60p3")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
 [node name="Virtual Joystick" parent="." instance=ExtResource("5_6lg4h")]
 visible = false
 offset_top = -257.0
@@ -137,7 +194,8 @@ offset_right = 247.0
 offset_bottom = 0.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="pressed" from="Control/GunsButton" to="." method="_on_guns_button_pressed"]
+[connection signal="pressed" from="Control/PanelContainer/HBoxContainer/InvincibleButton" to="." method="_on_invincible_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/HealButton" to="." method="_on_heal_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/ScreenBlastButton" to="." method="_on_screen_blast_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/SlowTimeButton" to="." method="_on_slow_time_button_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/GunsButton" to="." method="_on_guns_button_pressed"]
