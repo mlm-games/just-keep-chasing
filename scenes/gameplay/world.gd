@@ -8,15 +8,13 @@
 #hack: Collision bouncing in the direction of collision direction for specific bullets?
 #heartbeast video for making the sawblades balloon game (Collision bouncing in the direction of collision direction)
 #Powerups only in singleplayer
-#TODO: Add the description based on u being an antibody trying to fight off the rampant bacteria and viruses (has a lot of potential for different diseases, in cancer mode u fight other antibodies as a nanobot trying to stop them from killing the wrong bacteria? (i dont properly know how cancer works)
 # when new difficulty is unlocked for all kinds of viruses, achievement can be like: little did he know, the stronger ones were good at hiding 
-#HACK:A gamemode, You can only move a certain amt in a certain amt of time, (experiment until its fun)
+#hack:A gamemode, You can only move a certain amt in a certain amt of time, (experiment until its fun)
 #HACK: The powerup has a initial velocity to the opposite direction of the player and it then accelerates toward the player upto a limit speed.
 #HACK: Player's gun doesnt slow down on slow_time powerup [upgraded!]
 #HACK: For collectibles, you can do the collection like how vampire survivors does it, call a state change fron idle to follow and let it get attracted at a certain speed after moving away for a second
 #hack: Use inherited scenes for powerups.
-#TODO: Add a powerup that makes the player invincible for a certain amount of time
-#TODO: Add a upgrade that makes you damage enemies on contact
+#todo: Add a upgrade that makes you damage enemies on contact
 #TODO: Add a WorldEnvironiment node to make the colors look good against the parallax image
 #TODO: Slight zoom-in when collecting a upgrade, zoom-out after collection, (zoom in screeneffects)
 #hack: if memory available (>90%), let upgrades layer stay, or else free from memory.
