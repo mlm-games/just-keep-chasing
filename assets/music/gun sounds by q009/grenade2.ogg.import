@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://uclndkvkx3rv"
+path="res://.godot/imported/grenade2.ogg-047c0c991dc6f54cd756d8db8204ac01.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/music/gun sounds by q009/grenade2.ogg"
+dest_files=["res://.godot/imported/grenade2.ogg-047c0c991dc6f54cd756d8db8204ac01.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

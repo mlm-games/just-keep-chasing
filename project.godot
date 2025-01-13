@@ -19,10 +19,9 @@ config/icon="res://assets/sprites/Gun-sprite.png"
 
 [autoload]
 
-GameState="*res://game_state.gd"
 ScreenEffects="*res://autoloads/transitions.tscn"
 DebugShortcuts="*res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.tscn"
-GameData="*res://game_data.gd"
+GameState="*res://autoloads/game_state.gd"
 
 [category]
 

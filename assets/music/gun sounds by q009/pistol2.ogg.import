@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b6f8atyg6hgix"
+path="res://.godot/imported/pistol2.ogg-b81fb5551a1a4f7730fa27f36783106c.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/music/gun sounds by q009/pistol2.ogg"
+dest_files=["res://.godot/imported/pistol2.ogg-b81fb5551a1a4f7730fa27f36783106c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

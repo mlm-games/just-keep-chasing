@@ -1,10 +1,14 @@
 extends Control
 
+const WorldScene = "res://scenes/gameplay/world.tscn"
+const SettingsScene = "res://scenes/UI/settings.tscn"
+
 @onready var btn_play = $MarginContainer/Control/VBoxContainer/PlayButton
 @onready var btn_exit = $MarginContainer/Control/VBoxContainer/ExitButton
 #Hack: hold r to restart, press r to reload
 
 func _ready():
+	get_tree().paused = false
 	# needed for gamepads to work
 	btn_play.grab_focus()
 	if OS.has_feature('web'):
@@ -12,7 +16,7 @@ func _ready():
 
 
 func _on_PlayButton_pressed() -> void:
-	ScreenEffects.change_scene_with_transition("res://scenes/gameplay/world.tscn")
+	ScreenEffects.change_scene_with_transition(WorldScene)
 
 
 func _on_ExitButton_pressed() -> void:
@@ -20,3 +24,7 @@ func _on_ExitButton_pressed() -> void:
 	ScreenEffects.transition()
 	await ScreenEffects.transition_player.animation_finished
 	get_tree().quit()
+
+
+func _on_settings_button_pressed() -> void:
+	ScreenEffects.change_scene_with_transition(SettingsScene)

@@ -1,19 +1,21 @@
 extends CanvasLayer
 
-var upgrade_scene = load("res://scenes/UI/health_slot.tscn") #tmp
-
+var upgrade_scenes_path = "res://scenes/UI/health_slot.tscn" #tmp
+@onready var hud : HUD = get_tree().get_first_node_in_group("HUD")
 @onready var upgrade_slots_to_add_below_node: Control = %SpacerControl2
 
 func _ready() -> void:
 	get_tree().paused = true
 	for i in range(3):
-		var _upgrade_slot = upgrade_scene.instantiate()
-		upgrade_slots_to_add_below_node.add_sibling(_upgrade_slot)
-		_upgrade_slot.slot_clicked.connect(on_slot_clicked.bind(_upgrade_slot))
+		var upgrade_slot = load(upgrade_scenes_path).instantiate()
+		#upgrade_slot.augment = load(str(ResourceLoader.get_resource_uid(GameState.augments_paths.pick_random())))
+		upgrade_slots_to_add_below_node.add_sibling(upgrade_slot)
+		upgrade_slot.slot_clicked.connect(on_slot_clicked.bind(upgrade_slot))
 
 func on_slot_clicked(slot):
-	if GameState.research_points >= 5:
-		GameState.research_points -= 5
+	if GameState.research_points >= slot.augment.augment_price:
+		GameState.research_points -= slot.augment.augment_price
+		hud.update_currency_label()
 		#apply_effect(slot.stats)
 		slot.queue_free()
 #TODO: Do it using augments...

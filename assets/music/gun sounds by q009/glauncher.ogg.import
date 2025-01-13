@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://f3yu4e6pwjrr"
+path="res://.godot/imported/glauncher.ogg-b713d3ef8e2c18253aaef15c4f84a8bf.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/music/gun sounds by q009/glauncher.ogg"
+dest_files=["res://.godot/imported/glauncher.ogg-b713d3ef8e2c18253aaef15c4f84a8bf.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

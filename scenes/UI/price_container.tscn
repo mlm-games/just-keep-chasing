@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqnb688fw4wpi"]
+[gd_scene load_steps=4 format=3 uid="uid://dqnb688fw4wpi"]
 
+[ext_resource type="Script" path="res://scenes/UI/price_container.gd" id="1_4vj6i"]
 [ext_resource type="Texture2D" uid="uid://c7x4mr7uu8mk0" path="res://assets/sprites/currency1.png" id="1_7ihb4"]
 [ext_resource type="LabelSettings" uid="uid://i8bl646qytw4" path="res://resources/theme/currency_label_settings.tres" id="1_wcoud"]
 
@@ -7,6 +8,7 @@
 offset_right = 78.0
 offset_bottom = 33.0
 size_flags_horizontal = 4
+script = ExtResource("1_4vj6i")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2

@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_g8kvr")
-value = 5
-key = "max_health"
+value = 1
+key = "max_speed"

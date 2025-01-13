@@ -7,3 +7,4 @@ class_name Augments extends Resource
 
 @export_group("Data")
 @export var stats_to_modify : Array[StatsModifier]
+@export var rarity : float

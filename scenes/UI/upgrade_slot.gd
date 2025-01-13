@@ -2,15 +2,15 @@ class_name SlotContainer extends MarginContainer
 
 signal slot_clicked
 
-@export var stats: Array[StatsModifier]= []
+@export var augment : Augments = ResourceLoader.load(GameState.augments_paths.pick_random())
 
 var panel_entered : bool = false
 
 func _ready() -> void:
-#	if stats != []:
-#		%TextureRect.texture = stats[0].stat_icon
-	pass
-
+	if augment != null :
+		%TextureRect.texture = augment.augment_icon
+		%UpgradeLabel.text = tr(augment.augment_id.capitalize())
+		%PriceContainer.price_label.text = str(augment.augment_price)
 
 func _on_panel_mouse_entered() -> void:
 	panel_entered = true

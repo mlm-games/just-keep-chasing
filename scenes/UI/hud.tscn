@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://p3ijv0nq3035"]
+[gd_scene load_steps=18 format=3 uid="uid://p3ijv0nq3035"]
 
 [ext_resource type="Script" path="res://scenes/UI/HUD.gd" id="1_ldp5k"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="2_vgwca"]
+[ext_resource type="Texture2D" uid="uid://b7b32402tako6" path="res://assets/sprites/star_powerup.svg" id="3_5i6h7"]
 [ext_resource type="Texture2D" uid="uid://ddkwkn3fyh6qq" path="res://assets/sprites/screen_blast_powerup_icon.png" id="3_ytqdl"]
 [ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/sprites/heal_powerup.png" id="4_lcl0g"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="5_6lg4h"]
@@ -15,14 +16,6 @@ action = &"invincible_powerup"
 
 [sub_resource type="Shortcut" id="Shortcut_qjvlw"]
 events = [SubResource("InputEventAction_h1hsc")]
-
-[sub_resource type="Gradient" id="Gradient_b4762"]
-colors = PackedColorArray(0.497474, 0.497474, 0.497474, 1, 0.782969, 0.583659, 0.750949, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_edugu"]
-gradient = SubResource("Gradient_b4762")
-fill_from = Vector2(0.0366972, 0.93578)
-fill_to = Vector2(1, 0.0321101)
 
 [sub_resource type="InputEventAction" id="InputEventAction_p3uv4"]
 action = &"heal"
@@ -78,6 +71,7 @@ vertical_alignment = 2
 
 [node name="CurrencyLabel" type="RichTextLabel" parent="Control"]
 unique_name_in_owner = true
+process_mode = 3
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -111,7 +105,7 @@ size_flags_horizontal = 3
 focus_mode = 0
 shortcut = SubResource("Shortcut_qjvlw")
 text = "0"
-icon = SubResource("GradientTexture2D_edugu")
+icon = ExtResource("3_5i6h7")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
@@ -167,6 +161,7 @@ alignment = 2
 
 [node name="GunsButton" type="TouchScreenButton" parent="Control/HBoxContainer"]
 unique_name_in_owner = true
+visible = false
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
 position = Vector2(1036, 4)
 scale = Vector2(3.625, 2.625)

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://k7n68ivaj575"
+path="res://.godot/imported/minigun3.ogg-c2f839cb3eabb06886b0933fc489a036.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/music/gun sounds by q009/minigun3.ogg"
+dest_files=["res://.godot/imported/minigun3.ogg-c2f839cb3eabb06886b0933fc489a036.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

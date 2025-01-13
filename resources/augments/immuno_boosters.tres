@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Augments" load_steps=6 format=3 uid="uid://dbhqk1tq5grf8"]
+
+[ext_resource type="Texture2D" uid="uid://dnbyt8p2ow46o" path="res://assets/sprites/birdshot-shell.png" id="1_b6q1j"]
+[ext_resource type="Script" path="res://resources/augments/augmentations.gd" id="2_1auth"]
+[ext_resource type="Script" path="res://resources/default_stat_modifiers/stats_modifier_base.gd" id="3_aaedq"]
+[ext_resource type="Resource" uid="uid://cprp5hhsgf30d" path="res://resources/default_stat_modifiers/health.tres" id="4_23w1f"]
+
+[sub_resource type="Resource" id="Resource_ex5da"]
+script = ExtResource("3_aaedq")
+value = 1
+key = "heal"
+
+[resource]
+script = ExtResource("2_1auth")
+augment_icon = ExtResource("1_b6q1j")
+augment_price = 30
+augment_id = "immuno_boosters"
+stats_to_modify = Array[ExtResource("3_aaedq")]([ExtResource("4_23w1f"), SubResource("Resource_ex5da")])
+rarity = 0.0

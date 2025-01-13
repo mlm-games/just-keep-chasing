@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cfdl10nq3kfa4"
+path="res://.godot/imported/rifle2.ogg-634eb1b73a008f254f5a22a40bd1e183.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/music/gun sounds by q009/rifle2.ogg"
+dest_files=["res://.godot/imported/rifle2.ogg-634eb1b73a008f254f5a22a40bd1e183.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

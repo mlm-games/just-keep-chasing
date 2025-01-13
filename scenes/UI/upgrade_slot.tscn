@@ -32,8 +32,10 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
 texture = ExtResource("2_3bwd0")
+expand_mode = 5
 
 [node name="UpgradeLabel" type="Label" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
 text = "Placeholder"
@@ -41,6 +43,7 @@ label_settings = ExtResource("2_071u4")
 horizontal_alignment = 1
 
 [node name="PriceContainer" parent="VBoxContainer" instance=ExtResource("1_o3l4u")]
+unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 

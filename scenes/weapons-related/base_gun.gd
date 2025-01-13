@@ -6,6 +6,7 @@ class_name BaseGun extends Area2D
 @export var ammo: int = max_ammo
 @export var targeting_range: float
 @export var fire_rate: float
+@export var fire_audio: AudioStreamWAV
 #@export var recoil_dist: float = 5
 
 @onready var _bullet_spawn_point: Marker2D = %BulletSpawnPoint

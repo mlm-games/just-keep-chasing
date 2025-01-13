@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c8rp0wvwgdvox"
+path="res://.godot/imported/shotgun3.ogg-d14507c0b2c71d67ce67e7342bf01b1b.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/music/gun sounds by q009/shotgun3.ogg"
+dest_files=["res://.godot/imported/shotgun3.ogg-d14507c0b2c71d67ce67e7342bf01b1b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

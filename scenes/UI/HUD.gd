@@ -47,8 +47,8 @@ func update_invincible_button() -> void:
 
 func check_time_condition() -> void:
 	#Temp Upgrade condition
-	if elapsed_time >= 120 and GameState.research_points % GameData.upgrade_shop_spawn_divisor == 0:
-		GameData.upgrade_shop_spawn_divisor += 10 + (10 * (elapsed_time * 0.001))
+	if GameState.research_points / GameState.upgrade_shop_spawn_divisor > 1 and GameState.research_points != 0:
+		GameState.upgrade_shop_spawn_divisor += 10 + (10 * (elapsed_time * 0.001))
 		var upgrades_scene = load("res://scenes/UI/upgrades_layer.tscn").instantiate()
 		#hack: Add it like a pop up like a 0.01 sec anim? also some kind of sound for sure
 		add_child(upgrades_scene)
