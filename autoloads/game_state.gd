@@ -4,6 +4,7 @@ extends Node
 #TODO: Make the settings load on menu scene
 
 const MenuScene = "res://scenes/UI/menu.tscn"
+const SettingsScene = "res://scenes/UI/settings.tscn"
 
 const AUGMENTS_DIR : String = "res://resources/augments/"
 const CONFIG_DIR: String = "data/saves/"
@@ -55,7 +56,12 @@ var player_reload_speed_mult : float
 var player_health_mult : float
 var upgrade_shop_spawn_divisor : int = 50
 
-#@export var stats : Dictionary[String, float]
+enum Stats {
+	max_health,
+	current_health,
+	max_speed,
+	current_speed,
+}
 
 #endregion
 
@@ -88,6 +94,7 @@ var audio: Dictionary = {
 
 func  _ready() -> void:
 	populate_augment_paths()
+	load_settings(true)
 
 func populate_augment_paths() -> void:
 	var dir = DirAccess.open(AUGMENTS_DIR)
@@ -174,7 +181,7 @@ func save_settings() -> void:
 	else:
 		print("Settings successfully saved to: %s" % CONFIG_PATH)
 
-func load_settings() -> bool:
+func load_settings(with_ui_update : bool = false) -> bool:
 	if !ResourceLoader.exists(CONFIG_PATH):
 		print("Settings save file not found.")
 		return false
@@ -191,6 +198,13 @@ func load_settings() -> bool:
 	gameplay_options = new_load.gameplay_options.duplicate(true)
 	video = new_load.video.duplicate(true)
 	audio = new_load.audio.duplicate(true)
+	
+	if with_ui_update == true:
+		var settings_instance = load(SettingsScene).instantiate()
+		add_child(settings_instance)
+		#await settings_instance.sign
+		remove_child(settings_instance)
+		settings_instance.queue_free()
 	
 	return true
 

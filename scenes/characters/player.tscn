@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b3mf65fcnvmvu"]
+[gd_scene load_steps=29 format=3 uid="uid://b3mf65fcnvmvu"]
 
 [ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_cvyhv"]
 [ext_resource type="Texture2D" uid="uid://6df1pxb6h2bi" path="res://assets/sprites/player.png" id="2_vw3ki"]
@@ -13,60 +13,154 @@ radius = 38.0132
 [sub_resource type="CircleShape2D" id="CircleShape2D_8iqyn"]
 radius = 38.0132
 
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_bs7f4"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gpndl"]
+animation = &"hurt_end"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bcboo"]
+animation = &"hurt_start"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2aamj"]
+advance_mode = 2
+advance_expression = "taking_damage"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0xhbv"]
+switch_mode = 2
+advance_mode = 2
+advance_expression = "!taking_damage"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tmbbt"]
+switch_mode = 2
+advance_mode = 2
+advance_expression = "taking_damage"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_bl56h"]
+states/hurt_end/node = SubResource("AnimationNodeAnimation_gpndl")
+states/hurt_end/position = Vector2(639, 100)
+states/hurt_start/node = SubResource("AnimationNodeAnimation_bcboo")
+states/hurt_start/position = Vector2(364, 100)
+transitions = ["Start", "hurt_start", SubResource("AnimationNodeStateMachineTransition_2aamj"), "hurt_start", "hurt_end", SubResource("AnimationNodeStateMachineTransition_0xhbv"), "hurt_end", "hurt_start", SubResource("AnimationNodeStateMachineTransition_tmbbt")]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6iak8"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0bpor"]
+animation = &"moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qtdod"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bmtj2"]
+advance_mode = 2
+advance_expression = "velocity"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_142j5"]
+advance_mode = 2
+advance_expression = "!velocity"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_l3wk2"]
+states/idle/node = SubResource("AnimationNodeAnimation_6iak8")
+states/idle/position = Vector2(406, 100)
+states/moving/node = SubResource("AnimationNodeAnimation_0bpor")
+states/moving/position = Vector2(630, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_qtdod"), "idle", "moving", SubResource("AnimationNodeStateMachineTransition_bmtj2"), "moving", "idle", SubResource("AnimationNodeStateMachineTransition_142j5")]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_k2410"]
+graph_offset = Vector2(-769.419, 59.2123)
+nodes/Add2/node = SubResource("AnimationNodeAdd2_bs7f4")
+nodes/Add2/position = Vector2(80, 140)
+nodes/Hurt/node = SubResource("AnimationNodeStateMachine_bl56h")
+nodes/Hurt/position = Vector2(-160, 260)
+nodes/Movement/node = SubResource("AnimationNodeStateMachine_l3wk2")
+nodes/Movement/position = Vector2(-160, 60)
+node_connections = [&"Add2", 0, &"Movement", &"Add2", 1, &"Hurt", &"output", 0, &"Add2"]
+
 [sub_resource type="Animation" id="Animation_mfor4"]
 length = 0.001
-tracks/0/type = "bezier"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset:x")
+tracks/0/path = NodePath("Sprite2D:offset")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
-tracks/1/type = "bezier"
+tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:offset:y")
+tracks/1/path = NodePath("Sprite2D:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
+
+[sub_resource type="Animation" id="Animation_rr1si"]
+resource_name = "hurt_end"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0.670588, 0.494118, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_kthah"]
+resource_name = "hurt_start"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.670588, 0.494118, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_h0oty"]
+resource_name = "idle"
+loop_mode = 1
 
 [sub_resource type="Animation" id="Animation_spicx"]
 resource_name = "moving"
 loop_mode = 1
-tracks/0/type = "bezier"
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset:x")
-tracks/0/interp = 1
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, 0, 0, 0, 0),
-"times": PackedFloat32Array(0)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:offset:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(0, 0.333333, 0.466667, 0.6, 0.933333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 3), Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_noojc"]
 _data = {
 "RESET": SubResource("Animation_mfor4"),
+"hurt_end": SubResource("Animation_rr1si"),
+"hurt_start": SubResource("Animation_kthah"),
+"idle": SubResource("Animation_h0oty"),
 "moving": SubResource("Animation_spicx")
 }
 
@@ -79,6 +173,7 @@ script = ExtResource("1_cvyhv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+self_modulate = Color(1, 0.670588, 0.494118, 1)
 rotation = 0.00160509
 scale = Vector2(0.23, 0.23)
 texture = ExtResource("2_vw3ki")
@@ -115,10 +210,19 @@ unique_name_in_owner = true
 
 [node name="Pistol" parent="." instance=ExtResource("3_al27l")]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeBlendTree_k2410")
+advance_expression_base_node = NodePath("..")
+anim_player = NodePath("AnimationPlayer")
+parameters/Add2/add_amount = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_noojc")
 }
+
+[node name="PlayerAnimation" type="Node2D" parent="."]
 
 [connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
 [connection signal="player_died" from="HealthComponent" to="." method="_on_health_component_player_died"]

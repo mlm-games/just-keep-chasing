@@ -308,6 +308,11 @@ value = 100.0
 layout_mode = 2
 alignment = 2
 
+[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/BottomContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "UI_SAVE"
+
 [node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/BottomContainer"]
 layout_mode = 2
 text = "UI_BACK"
@@ -333,4 +338,5 @@ bus = &"SFX"
 [connection signal="drag_ended" from="MarginContainer/VBoxContainer/TabContainer/AudioContainer/PanelContainer/MarginContainer/AudioContainer/HBoxContainer/MainVolumeSlider" to="." method="_on_main_volume_slider_drag_ended"]
 [connection signal="drag_ended" from="MarginContainer/VBoxContainer/TabContainer/AudioContainer/PanelContainer/MarginContainer/AudioContainer/HBoxContainer2/MusicSlider" to="." method="_on_music_slider_drag_ended"]
 [connection signal="drag_ended" from="MarginContainer/VBoxContainer/TabContainer/AudioContainer/PanelContainer/MarginContainer/AudioContainer/HBoxContainer3/SFXSlider" to="." method="_on_sfx_slider_drag_ended"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomContainer/BackButton" to="." method="_on_back_button_pressed"]

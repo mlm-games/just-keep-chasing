@@ -57,12 +57,11 @@ var locales := {
 
 
 func _ready() -> void:
-	GameState.load_settings()
-	
 	languages_ready()
 	video_ready()
 	gameplay_ready()
 	audio_ready()
+	ready.emit()
 
 #region Accessibility
 
@@ -102,13 +101,13 @@ func gameplay_ready() -> void:
 func video_ready():
 	
 	var window : Window = get_window()
-	_update_ui(window)
 	window.connect("size_changed", _preselect_resolution.bind(window))
+	_update_ui()
 	for resolution in resolutions_array:
 		var resolution_string : String = "%d x %d" % [resolution.x, resolution.y]
 		%ResolutionButton.add_item(resolution_string)
 
-func _update_ui(window : Window):
+func _update_ui(window : Window = get_window()):
 	%FullscreenButton.button_pressed = GameState.video["fullscreen"]
 	if !GameState.video["fullscreen"]:
 			var ws = GameState.video["resolution"]
@@ -179,7 +178,7 @@ func _on_resolution_button_item_selected(index: int) -> void:
 	
 
 func _on_back_button_pressed() -> void:
-	GameState.save_settings()
+	# Leaves without saving
 	ScreenEffects.change_scene_with_transition(GameState.MenuScene)
 	#Set the scene to change to.
 
@@ -199,7 +198,9 @@ func _on_fullscreen_button_toggled(toggled_on: bool) -> void:
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 		DisplayServer.window_set_flag( DisplayServer.WINDOW_FLAG_BORDERLESS, GameState.video["borderless"] )
+	
 	GameState.video["fullscreen"] = toggled_on
+	_update_resolution_options_enabled()
 
 
 func _on_language_options_button_item_selected(index: int) -> void:
@@ -207,3 +208,7 @@ func _on_language_options_button_item_selected(index: int) -> void:
 	TranslationServer.set_locale(locale)
 	GameState.accessibility["current_locale"] = locale
 	#FIXME: _update_ui()
+
+
+func _on_save_button_pressed() -> void:
+	GameState.save_settings()
