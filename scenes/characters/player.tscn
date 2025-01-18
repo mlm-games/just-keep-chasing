@@ -173,7 +173,6 @@ script = ExtResource("1_cvyhv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-self_modulate = Color(1, 0.670588, 0.494118, 1)
 rotation = 0.00160509
 scale = Vector2(0.23, 0.23)
 texture = ExtResource("2_vw3ki")

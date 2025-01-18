@@ -11,7 +11,7 @@ const CONFIG_DIR: String = "data/saves/"
 const BASE_DIR: String = "user://"
 const CONFIG_PATH: String = BASE_DIR + CONFIG_DIR + "settings.tres"
 
-#region game_specific_variables
+#region global_game_specific_variables
 
 var augments_paths : Array[String]
 
@@ -24,44 +24,56 @@ enum PowerupType {
 	INVINCIBLE,
 }
 
-var powerups = {
+var powerups := {
 	PowerupType.SLOW_TIME: 0,
 	PowerupType.SCREEN_BLAST: 0,
 	PowerupType.HEAL: 0,
 	PowerupType.INVINCIBLE: 0,
 }
 
+enum Stats {
+	MAX_HEALTH,
+	HEALTH,
+	SPEED,
+	DAMAGE_MULT,
+	DAMAGE,
+}
 
+enum Operation {
+	ADD,
+	MULTIPLY,
+	REPLACE,
+	EXPONENTIAL,
+}
+
+var player_stats: Dictionary = {
+	Stats.MAX_HEALTH: 100,
+	Stats.SPEED: 250,
+	Stats.DAMAGE_MULT: 1,
+	Stats.DAMAGE: 0,
+}
 
 # Player-related properties
-var player_lives: int = 1
+#var player_lives: int = 1
 
 # Game-related properties
 var research_points : int = 0
-var current_level: int = 1
+#var current_level: int = 1
 var is_game_paused: bool = false
 var is_game_over: bool = false
 
 # Inventory and items
-var inventory: Dictionary = {}
-var collected_items: Array = []
+#var inventory: Dictionary = {}
+#var collected_augments: Array = []
 
 # Checkpoint and respawn
-var last_checkpoint: Vector2 = Vector2.ZERO
-var respawn_position: Vector2 = Vector2.ZERO
+#var last_savepoint: Vector2 = Vector2.ZERO
+#var respawn_position: Vector2 = Vector2.ZERO
 
-var player_max_health_flat_inc : float
-var player_speed_flat_inc : float
 var player_reload_speed_mult : float
 var player_health_mult : float
-var upgrade_shop_spawn_divisor : int = 50
+var upgrade_shop_spawn_divisor : int = 20
 
-enum Stats {
-	max_health,
-	current_health,
-	max_speed,
-	current_speed,
-}
 
 #endregion
 
@@ -106,17 +118,36 @@ func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1
 	get_node("/root/World/HUD").update_hud()
 
+func apply_augment(augment: Augments) -> void:
+	for stat:StatsModifier in augment.stats_to_modify:
+		if stat.key in player_stats.keys():
+			match stat.operation:
+				Operation.REPLACE:
+					player_stats[stat.key] = stat.value
+				Operation.ADD:
+					player_stats[stat.key] += stat.value
+				Operation.MULTIPLY:
+					player_stats[stat.key] *= stat.value
+				Operation.EXPONENTIAL:
+					player_stats[stat.key] = pow(player_stats[stat.key], stat.value)
+			if stat.key == Stats.MAX_HEALTH:
+				#Update max_health in player's health component
+				get_tree().get_nodes_in_group("Player")[0].health_component.max_health = player_stats[Stats.MAX_HEALTH]
+		else:
+			match stat.key:
+				Stats.HEALTH:
+					get_tree().get_nodes_in_group("Player")[0].health_component.heal_or_damage(20)
 
 # Methods for managing game state
-func reset_game() -> void:
-	research_points = 0
-	current_level = 1
-	is_game_paused = false
-	is_game_over = false
-	inventory.clear()
-	collected_items.clear()
-	last_checkpoint = Vector2.ZERO
-	respawn_position = Vector2.ZERO
+#func reset_game() -> void:
+	#research_points = 0
+	#current_level = 1
+	#is_game_paused = false
+	#is_game_over = false
+	#inventory.clear()
+	#collected_items.clear()
+	#last_checkpoint = Vector2.ZERO
+	#respawn_position = Vector2.ZERO
 	# Reinitialize the player?
 
 func save_game() -> void:
@@ -130,28 +161,28 @@ func load_game() -> void:
 func update_highest_game_time(time: float) -> void:
 	if time > highest_game_time:
 		highest_game_time = time
-
-func add_to_inventory(item: String, quantity: int = 1) -> void:
-	if inventory.has(item):
-		inventory[item] += quantity
-	else:
-		inventory[item] = quantity
-
-func remove_from_inventory(item: String, quantity: int = 1) -> void:
-	if inventory.has(item):
-		inventory[item] -= quantity
-		if inventory[item] <= 0:
-			inventory.erase(item)
-
-func collect_item(item: String) -> void:
-	if not collected_items.has(item):
-		collected_items.append(item)
-
-func has_collected_item(item: String) -> bool:
-	return collected_items.has(item)
-
-func set_checkpoint(position: Vector2) -> void:
-	last_checkpoint = position
+#
+#func add_to_inventory(item: String, quantity: int = 1) -> void:
+	#if inventory.has(item):
+		#inventory[item] += quantity
+	#else:
+		#inventory[item] = quantity
+#
+#func remove_from_inventory(item: String, quantity: int = 1) -> void:
+	#if inventory.has(item):
+		#inventory[item] -= quantity
+		#if inventory[item] <= 0:
+			#inventory.erase(item)
+#
+#func collect_item(item: String) -> void:
+	#if not collected_items.has(item):
+		#collected_items.append(item)
+#
+#func has_collected_item(item: String) -> bool:
+	#return collected_items.has(item)
+#
+#func set_checkpoint(position: Vector2) -> void:
+	#last_checkpoint = position
 
 func respawn_player() -> void:
 		# Implement respawning the player at the last checkpoint or respawn position

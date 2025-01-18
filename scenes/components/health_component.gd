@@ -5,9 +5,10 @@ signal taking_damage
 signal health_changed(new_health: float)
 
 @export var max_health: float 
-var current_health: float
+var current_health: float = max_health
 var dying: bool = false
 var invincible: bool = false
+var prev_health := max_health
 
 func _ready() -> void:
 	current_health = max_health
@@ -31,20 +32,25 @@ func dot(attack: Attack) -> void:
 			health_changed.emit(current_health)
 			check_health()
 
-func heal(amount: float) -> void:
-	current_health = min(current_health + amount, max_health)
+func heal_or_damage(amount: float) -> void:
+	current_health = clampf(current_health + amount, 0, max_health)
 	health_changed.emit(current_health) 
 
 
 func is_alive() -> bool:
 	return current_health > 0
 
+#func is_taking_damage(delta) -> bool:
+	#var is_damaged = current_health < prev_health
+	#prev_health = current_health
+	#return is_damaged
+
 
 func check_health() -> void:
-	if current_health <= 0:
-		if get_parent().is_in_group("Player"):
+	if not is_alive():
+		if get_parent() is Player:
 			player_died.emit()
-		if get_parent().is_in_group("Enemies") and not dying:
+		if get_parent() is SlimeEnemy and not dying:
 			dying = true
 			GameState.research_points += get_parent().research_point_value
 			get_tree().get_first_node_in_group("HUD").update_currency_label()

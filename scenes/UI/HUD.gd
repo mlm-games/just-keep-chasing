@@ -1,4 +1,3 @@
-#TODO: Write down all the stats you want to add, then do the modifiaction of stats affecting part, now just perform other tasks, in anytype note down.
 #hack: Display ammo_count (reload status optional)
 #hack: touch_button_changing_icons...
 #Todo: WBC movement and texture like a ameoba(looks and anims in the direction of mov..)
@@ -47,7 +46,9 @@ func update_invincible_button() -> void:
 
 func check_time_condition() -> void:
 	#Temp Upgrade condition
+	@warning_ignore("integer_division")
 	if GameState.research_points / GameState.upgrade_shop_spawn_divisor > 1 and GameState.research_points != 0:
+		@warning_ignore("narrowing_conversion")
 		GameState.upgrade_shop_spawn_divisor += 10 + (10 * (elapsed_time * 0.001))
 		var upgrades_scene = load("res://scenes/UI/upgrades_layer.tscn").instantiate()
 		#hack: Add it like a pop up like a 0.01 sec anim? also some kind of sound for sure

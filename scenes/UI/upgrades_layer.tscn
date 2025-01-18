@@ -1,15 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://24v2w4t8hgkl"]
+[gd_scene load_steps=7 format=3 uid="uid://24v2w4t8hgkl"]
 
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="1_etbkl"]
 [ext_resource type="Script" path="res://scenes/UI/upgrades_layer.gd" id="1_f2f6q"]
 [ext_resource type="LabelSettings" uid="uid://c7d047estc02" path="res://resources/theme/label-settings-default.tres" id="2_fr6u5"]
 [ext_resource type="PackedScene" uid="uid://dq2rptl6lv3tc" path="res://scenes/UI/upgrade_slot.tscn" id="3_sx6la"]
 
+[sub_resource type="InputEventAction" id="InputEventAction_lxedb"]
+action = &"pause"
+
+[sub_resource type="Shortcut" id="Shortcut_giq6u"]
+events = [SubResource("InputEventAction_lxedb")]
+
 [node name="Upgrades" type="CanvasLayer"]
 layer = 50
 script = ExtResource("1_f2f6q")
 
 [node name="Control" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -92,8 +99,9 @@ alignment = 1
 
 [node name="CloseButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-tooltip_text = "close"
+tooltip_text = "UI_CLOSE_SHOP"
 theme_override_constants/align_to_largest_stylebox = 1
-text = "CLOSE"
+shortcut = SubResource("Shortcut_giq6u")
+text = "UI_CLOSE"
 
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

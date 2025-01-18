@@ -1,5 +1,6 @@
 class_name StatsModifier extends Resource
 
-@warning_ignore("narrowing_conversion")
-@export var value : int = NAN
-@export var key: String = ""
+@export var value : float = 0
+@export var key: GameState.Stats
+@export var operation: GameState.Operation
+#@export_enum("ADD","MULTIPLY","REPLACE","EXPONENTIAL") var operation : int
