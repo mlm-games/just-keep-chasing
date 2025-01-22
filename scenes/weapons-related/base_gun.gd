@@ -37,7 +37,6 @@ func _physics_process(_delta: float) -> void:
 			_fire_rate_timer.start()
 
 func spawn_bullet() -> void:
-	# Gun moves slight back and forth
 	if ammo > 0:
 		var bullet_instance = bullet.scene.instantiate()
 		bullet_instance.global_position = _bullet_spawn_point.global_position

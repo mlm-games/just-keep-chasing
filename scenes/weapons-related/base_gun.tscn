@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://djr17spwfqlsu"]
+
+[ext_resource type="Script" uid="uid://0vqt2x8xwvgg" path="res://scenes/weapons-related/base_gun.gd" id="1_erppj"]
+[ext_resource type="Texture2D" uid="uid://dyus754xmr41s" path="res://assets/sprites/pistol.png" id="3_1ijls"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
+radius = 600.053
+
+[sub_resource type="Animation" id="Animation_78mbw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PivotPoint/Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_mxhbq"]
+resource_name = "reload"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PivotPoint/Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 12.5664]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b6q5x"]
+_data = {
+&"RESET": SubResource("Animation_78mbw"),
+&"reload": SubResource("Animation_mxhbq")
+}
+
+[node name="Pistol" type="Area2D" groups=["Weapons"]]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_erppj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_we32q")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_b6q5x")
+}
+
+[node name="PivotPoint" type="Marker2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="PivotPoint"]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(36, 5)
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("3_1ijls")
+flip_h = true
+
+[node name="BulletSpawnPoint" type="Marker2D" parent="PivotPoint/Sprite2D"]
+unique_name_in_owner = true
+position = Vector2(300, -111.111)
+
+[node name="FireRateTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.25
+one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="area_entered" from="." to="." method="_on_base_weapon_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_base_weapon_area_exited"]

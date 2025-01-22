@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="GunData" load_steps=2 format=3 uid="uid://doth1xd85xeyo"]
+
+[ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="1_6ux22"]
+
+[resource]
+script = ExtResource("1_6ux22")
+reload_time = 0.0
+max_ammo = 0
+ammo = null
+targeting_range = 0.0
+fire_rate = 0.0
+metadata/_custom_type_script = ExtResource("1_6ux22")
