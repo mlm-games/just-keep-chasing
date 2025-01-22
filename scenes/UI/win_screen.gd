@@ -2,7 +2,7 @@ extends Control
 
 #@export var world_scene : PackedScene
 
-func  _process(delta: float) -> void:
+func  _process(_delta: float) -> void:
 	if get_tree().paused == false and visible:
 		get_tree().paused = true
 

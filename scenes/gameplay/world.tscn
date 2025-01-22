@@ -115,6 +115,7 @@ follow_viewport_enabled = true
 
 [node name="BackgroundParallax2D" type="Parallax2D" parent="Control/CanvasLayer"]
 scroll_scale = Vector2(0.625, 0.625)
+scroll_offset = Vector2(1, 0)
 repeat_size = Vector2(1152, 896)
 
 [node name="BackgroundRect" type="TextureRect" parent="Control/CanvasLayer/BackgroundParallax2D"]

@@ -129,19 +129,19 @@ func  _ready() -> void:
 
 func populate_augments() -> Array[Augments]:
 	var dir : DirAccess = DirAccess.open(AUGMENTS_DIR)
-	var augments : Array[Augments]
+	var augments_arr : Array[Augments]
 	for res:String in dir.get_files():
 		if res.ends_with(".tres"):
-			augments.append(ResourceLoader.load(AUGMENTS_DIR + res))
-	return augments
+			augments_arr.append(ResourceLoader.load(AUGMENTS_DIR + res))
+	return augments_arr
 
 func populate_powerup_data() -> Array[PowerupData]:
 	var dir : DirAccess = DirAccess.open(POWERUPS_DIR)
-	var powerup_data : Array[PowerupData]
+	var powerup_data_list : Array[PowerupData]
 	for res:String in dir.get_files():
 		if res.ends_with(".tres"):
-			powerup_data.append(ResourceLoader.load(POWERUPS_DIR + res))
-	return powerup_data
+			powerup_data_list.append(ResourceLoader.load(POWERUPS_DIR + res))
+	return powerup_data_list
 
 func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1

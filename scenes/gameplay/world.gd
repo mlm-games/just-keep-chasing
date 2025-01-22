@@ -125,9 +125,12 @@ func use_powerup(powerup_type: int) -> void:
 		GameState.powerups[powerup_type] -= 1
 		match powerup_type:
 			GameState.PowerupType.SLOW_TIME:
-				if Engine.time_scale != 0: Engine.time_scale = 0.75
-				await get_tree().create_timer(2.0).timeout
-				Engine.time_scale = 1.0
+				if Engine.time_scale != 0:
+					Engine.time_scale = 0.75
+					await get_tree().create_timer(2.0).timeout
+					Engine.time_scale = 1.0
+				else:
+					GameState.powerups[powerup_type] += 1
 			GameState.PowerupType.SCREEN_BLAST:
 				for enemy in get_tree().get_nodes_in_group("Enemies"):
 					enemy.queue_free()
