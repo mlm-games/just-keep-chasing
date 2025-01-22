@@ -21,7 +21,7 @@
 extends Node2D
 
 const ENEMY_SCENE_PATH = "res://scenes/characters/enemy%d.tscn"
-
+@export var test: Dictionary[Gun, Augments]
 @export var guns: Array[PackedScene] = []
 @export var powerups: Array[Powerup] = []
 

@@ -11,6 +11,12 @@ func _ready() -> void:
 		%TextureRect.texture = augment.augment_icon
 		%UpgradeLabel.text = tr(augment.augment_id.capitalize())
 		%PriceContainer.price_label.text = str(augment.augment_price)
+		red_out_unbuyable_slots()
+
+
+func red_out_unbuyable_slots() -> void:
+	if augment.augment_price > GameState.research_points:
+		%PriceContainer.price_label.modulate = Color(1.0, 0.333, 0.11)
 
 func _on_panel_mouse_entered() -> void:
 	panel_entered = true

@@ -6,8 +6,8 @@ extends PickUp
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		var tween = get_tree().create_tween().set_ease(Tween.EASE_IN).set_parallel()
-		tween.tween_property(self, "global_position", body.global_position, 0.25)
-		tween.tween_property(self, "scale", Vector2.ZERO, 0.25)
+		tween.tween_property(self, "global_position", body.global_position, 0.15)
+		tween.tween_property(self, "scale", Vector2.ZERO, 0.15)
 		await tween.finished
 		#TODO: play_audio()
 		collect_powerup()

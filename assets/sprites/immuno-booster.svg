@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100"
+   height="100"
+   viewBox="0 0 100 100"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   sodipodi:docname="immuno-booster.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="7.46"
+     inkscape:cx="48.190349"
+     inkscape:cy="50.335121"
+     inkscape:window-width="1536"
+     inkscape:window-height="902"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <linearGradient
+       id="swatch13"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#c1ffdf;stop-opacity:1;"
+         offset="0"
+         id="stop13" />
+    </linearGradient>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#b3b3b3;stroke-width:0.830762;fill-opacity:0.32636636"
+       id="rect2"
+       width="21.200361"
+       height="0.68994439"
+       x="14.619554"
+       y="45.838627"
+       rx="0"
+       ry="0.34497219" />
+    <rect
+       style="fill:#666666"
+       id="rect4"
+       width="8.2082968"
+       height="6.0900264"
+       x="71.445831"
+       y="42.760921"
+       ry="0" />
+    <rect
+       style="fill:#545454;fill-opacity:0.467032;stroke-width:0.464679"
+       id="rect14"
+       width="2.0420768"
+       height="5.2857366"
+       x="76.282295"
+       y="43.173794"
+       ry="0.39474669" />
+    <rect
+       style="fill:#3cff00"
+       id="rect1"
+       width="39.024391"
+       height="7.926827"
+       x="31.284554"
+       y="42.07317"
+       ry="3.9634135"
+       rx="4.6747937" />
+    <rect
+       style="fill:#c8beb7"
+       id="rect3"
+       width="7.3256841"
+       height="39.011475"
+       x="65.49691"
+       y="27.096205"
+       ry="3.662842" />
+    <rect
+       style="fill:#666666;fill-opacity:1"
+       id="rect6"
+       width="4.5013237"
+       height="21.624006"
+       x="77.977158"
+       y="35.301186"
+       ry="1.8534863" />
+    <rect
+       style="opacity:0.782;mix-blend-mode:soft-light;fill:#1a1a1a;fill-opacity:0.159649;stroke-width:0.476799"
+       id="rect7"
+       width="2.8323381"
+       height="22.938606"
+       x="67.877632"
+       y="34.719772"
+       ry="1.0022131" />
+    <rect
+       style="display:inline;opacity:0.582;mix-blend-mode:hard-light;fill:#c1c449;fill-opacity:1;stroke-width:0.518471"
+       id="rect8"
+       width="29.352289"
+       height="2.832993"
+       x="33.595139"
+       y="43.815796"
+       ry="1.4164965"
+       rx="1.5054352" />
+    <rect
+       style="fill:#787878;fill-opacity:1;stroke-width:0.432376"
+       id="rect13"
+       width="1.4866058"
+       height="12.240628"
+       x="79.48452"
+       y="39.992874"
+       ry="1.0491967" />
+  </g>
+</svg>

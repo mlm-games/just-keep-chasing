@@ -1,10 +1,73 @@
-[gd_scene load_steps=3 format=3 uid="uid://byks0f5xqnv20"]
+[gd_scene load_steps=6 format=3 uid="uid://byks0f5xqnv20"]
 
 [ext_resource type="Texture2D" uid="uid://diwwf4nywvgku" path="res://assets/sprites/cell-blockade.png" id="1_delmf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m0n0c"]
 radius = 33.0
 height = 68.0
+
+[sub_resource type="Animation" id="Animation_krxtq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_p24hy"]
+resource_name = "normal"
+length = 100.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:skew")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 43.33, 64.34, 100),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.0872665, 0.0872665, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 40, 64.34, 100),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.22173, 2.14675, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kcudx"]
+_data = {
+&"RESET": SubResource("Animation_krxtq"),
+&"normal": SubResource("Animation_p24hy")
+}
 
 [node name="Blockade" type="StaticBody2D"]
 
@@ -15,3 +78,9 @@ texture = ExtResource("1_delmf")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_m0n0c")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_kcudx")
+}
+autoplay = "normal"

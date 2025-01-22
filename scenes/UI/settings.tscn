@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dp42fom7cc3n0"]
 
 [ext_resource type="Theme" uid="uid://bt255sn41frcj" path="res://resources/theme/theme-settings.tres" id="1_0bumm"]
-[ext_resource type="Script" path="res://scenes/UI/settings.gd" id="2_m8nmd"]
+[ext_resource type="Script" uid="uid://df5m0bjwx82n1" path="res://scenes/UI/settings.gd" id="2_m8nmd"]
 [ext_resource type="AudioStream" uid="uid://bmiu5h0got4jq" path="res://assets/music/14._i_am_not_clumsy.mp3" id="3_08krg"]
 
 [node name="Settings" type="Control"]

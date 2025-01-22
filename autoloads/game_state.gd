@@ -37,6 +37,22 @@ enum Stats {
 	SPEED,
 	DAMAGE_MULT,
 	DAMAGE,
+	RELOAD_SPEED_REDUCTION_MULT,
+	TARGETTING_RANGE_MULT,
+	SHOP_COST_REDUCTION_MULT,
+	RAW_AMMO_INC,
+	AMMO_INC_MULT,
+	HEALTH_REGEN,
+	FLAT_ENEMY_HEALTH_REDUCTION,
+	ENEMY_HEALTH_REDUCTION_MULT,
+	FIRE_SPEED_REDUCTION_MULT,
+}
+
+# Making the firespeed go very fast when health goes below 20%
+# Other effects from my browser
+# Can do this after all the polish and marketing stuff...
+enum Effects {
+	
 }
 
 enum Operation {
@@ -132,11 +148,16 @@ func apply_augment(augment: Augments) -> void:
 					player_stats[stat.key] = pow(player_stats[stat.key], stat.value)
 			if stat.key == Stats.MAX_HEALTH:
 				#Update max_health in player's health component
-				get_tree().get_nodes_in_group("Player")[0].health_component.max_health = player_stats[Stats.MAX_HEALTH]
+				get_tree().get_nodes_in_group("Player")[0].update_max_health(player_stats[Stats.MAX_HEALTH])
 		else:
 			match stat.key:
 				Stats.HEALTH:
 					get_tree().get_nodes_in_group("Player")[0].health_component.heal_or_damage(20)
+
+func update_highest_game_time(time: float) -> void:
+	if time > highest_game_time:
+		highest_game_time = time
+
 
 # Methods for managing game state
 #func reset_game() -> void:
@@ -150,17 +171,6 @@ func apply_augment(augment: Augments) -> void:
 	#respawn_position = Vector2.ZERO
 	# Reinitialize the player?
 
-func save_game() -> void:
-		# Implement saving game state to a file or database
-	pass
-
-func load_game() -> void:
-		# Implement loading game state from a file or database
-	pass
-
-func update_highest_game_time(time: float) -> void:
-	if time > highest_game_time:
-		highest_game_time = time
 #
 #func add_to_inventory(item: String, quantity: int = 1) -> void:
 	#if inventory.has(item):
@@ -184,11 +194,21 @@ func update_highest_game_time(time: float) -> void:
 #func set_checkpoint(position: Vector2) -> void:
 	#last_checkpoint = position
 
+
+
+#region Saving and loading
+
+func save_game() -> void:
+		# Implement saving game state to a file or database
+	pass
+
+func load_game() -> void:
+		# Implement loading game state from a file or database
+	pass
+
 func respawn_player() -> void:
 		# Implement respawning the player at the last checkpoint or respawn position
 	pass
-
-#region Saving and loading
 
 func get_or_create_dir(path: String) -> DirAccess:
 	var dir := DirAccess.open(BASE_DIR)

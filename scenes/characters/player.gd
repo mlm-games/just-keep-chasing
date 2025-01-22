@@ -36,6 +36,9 @@ func _on_health_component_taking_damage() -> void:
 func _on_health_component_health_changed(new_health: float) -> void:
 	%ProgressBar.value = new_health
 
+func update_max_health(new_max_health: float) -> void:
+	%ProgressBar.max_value = new_max_health
+	health_component.max_health = new_max_health
 #func on_save_game(saved_data: Array[SaveData]):
 	#if health_component.is_alive():
 		#var my_data = CharacterSaveData.new()

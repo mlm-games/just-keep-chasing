@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://24v2w4t8hgkl"]
 
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="1_etbkl"]
-[ext_resource type="Script" path="res://scenes/UI/upgrades_layer.gd" id="1_f2f6q"]
+[ext_resource type="Script" uid="uid://cdc8if22rnwsq" path="res://scenes/UI/upgrades_layer.gd" id="1_f2f6q"]
 [ext_resource type="LabelSettings" uid="uid://c7d047estc02" path="res://resources/theme/label-settings-default.tres" id="2_fr6u5"]
 [ext_resource type="PackedScene" uid="uid://dq2rptl6lv3tc" path="res://scenes/UI/upgrade_slot.tscn" id="3_sx6la"]
 
@@ -66,6 +66,7 @@ label_settings = ExtResource("2_fr6u5")
 layout_mode = 2
 
 [node name="OptionsContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1

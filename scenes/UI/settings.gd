@@ -111,9 +111,9 @@ func _update_ui(window : Window = get_window()):
 	%FullscreenButton.button_pressed = GameState.video["fullscreen"]
 	if !GameState.video["fullscreen"]:
 			var ws = GameState.video["resolution"]
-			DisplayServer.window_set_size(ws)
+			window.size = ws
 			var ss = DisplayServer.screen_get_size()
-			DisplayServer.window_set_position(ss*0.5-ws*0.5)
+			window.position = ss*0.5-ws*0.5
 
 	_preselect_resolution(window)
 	_update_resolution_options_enabled()

@@ -1,6 +1,6 @@
 [gd_scene load_steps=29 format=3 uid="uid://b3mf65fcnvmvu"]
 
-[ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_cvyhv"]
+[ext_resource type="Script" uid="uid://crf18oy3oc75j" path="res://scenes/characters/player.gd" id="1_cvyhv"]
 [ext_resource type="Texture2D" uid="uid://6df1pxb6h2bi" path="res://assets/sprites/player.png" id="2_vw3ki"]
 [ext_resource type="PackedScene" uid="uid://bk4fraugaremc" path="res://scenes/weapons-related/pistol.tscn" id="3_al27l"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="4_pwyjt"]
@@ -157,11 +157,11 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_noojc"]
 _data = {
-"RESET": SubResource("Animation_mfor4"),
-"hurt_end": SubResource("Animation_rr1si"),
-"hurt_start": SubResource("Animation_kthah"),
-"idle": SubResource("Animation_h0oty"),
-"moving": SubResource("Animation_spicx")
+&"RESET": SubResource("Animation_mfor4"),
+&"hurt_end": SubResource("Animation_rr1si"),
+&"hurt_start": SubResource("Animation_kthah"),
+&"idle": SubResource("Animation_h0oty"),
+&"moving": SubResource("Animation_spicx")
 }
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
@@ -218,7 +218,7 @@ parameters/Add2/add_amount = 1.0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
 root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_noojc")
+&"": SubResource("AnimationLibrary_noojc")
 }
 
 [node name="PlayerAnimation" type="Node2D" parent="."]
