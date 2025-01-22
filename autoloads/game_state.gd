@@ -7,13 +7,15 @@ const MenuScene = "res://scenes/UI/menu.tscn"
 const SettingsScene = "res://scenes/UI/settings.tscn"
 
 const AUGMENTS_DIR : String = "res://resources/augments/"
+const POWERUPS_DIR : String = "res://resources/powerups/"
 const CONFIG_DIR: String = "data/saves/"
 const BASE_DIR: String = "user://"
 const CONFIG_PATH: String = BASE_DIR + CONFIG_DIR + "settings.tres"
 
 #region global_game_specific_variables
 
-var augments_paths : Array[String]
+var augments : Array[Augments]
+var powerups_data: Array[PowerupData]
 
 var highest_game_time: float = 0.0
 
@@ -121,14 +123,25 @@ var audio: Dictionary = {
 #endregion
 
 func  _ready() -> void:
-	populate_augment_paths()
+	augments = populate_augments()
+	powerups_data = populate_powerup_data()
 	load_settings(true)
 
-func populate_augment_paths() -> void:
-	var dir = DirAccess.open(AUGMENTS_DIR)
-	for res in dir.get_files():
+func populate_augments() -> Array[Augments]:
+	var dir : DirAccess = DirAccess.open(AUGMENTS_DIR)
+	var augments : Array[Augments]
+	for res:String in dir.get_files():
 		if res.ends_with(".tres"):
-			augments_paths.append(AUGMENTS_DIR + res)
+			augments.append(ResourceLoader.load(AUGMENTS_DIR + res))
+	return augments
+
+func populate_powerup_data() -> Array[PowerupData]:
+	var dir : DirAccess = DirAccess.open(POWERUPS_DIR)
+	var powerup_data : Array[PowerupData]
+	for res:String in dir.get_files():
+		if res.ends_with(".tres"):
+			powerup_data.append(ResourceLoader.load(POWERUPS_DIR + res))
+	return powerup_data
 
 func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1

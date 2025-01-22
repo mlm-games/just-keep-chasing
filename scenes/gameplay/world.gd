@@ -21,9 +21,9 @@
 extends Node2D
 
 const ENEMY_SCENE_PATH = "res://scenes/characters/enemy%d.tscn"
-@export var test: Dictionary[Gun, Augments]
+const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.tscn")
+
 @export var guns: Array[PackedScene] = []
-@export var powerups: Array[Powerup] = []
 
 @onready var hud: HUD = %HUD
 @onready var out_of_view_spawn_location: PathFollow2D = %OutOfViewSpawnLocation
@@ -73,18 +73,19 @@ func spawn_enemy() -> void:
 	enemies_node.add_child(enemy_instance)
 
 func spawn_powerup() -> void:
-	var powerup = get_random_powerup()
-	var powerup_instance = powerup.scene.instantiate()
+	var powerup_data = get_random_powerup()
+	var powerup_instance = BasePowerupScene.instantiate()
+	powerup_instance.set_powerup_data(powerup_data)
 	out_of_view_spawn_location.progress_ratio = randf()
 	powerup_instance.global_position = out_of_view_spawn_location.global_position
 	powerups_node.add_child(powerup_instance)
 
-func get_random_powerup() -> Powerup:
+func get_random_powerup() -> PowerupData:
 	#TODO: Replace randfs in the powertype scene itself
-	var powerup: Powerup = powerups.pick_random()
-	if powerup.spawn_chance < randf():
-		powerup = get_random_powerup()
-	return powerup
+	var powerup_data: PowerupData = GameState.powerups_data.pick_random()
+	if powerup_data.spawn_chance_percent / 100 < randf():
+		powerup_data = get_random_powerup()
+	return powerup_data
 
 func switch_weapon() -> void:
 	if guns.size() != 0:

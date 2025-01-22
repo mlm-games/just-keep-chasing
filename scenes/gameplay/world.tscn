@@ -1,23 +1,19 @@
-[gd_scene load_steps=21 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene load_steps=18 format=3 uid="uid://4fyoq8npekf0"]
 
 [ext_resource type="Script" uid="uid://lgsfy3lj2y0g" path="res://scenes/gameplay/world.gd" id="1_li0ht"]
-[ext_resource type="Resource" uid="uid://c3hm2e8euscc1" path="res://scenes/powerups/slow_time_powerup.tres" id="2_52a6m"]
 [ext_resource type="PackedScene" uid="uid://bk4fraugaremc" path="res://scenes/weapons-related/pistol.tscn" id="2_si53n"]
-[ext_resource type="Resource" uid="uid://kcnotr5g6npm" path="res://scenes/powerups/screen_blast_powerup.tres" id="3_o14jb"]
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes/characters/player.tscn" id="3_vhnxw"]
 [ext_resource type="PackedScene" uid="uid://3gohb2peicf" path="res://scenes/weapons-related/machine_gun.tscn" id="3_yilem"]
 [ext_resource type="PackedScene" uid="uid://rks5cvegm0tb" path="res://scenes/weapons-related/double_barrel_shotgun.tscn" id="4_hdduu"]
-[ext_resource type="Resource" uid="uid://dsp1inl6s1qal" path="res://scenes/powerups/heal_powerup.tres" id="4_hp0xe"]
 [ext_resource type="PackedScene" uid="uid://byks0f5xqnv20" path="res://scenes/gameplay/blockade.tscn" id="4_l562g"]
 [ext_resource type="Script" uid="uid://cso3agrkbovv8" path="res://scenes/saves/saver_loader.gd" id="5_m8xuy"]
 [ext_resource type="PackedScene" uid="uid://ceb1hgsm04rux" path="res://scenes/weapons-related/birdshot_shotgun.tscn" id="5_mr61w"]
 [ext_resource type="PackedScene" uid="uid://dxmkvni7lrbw3" path="res://scenes/weapons-related/buckshot_shotgun.tscn" id="6_68gcx"]
 [ext_resource type="PackedScene" uid="uid://cp7bdncv26bbl" path="res://scenes/characters/wbc.tscn" id="6_scc53"]
 [ext_resource type="PackedScene" uid="uid://p3ijv0nq3035" path="res://scenes/UI/hud.tscn" id="6_vltvt"]
-[ext_resource type="Script" uid="uid://bctrrfit1c7va" path="res://scenes/powerups/powerup.gd" id="7_62e17"]
 [ext_resource type="PackedScene" uid="uid://dbggwktk75btw" path="res://scenes/weapons-related/pump_action_shotgun.tscn" id="7_orse0"]
-[ext_resource type="PackedScene" uid="uid://cme2e7v3yy8ol" path="res://scenes/powerups/slow_time_powerup.tscn" id="8_k2l23"]
-[ext_resource type="Resource" uid="uid://ce4xe08v3av5a" path="res://scenes/powerups/invincible_powerup.tres" id="12_ue4yo"]
+[ext_resource type="Script" uid="uid://buv40e5a827xo" path="res://scenes/powerups/powerup_manager.gd" id="13_wcqrj"]
+[ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="14_su07q"]
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="18_r7okl"]
 
 [sub_resource type="Curve2D" id="Curve2D_xsefa"]
@@ -26,10 +22,12 @@ _data = {
 }
 point_count = 5
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
+radius = 42.86
+
 [node name="World" type="Node2D"]
 script = ExtResource("1_li0ht")
-guns = Array[PackedScene]([ExtResource("2_si53n"), ExtResource("3_yilem"), ExtResource("4_hdduu"), ExtResource("5_mr61w"), ExtResource("6_68gcx"), ExtResource("7_orse0"), null])
-powerups = Array[ExtResource("7_62e17")]([ExtResource("2_52a6m"), ExtResource("3_o14jb"), ExtResource("4_hp0xe"), ExtResource("12_ue4yo")])
+guns = Array[PackedScene]([ExtResource("2_si53n"), ExtResource("3_yilem"), ExtResource("4_hdduu"), ExtResource("5_mr61w"), ExtResource("6_68gcx"), ExtResource("7_orse0")])
 
 [node name="HUD" parent="." instance=ExtResource("6_vltvt")]
 unique_name_in_owner = true
@@ -90,10 +88,19 @@ script = ExtResource("5_m8xuy")
 position = Vector2(1598, 881)
 collision_mask = 4
 
-[node name="SlowTimePowerup" parent="." instance=ExtResource("8_k2l23")]
+[node name="SlowTimePowerup" type="Area2D" parent="."]
 position = Vector2(309, 223)
 collision_layer = 0
 collision_mask = 2
+script = ExtResource("13_wcqrj")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlowTimePowerup"]
+shape = SubResource("CircleShape2D_rxdp3")
+
+[node name="Sprite2D" type="Sprite2D" parent="SlowTimePowerup"]
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("14_su07q")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -124,3 +131,4 @@ color = Color(1, 0.933333, 0.929412, 1)
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="timeout" from="PowerupSpawnTimer" to="." method="_on_powerup_spawn_timer_timeout"]
+[connection signal="body_entered" from="SlowTimePowerup" to="SlowTimePowerup" method="_on_body_entered"]

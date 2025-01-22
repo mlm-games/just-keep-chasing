@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerupData" load_steps=3 format=3 uid="uid://cw5xlfwubk72c"]
+
+[ext_resource type="Texture2D" uid="uid://b7b32402tako6" path="res://assets/sprites/star_powerup.svg" id="1_krgy0"]
+[ext_resource type="Script" uid="uid://bctrrfit1c7va" path="res://resources/powerups/powerup.gd" id="1_w0ove"]
+
+[resource]
+script = ExtResource("1_w0ove")
+id = "star"
+icon = ExtResource("1_krgy0")
+icon_modulate = Color(0, 0, 0, 1)
+icon_scale = Vector2(0.03, 0.03)
+spawn_chance_percent = 10.0
+powerup_type = 3
+metadata/_custom_type_script = ExtResource("1_w0ove")

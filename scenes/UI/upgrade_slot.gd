@@ -2,7 +2,7 @@ class_name SlotContainer extends MarginContainer
 
 signal slot_clicked
 
-@export var augment : Augments = ResourceLoader.load(GameState.augments_paths.pick_random())
+@export var augment : Augments = GameState.augments.pick_random()
 
 var panel_entered : bool = false
 
