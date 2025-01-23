@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtmwhgtfypwqy"]
+[gd_scene load_steps=4 format=3 uid="uid://d4ji6n3iq4d3t"]
 
-[ext_resource type="Script" uid="uid://p3q5d6pe1800" path="res://scenes/weapons-related/fire_bullet.gd" id="1_nwoub"]
+[ext_resource type="Script" path="res://scenes/weapons-related/fire_bullet.gd" id="1_nwoub"]
 [ext_resource type="Texture2D" uid="uid://cdyq3ys4xr2vb" path="res://assets/sprites/fire-bullet.png" id="2_bpvjm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2ap0v"]

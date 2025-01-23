@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxaeogw1xbwu3"]
+[gd_scene load_steps=4 format=3 uid="uid://bhevlf7vp4atc"]
 
-[ext_resource type="Script" uid="uid://btuop4yuirt1i" path="res://scenes/weapons-related/birdshot.gd" id="1_2lk3j"]
+[ext_resource type="Script" path="res://scenes/weapons-related/birdshot.gd" id="1_2lk3j"]
 [ext_resource type="Texture2D" uid="uid://bogbptl8oh8pv" path="res://assets/sprites/shotgun-shell.png" id="2_kkx1u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2ap0v"]

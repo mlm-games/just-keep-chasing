@@ -6,9 +6,9 @@
 
 [resource]
 script = ExtResource("2_n8mda")
-projectile_speed = 750.0
+projectile_speed = 500.0
 projectile_range = 500
-projectile_damage = nan
+projectile_damage = 2.0
 projectile_spread = 0.0
 sprite_scale = Vector2(0.06, 0.17)
 sprite_modulate = Color(0.839216, 0.839216, 0.839216, 1)

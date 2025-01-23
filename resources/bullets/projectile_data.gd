@@ -3,7 +3,7 @@ class_name ProjectileData extends Resource
 @export_group("Stats", "projectile_")
 @export var projectile_speed : float = 750
 @export var projectile_range : int = 1000
-@export var projectile_damage : float = NAN
+@export var projectile_damage : float = -1
 @export var projectile_spread : float = 0
 
 @export_group("Sprite Properties", "sprite_")

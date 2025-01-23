@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Projectiles" load_steps=3 format=3 uid="uid://x7ehhb3f5w4s"]
-
-[ext_resource type="PackedScene" uid="uid://bgfkmosx2fllk" path="res://scenes/weapons-related/pellet.tscn" id="1_hv1qp"]
-[ext_resource type="Script" path="res://scenes/weapons-related/projectiles.gd" id="1_nwwk7"]
-
-[resource]
-script = ExtResource("1_nwwk7")
-scene = ExtResource("1_hv1qp")

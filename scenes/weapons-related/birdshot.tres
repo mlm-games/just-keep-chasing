@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Projectiles" load_steps=3 format=3 uid="uid://b6aweocd3n4f"]
-
-[ext_resource type="PackedScene" uid="uid://cxaeogw1xbwu3" path="res://scenes/weapons-related/birdshot.tscn" id="1_grn3b"]
-[ext_resource type="Script" path="res://scenes/weapons-related/projectiles.gd" id="2_1of2h"]
-
-[resource]
-script = ExtResource("2_1of2h")
-scene = ExtResource("1_grn3b")
