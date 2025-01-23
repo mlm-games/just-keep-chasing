@@ -1,6 +1,9 @@
 class_name BaseGun extends Area2D
 
-@export var bullet: Projectiles
+const RELOAD_LOOP_TIME = 0.5
+const BaseBulletScene = preload("res://scenes/weapons-related/base_projectile.tscn")
+
+@export var bullet: ProjectileData
 @export var reload_time: float
 @export var max_ammo: int
 @export var ammo: int = max_ammo
@@ -17,6 +20,8 @@ class_name BaseGun extends Area2D
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 
 var _enemies_in_range: Array = []
+var tween
+
 
 func _ready() -> void:
 	#$CollisionShape2D.shape.radius = 600
@@ -38,7 +43,8 @@ func _physics_process(_delta: float) -> void:
 
 func spawn_bullet() -> void:
 	if ammo > 0:
-		var bullet_instance = bullet.scene.instantiate()
+		var bullet_instance = BaseBulletScene.instantiate()
+		bullet_instance.set_projectile_values(bullet)
 		bullet_instance.global_position = _bullet_spawn_point.global_position
 		bullet_instance.global_rotation = _bullet_spawn_point.global_rotation
 		get_tree().current_scene.add_child(bullet_instance)
@@ -75,6 +81,20 @@ func _on_base_weapon_area_exited(area: Area2D) -> void:
 
 func _on_fire_rate_timer_timeout() -> void:
 	if not _enemies_in_range.is_empty():
+		play_fire_animation()
 		spawn_bullet()
 		if ammo <= 0:
 			reload()
+
+func play_fire_animation() -> void:
+	if tween:
+		tween.kill()
+	tween = get_tree().create_tween().set_ease(Tween.EASE_OUT)
+	tween.tween_property(%Sprite2D, "skew", -0.05, fire_rate/2)
+	tween.tween_property(%Sprite2D, "skew", 0, fire_rate/2)
+
+#func play_reload_animation() -> void:
+	#tween.set_loops(reload_time/RELOAD_LOOP_TIME)
+	#tween.tween_property(%Sprite2D, "rotation", 720, RELOAD_LOOP_TIME)
+	#await tween.finished
+	#tween.set_loops(0)

@@ -1,4 +1,4 @@
-class_name ProjectileData1 extends Resource
+class_name ProjectileData extends Resource
 
 @export_group("Stats", "projectile_")
 @export var projectile_speed : float = 750
@@ -11,6 +11,6 @@ class_name ProjectileData1 extends Resource
 @export var sprite_modulate : Color = Color.WHITE
 @export var sprite_texture : Texture2D
 @export var sprite_rotation : float = 0
-@export var sprite_offset : Vector2= Vector2.ZERO
+@export var sprite_offset : Vector2 = Vector2.ZERO
 
 @export var collision_shape_radius : float = 9.0

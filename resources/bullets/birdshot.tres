@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=3 format=3 uid="uid://cvll3ruomryrf"]
+
+[ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_1pj4w"]
+[ext_resource type="Texture2D" uid="uid://bogbptl8oh8pv" path="res://assets/sprites/shotgun-shell.png" id="2_s65ww"]
+
+[resource]
+script = ExtResource("1_1pj4w")
+projectile_speed = 500.0
+projectile_range = 1000
+projectile_damage = 0.5
+projectile_spread = 0.0
+sprite_scale = Vector2(0.052, 0.157)
+sprite_modulate = Color(1, 1, 1, 1)
+sprite_texture = ExtResource("2_s65ww")
+sprite_rotation = 0.0
+sprite_offset = Vector2(0, 0)
+collision_shape_radius = 9.85
+metadata/_custom_type_script = ExtResource("1_1pj4w")

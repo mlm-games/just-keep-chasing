@@ -44,7 +44,7 @@ _data = {
 &"reload": SubResource("Animation_mxhbq")
 }
 
-[node name="Pistol" type="Area2D" groups=["Weapons"]]
+[node name="BaseGun" type="Area2D" groups=["Weapons"]]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_erppj")

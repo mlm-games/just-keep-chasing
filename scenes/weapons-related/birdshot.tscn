@@ -17,7 +17,6 @@ bullet_damage = 0.5
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-0.499998, -5.36442e-07)
 scale = Vector2(0.0520548, 0.156863)
 texture = ExtResource("2_kkx1u")
 

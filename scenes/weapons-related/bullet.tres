@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Projectiles" load_steps=3 format=3 uid="uid://dxbf0dcaymdme"]
 
-[ext_resource type="Script" path="res://scenes/weapons-related/projectiles.gd" id="1_qfp5u"]
-[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/bullet.tscn" id="1_rhxfl"]
+[ext_resource type="Script" uid="uid://bho1t2mlff5hy" path="res://scenes/weapons-related/projectiles.gd" id="1_qfp5u"]
+[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_rhxfl"]
 
 [resource]
 script = ExtResource("1_qfp5u")

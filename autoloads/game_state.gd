@@ -26,6 +26,13 @@ enum PowerupType {
 	INVINCIBLE,
 }
 
+enum StatusEffectType {
+	FIRE,
+	POISON,
+	BLIGHT,
+	LEECH,
+}
+
 var powerups := {
 	PowerupType.SLOW_TIME: 0,
 	PowerupType.SCREEN_BLAST: 0,

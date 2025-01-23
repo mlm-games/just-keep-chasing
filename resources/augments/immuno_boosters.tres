@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://dbhqk1tq5grf8"]
 
-[ext_resource type="Texture2D" uid="uid://dnbyt8p2ow46o" path="res://assets/sprites/birdshot-shell.png" id="1_b6q1j"]
+[ext_resource type="Texture2D" uid="uid://bwn1fetdqmm3c" path="res://assets/sprites/immuno-booster.svg" id="1_e4qs5"]
 [ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="2_1auth"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="3_aaedq"]
 
@@ -12,7 +12,7 @@ operation = 0
 
 [resource]
 script = ExtResource("2_1auth")
-augment_icon = ExtResource("1_b6q1j")
+augment_icon = ExtResource("1_e4qs5")
 augment_price = 30
 augment_id = "immuno_boosters"
 stats_to_modify = Array[ExtResource("3_aaedq")]([SubResource("Resource_3ju77")])
