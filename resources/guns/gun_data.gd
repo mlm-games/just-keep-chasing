@@ -1,6 +1,6 @@
 class_name GunData extends Resource
 
-@export var bullet: Projectiles
+@export var bullet: ProjectileData
 @export var reload_time: float
 @export var max_ammo: int
 @export var ammo: int = max_ammo

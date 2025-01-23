@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bx00n3sunh5ld" path="res://scenes/weapons-related/double_barrel_shotgun.gd" id="1_ak5kx"]
 [ext_resource type="Texture2D" uid="uid://dccuva7i61u0n" path="res://assets/sprites/double_barrel_shotgun.png" id="2_fwune"]
-[ext_resource type="Resource" uid="uid://g3ajj7k7k0x2" path="res://resources/bullets/pellet.tres" id="2_oqaea"]
+[ext_resource type="Resource" uid="uid://ccjjel7gxlyjx" path="res://resources/bullets/pellet.tres" id="2_oqaea"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
 radius = 600.053
