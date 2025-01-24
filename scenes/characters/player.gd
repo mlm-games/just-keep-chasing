@@ -19,7 +19,7 @@ func _physics_process(_delta):
 	
 	move_and_slide()
 
-func _on_health_component_player_died() -> void:
+func _on_health_component_entity_died() -> void:
 	hide()
 	process_mode = Node.PROCESS_MODE_DISABLED
 	await get_tree().create_timer(0.5).timeout

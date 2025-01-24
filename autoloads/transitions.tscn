@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://c7j5jqynag4uw"]
 
-[ext_resource type="Script" path="res://autoloads/transitions.gd" id="1_mlxrt"]
-[ext_resource type="Shader" path="res://resources/shaders/circletransition.gdshader" id="2_bdbvc"]
+[ext_resource type="Script" uid="uid://b13rnxpo5kt4b" path="res://autoloads/transitions.gd" id="1_mlxrt"]
+[ext_resource type="Shader" uid="uid://dnms5hsmipkyv" path="res://resources/shaders/circletransition.gdshader" id="2_bdbvc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6dxx3"]
 
@@ -125,12 +125,12 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mvkca"]
 _data = {
-"RESET": SubResource("Animation_8o81u"),
-"circleIn": SubResource("Animation_0p84c"),
-"circleOut": SubResource("Animation_y8vgw"),
-"fadeToBlack": SubResource("Animation_7cxrl"),
-"fadeToNormal": SubResource("Animation_i0ik4"),
-"slightFlash": SubResource("Animation_qqa86")
+&"RESET": SubResource("Animation_8o81u"),
+&"circleIn": SubResource("Animation_0p84c"),
+&"circleOut": SubResource("Animation_y8vgw"),
+&"fadeToBlack": SubResource("Animation_7cxrl"),
+&"fadeToNormal": SubResource("Animation_i0ik4"),
+&"slightFlash": SubResource("Animation_qqa86")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fyb5o"]
@@ -157,7 +157,7 @@ color = Color(0, 0, 0, 1)
 [node name="TransitionPlayer" type="AnimationPlayer" parent="TransitionRect"]
 root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_mvkca")
+&"": SubResource("AnimationLibrary_mvkca")
 }
 
 [node name="OnScreenEffectsRect" type="ColorRect" parent="."]

@@ -97,7 +97,7 @@ var is_game_over: bool = false
 
 var player_reload_speed_mult : float
 var player_health_mult : float
-var upgrade_shop_spawn_divisor : int = 20
+var upgrade_shop_spawn_divisor : int = 15
 
 
 #endregion

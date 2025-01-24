@@ -1,5 +1,3 @@
-
-
 class_name SlimeEnemy extends CharacterBody2D
 
 const ANIMATION_FOLLOW_X = "follow-x"
@@ -11,12 +9,19 @@ const ANIMATION_FOLLOW_Y = "follow-y"
 
 @onready var player = get_tree().get_first_node_in_group("Player")
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
-@onready var hitbox_component: HitboxComponent = %HitboxComponent
+@onready var hitbox_component: HitboxComponent = %EnemyHitboxComponent
 
 var player_hitbox: HitboxComponent
 var can_deal_damage := false
 
-func _process(delta: float) -> void:
+func _ready() -> void:
+	pass
+	#Fixme: Do not work due to the values due to the area parameter not being passed
+	#hitbox_component.health_component.entity_died.connect(_on_health_component_entity_died)
+	#hitbox_component.area_entered.connect(_on_hitbox_component_area_entered)
+	#hitbox_component.area_entered.connect(_on_hitbox_component_area_exited)
+
+func _physics_process(delta: float) -> void:
 	move_towards_player()
 	update_animation()
 	apply_contact_damage(delta)
@@ -27,10 +32,11 @@ func move_towards_player() -> void:
 	move_and_slide()
 
 func update_animation() -> void:
-	if abs(velocity.x) > abs(velocity.y):
-		animation_player.play(ANIMATION_FOLLOW_X)
-	else:
-		animation_player.play(ANIMATION_FOLLOW_Y)
+	if not animation_player.is_playing():
+		if abs(velocity.x) > abs(velocity.y):
+			animation_player.play(ANIMATION_FOLLOW_X)
+		else:
+			animation_player.play(ANIMATION_FOLLOW_Y)
 
 func apply_contact_damage(delta: float) -> void:
 	if can_deal_damage and player_hitbox:
@@ -55,3 +61,15 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	remove_from_group("On Screen Enemies")
+
+
+func _on_health_component_entity_died() -> void:
+	if not hitbox_component.health_component.dying:
+		GameState.research_points += research_point_value
+		hitbox_component.health_component.dying = true
+	get_tree().get_first_node_in_group("HUD").update_currency_label()
+	$EnemyHitboxComponent/CollisionShape2D.set_deferred("disabled", true)
+	set_physics_process(false)
+	animation_player.play("death")
+	await animation_player.animation_finished
+	queue_free()

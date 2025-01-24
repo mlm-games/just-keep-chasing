@@ -1,6 +1,6 @@
 class_name HealthComponent extends Node
 #TODO: Sending out the anims for each powerups (like shockwaves for screenblast, starry colors on player for invincible)
-signal player_died
+signal entity_died
 signal taking_damage
 signal health_changed(new_health: float)
 
@@ -33,6 +33,11 @@ func dot(attack: Attack) -> void:
 			check_health()
 
 func heal_or_damage(amount: float) -> void:
+	if amount > 0:
+		var tween = create_tween().set_ease(Tween.EASE_OUT_IN)
+		var color_backup = get_parent().modulate
+		tween.tween_property(get_parent(), "modulate", Color.LIGHT_GREEN, 0.1)
+		tween.tween_property(get_parent(), "modulate", color_backup, 0.1)
 	current_health = clampf(current_health + amount, 0, max_health)
 	health_changed.emit(current_health) 
 
@@ -48,13 +53,7 @@ func is_alive() -> bool:
 
 func check_health() -> void:
 	if not is_alive():
-		if get_parent() is Player:
-			player_died.emit()
-		if get_parent() is SlimeEnemy and not dying:
-			dying = true
-			GameState.research_points += get_parent().research_point_value
-			get_tree().get_first_node_in_group("HUD").update_currency_label()
-			get_parent().queue_free()
+		entity_died.emit()
 
 func disable_for_secs(secs: float) -> void:
 	invincible = true

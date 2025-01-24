@@ -1,73 +1,18 @@
-[gd_scene load_steps=13 format=3 uid="uid://q2ch1upupt84"]
+[gd_scene load_steps=10 format=3 uid="uid://q2ch1upupt84"]
 
-[ext_resource type="Script" path="res://scenes/characters/slime_enemy.gd" id="1_arqkv"]
+[ext_resource type="Script" uid="uid://bv26fkvrv8bar" path="res://scenes/characters/slime_enemy.gd" id="1_arqkv"]
 [ext_resource type="Texture2D" uid="uid://buqj8udj42uq6" path="res://assets/sprites/slime.png" id="2_fgdun"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="3_bg28f"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_uyc4d"]
-[ext_resource type="Script" path="res://scenes/states/state_machine.gd" id="5_y65yd"]
-[ext_resource type="Script" path="res://scenes/states/enemy_follow.gd" id="6_fte2u"]
+[ext_resource type="AnimationLibrary" uid="uid://bo5gtqkkhod47" path="res://scenes/characters/slime_enemy_anims.tres" id="5_aegf3"]
+[ext_resource type="Script" uid="uid://dwywbgomubv6t" path="res://scenes/states/state_machine.gd" id="5_y65yd"]
+[ext_resource type="Script" uid="uid://c8xci5jrigj80" path="res://scenes/states/enemy_follow.gd" id="6_fte2u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pnp1"]
 size = Vector2(56, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
 size = Vector2(44, 40)
-
-[sub_resource type="Animation" id="Animation_0xt00"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_txy4m"]
-resource_name = "follow-x"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1.5, 2),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 5), Vector2(0, -5), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_2n6dd"]
-resource_name = "follow-y"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1.5, 2),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(5, 0), Vector2(-5, 0), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_p8ubb"]
-_data = {
-"RESET": SubResource("Animation_0xt00"),
-"follow-x": SubResource("Animation_txy4m"),
-"follow-y": SubResource("Animation_2n6dd")
-}
 
 [node name="Enemy2" type="CharacterBody2D" groups=["Enemies"]]
 position = Vector2(363, 235)
@@ -83,13 +28,13 @@ metadata/_edit_group_ = true
 [node name="HealthComponent" parent="." instance=ExtResource("4_uyc4d")]
 max_health = 13.0
 
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_bg28f")]
+[node name="EnemyHitboxComponent" parent="." node_paths=PackedStringArray("health_component") groups=["Enemies"] instance=ExtResource("3_bg28f")]
 unique_name_in_owner = true
 collision_layer = 4
 collision_mask = 3
 health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitboxComponent"]
 shape = SubResource("RectangleShape2D_8pnp1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -103,7 +48,7 @@ shape = SubResource("RectangleShape2D_mgdpr")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-"": SubResource("AnimationLibrary_p8ubb")
+&"": ExtResource("5_aegf3")
 }
 speed_scale = 2.0
 
@@ -113,5 +58,10 @@ script = ExtResource("5_y65yd")
 [node name="Follow" type="Node" parent="StateMachine"]
 script = ExtResource("6_fte2u")
 
-[connection signal="area_entered" from="HitboxComponent" to="." method="_on_hitbox_component_area_entered"]
-[connection signal="area_exited" from="HitboxComponent" to="." method="_on_hitbox_component_area_exited"]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="entity_died" from="HealthComponent" to="." method="_on_health_component_entity_died"]
+[connection signal="area_entered" from="EnemyHitboxComponent" to="." method="_on_hitbox_component_area_entered"]
+[connection signal="area_exited" from="EnemyHitboxComponent" to="." method="_on_hitbox_component_area_exited"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -223,6 +223,6 @@ libraries = {
 
 [node name="PlayerAnimation" type="Node2D" parent="."]
 
+[connection signal="entity_died" from="HealthComponent" to="." method="_on_health_component_entity_died"]
 [connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
-[connection signal="player_died" from="HealthComponent" to="." method="_on_health_component_player_died"]
 [connection signal="taking_damage" from="HealthComponent" to="." method="_on_health_component_taking_damage"]

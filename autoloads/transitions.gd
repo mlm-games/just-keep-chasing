@@ -24,14 +24,14 @@ func change_scene_with_transition_packed(scene: PackedScene, anim_name: String =
 	await screen_covered
 	get_tree().change_scene_to_packed(scene)
 
-func transition(anim_name: String = "fadeToBlack", pop_up: bool = false):
+func transition(anim_name: StringName = "fadeToBlack", pop_up: bool = false):
 	match anim_name:
 		"fadeToBlack":
 			transition_rect.visible = true
 			transition_player.play(anim_name)
 		"slightFlash":
 			white_rect.visible = true
-			effects_player.play(anim_name)
+			transition_player.play(anim_name)
 		"circleIn":
 			shader_rect.visible = true
 			transition_player.play(anim_name)
@@ -40,7 +40,7 @@ func transition(anim_name: String = "fadeToBlack", pop_up: bool = false):
 
 
 
-func _on_animation_player_animation_finished(anim_name: String):
+func _on_animation_player_animation_finished(anim_name: StringName):
 	match anim_name:
 		"fadeToBlack":
 			screen_covered.emit()

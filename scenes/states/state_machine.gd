@@ -37,6 +37,3 @@ func on_state_transitioned(state, new_state_name) -> void:
 	
 	current_state = new_state
 	print(new_state)
-
-
-
