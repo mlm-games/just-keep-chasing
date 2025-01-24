@@ -16,10 +16,9 @@ var can_deal_damage := false
 
 func _ready() -> void:
 	pass
-	#Fixme: Do not work due to the values due to the area parameter not being passed
-	#hitbox_component.health_component.entity_died.connect(_on_health_component_entity_died)
-	#hitbox_component.area_entered.connect(_on_hitbox_component_area_entered)
-	#hitbox_component.area_entered.connect(_on_hitbox_component_area_exited)
+	hitbox_component.health_component.entity_died.connect(_on_health_component_entity_died)
+	hitbox_component.area_entered.connect(_on_hitbox_component_area_entered.bind())
+	hitbox_component.area_entered.connect(_on_hitbox_component_area_exited.bind())
 
 func _physics_process(delta: float) -> void:
 	move_towards_player()

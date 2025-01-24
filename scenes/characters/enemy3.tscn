@@ -65,8 +65,5 @@ script = ExtResource("4_0c3i1")
 [node name="Follow" type="Node" parent="StateMachine"]
 script = ExtResource("5_nocuo")
 
-[connection signal="entity_died" from="HealthComponent" to="." method="_on_health_component_entity_died"]
-[connection signal="area_entered" from="EnemyHitboxComponent" to="." method="_on_hitbox_component_area_entered"]
-[connection signal="area_exited" from="EnemyHitboxComponent" to="." method="_on_hitbox_component_area_exited"]
 [connection signal="screen_entered" from="AnimationPlayer/VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="AnimationPlayer/VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
