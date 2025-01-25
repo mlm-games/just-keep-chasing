@@ -43,7 +43,7 @@ shape = SubResource("RectangleShape2D_8pnp1")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.611765, 1, 1)
 position = Vector2(5.83333, 3.66666)
-scale = Vector2(0.94, 0.88)
+scale = Vector2(0.06, 0.057)
 texture = SubResource("CompressedTexture2D_c5db5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

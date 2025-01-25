@@ -38,7 +38,7 @@ health_component = NodePath("../HealthComponent")
 shape = SubResource("RectangleShape2D_8pnp1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.94, 0.88)
+scale = Vector2(0.06, 0.057)
 texture = ExtResource("4_aegf3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

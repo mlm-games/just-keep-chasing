@@ -22,7 +22,7 @@ research_point_value = 1
 speed = 125.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.94, 0.88)
+scale = Vector2(0.06, 0.057)
 texture = ExtResource("2_n5x2f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
