@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://q2ch1upupt84"]
 
 [ext_resource type="Script" uid="uid://bv26fkvrv8bar" path="res://scenes/characters/slime_enemy.gd" id="1_arqkv"]
-[ext_resource type="Texture2D" uid="uid://buqj8udj42uq6" path="res://assets/sprites/slime.png" id="2_fgdun"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="3_bg28f"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="4_aegf3"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_uyc4d"]
 [ext_resource type="AnimationLibrary" uid="uid://bo5gtqkkhod47" path="res://scenes/characters/slime_enemy_anims.tres" id="5_aegf3"]
 [ext_resource type="Script" uid="uid://dwywbgomubv6t" path="res://scenes/states/state_machine.gd" id="5_y65yd"]
@@ -39,7 +39,7 @@ shape = SubResource("RectangleShape2D_8pnp1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.94, 0.88)
-texture = ExtResource("2_fgdun")
+texture = ExtResource("4_aegf3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mgdpr")
