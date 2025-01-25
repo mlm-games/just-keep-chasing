@@ -4,6 +4,7 @@ signal entity_died
 signal taking_damage
 signal health_changed(new_health: float)
 
+const INVINCIBLE_SHADER = preload("res://scenes/characters/star_effect.gdshader")
 @export var max_health: float 
 var current_health: float = max_health
 var dying: bool = false
@@ -57,6 +58,10 @@ func check_health() -> void:
 
 func disable_for_secs(secs: float) -> void:
 	invincible = true
+	var parent_sprite : Sprite2D = get_node("../Sprite2D")
+	parent_sprite.material = ShaderMaterial.new()
+	parent_sprite.material.shader = INVINCIBLE_SHADER
 	await get_tree().create_timer(secs).timeout
 	invincible = false
+	parent_sprite.material = null
 	

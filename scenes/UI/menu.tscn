@@ -1,5 +1,6 @@
-[gd_scene load_steps=21 format=3 uid="uid://c2gocuhw2o7py"]
+[gd_scene load_steps=22 format=3 uid="uid://c2gocuhw2o7py"]
 
+[ext_resource type="Theme" uid="uid://d26u4ffjbtvf8" path="res://resources/test_theme.tres" id="1_svcqa"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="2_b641b"]
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="2_ny0ke"]
 [ext_resource type="Script" uid="uid://hgvitycqq2iu" path="res://scenes/UI/game_version.gd" id="4_3hod2"]
@@ -95,7 +96,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_b641b")
+theme = ExtResource("1_svcqa")
 script = ExtResource("5")
 
 [node name="TextureRect2" type="TextureRect" parent="."]
@@ -186,7 +187,6 @@ text = "MENU_LABEL_CONTINUE"
 [node name="PlayButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
-theme = ExtResource("2_b641b")
 text = "MENU_LABEL_NEW_GAME"
 
 [node name="SettingsButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]

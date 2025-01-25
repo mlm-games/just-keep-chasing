@@ -1,7 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://gxc4hcrljhcm"]
 
-[ext_resource type="Script" path="res://scenes/components/health_component.gd" id="1_c6b3v"]
+[ext_resource type="Script" uid="uid://0ekbck30lfms" path="res://scenes/components/health_component.gd" id="1_c6b3v"]
 
 [node name="HealthComponent" type="Node"]
 script = ExtResource("1_c6b3v")
 max_health = 100.0
+
+[node name="EffectsAudioPlayer2D" type="AudioStreamPlayer2D" parent="."]
+attenuation = 2.21914

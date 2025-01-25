@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bon1fuojkwn5g"]
 
 [ext_resource type="Script" uid="uid://bv26fkvrv8bar" path="res://scenes/characters/slime_enemy.gd" id="1_ocsmm"]
-[ext_resource type="Texture2D" uid="uid://buqj8udj42uq6" path="res://assets/sprites/slime.png" id="2_grfc4"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_n5x2f"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="3_ctjx3"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_ovq2o"]
 [ext_resource type="AnimationLibrary" uid="uid://bo5gtqkkhod47" path="res://scenes/characters/slime_enemy_anims.tres" id="5_n5x2f"]
@@ -22,12 +22,11 @@ research_point_value = 1
 speed = 125.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(1, -3)
-scale = Vector2(0.94, 0.88)
-texture = ExtResource("2_grfc4")
+position = Vector2(0, -10)
+scale = Vector2(0.06, 0.056)
+texture = ExtResource("2_n5x2f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_mgdpr")
 
 [node name="EnemyHitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_ctjx3")]
@@ -51,5 +50,6 @@ speed_scale = 2.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
+[connection signal="area_exited" from="EnemyHitboxComponent" to="." method="_on_enemy_hitbox_component_area_exited"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

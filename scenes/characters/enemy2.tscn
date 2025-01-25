@@ -42,7 +42,6 @@ scale = Vector2(0.94, 0.88)
 texture = ExtResource("2_fgdun")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_mgdpr")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

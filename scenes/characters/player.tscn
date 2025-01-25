@@ -184,7 +184,7 @@ shape = SubResource("CircleShape2D_d6keb")
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_pwyjt")]
 unique_name_in_owner = true
-collision_layer = 3
+collision_layer = 2
 collision_mask = 4
 health_component = NodePath("../HealthComponent")
 

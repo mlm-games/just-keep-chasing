@@ -18,12 +18,13 @@ func _ready() -> void:
 	pass
 	hitbox_component.health_component.entity_died.connect(_on_health_component_entity_died)
 	hitbox_component.area_entered.connect(_on_hitbox_component_area_entered.bind())
-	hitbox_component.area_entered.connect(_on_hitbox_component_area_exited.bind())
+	hitbox_component.area_exited.connect(_on_hitbox_component_area_exited.bind())
 
 func _physics_process(delta: float) -> void:
 	move_towards_player()
 	update_animation()
 	apply_contact_damage(delta)
+	print($Sprite2D.scale)
 
 func move_towards_player() -> void:
 	var direction = global_position.direction_to(player.global_position)
@@ -44,12 +45,12 @@ func apply_contact_damage(delta: float) -> void:
 		player_hitbox.damage(contact_attack)
 
 func _on_hitbox_component_area_entered(area: Area2D) -> void:
-	if area is HitboxComponent:
+	if area.get_parent() is Player:
 		player_hitbox = area
 		can_deal_damage = true
 
 func _on_hitbox_component_area_exited(area: Area2D) -> void:
-	if area is HitboxComponent and player_hitbox == area:
+	if area.get_parent() is Player and player_hitbox == area:
 		player_hitbox = null
 		can_deal_damage = false
 
