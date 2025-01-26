@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c2gocuhw2o7py"]
+[gd_scene load_steps=23 format=3 uid="uid://c2gocuhw2o7py"]
 
 [ext_resource type="Theme" uid="uid://d26u4ffjbtvf8" path="res://resources/test_theme.tres" id="1_svcqa"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="2_b641b"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" uid="uid://cx3foo3o15go8" path="res://scenes/gameplay/wavy_effect.gdshader" id="4_78n2u"]
 [ext_resource type="Script" uid="uid://d3qxlw41khhgp" path="res://scenes/UI/menu.gd" id="5"]
 [ext_resource type="Script" uid="uid://cplyjxscurihv" path="res://scenes/UI/godot_version.gd" id="5_fdyjp"]
+[ext_resource type="PackedScene" uid="uid://cs2fl7pw33da1" path="res://scenes/UI/misc/anim-button.tscn" id="5_ofy2k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_78n2u"]
 shader = ExtResource("4_78n2u")
@@ -163,6 +164,9 @@ text = "GAME_TITLE"
 label_settings = SubResource("LabelSettings_78n2u")
 uppercase = true
 
+[node name="Button" parent="MarginContainer/Control/CenterContainer/Title" instance=ExtResource("5_ofy2k")]
+layout_mode = 0
+
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 7
@@ -178,6 +182,7 @@ grow_vertical = 0
 theme_override_constants/separation = 16
 
 [node name="ResumeButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 theme = ExtResource("2_b641b")

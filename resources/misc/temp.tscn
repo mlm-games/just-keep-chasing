@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://b25jc43b1rvi5"]
+
+[ext_resource type="Script" uid="uid://bqnokttfjhv30" path="res://temp.gd" id="1_3c8th"]
+[ext_resource type="Shader" uid="uid://bc2jjkf388bi5" path="res://resources/misc/button_ripple.gdshader" id="1_b2ss7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ejqv"]
+shader = ExtResource("1_b2ss7")
+shader_parameter/progress = 0.0
+
+[sub_resource type="Theme" id="Theme_b2ss7"]
+
+[node name="Node2D" type="Button"]
+material = SubResource("ShaderMaterial_7ejqv")
+offset_left = 46.0
+offset_top = 63.0
+offset_right = 604.0
+offset_bottom = 242.0
+theme = SubResource("Theme_b2ss7")
+text = "hiujuuh"
+script = ExtResource("1_3c8th")
