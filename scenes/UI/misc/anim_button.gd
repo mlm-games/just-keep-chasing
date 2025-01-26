@@ -63,3 +63,9 @@ func _on_button_up():
 
 func _update_text_effect(value: float):
 	label.material.set_shader_parameter("effect_value", value)
+
+
+#func _on_pressed() -> void:
+#FIXME: Doesnt work due to the timers not being syncronised properly, hence looking bad.
+	#await get_tree().create_timer(0.15).timeout
+	#_on_mouse_entered()
