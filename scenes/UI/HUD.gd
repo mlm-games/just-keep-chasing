@@ -55,7 +55,7 @@ func check_time_condition() -> void:
 		add_child(upgrades_scene)
 			
 	
-	##Win condition
+	# Win condition
 	if elapsed_time == 300:
 		if !pop_up_on_screen:
 			pop_up_on_screen = true

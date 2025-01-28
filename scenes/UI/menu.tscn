@@ -7,7 +7,7 @@
 [ext_resource type="Shader" uid="uid://cx3foo3o15go8" path="res://scenes/gameplay/wavy_effect.gdshader" id="4_78n2u"]
 [ext_resource type="Script" uid="uid://d3qxlw41khhgp" path="res://scenes/UI/menu.gd" id="5"]
 [ext_resource type="Script" uid="uid://cplyjxscurihv" path="res://scenes/UI/godot_version.gd" id="5_fdyjp"]
-[ext_resource type="PackedScene" uid="uid://cs2fl7pw33da1" path="res://scenes/UI/misc/anim-button.tscn" id="5_ofy2k"]
+[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="7_ypw4e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_78n2u"]
 shader = ExtResource("4_78n2u")
@@ -164,9 +164,6 @@ text = "GAME_TITLE"
 label_settings = SubResource("LabelSettings_78n2u")
 uppercase = true
 
-[node name="Button" parent="MarginContainer/Control/CenterContainer/Title" instance=ExtResource("5_ofy2k")]
-layout_mode = 0
-
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
 layout_mode = 1
 anchors_preset = 7
@@ -188,21 +185,29 @@ layout_mode = 2
 theme = ExtResource("2_b641b")
 disabled = true
 text = "MENU_LABEL_CONTINUE"
+script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = ExtResource("7_ypw4e")
 
 [node name="PlayButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_NEW_GAME"
+script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = ExtResource("7_ypw4e")
 
 [node name="SettingsButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_SETTINGS"
+script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = ExtResource("7_ypw4e")
 
 [node name="ExitButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_EXIT"
+script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = ExtResource("7_ypw4e")
 
 [node name="Version" type="VBoxContainer" parent="MarginContainer/Control"]
 visible = false

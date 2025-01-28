@@ -1,7 +1,7 @@
 class_name AnimButton extends Button
 
-@onready var particles = %MovementParticles2D
-@onready var label: Label = $Label
+#@onready var particles = $MovementParticles2D
+#@onready var label: Label = $Label
 
 var tween: Tween
 
@@ -12,42 +12,42 @@ func _ready():
 	button_up.connect(_on_button_up)
 	
 	#Label stuff
-	_setup_text_animation()
+	#_setup_text_animation()
 
-func _setup_text_animation():
-	label.material = ShaderMaterial.new()
-	label.material.shader = preload("res://scenes/UI/misc/anim_text.gdshader")
+#func _setup_text_animation():
+	#label.material = ShaderMaterial.new()
+	#label.material.shader = preload("res://scenes/UI/misc/anim_text.gdshader")
 
 
 func _on_mouse_entered():
-	particles.emitting = true
+	#particles.emitting = true
 	if tween:
 		tween.kill()
 	tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.1).set_trans(Tween.TRANS_CUBIC)
 	
 	# smallish glow effect
-	var style = get_theme_stylebox("normal").duplicate()
-	style.shadow_size = 8
-	add_theme_stylebox_override("normal", style)
+	#var style = get_theme_stylebox("normal").duplicate()
+	#style.shadow_size = 8
+	#add_theme_stylebox_override("normal", style)
 	
-	# Label stuff
-	var tween = create_tween()
-	tween.tween_method(_update_text_effect, 0.0, 1.0, 0.3)
+	## Label stuff
+	#tween = create_tween()
+	#tween.tween_method(_update_text_effect, 0.0, 1.0, 0.3)
 
 func _on_mouse_exited():
-	particles.emitting = false
+	#particles.emitting = false
 	if tween:
 		tween.kill()
 	tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_CUBIC)
 	
 	# Reset glow
-	add_theme_stylebox_override("normal", null)
+	#add_theme_stylebox_override("normal", null)
 	
-	# label 
-	var tween = create_tween()
-	tween.tween_method(_update_text_effect, 1.0, 0.0, 0.3)
+	## label 
+	#tween = create_tween()
+	#tween.tween_method(_update_text_effect, 1.0, 0.0, 0.3)
 
 func _on_button_down():
 	if tween:
@@ -61,8 +61,8 @@ func _on_button_up():
 	tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_CUBIC)
 
-func _update_text_effect(value: float):
-	label.material.set_shader_parameter("effect_value", value)
+#func _update_text_effect(value: float):
+	#label.material.set_shader_parameter("effect_value", value)
 
 
 #func _on_pressed() -> void:

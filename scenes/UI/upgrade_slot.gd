@@ -21,7 +21,7 @@ func red_out_unbuyable_slots() -> void:
 func _on_panel_mouse_entered() -> void:
 	panel_entered = true
 
-
+#FIXME: Not connected in some places
 func _on_panel_mouse_exited() -> void:
 	panel_entered = false
 

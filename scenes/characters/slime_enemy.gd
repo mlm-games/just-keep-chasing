@@ -1,24 +1,35 @@
-class_name SlimeEnemy extends CharacterBody2D
+class_name SlimeEnemy extends BaseEnemy
 
 const ANIMATION_FOLLOW_X = "follow-x"
 const ANIMATION_FOLLOW_Y = "follow-y"
 
-@export var research_point_value : int
-@export var speed: float
-@export var contact_attack_damage: int = 20
 
 @onready var player = get_tree().get_first_node_in_group("Player")
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var hitbox_component: HitboxComponent = %EnemyHitboxComponent
+@onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 var player_hitbox: HitboxComponent
 var can_deal_damage := false
 
 func _ready() -> void:
-	pass
 	hitbox_component.health_component.entity_died.connect(_on_health_component_entity_died)
 	hitbox_component.area_entered.connect(_on_hitbox_component_area_entered.bind())
 	hitbox_component.area_exited.connect(_on_hitbox_component_area_exited.bind())
+	visible_on_screen_notifier_2d.screen_entered.connect(_on_visible_on_screen_notifier_2d_screen_entered)
+	visible_on_screen_notifier_2d.screen_exited.connect(_on_visible_on_screen_notifier_2d_screen_exited)
+
+func set_data_values(enemy_data: EnemyData):
+	contact_attack_damage = enemy_data.base_contact_damage
+	speed = enemy_data.base_speed
+	research_point_value = enemy_data.research_point_value
+	scale = enemy_data.character_scale
+	$CollisionShape2D.shape = RectangleShape2D.new()
+	$CollisionShape2D.shape.size = enemy_data.character_hitbox_shape_value
+	$Sprite2D.texture = enemy_data.sprite_texture
+	$Sprite2D.scale = enemy_data.sprite_scale
+	$Sprite2D.modulate = enemy_data.sprite_color
+	
 
 func _physics_process(delta: float) -> void:
 	move_towards_player()

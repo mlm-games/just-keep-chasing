@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://degok78oygxw3"]
+[gd_scene load_steps=6 format=3 uid="uid://degok78oygxw3"]
 
 [ext_resource type="Script" uid="uid://c5dyub3hyvbo5" path="res://scenes/UI/win_screen.gd" id="1_8e61f"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="2_dfho5"]
+[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="3_c1oj8"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_rkvi0"]
 
@@ -53,6 +54,8 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 theme = ExtResource("2_dfho5")
 text = "Continue?"
+script = ExtResource("3_c1oj8")
+metadata/_custom_type_script = ExtResource("3_c1oj8")
 
 [node name="MenuButton" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 40)
@@ -61,6 +64,8 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_constants/outline_size = 5
 text = "Quit to menu?"
+script = ExtResource("3_c1oj8")
+metadata/_custom_type_script = ExtResource("3_c1oj8")
 
 [node name="GameOverLabel" type="Label" parent="MarginContainer"]
 layout_mode = 2

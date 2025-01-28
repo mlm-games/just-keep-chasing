@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=4 format=3 uid="uid://c41lhhdbpe2ut"]
+
+[ext_resource type="PackedScene" uid="uid://b383ofsmpqt55" path="res://scenes/characters/slime_enemy.tscn" id="1_3gtkh"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/slime_data.gd" id="1_pgwt5"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_3gtkh"]
+
+[resource]
+script = ExtResource("1_pgwt5")
+base_enemy_scene = ExtResource("1_3gtkh")
+base_contact_damage = 10.0
+research_point_value = 5
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1.5, 1.5)
+sprite_texture = ExtResource("2_3gtkh")
+sprite_scale = Vector2(0.06, 0.057)
+sprite_color = Color(1, 0.612, 1, 1)
+base_health = 0.0
+base_speed = 0.0
+metadata/_custom_type_script = ExtResource("1_pgwt5")

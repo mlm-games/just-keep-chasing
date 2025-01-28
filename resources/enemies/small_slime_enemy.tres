@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=4 format=3 uid="uid://cvi416jal72s4"]
+
+[ext_resource type="PackedScene" uid="uid://b383ofsmpqt55" path="res://scenes/characters/slime_enemy.tscn" id="1_c1m5j"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/slime_data.gd" id="1_e4fic"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_3ntqp"]
+
+[resource]
+script = ExtResource("1_e4fic")
+base_enemy_scene = ExtResource("1_c1m5j")
+base_contact_damage = 10.0
+research_point_value = 1
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1, 1)
+sprite_texture = ExtResource("2_3ntqp")
+sprite_scale = Vector2(0.06, 0.057)
+sprite_color = Color(1, 1, 1, 1)
+base_health = 10.0
+base_speed = 125.0
+metadata/_custom_type_script = ExtResource("1_e4fic")

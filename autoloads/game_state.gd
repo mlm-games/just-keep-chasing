@@ -8,6 +8,7 @@ const SettingsScene = "res://scenes/UI/settings.tscn"
 
 const AUGMENTS_DIR : String = "res://resources/augments/"
 const POWERUPS_DIR : String = "res://resources/powerups/"
+const ENEMY_DATA_DIR : String = "res://resources/enemies/"
 const CONFIG_DIR: String = "data/saves/"
 const BASE_DIR: String = "user://"
 const CONFIG_PATH: String = BASE_DIR + CONFIG_DIR + "settings.tres"
@@ -16,6 +17,7 @@ const CONFIG_PATH: String = BASE_DIR + CONFIG_DIR + "settings.tres"
 
 var augments : Array[Augments]
 var powerups_data: Array[PowerupData]
+var enemy_data_list: Array[EnemyData]
 
 var highest_game_time: float = 0.0
 
@@ -132,6 +134,7 @@ var audio: Dictionary = {
 func  _ready() -> void:
 	augments = populate_augments()
 	powerups_data = populate_powerup_data()
+	enemy_data_list = populate_enemy_data()
 	load_settings(true)
 
 func populate_augments() -> Array[Augments]:
@@ -149,6 +152,14 @@ func populate_powerup_data() -> Array[PowerupData]:
 		if res.ends_with(".tres"):
 			powerup_data_list.append(ResourceLoader.load(POWERUPS_DIR + res))
 	return powerup_data_list
+
+func populate_enemy_data() -> Array[EnemyData]:
+	var dir : DirAccess = DirAccess.open(ENEMY_DATA_DIR)
+	var enemy_data_list : Array[EnemyData]
+	for res:String in dir.get_files():
+		if res.ends_with(".tres"):
+			enemy_data_list.append(ResourceLoader.load(ENEMY_DATA_DIR + res))
+	return enemy_data_list
 
 func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1

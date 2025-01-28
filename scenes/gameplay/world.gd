@@ -20,9 +20,9 @@
 #HACK: Use the canvascolor node to change environiment colors when new waves appear...
 extends Node2D
 
-const ENEMY_SCENE_PATH = "res://scenes/characters/enemy%d.tscn"
 const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.tscn")
 
+ 
 @export var guns: Array[PackedScene] = []
 
 @onready var hud: HUD = %HUD
@@ -65,7 +65,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		pick_up_weapon()
 
 func spawn_enemy() -> void:
-	var enemy_scene = load(ENEMY_SCENE_PATH % randi_range(enemy_spawn_type_range.x, enemy_spawn_type_range.y))
+	var enemy_scene = GameState.enemy_data_list[0].base_enemy_scene
 	var enemy_instance = enemy_scene.instantiate()
 	enemy_instance.get_node("HealthComponent").max_health *= enemy_health_mult
 	out_of_view_spawn_location.progress_ratio = randf()
