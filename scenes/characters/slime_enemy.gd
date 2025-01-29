@@ -35,7 +35,6 @@ func _physics_process(delta: float) -> void:
 	move_towards_player()
 	update_animation()
 	apply_contact_damage(delta)
-	print($Sprite2D.scale)
 
 func move_towards_player() -> void:
 	var direction = global_position.direction_to(player.global_position)

@@ -3,7 +3,7 @@ class_name EnemyData extends BaseCharacterData
 @export var base_enemy_scene : PackedScene
 
 @export var base_contact_damage : float = 0
-@export var research_point_value : int = NAN
+@export var research_point_value : int = int(NAN)
 
 @export_group("Character Properties", "character_")
 @export var character_hitbox_shape_type : Shape2D = RectangleShape2D.new()

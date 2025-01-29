@@ -1,10 +1,8 @@
 extends Node
 
-#TODO: change out some lines for applying settings on restart and showing a label saying require restart
-#TODO: Make the settings load on menu scene
-
 const MenuScene = "res://scenes/UI/menu.tscn"
 const SettingsScene = "res://scenes/UI/settings.tscn"
+var collection_res = preload("res://resources/collection_resource.tres")
 
 const AUGMENTS_DIR : String = "res://resources/augments/"
 const POWERUPS_DIR : String = "res://resources/powerups/"
@@ -14,10 +12,6 @@ const BASE_DIR: String = "user://"
 const CONFIG_PATH: String = BASE_DIR + CONFIG_DIR + "settings.tres"
 
 #region global_game_specific_variables
-
-var augments : Array[Augments]
-var powerups_data: Array[PowerupData]
-var enemy_data_list: Array[EnemyData]
 
 var highest_game_time: float = 0.0
 
@@ -43,19 +37,19 @@ var powerups := {
 }
 
 enum Stats {
-	MAX_HEALTH,
-	HEALTH,
-	SPEED,
+	PLAYER_MAX_HEALTH,
+	PLAYER_HEALTH,
+	PLAYER_SPEED,
 	DAMAGE_MULT,
-	DAMAGE,
+	RAW_DAMAGE_MOD,
 	RELOAD_SPEED_REDUCTION_MULT,
 	TARGETTING_RANGE_MULT,
-	SHOP_COST_REDUCTION_MULT,
+	SHOP_COST_MULT,
 	RAW_AMMO_INC,
 	AMMO_INC_MULT,
 	HEALTH_REGEN,
 	FLAT_ENEMY_HEALTH_REDUCTION,
-	ENEMY_HEALTH_REDUCTION_MULT,
+	ENEMY_HEALTH_MULT,
 	FIRE_SPEED_REDUCTION_MULT,
 }
 
@@ -73,11 +67,21 @@ enum Operation {
 	EXPONENTIAL,
 }
 
-var player_stats: Dictionary = {
-	Stats.MAX_HEALTH: 100,
-	Stats.SPEED: 250,
+var game_stats: Dictionary[GameState.Stats, Variant] = {
+	Stats.PLAYER_MAX_HEALTH: 100,
+	Stats.PLAYER_HEALTH: 250,
+	Stats.PLAYER_SPEED: 250,
 	Stats.DAMAGE_MULT: 1,
-	Stats.DAMAGE: 0,
+	Stats.RAW_DAMAGE_MOD: 0,
+	Stats.RELOAD_SPEED_REDUCTION_MULT: 1,
+	Stats.TARGETTING_RANGE_MULT: 1,
+	Stats.SHOP_COST_MULT: 1,
+	Stats.RAW_AMMO_INC: 0,
+	Stats.AMMO_INC_MULT: 1,
+	Stats.HEALTH_REGEN: 0,
+	Stats.FLAT_ENEMY_HEALTH_REDUCTION: 0,
+	Stats.ENEMY_HEALTH_MULT: 1,
+	Stats.FIRE_SPEED_REDUCTION_MULT: 1,
 }
 
 # Player-related properties
@@ -99,7 +103,7 @@ var is_game_over: bool = false
 
 var player_reload_speed_mult : float
 var player_health_mult : float
-var upgrade_shop_spawn_divisor : int = 15
+var upgrade_shop_spawn_divisor : float = 20
 
 
 #endregion
@@ -132,34 +136,20 @@ var audio: Dictionary = {
 #endregion
 
 func  _ready() -> void:
-	augments = populate_augments()
-	powerups_data = populate_powerup_data()
-	enemy_data_list = populate_enemy_data()
+	if OS.has_feature("editor"):
+		collection_res.augments = get_resource_paths_in_directory(AUGMENTS_DIR)
+		collection_res.powerups = get_resource_paths_in_directory(POWERUPS_DIR)
+		collection_res.enemies = get_resource_paths_in_directory(ENEMY_DATA_DIR)
+		print(ResourceSaver.save(collection_res))
 	load_settings(true)
 
-func populate_augments() -> Array[Augments]:
-	var dir : DirAccess = DirAccess.open(AUGMENTS_DIR)
-	var augments_arr : Array[Augments]
+func get_resource_paths_in_directory(resources_dir: String) -> Dictionary[StringName, String]:
+	var dir : DirAccess = DirAccess.open(resources_dir)
+	var res_list : Dictionary[StringName, String] = {}
 	for res:String in dir.get_files():
 		if res.ends_with(".tres"):
-			augments_arr.append(ResourceLoader.load(AUGMENTS_DIR + res))
-	return augments_arr
-
-func populate_powerup_data() -> Array[PowerupData]:
-	var dir : DirAccess = DirAccess.open(POWERUPS_DIR)
-	var powerup_data_list : Array[PowerupData]
-	for res:String in dir.get_files():
-		if res.ends_with(".tres"):
-			powerup_data_list.append(ResourceLoader.load(POWERUPS_DIR + res))
-	return powerup_data_list
-
-func populate_enemy_data() -> Array[EnemyData]:
-	var dir : DirAccess = DirAccess.open(ENEMY_DATA_DIR)
-	var enemy_data_list : Array[EnemyData]
-	for res:String in dir.get_files():
-		if res.ends_with(".tres"):
-			enemy_data_list.append(ResourceLoader.load(ENEMY_DATA_DIR + res))
-	return enemy_data_list
+			res_list.get_or_add(res.rstrip(".tres"),resources_dir + res)
+	return res_list
 
 func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1
@@ -167,23 +157,23 @@ func powerup_collected(powerup_type: int) -> void:
 
 func apply_augment(augment: Augments) -> void:
 	for stat:StatsModifier in augment.stats_to_modify:
-		if stat.key in player_stats.keys():
+		if stat.key in game_stats.keys():
 			match stat.operation:
 				Operation.REPLACE:
-					player_stats[stat.key] = stat.value
+					game_stats[stat.key] = stat.value
 				Operation.ADD:
-					player_stats[stat.key] += stat.value
+					game_stats[stat.key] += stat.value
 				Operation.MULTIPLY:
-					player_stats[stat.key] *= stat.value
+					game_stats[stat.key] *= stat.value
 				Operation.EXPONENTIAL:
-					player_stats[stat.key] = pow(player_stats[stat.key], stat.value)
-			if stat.key == Stats.MAX_HEALTH:
+					game_stats[stat.key] = pow(game_stats[stat.key], stat.value)
+			if stat.key == Stats.PLAYER_MAX_HEALTH:
 				#Update max_health in player's health component
-				get_tree().get_nodes_in_group("Player")[0].update_max_health(player_stats[Stats.MAX_HEALTH])
+				get_tree().get_nodes_in_group("Player")[0].update_max_health(game_stats[Stats.PLAYER_MAX_HEALTH])
 		else:
 			match stat.key:
-				Stats.HEALTH:
-					get_tree().get_nodes_in_group("Player")[0].health_component.heal_or_damage(20)
+				Stats.PLAYER_HEALTH:
+					get_tree().get_nodes_in_group("Player")[0].health_component.heal_or_damage(stat.value)
 
 func update_highest_game_time(time: float) -> void:
 	if time > highest_game_time:

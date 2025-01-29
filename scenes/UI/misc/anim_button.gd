@@ -10,6 +10,7 @@ func _ready():
 	mouse_exited.connect(_on_mouse_exited)
 	button_down.connect(_on_button_down)
 	button_up.connect(_on_button_up)
+	pivot_offset = size/2
 	
 	#Label stuff
 	#_setup_text_animation()
@@ -24,7 +25,7 @@ func _on_mouse_entered():
 	if tween:
 		tween.kill()
 	tween = create_tween()
-	tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.1).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(self, "scale", Vector2(1.075, 1.075), 0.1).set_trans(Tween.TRANS_CUBIC)
 	
 	# smallish glow effect
 	#var style = get_theme_stylebox("normal").duplicate()

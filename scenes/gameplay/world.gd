@@ -18,6 +18,7 @@
 #TODO: A good way to unlock guns is by making them unlockable by having to play a mini 2 min round with them, and finish it without dying?
 #TODO: Bazooka, destroys obstacles instantly?
 #HACK: Use the canvascolor node to change environiment colors when new waves appear...
+#HACK: Make the bouncy anim button effect global so that it doesnt need to be duplicated
 extends Node2D
 
 const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.tscn")
@@ -37,6 +38,7 @@ var enemy_health_mult = 1
 var enemy_spawn_type_range = Vector2(1, 1)
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
+
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	spawn_enemy()
@@ -65,8 +67,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		pick_up_weapon()
 
 func spawn_enemy() -> void:
-	var enemy_scene = GameState.enemy_data_list[0].base_enemy_scene
-	var enemy_instance = enemy_scene.instantiate()
+	var enemy_data = load(GameState.collection_res.enemies["small_slime_enemy"])
+	var enemy_scene = enemy_data.base_enemy_scene
+	var enemy_instance:SlimeEnemy = enemy_scene.instantiate()
+	enemy_instance.set_data_values(enemy_data)
 	enemy_instance.get_node("HealthComponent").max_health *= enemy_health_mult
 	out_of_view_spawn_location.progress_ratio = randf()
 	enemy_instance.global_position = out_of_view_spawn_location.global_position
@@ -81,8 +85,8 @@ func spawn_powerup() -> void:
 	powerups_node.add_child(powerup_instance)
 
 func get_random_powerup() -> PowerupData:
-	#TODO: Replace randfs in the powertype scene itself
-	var powerup_data: PowerupData = GameState.powerups_data.pick_random()
+	#TODO: Replace randfs in the powertype scene itself or implement a better version
+	var powerup_data: PowerupData = load(GameState.collection_res.powerups.values().pick_random())
 	if powerup_data.spawn_chance_percent / 100 < randf():
 		powerup_data = get_random_powerup()
 	return powerup_data
@@ -107,7 +111,7 @@ func throw_weapon() -> void:
 		switch_weapon()
 
 func pick_up_weapon() -> void:
-	#Todo: Whne near the gun, it is highlighted, so that it can be clicked.
+	#Todo: When near the gun, it is highlighted, so that it can be clicked.
 	print(thrown_guns.size())
 	if thrown_guns.size() > 0:
 		var weapon = get_tree().get_first_node_in_group("Dropped Weapons")

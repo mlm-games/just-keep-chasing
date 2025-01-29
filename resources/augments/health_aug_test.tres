@@ -19,7 +19,7 @@ operation = 0
 [resource]
 script = ExtResource("1_ydscn")
 augment_icon = ExtResource("1_h1mls")
-augment_price = 20
+augment_price = 10
 augment_id = "heal_and_health"
 stats_to_modify = Array[ExtResource("3_c1bpb")]([SubResource("Resource_hmhfi"), SubResource("Resource_aveke")])
 rarity = 0.0

@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-const UpgradeScenePath = "res://scenes/UI/upgrade_slot.tscn" #tmp
+const UpgradeScenePath = "res://scenes/UI/upgrade_slot.tscn"
 @onready var hud : HUD = get_tree().get_first_node_in_group("HUD")
 @onready var upgrade_slots_to_add_below_node: Control = %SpacerControl2
 
@@ -11,7 +11,6 @@ func _ready() -> void:
 	tween.tween_property($Control, "modulate", Color.WHITE, 0.25)
 	for i in range(3):
 		var upgrade_slot = load(UpgradeScenePath).instantiate()
-		#upgrade_slot.augment = load(str(ResourceLoader.get_resource_uid(GameState.augments_paths.pick_random())))
 		upgrade_slots_to_add_below_node.add_sibling(upgrade_slot)
 		upgrade_slot.slot_clicked.connect(on_slot_clicked.bind(upgrade_slot))
 

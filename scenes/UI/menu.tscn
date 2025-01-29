@@ -158,7 +158,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Title" type="Label" parent="MarginContainer/Control/CenterContainer"]
-modulate = Color(0.796078, 0.976471, 0.462745, 1)
+modulate = Color(0.705882, 0.839216, 0.407843, 1)
 layout_mode = 2
 text = "GAME_TITLE"
 label_settings = SubResource("LabelSettings_78n2u")

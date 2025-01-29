@@ -96,12 +96,14 @@ size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
 alignment = 1
 
 [node name="CloseButton" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 tooltip_text = "UI_CLOSE_SHOP"
-theme_override_constants/align_to_largest_stylebox = 1
 shortcut = SubResource("Shortcut_giq6u")
 text = "UI_CLOSE"
 

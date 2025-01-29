@@ -20,7 +20,7 @@ platform_floor_layers = 4294967292
 script = ExtResource("1_spd34")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.94, 0.88)
+scale = Vector2(0.06, 0.057)
 texture = ExtResource("2_d2gw2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -48,5 +48,3 @@ speed_scale = 2.0
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [connection signal="area_exited" from="EnemyHitboxComponent" to="." method="_on_enemy_hitbox_component_area_exited"]
-[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

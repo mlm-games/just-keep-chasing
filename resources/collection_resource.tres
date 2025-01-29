@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CollectionResource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/collection_resource.gd" id="1_o4jb2"]
+
+[resource]
+script = ExtResource("1_o4jb2")
+enemies = Dictionary[StringName, String]({
+&"basic_slime_enemy": "res://resources/enemies/basic_slime_enemy.tres",
+&"evolved_slime_enemy": "res://resources/enemies/evolved_slime_enemy.tres",
+&"small_slime_enemy": "res://resources/enemies/small_slime_enemy.tres"
+})
+augments = Dictionary[StringName, String]({
+&"health_aug_": "res://resources/augments/health_aug_test.tres",
+&"immuno_boo": "res://resources/augments/immuno_boosters.tres"
+})
+powerups = Dictionary[StringName, String]({
+&"heal_powerup": "res://resources/powerups/heal_powerup.tres",
+&"screen_blast_powerup": "res://resources/powerups/screen_blast_powerup.tres",
+&"slow_time_powerup": "res://resources/powerups/slow_time_powerup.tres",
+&"temp_invincible_powerup": "res://resources/powerups/temp_invincible_powerup.tres"
+})
+metadata/_custom_type_script = ExtResource("1_o4jb2")

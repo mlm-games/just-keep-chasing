@@ -30,7 +30,7 @@ func update_hud() -> void:
 	update_invincible_button()
 
 func update_currency_label() -> void:
-	currency_label.text = "[img=50]assets/sprites/currency1.png[/img]" + str(GameState.research_points)
+	currency_label.text = "[img=50]assets/sprites/currency.png[/img]" + str(GameState.research_points)
 #Fixme: Use enums or There should be another way to remove these redundant functions below
 func update_slow_time_button() -> void:
 	slow_time_button.text = str(GameState.powerups[0])
@@ -45,15 +45,13 @@ func update_invincible_button() -> void:
 	invincible_button.text = str(GameState.powerups[3])
 
 func check_time_condition() -> void:
-	#Temp Upgrade condition
-	@warning_ignore("integer_division")
-	if GameState.research_points / GameState.upgrade_shop_spawn_divisor > 1 and GameState.research_points != 0:
-		@warning_ignore("narrowing_conversion")
+	#FIXME: Temp Upgrade condition, fix it later
+	if GameState.research_points / GameState.upgrade_shop_spawn_divisor > 1.0 and GameState.research_points != 0:
 		GameState.upgrade_shop_spawn_divisor += 10 + (10 * (elapsed_time * 0.001))
 		var upgrades_scene = load("res://scenes/UI/upgrades_layer.tscn").instantiate()
 		#hack: Add it like a pop up like a 0.01 sec anim? also some kind of sound for sure
 		add_child(upgrades_scene)
-			
+	
 	
 	# Win condition
 	if elapsed_time == 300:

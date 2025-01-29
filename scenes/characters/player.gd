@@ -9,7 +9,7 @@ var taking_damage : bool = false
 
 func _physics_process(_delta):
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	velocity = direction.normalized() * Vector2(GameState.player_stats[GameState.Stats.SPEED], GameState.player_stats[GameState.Stats.SPEED])
+	velocity = direction.normalized() * GameState.game_stats[GameState.Stats.PLAYER_SPEED]
 	
 	if velocity.x > 0:
 		%Sprite2D.flip_h = true

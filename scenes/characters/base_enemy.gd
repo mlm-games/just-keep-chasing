@@ -4,7 +4,7 @@ class_name BaseEnemy extends CharacterBody2D
 
 var research_point_value : int
 var speed: float
-var contact_attack_damage: int
+var contact_attack_damage: float
 
 var health_mult: float = 1.0
 var currency_mult: float = 1.0
