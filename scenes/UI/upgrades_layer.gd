@@ -15,11 +15,13 @@ func _ready() -> void:
 		upgrade_slot.slot_clicked.connect(on_slot_clicked.bind(upgrade_slot))
 
 func on_slot_clicked(slot: SlotContainer):
-	if GameState.research_points >= slot.augment.augment_price:
-		GameState.research_points -= slot.augment.augment_price
+	if GameState.research_points >= slot.display_price:
+		GameState.research_points -= slot.display_price
 		hud.update_currency_label()
 		GameState.apply_augment(slot.augment)
 		slot.queue_free()
+		# Increase the price multiplier after purchase
+		GameState.price_multiplier *= (1 + GameState.price_increase_rate)
 		
 	red_out_unbuyable_slots()
 

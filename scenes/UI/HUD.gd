@@ -15,7 +15,6 @@ var pop_up_on_screen = false
 @onready var currency_label: RichTextLabel = %CurrencyLabel
 
 var elapsed_time = 0
-const RESEARCH_TEXTURE = "assets/sprites/currency1.png"
 
 func update_timer_label() -> void:
 	@warning_ignore("integer_division")
@@ -30,7 +29,7 @@ func update_hud() -> void:
 	update_invincible_button()
 
 func update_currency_label() -> void:
-	currency_label.text = "[img=50]assets/sprites/currency.png[/img]" + str(GameState.research_points)
+	currency_label.text = "[img=50]%s[/img]" % GameState.RESEARCH_TEXTURE + str(GameState.research_points)
 #Fixme: Use enums or There should be another way to remove these redundant functions below
 func update_slow_time_button() -> void:
 	slow_time_button.text = str(GameState.powerups[0])

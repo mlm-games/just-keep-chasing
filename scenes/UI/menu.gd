@@ -13,7 +13,7 @@ func _ready():
 	btn_play.grab_focus()
 	if OS.has_feature('web'):
 		btn_exit.queue_free() # exit button dosn't make sense on HTML5
-
+	GameState.reset_stats()
 
 func _on_PlayButton_pressed() -> void:
 	ScreenEffects.change_scene_with_transition(WorldScene)

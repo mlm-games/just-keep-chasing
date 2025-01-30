@@ -10,8 +10,12 @@ const ENEMY_DATA_DIR : String = "res://resources/enemies/"
 const CONFIG_DIR: String = "data/saves/"
 const BASE_DIR: String = "user://"
 const CONFIG_PATH: String = BASE_DIR + CONFIG_DIR + "settings.tres"
+const RESEARCH_TEXTURE = "assets/sprites/currency.png"
 
 #region global_game_specific_variables
+
+var price_multiplier: float = 1.0
+var price_increase_rate: float = 0.05  # Increase by 10% each time
 
 var highest_game_time: float = 0.0
 
@@ -57,7 +61,7 @@ enum Stats {
 # Other effects from my browser
 # Can do this after all the polish and marketing stuff...
 enum Effects {
-	
+	 
 }
 
 enum Operation {
@@ -279,5 +283,29 @@ func load_settings(with_ui_update : bool = false) -> bool:
 		settings_instance.queue_free()
 	
 	return true
+#Use a initial resource with all initial values and reset to that...? No that is for save reset... Just delete save file lul
+func reset_stats() -> void:
+	research_points = 0
+	price_multiplier = 1
+
+var unlocked_guns: Dictionary = {}  # gun_name: bool
+var all_possible_guns
+
+func unlock_gun(gun_name: String) -> void:
+	unlocked_guns[gun_name] = true
+	save_unlocked_guns()
+
+func is_gun_unlocked(gun_name: String) -> bool:
+	return unlocked_guns.get(gun_name, false)
+
+func save_unlocked_guns() -> void:
+	# Save to file system
+	pass
+
+func load_unlocked_guns() -> void:
+	# Load from file system
+	pass
+
+
 
 #endregion

@@ -9,6 +9,8 @@ var original_scale : Vector2
 var hover_scale : Vector2 = Vector2(1.1, 1.1)
 var hover_tween : Tween
 
+@onready var display_price: int = augment.augment_price * GameState.price_multiplier
+
 func _ready() -> void:
 	original_scale = scale
 	setup_slot()
@@ -19,7 +21,7 @@ func setup_slot() -> void:
 	if augment != null:
 		%TextureRect.texture = augment.augment_icon
 		%UpgradeLabel.text = tr(augment.augment_id.capitalize())
-		%PriceContainer.price_label.text = str(augment.augment_price)
+		%PriceContainer.price_label.text = str(display_price)
 		red_out_unbuyable_slots()
 
 func setup_hover_effects() -> void:
@@ -30,7 +32,7 @@ func setup_hover_effects() -> void:
 	add_theme_stylebox_override("panel", style_box)
 
 func red_out_unbuyable_slots() -> void:
-	if augment.augment_price > GameState.research_points:
+	if display_price > GameState.research_points:
 		%PriceContainer.price_label.modulate = Color(1.0, 0.333, 0.11)
 		modulate = Color(0.7, 0.7, 0.7) # Dim the whole slot
 

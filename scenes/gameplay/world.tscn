@@ -53,7 +53,7 @@ adjustment_saturation = 1.1
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_li0ht")
-guns = Array[PackedScene]([ExtResource("2_si53n"), ExtResource("3_yilem"), ExtResource("4_hdduu"), ExtResource("5_mr61w"), ExtResource("6_68gcx"), ExtResource("7_orse0")])
+all_possible_guns = Array[PackedScene]([ExtResource("2_si53n"), ExtResource("3_yilem"), ExtResource("7_orse0"), ExtResource("5_mr61w"), ExtResource("6_68gcx"), ExtResource("4_hdduu")])
 
 [node name="HUD" parent="." instance=ExtResource("6_vltvt")]
 unique_name_in_owner = true

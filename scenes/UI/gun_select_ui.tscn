@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://w741s0vbuit0"]
+
+[ext_resource type="Script" uid="uid://dhgbugivnd1b5" path="res://scenes/gameplay/gun_trial_scene.gd" id="1_dgouq"]
+
+[node name="GunSelectControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dgouq")
+metadata/_edit_use_anchors_ = true
+
+[node name="ItemList" type="ItemList" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+item_count = 2
+max_columns = 4
+fixed_icon_size = Vector2i(200, 200)

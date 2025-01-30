@@ -10,12 +10,9 @@
 #hack:A gamemode, You can only move a certain amt in a certain amt of time, (experiment until its fun)
 #HACK: Player's gun doesnt slow down on slow_time powerup [upgraded! or an ultra augment (like after defeating bosses?]
 #TODO: Add a upgrade that makes you damage enemies on contact
-#TODO: Add a WorldEnvironiment node to make the colors look good against the parallax image
-#TODO: increase the powerups price as time goes on by a multiplier like brotato	
 #TODO: Use backward curves for the bullets speed to decrease as time goes on...
 #hack: if memory available (>90%), let upgrades layer stay, or else free from memory.
 #HACK: Give a first timer tutorial where how T works is told by a video? and Add a fast moving enemy in the end so the player dies, and for every new gun he gets, he will defeat a new wave (previously not impossible, but insane)
-#TODO: A good way to unlock guns is by making them unlockable by having to play a mini 2 min round with them, and finish it without dying?
 #TODO: Bazooka, destroys obstacles instantly?
 #HACK: Use the canvascolor node to change environiment colors when new waves appear...
 #HACK: Make the bouncy anim button effect global so that it doesnt need to be duplicated
@@ -23,8 +20,8 @@ extends Node2D
 
 const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.tscn")
 
- 
 @export var guns: Array[PackedScene] = []
+@export var all_possible_guns: Array[PackedScene] = []
 
 @onready var hud: HUD = %HUD
 @onready var out_of_view_spawn_location: PathFollow2D = %OutOfViewSpawnLocation
@@ -39,6 +36,12 @@ var enemy_spawn_type_range = Vector2(1, 1)
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
 
+func _ready() -> void:
+		# Only add unlocked guns to the available guns array
+	guns.clear()
+	for gun in all_possible_guns:
+		if GameState.is_gun_unlocked(gun.resource_path):
+			guns.append(gun)
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	spawn_enemy()
@@ -145,3 +148,20 @@ func use_powerup(powerup_type: int) -> void:
 			GameState.PowerupType.INVINCIBLE:
 				player.health_component.disable_for_secs(20)
 		hud.update_hud()
+
+func start_gun_trial(gun: PackedScene) -> void:
+	# Instance the trial scene
+	var trial_scene = preload("res://scenes/trial_round.tscn").instantiate()
+	trial_scene.trial_gun = gun
+	trial_scene.trial_completed.connect(_on_trial_completed.bind(gun))
+	add_child(trial_scene)
+
+func _on_trial_completed(success: bool, gun: PackedScene) -> void:
+	if success:
+		GameState.unlock_gun(gun.resource_path)
+		guns.append(gun)
+		# Show success message
+		print("Gun unlocked!")
+	else:
+		# Show failure message
+		print("Trial failed! Try again!")
