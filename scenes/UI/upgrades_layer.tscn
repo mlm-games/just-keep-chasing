@@ -111,6 +111,12 @@ text = "UI_REFRESH"
 script = ExtResource("5_mqd2u")
 metadata/_custom_type_script = ExtResource("5_mqd2u")
 
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/AnimButton"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+bbcode_enabled = true
+
 [node name="Control2" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3

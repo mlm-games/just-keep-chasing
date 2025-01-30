@@ -202,12 +202,22 @@ text = "MENU_LABEL_SETTINGS"
 script = ExtResource("7_ypw4e")
 metadata/_custom_type_script = ExtResource("7_ypw4e")
 
+[node name="AchievementsButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+text = "MENU_LABEL_ACHIEVEMENTS"
+script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = ExtResource("7_ypw4e")
+
 [node name="ExitButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_EXIT"
 script = ExtResource("7_ypw4e")
 metadata/_custom_type_script = ExtResource("7_ypw4e")
+
+[node name="Control" type="Control" parent="MarginContainer/Control/VBoxContainer"]
+layout_mode = 2
 
 [node name="Version" type="VBoxContainer" parent="MarginContainer/Control"]
 visible = false
@@ -294,4 +304,5 @@ color = Color(0.9, 1, 1.1, 1)
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/ResumeButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/AchievementsButton" to="." method="_on_achievements_button_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]

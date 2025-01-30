@@ -16,12 +16,12 @@
 #TODO: Bazooka, destroys obstacles instantly?
 #HACK: Use the canvascolor node to change environiment colors when new waves appear...
 #HACK: Make the bouncy anim button effect global so that it doesnt need to be duplicated
+#hack: Add a non-heavy graphics type and normal type, if menu fps above 450 fps, use normal type?
 extends Node2D
 
 const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.tscn")
 
-@export var guns: Array[PackedScene] = []
-@export var all_possible_guns: Array[PackedScene] = []
+@export var guns: Array[GunData] = []
 
 @onready var hud: HUD = %HUD
 @onready var out_of_view_spawn_location: PathFollow2D = %OutOfViewSpawnLocation
@@ -39,8 +39,8 @@ var thrown_guns: Array[PackedScene] = []
 func _ready() -> void:
 		# Only add unlocked guns to the available guns array
 	guns.clear()
-	for gun in all_possible_guns:
-		if GameState.is_gun_unlocked(gun.resource_path):
+	for gun in GameState.collection_res.guns.values():
+		if gun.unlocked:
 			guns.append(gun)
 
 func _on_enemy_spawn_timer_timeout() -> void:
@@ -70,7 +70,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		pick_up_weapon()
 
 func spawn_enemy() -> void:
-	var enemy_data = load(GameState.collection_res.enemies["small_slime_enemy"])
+	var enemy_data = GameState.collection_res.enemies["small_slime_enemy"]
 	var enemy_scene = enemy_data.base_enemy_scene
 	var enemy_instance:SlimeEnemy = enemy_scene.instantiate()
 	enemy_instance.set_data_values(enemy_data)
@@ -89,7 +89,7 @@ func spawn_powerup() -> void:
 
 func get_random_powerup() -> PowerupData:
 	#TODO: Replace randfs in the powertype scene itself or implement a better version
-	var powerup_data: PowerupData = load(GameState.collection_res.powerups.values().pick_random())
+	var powerup_data: PowerupData = GameState.collection_res.powerups.values().pick_random()
 	if powerup_data.spawn_chance_percent / 100 < randf():
 		powerup_data = get_random_powerup()
 	return powerup_data
@@ -98,7 +98,12 @@ func switch_weapon() -> void:
 	if guns.size() != 0:
 		current_gun_index = (current_gun_index + 1) % guns.size()
 		get_tree().call_group("Weapons", "queue_free")
-		var gun_instance = guns[current_gun_index].instantiate()
+		var gun_instance: BaseGun
+		if guns[current_gun_index] is ShotgunData:
+			gun_instance = load("res://scenes/weapons-related/double_barrel_shotgun.tscn").instantiate()
+		else:
+			gun_instance = load("res://scenes/weapons-related/base_gun.tscn").instantiate()
+		gun_instance.gun_data = guns[current_gun_index]
 		player.add_child(gun_instance)
 
 func throw_weapon() -> void:
@@ -149,16 +154,16 @@ func use_powerup(powerup_type: int) -> void:
 				player.health_component.disable_for_secs(20)
 		hud.update_hud()
 
-func start_gun_trial(gun: PackedScene) -> void:
+func start_gun_trial(gun: GunData) -> void:
 	# Instance the trial scene
 	var trial_scene = preload("res://scenes/trial_round.tscn").instantiate()
 	trial_scene.trial_gun = gun
 	trial_scene.trial_completed.connect(_on_trial_completed.bind(gun))
 	add_child(trial_scene)
 
-func _on_trial_completed(success: bool, gun: PackedScene) -> void:
+func _on_trial_completed(success: bool, gun: GunData) -> void:
 	if success:
-		GameState.unlock_gun(gun.resource_path)
+		GameState.unlock_gun(gun)
 		guns.append(gun)
 		# Show success message
 		print("Gun unlocked!")

@@ -2,15 +2,15 @@ extends Node
 
 const MenuScene = "res://scenes/UI/menu.tscn"
 const SettingsScene = "res://scenes/UI/settings.tscn"
-var collection_res = preload("res://resources/collection_resource.tres")
 
 const AUGMENTS_DIR : String = "res://resources/augments/"
 const POWERUPS_DIR : String = "res://resources/powerups/"
 const ENEMY_DATA_DIR : String = "res://resources/enemies/"
-const CONFIG_DIR: String = "data/saves/"
-const BASE_DIR: String = "user://"
-const CONFIG_PATH: String = BASE_DIR + CONFIG_DIR + "settings.tres"
+const GUN_DATA_DIR : String = "res://resources/guns/"
+const CONFIG_PATH: String ="user://settings.tres"
 const RESEARCH_TEXTURE = "assets/sprites/currency.png"
+
+var collection_res : CollectionResource = CollectionResource.new()
 
 #region global_game_specific_variables
 
@@ -121,21 +121,21 @@ var first_time_setup: bool = true
 var accessibility: Dictionary = {
 	"current_locale": "en",
 	"small_text_font_size": 20,
-	"big_text_font_size": 64
+	"big_text_font_size": 64,
 }
 var gameplay_options: Dictionary = {
 	"max_fps": 60,
-	"pause_on_lost_focus": true
+	"pause_on_lost_focus": true,
 }
 var video: Dictionary = {
 	"borderless": false,
-	"fullscreen": false,
-	"resolution": Vector2i(1080, 720)
+	"fullscreen": true,
+	"resolution": Vector2i(1080, 720),
 }
 var audio: Dictionary = {
 	"Master": 100,
 	"Music": 100,
-	"SFX": 100
+	"SFX": 100,
 }
 #endregion
 
@@ -144,20 +144,31 @@ func  _ready() -> void:
 		collection_res.augments = get_resource_paths_in_directory(AUGMENTS_DIR)
 		collection_res.powerups = get_resource_paths_in_directory(POWERUPS_DIR)
 		collection_res.enemies = get_resource_paths_in_directory(ENEMY_DATA_DIR)
-		print(ResourceSaver.save(collection_res))
-	load_settings(true)
+		collection_res.guns = get_resource_paths_in_directory(GUN_DATA_DIR)
+		print(ResourceSaver.save(collection_res, "res://resources/collection_resource.tres"))
+	if collection_res.augments.is_empty():
+		collection_res = load("res://resources/collection_resource.tres")
 
-func get_resource_paths_in_directory(resources_dir: String) -> Dictionary[StringName, String]:
+func get_resource_paths_in_directory(resources_dir: String, load_resource_paths: bool = false) -> Dictionary[StringName, Variant]:
 	var dir : DirAccess = DirAccess.open(resources_dir)
-	var res_list : Dictionary[StringName, String] = {}
-	for res:String in dir.get_files():
-		if res.ends_with(".tres"):
-			res_list.get_or_add(res.rstrip(".tres"),resources_dir + res)
+	var res_list : Dictionary[StringName, Variant] = {}
+	if load_resource_paths:
+		for res:String in dir.get_files():
+			if res.ends_with(".tres"):
+				res_list.get_or_add(res.rstrip(".tres"),resources_dir + res)
+	else:
+		for res:String in dir.get_files():
+			if res.ends_with(".tres"):
+				var loaded_res = load(resources_dir + res)
+				res_list.get_or_add(res.rstrip(".tres"), loaded_res)
 	return res_list
 
 func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1
 	get_node("/root/World/HUD").update_hud()
+	
+func get_currency_bbcode() -> String:
+	return "[img=40px]%s[/img]" % RESEARCH_TEXTURE
 
 func apply_augment(augment: Augments) -> void:
 	for stat:StatsModifier in augment.stats_to_modify:
@@ -235,11 +246,14 @@ func respawn_player() -> void:
 		# Implement respawning the player at the last checkpoint or respawn position
 	pass
 
-func get_or_create_dir(path: String) -> DirAccess:
-	var dir := DirAccess.open(BASE_DIR)
-	if !dir.dir_exists(path):
-		dir.make_dir_recursive(path)
-	return dir
+#func get_or_create_dir(path: String) -> DirAccess:
+	#var dir := DirAccess.open(BASE_DIR)
+	#if !dir.dir_exists(path):
+		#dir.make_dir_recursive(path)
+	#return dir
+
+func populate_resources_from_paths(path_arr: Array[StringName]):
+	var arr: Array[Resource]
 
 func save_settings() -> void:
 	var new_save := GameSettingsSave.new()
@@ -249,7 +263,7 @@ func save_settings() -> void:
 	new_save.video = video.duplicate(true)
 	new_save.audio = audio.duplicate(true)
 	
-	get_or_create_dir(CONFIG_DIR)
+	#get_or_create_dir(CONFIG_DIR)
 	var save_result := ResourceSaver.save(new_save, CONFIG_PATH)
 	
 	if save_result != OK:
@@ -260,6 +274,12 @@ func save_settings() -> void:
 func load_settings(with_ui_update : bool = false) -> bool:
 	if !ResourceLoader.exists(CONFIG_PATH):
 		print("Settings save file not found.")
+		if with_ui_update == true:
+			var settings_instance = load(SettingsScene).instantiate()
+			add_child(settings_instance)
+			#await settings_instance.sign
+			remove_child(settings_instance)
+			settings_instance.queue_free()
 		return false
 	
 	print("Settings file was found.")
@@ -291,12 +311,12 @@ func reset_stats() -> void:
 var unlocked_guns: Dictionary = {}  # gun_name: bool
 var all_possible_guns
 
-func unlock_gun(gun_name: String) -> void:
-	unlocked_guns[gun_name] = true
+func unlock_gun(gun: GunData) -> void:
+	gun.unlocked = true
 	save_unlocked_guns()
 
-func is_gun_unlocked(gun_name: String) -> bool:
-	return unlocked_guns.get(gun_name, false)
+#func is_gun_unlocked(gun: BaseGun) -> bool:
+	#return gun.unlocked
 
 func save_unlocked_guns() -> void:
 	# Save to file system

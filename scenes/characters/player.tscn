@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b3mf65fcnvmvu"]
+[gd_scene load_steps=30 format=3 uid="uid://b3mf65fcnvmvu"]
 
 [ext_resource type="Script" uid="uid://crf18oy3oc75j" path="res://scenes/characters/player.gd" id="1_cvyhv"]
 [ext_resource type="Texture2D" uid="uid://6df1pxb6h2bi" path="res://assets/sprites/player.png" id="2_vw3ki"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="4_pwyjt"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="6_8qvmc"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="6_bedk8"]
+[ext_resource type="Resource" uid="uid://doth1xd85xeyo" path="res://resources/guns/pistol.tres" id="7_6eyoc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d6keb"]
 radius = 38.0132
@@ -208,6 +209,7 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="Pistol" parent="." instance=ExtResource("3_al27l")]
+gun_data = ExtResource("7_6eyoc")
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeBlendTree_k2410")

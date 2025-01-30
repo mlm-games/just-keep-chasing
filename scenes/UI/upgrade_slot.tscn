@@ -6,6 +6,8 @@
 [ext_resource type="LabelSettings" uid="uid://c6ucvvlfvsecr" path="res://resources/theme/item_name_label_settings.tres" id="2_071u4"]
 
 [node name="SlotContainer" type="MarginContainer"]
+offset_right = 200.0
+offset_bottom = 260.0
 script = ExtResource("1_dya2o")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -44,7 +46,9 @@ horizontal_alignment = 1
 [node name="PriceContainer" parent="VBoxContainer" instance=ExtResource("1_o3l4u")]
 unique_name_in_owner = true
 layout_mode = 2
-alignment = 1
+size_flags_vertical = 3
+text = "5"
+horizontal_alignment = 1
 
 [connection signal="mouse_entered" from="VBoxContainer/Panel" to="." method="_on_panel_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/Panel" to="." method="_on_panel_mouse_exited"]

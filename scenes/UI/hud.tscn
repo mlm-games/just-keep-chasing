@@ -69,18 +69,6 @@ text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="CurrencyLabel" type="RichTextLabel" parent="Control"]
-unique_name_in_owner = true
-process_mode = 3
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -73.0
-offset_right = 470.0
-grow_vertical = 0
-bbcode_enabled = true
-
 [node name="PanelContainer" type="PanelContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 3
@@ -149,7 +137,21 @@ expand_icon = true
 [node name="SpacerControl" type="Control" parent="Control/PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 9.28
+size_flags_stretch_ratio = 4.0
+
+[node name="CurrencyLabel" type="RichTextLabel" parent="Control/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.8
+bbcode_enabled = true
+vertical_alignment = 1
+
+[node name="SpacerControl2" type="Control" parent="Control/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control"]
 layout_mode = 1

@@ -3,6 +3,8 @@ class_name BaseGun extends Area2D
 const RELOAD_LOOP_TIME = 0.5
 const BaseBulletScene = preload("res://scenes/weapons-related/base_projectile.tscn")
 
+@export var unlocked: bool = false
+
 @export var bullet: ProjectileData
 @export var reload_time: float
 @export var max_ammo: int
@@ -22,6 +24,7 @@ const BaseBulletScene = preload("res://scenes/weapons-related/base_projectile.ts
 var _enemies_in_range: Array = []
 var tween
 
+@export var gun_data: GunData
 
 func _ready() -> void:
 	#$CollisionShape2D.shape.radius = 600
@@ -90,11 +93,35 @@ func play_fire_animation() -> void:
 	if tween:
 		tween.kill()
 	tween = get_tree().create_tween().set_ease(Tween.EASE_OUT)
-	tween.tween_property(%Sprite2D, "skew", -0.05, fire_rate/2)
-	tween.tween_property(%Sprite2D, "skew", 0, fire_rate/2)
+	tween.tween_property(%Sprite2D, "skew", gun_data.fire_animation_skew*0.025, gun_data.fire_animation_duration/2)
+	tween.tween_property(%Sprite2D, "skew", 0, gun_data.fire_animation_duration/2)
 
 #func play_reload_animation() -> void:
 	#tween.set_loops(reload_time/RELOAD_LOOP_TIME)
+	
 	#tween.tween_property(%Sprite2D, "rotation", 720, RELOAD_LOOP_TIME)
 	#await tween.finished
 	#tween.set_loops(0)
+
+
+func set_gun_properties(gun_data: GunData) -> void:
+	# Apply gun data properties
+	if gun_data:
+		# Set up sprite
+		%Sprite2D.texture = gun_data.sprite
+		%Sprite2D.scale = gun_data.sprite_scale
+		%Sprite2D.position = gun_data.sprite_position
+		%Sprite2D.rotation = gun_data.sprite_rotation
+		%Sprite2D.flip_h = gun_data.sprite_flip_h
+		
+		 # Set up bullet spawn point
+		%BulletSpawnPoint.position = gun_data.bullet_spawn_offset
+		
+		 # Set up timers
+		_reload_timer.wait_time = gun_data.reload_time
+		_fire_rate_timer.wait_time = gun_data.fire_rate
+		
+		# Set other properties
+		max_ammo = gun_data.max_ammo
+		ammo = gun_data.ammo
+		targeting_range = gun_data.targeting_range

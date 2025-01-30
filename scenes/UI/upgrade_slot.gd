@@ -2,14 +2,15 @@ class_name SlotContainer extends MarginContainer
 
 signal slot_clicked
 #FIXME: Pick based on spawn chance
-@export var augment : Augments = load(GameState.collection_res.augments.values().pick_random())
+@export var augment : Augments = GameState.collection_res.augments.values().pick_random()
 
 var panel_entered : bool = false
 var original_scale : Vector2
 var hover_scale : Vector2 = Vector2(1.1, 1.1)
 var hover_tween : Tween
 
-@onready var display_price: int = augment.augment_price * GameState.price_multiplier
+@warning_ignore("narrowing_conversion")
+var display_price: int
 
 func _ready() -> void:
 	original_scale = scale
@@ -19,9 +20,10 @@ func _ready() -> void:
 
 func setup_slot() -> void:
 	if augment != null:
+		display_price = augment.augment_price * GameState.price_multiplier
 		%TextureRect.texture = augment.augment_icon
 		%UpgradeLabel.text = tr(augment.augment_id.capitalize())
-		%PriceContainer.price_label.text = str(display_price)
+		%PriceContainer.text = GameState.get_currency_bbcode() + str(display_price)
 		red_out_unbuyable_slots()
 
 func setup_hover_effects() -> void:
@@ -33,7 +35,7 @@ func setup_hover_effects() -> void:
 
 func red_out_unbuyable_slots() -> void:
 	if display_price > GameState.research_points:
-		%PriceContainer.price_label.modulate = Color(1.0, 0.333, 0.11)
+		%PriceContainer.modulate = Color(1.0, 0.333, 0.11)
 		modulate = Color(0.7, 0.7, 0.7) # Dim the whole slot
 
 func _on_panel_mouse_entered() -> void:

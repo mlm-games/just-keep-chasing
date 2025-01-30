@@ -1,39 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqnb688fw4wpi"]
+[gd_scene format=3 uid="uid://dqnb688fw4wpi"]
 
-[ext_resource type="Script" uid="uid://clurhj3odmqxw" path="res://scenes/UI/price_container.gd" id="1_4vj6i"]
-[ext_resource type="Texture2D" uid="uid://c7x4mr7uu8mk0" path="res://assets/sprites/currency.png" id="1_7ihb4"]
-[ext_resource type="LabelSettings" uid="uid://i8bl646qytw4" path="res://resources/theme/currency_label_settings.tres" id="1_wcoud"]
-
-[node name="PriceContainer" type="HBoxContainer"]
-offset_right = 78.0
-offset_bottom = 33.0
-size_flags_horizontal = 4
-script = ExtResource("1_4vj6i")
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
-
-[node name="ProphylacticsIcon" type="TextureRect" parent="MarginContainer"]
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 2
-size_flags_vertical = 4
-texture = ExtResource("1_7ihb4")
-expand_mode = 5
-
-[node name="MarginContainer2" type="MarginContainer" parent="."]
-layout_mode = 2
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 0
-
-[node name="PriceLabel" type="Label" parent="MarginContainer2"]
-layout_mode = 2
-text = "5"
-label_settings = ExtResource("1_wcoud")
+[node name="CurrencyLabel" type="RichTextLabel"]
+process_mode = 3
+offset_right = 111.0
+offset_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.8
+bbcode_enabled = true
+text = "dddgd"
+fit_content = true
 vertical_alignment = 1
