@@ -162,12 +162,12 @@ func get_resource_paths_in_directory(resources_dir: String, load_resource_paths:
 	if load_resource_paths:
 		for res:String in dir.get_files():
 			if res.ends_with(".tres"):
-				res_list.get_or_add(res.rstrip(".tres"),resources_dir + res)
+				res_list.get_or_add(res.trim_suffix(".tres"),resources_dir + res)
 	else:
 		for res:String in dir.get_files():
 			if res.ends_with(".tres"):
 				var loaded_res = load(resources_dir + res)
-				res_list.get_or_add(res.rstrip(".tres"), loaded_res)
+				res_list.get_or_add(res.trim_suffix(".tres"), loaded_res)
 	return res_list
 
 func powerup_collected(powerup_type: int) -> void:
