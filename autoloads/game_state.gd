@@ -71,6 +71,13 @@ enum Operation {
 	EXPONENTIAL,
 }
 
+# enemy_id: no of kills
+var kill_count: Dictionary[String, int] = { 
+	"small_slime_enemy": 0,
+	"basic_slime_enemy": 0,
+	"evolved_slime_enemy": 0,
+}
+
 var game_stats: Dictionary[GameState.Stats, Variant] = {
 	Stats.PLAYER_MAX_HEALTH: 100,
 	Stats.PLAYER_HEALTH: 250,
@@ -251,10 +258,7 @@ func respawn_player() -> void:
 	#if !dir.dir_exists(path):
 		#dir.make_dir_recursive(path)
 	#return dir
-
-func populate_resources_from_paths(path_arr: Array[StringName]):
-	var arr: Array[Resource]
-
+	
 func save_settings() -> void:
 	var new_save := GameSettingsSave.new()
 	new_save.first_time_setup = first_time_setup

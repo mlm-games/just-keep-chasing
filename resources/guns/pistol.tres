@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("1_6ux22")
+unlocked = false
 weapon_name_id = "pistol"
 sprite = ExtResource("3_a0tsk")
 bullet = ExtResource("1_h5tx8")
@@ -16,9 +17,13 @@ targeting_range = 600.0
 fire_rate = 0.25
 sprite_scale = Vector2(0.08, 0.08)
 sprite_position = Vector2(36, 5)
-sprite_rotation = 0.0
+sprite_rotation_degrees = 0.0
 sprite_flip_h = false
+sprite_modulate = Color(1, 1, 1, 1)
 bullet_spawn_offset = Vector2(300, -111)
 fire_animation_skew = 4.94764
 fire_animation_duration = 0.15
+screen_shake_frequency = 10.0
+screen_shake_amplitude = 0.5
+id = "pistol"
 metadata/_custom_type_script = ExtResource("1_6ux22")

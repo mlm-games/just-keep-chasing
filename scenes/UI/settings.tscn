@@ -48,10 +48,9 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
-current_tab = 2
+current_tab = 0
 
 [node name="AccessibilityContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = 10
@@ -157,6 +156,7 @@ rounded = true
 alignment = 1
 
 [node name="VideoContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = 10

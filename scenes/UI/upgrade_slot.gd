@@ -22,7 +22,7 @@ func setup_slot() -> void:
 	if augment != null:
 		display_price = augment.augment_price * GameState.price_multiplier
 		%TextureRect.texture = augment.augment_icon
-		%UpgradeLabel.text = tr(augment.augment_id.capitalize())
+		%UpgradeLabel.text = tr(augment.id.capitalize())
 		%PriceContainer.text = GameState.get_currency_bbcode() + str(display_price)
 		red_out_unbuyable_slots()
 

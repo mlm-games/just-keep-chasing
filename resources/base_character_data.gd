@@ -1,4 +1,4 @@
-class_name BaseCharacterData extends Resource
+class_name BaseCharacterData extends BaseData
 
 @export_group("Stats", "base_")
 @export var base_health : float = 0

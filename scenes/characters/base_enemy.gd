@@ -10,6 +10,7 @@ var health_mult: float = 1.0
 var currency_mult: float = 1.0
 # var currency_type: currency
 
+var enemy_data_resource: EnemyData
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	add_to_group("On Screen Enemies")

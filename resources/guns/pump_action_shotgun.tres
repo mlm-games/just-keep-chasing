@@ -27,4 +27,5 @@ fire_animation_skew = 4.94764
 fire_animation_duration = null
 screen_shake_frequency = 10.0
 screen_shake_amplitude = 0.5
+id = "pump_action_shotgun"
 metadata/_custom_type_script = ExtResource("1_bq3ia")

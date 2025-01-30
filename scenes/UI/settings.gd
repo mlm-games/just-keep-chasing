@@ -57,6 +57,7 @@ var locales := {
 
 
 func _ready() -> void:
+	language_options_button.grab_focus()
 	languages_ready()
 	video_ready()
 	gameplay_ready()

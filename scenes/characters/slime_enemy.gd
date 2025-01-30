@@ -29,7 +29,7 @@ func set_data_values(enemy_data: EnemyData):
 	$Sprite2D.texture = enemy_data.sprite_texture
 	$Sprite2D.scale = enemy_data.sprite_scale
 	$Sprite2D.modulate = enemy_data.sprite_color
-	
+	enemy_data_resource = enemy_data
 
 func _physics_process(delta: float) -> void:
 	move_towards_player()
@@ -77,6 +77,8 @@ func _on_health_component_entity_died() -> void:
 	if not hitbox_component.health_component.dying:
 		GameState.research_points += research_point_value
 		hitbox_component.health_component.dying = true
+		# Update kill count
+		GameState.kill_count[enemy_data_resource.id] += 1
 	get_tree().get_first_node_in_group("HUD").update_currency_label()
 	$EnemyHitboxComponent/CollisionShape2D.set_deferred("disabled", true)
 	set_physics_process(false)

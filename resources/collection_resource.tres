@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="CollectionResource" load_steps=17 format=3 uid="uid://dhnmsamfwcj4d"]
+[gd_resource type="Resource" script_class="CollectionResource" load_steps=17 format=3 uid="uid://by4cqvx4t2d3u"]
 
-[ext_resource type="Resource" uid="uid://dwyjyfw01chxg" path="res://resources/augments/health_aug_test.tres" id="1_i2h8p"]
+[ext_resource type="Resource" uid="uid://dwyjyfw01chxg" path="res://resources/augments/basic_repair.tres" id="1_i2h8p"]
 [ext_resource type="Resource" uid="uid://dbhqk1tq5grf8" path="res://resources/augments/immuno_boosters.tres" id="2_uo3fq"]
 [ext_resource type="Resource" uid="uid://c66ie0f07a5c6" path="res://resources/enemies/basic_slime_enemy.tres" id="3_b1f1p"]
 [ext_resource type="Resource" uid="uid://c41lhhdbpe2ut" path="res://resources/enemies/evolved_slime_enemy.tres" id="4_147fk"]
@@ -25,7 +25,7 @@ enemies = {
 &"small_slime_enemy": ExtResource("5_vuj70")
 }
 augments = {
-&"health_aug_": ExtResource("1_i2h8p"),
+&"basic_repai": ExtResource("1_i2h8p"),
 &"immuno_boo": ExtResource("2_uo3fq")
 }
 powerups = {

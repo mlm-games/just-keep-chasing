@@ -16,4 +16,5 @@ sprite_scale = Vector2(0.06, 0.057)
 sprite_color = Color(1, 1, 1, 1)
 base_health = 30.0
 base_speed = 75.0
+id = "basic_slime_enemy"
 metadata/_custom_type_script = ExtResource("1_22qtp")

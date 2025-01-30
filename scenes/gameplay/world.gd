@@ -100,9 +100,9 @@ func switch_weapon() -> void:
 		get_tree().call_group("Weapons", "queue_free")
 		var gun_instance: BaseGun
 		if guns[current_gun_index] is ShotgunData:
-			gun_instance = load("res://scenes/weapons-related/double_barrel_shotgun.tscn").instantiate()
+			gun_instance = preload("res://scenes/weapons-related/double_barrel_shotgun.tscn").instantiate()
 		else:
-			gun_instance = load("res://scenes/weapons-related/base_gun.tscn").instantiate()
+			gun_instance = preload("res://scenes/weapons-related/base_gun.tscn").instantiate()
 		gun_instance.gun_data = guns[current_gun_index]
 		player.add_child(gun_instance)
 

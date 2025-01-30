@@ -1,4 +1,4 @@
-class_name GunData extends Resource
+class_name GunData extends BaseData
 
 @export var unlocked: bool = false
 
