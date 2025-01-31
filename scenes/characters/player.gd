@@ -7,6 +7,12 @@ class_name Player extends CharacterBody2D
 
 var taking_damage : bool = false
 
+func _ready() -> void:
+	var initial_gun_data: GunData = GameState.collection_res.guns["pistol"]
+	var base_gun: BaseGun = initial_gun_data.weapon_scene.instantiate()
+	base_gun.gun_data = initial_gun_data
+	add_child(base_gun)
+
 func _physics_process(_delta):
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	velocity = direction.normalized() * GameState.game_stats[GameState.Stats.PLAYER_SPEED]

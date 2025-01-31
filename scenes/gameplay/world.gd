@@ -36,12 +36,15 @@ var enemy_spawn_type_range = Vector2(1, 1)
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
 
+var spawnable_enemies : Array = []
+
 func _ready() -> void:
 		# Only add unlocked guns to the available guns array
 	guns.clear()
 	for gun in GameState.collection_res.guns.values():
 		if gun.unlocked:
 			guns.append(gun)
+	spawnable_enemies = GameState.collection_res.enemies.values()
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	spawn_enemy()
@@ -70,7 +73,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		pick_up_weapon()
 
 func spawn_enemy() -> void:
-	var enemy_data = GameState.collection_res.enemies["small_slime_enemy"]
+	var enemy_data = spawnable_enemies.pick_random()
 	var enemy_scene = enemy_data.base_enemy_scene
 	var enemy_instance:SlimeEnemy = enemy_scene.instantiate()
 	enemy_instance.set_data_values(enemy_data)
@@ -100,7 +103,7 @@ func switch_weapon() -> void:
 		get_tree().call_group("Weapons", "queue_free")
 		var gun_instance: BaseGun
 		if guns[current_gun_index] is ShotgunData:
-			gun_instance = preload("res://scenes/weapons-related/double_barrel_shotgun.tscn").instantiate()
+			gun_instance = preload("res://scenes/weapons-related/base_shotgun.tscn").instantiate()
 		else:
 			gun_instance = preload("res://scenes/weapons-related/base_gun.tscn").instantiate()
 		gun_instance.gun_data = guns[current_gun_index]

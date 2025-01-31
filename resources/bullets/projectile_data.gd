@@ -14,3 +14,4 @@ class_name ProjectileData extends Resource
 @export var sprite_offset : Vector2 = Vector2.ZERO
 
 @export var collision_shape_radius : float = 9.0
+@export var collision_shape_mask: int = 3

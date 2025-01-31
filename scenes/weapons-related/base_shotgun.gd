@@ -8,8 +8,8 @@ class_name Shotgun extends BaseGun
 func spawn_bullet() -> void:
 	if ammo > 0:
 		for _i in range(pellets_per_shot):
-			var bullet_instance = BaseBulletScene.instantiate()
-			bullet_instance.set_projectile_values(bullet)
+			var bullet_instance: BaseProjectile = BaseBulletScene.instantiate()
+			bullet_instance.projectile_data = gun_data.bullet
 			bullet_instance.global_position = _bullet_spawn_point.global_position
 			bullet_instance.global_rotation_degrees = _bullet_spawn_point.global_rotation_degrees + randf_range(-pellet_spread, pellet_spread)
 			get_tree().current_scene.add_child(bullet_instance)

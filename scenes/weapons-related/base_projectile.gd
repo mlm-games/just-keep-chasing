@@ -8,11 +8,15 @@ class_name BaseProjectile extends Area2D
 @export var dot_type : GameState.StatusEffectType
 @export var dot_duration : float = NAN
 
+var projectile_data: ProjectileData
+
 var attack := Attack.new()
 var travelled_distance := 0.0
 
 @onready var _rand_spread = deg_to_rad(randf_range(-spread, spread))
 
+func _ready() -> void:
+	set_projectile_values(projectile_data)
 
 func _physics_process(delta: float) -> void:
 	var direction = Vector2.RIGHT.rotated(rotation + _rand_spread)
@@ -34,6 +38,7 @@ func _on_area_entered(body: Node2D) -> void:
 
 func set_projectile_values(projectile_data: ProjectileData):
 	$CollisionShape2D.shape.radius = projectile_data.collision_shape_radius
+	set_collision_mask_value(projectile_data.collision_shape_mask, true)
 	damage = projectile_data.projectile_damage
 	projectile_range = projectile_data.projectile_range
 	speed = projectile_data.projectile_speed

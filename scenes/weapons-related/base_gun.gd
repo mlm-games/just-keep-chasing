@@ -5,6 +5,8 @@ const BaseBulletScene = preload("res://scenes/weapons-related/base_projectile.ts
 
 @export var unlocked: bool = false
 
+# needed properites for gun data
+
 @export var bullet: ProjectileData
 @export var reload_time: float
 @export var max_ammo: int
@@ -14,6 +16,7 @@ const BaseBulletScene = preload("res://scenes/weapons-related/base_projectile.ts
 @export var fire_audio: AudioStreamWAV
 @export var damage_dropoff_curve: Curve
 @export var speed_dropoff_curve: Curve
+@export var bullet_spawn_pos: Vector2
 #@export var recoil_dist: float = 5
 
 @onready var _bullet_spawn_point: Marker2D = %BulletSpawnPoint
@@ -27,6 +30,7 @@ var tween
 @export var gun_data: GunData
 
 func _ready() -> void:
+	set_gun_properties(gun_data)
 	#$CollisionShape2D.shape.radius = 600
 	_reload_timer.wait_time = reload_time
 	_reload_timer.one_shot = true
@@ -46,8 +50,8 @@ func _physics_process(_delta: float) -> void:
 
 func spawn_bullet() -> void:
 	if ammo > 0:
-		var bullet_instance = BaseBulletScene.instantiate()
-		bullet_instance.set_projectile_values(bullet)
+		var bullet_instance : BaseProjectile = BaseBulletScene.instantiate()
+		bullet_instance.projectile_data = bullet
 		bullet_instance.global_position = _bullet_spawn_point.global_position
 		bullet_instance.global_rotation = _bullet_spawn_point.global_rotation
 		get_tree().current_scene.add_child(bullet_instance)
@@ -104,24 +108,26 @@ func play_fire_animation() -> void:
 	#tween.set_loops(0)
 
 
-func set_gun_properties(gun_data: GunData) -> void:
-	# Apply gun data properties
-	if gun_data:
-		# Set up sprite
-		%Sprite2D.texture = gun_data.sprite
-		%Sprite2D.scale = gun_data.sprite_scale
-		%Sprite2D.position = gun_data.sprite_position
-		%Sprite2D.rotation = gun_data.sprite_rotation
-		%Sprite2D.flip_h = gun_data.sprite_flip_h
-		
-		 # Set up bullet spawn point
-		%BulletSpawnPoint.position = gun_data.bullet_spawn_offset
-		
-		 # Set up timers
-		_reload_timer.wait_time = gun_data.reload_time
-		_fire_rate_timer.wait_time = gun_data.fire_rate
-		
-		# Set other properties
-		max_ammo = gun_data.max_ammo
-		ammo = gun_data.ammo
-		targeting_range = gun_data.targeting_range
+func set_gun_properties(local_gun_data: GunData) -> void:
+	# Apply new gundata properties
+	gun_data = local_gun_data
+	# Set up sprite
+	%Sprite2D.texture = gun_data.sprite
+	%Sprite2D.scale = gun_data.sprite_scale
+	%Sprite2D.position = gun_data.sprite_position
+	%Sprite2D.rotation = gun_data.sprite_rotation_degrees
+	%Sprite2D.flip_h = gun_data.sprite_flip_h
+	
+	 # Set up bullet spawn point
+	_bullet_spawn_point.position = gun_data.bullet_spawn_offset
+	
+	 # Set up timers
+	reload_time = gun_data.reload_time
+	fire_rate = gun_data.fire_rate
+	
+	# Set other properties
+	max_ammo = gun_data.max_ammo
+	ammo = gun_data.ammo
+	targeting_range = gun_data.targeting_range
+	
+	bullet = gun_data.bullet

@@ -18,4 +18,5 @@ sprite_texture = ExtResource("2_xxnb8")
 sprite_rotation = 90.0
 sprite_offset = Vector2(-25, 0)
 collision_shape_radius = 9.0
+collision_shape_mask = 3
 metadata/_custom_type_script = SubResource("Resource_uq3rq")
