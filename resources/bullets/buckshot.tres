@@ -15,4 +15,5 @@ sprite_texture = ExtResource("2_ltcgv")
 sprite_rotation = 0.0
 sprite_offset = Vector2(0, 0)
 collision_shape_radius = 9.85
+collision_shape_mask = 3
 metadata/_custom_type_script = ExtResource("1_k47vs")
