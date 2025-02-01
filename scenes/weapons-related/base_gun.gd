@@ -51,9 +51,19 @@ func _physics_process(_delta: float) -> void:
 func spawn_bullet() -> void:
 	if ammo > 0:
 		var bullet_instance : BaseProjectile = BaseBulletScene.instantiate()
-		bullet_instance.projectile_data = bullet
+		var bullet_data: ProjectileData = bullet.duplicate(true)
 		bullet_instance.global_position = _bullet_spawn_point.global_position
 		bullet_instance.global_rotation = _bullet_spawn_point.global_rotation
+		if get_parent() is Player:
+			bullet_data.projectile_data.projectile_damage *= GameState.game_stats[GameState.Stats.DAMAGE_MULT]
+			bullet_data.projectile_data.projectile_damage += GameState.game_stats[GameState.Stats.RAW_DAMAGE_MOD]
+			bullet_data.projectile_data.targetting_range *= GameState.game_stats[GameState.Stats.TARGETTING_RANGE_MULT]
+		if get_parent() is SlimeEnemy:
+			bullet_data.projectile_data.projectile_damage += GameState.game_stats[GameState.Stats.RAW_GUN_ENEMY_DAMAGE_REDUCTION]
+			bullet_data.projectile_data.projectile_damage *= GameState.game_stats[GameState.Stats.GUN_ENEMY_DAMAGE_MULT]
+			bullet_data.projectile_data.targetting_range *= GameState.game_stats[GameState.Stats.GUN_ENEMY_TARGETTING_RANGE_MULT]
+		
+		bullet_instance.projectile_data = bullet_data
 		get_tree().current_scene.add_child(bullet_instance)
 		ammo -= 1
 		if ammo <= 0:

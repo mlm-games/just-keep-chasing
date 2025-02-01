@@ -36,6 +36,7 @@ func _on_area_entered(body: Node2D) -> void:
 		body.damage(attack)
 	queue_free()
 
+
 func set_projectile_values(projectile_data: ProjectileData):
 	$CollisionShape2D.shape.radius = projectile_data.collision_shape_radius
 	set_collision_mask_value(projectile_data.collision_shape_mask, true)

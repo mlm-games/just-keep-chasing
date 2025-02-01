@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Augments" load_steps=4 format=3 uid="uid://vkrfjwuxjcky"]
+
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_xk0ku"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_33m5x"]
+
+[sub_resource type="Resource" id="Resource_xk0ku"]
+script = ExtResource("2_33m5x")
+value = 1.1
+key = 6
+operation = 1
+metadata/_custom_type_script = ExtResource("2_33m5x")
+
+[resource]
+script = ExtResource("1_xk0ku")
+augment_price = 9999
+stats_to_modify = Array[ExtResource("2_33m5x")]([SubResource("Resource_xk0ku")])
+rarity = 0.0
+id = null
+metadata/_custom_type_script = ExtResource("1_xk0ku")

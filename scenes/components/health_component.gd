@@ -12,6 +12,8 @@ var invincible: bool = false
 var prev_health := max_health
 
 func _ready() -> void:
+	max_health -= GameState.Stats.FLAT_ENEMY_HEALTH_REDUCTION
+	max_health *= GameState.Stats.ENEMY_HEALTH_MULT
 	current_health = max_health
 	health_changed.emit(current_health)
 

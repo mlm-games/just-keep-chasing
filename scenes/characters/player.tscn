@@ -203,9 +203,6 @@ show_percentage = false
 [node name="HealthComponent" parent="." instance=ExtResource("6_bedk8")]
 unique_name_in_owner = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
-unique_name_in_owner = true
-
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeBlendTree_k2410")
 advance_expression_base_node = NodePath("..")

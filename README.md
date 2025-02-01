@@ -2,15 +2,14 @@
 
 A work-in-progress wave-based shooter game where survival is key. Fight through endless waves of enemies while collecting upgrades and managing resources.
 
-![Game Screenshot Placeholder]
-*Screenshot coming soon*
+*Screenshot later*
 
 ## 🎮 Current Features
 
 - Wave-based enemy spawning system
 - Basic shooting mechanics
 - Player movement controls
-- Pickup/drop system
+- Pickup/drop system (only for debug)
 - Basic upgrade system
 - Preliminary scoring system
 
@@ -19,46 +18,32 @@ A work-in-progress wave-based shooter game where survival is key. Fight through 
 This game is currently under active development. Many features are experimental and subject to change.
 
 ### Planned Features
-- Enhanced enemy AI
-- More diverse enemy types
-- Additional weapon types
-- Expanded upgrade system
-- Better visual effects
-- Improved UI/UX
 - Sound effects and music
 - High score system
 
 ## 🎨 Artwork Status
 
-**Note:** Current artwork is placeholder/prototype quality. We're actively looking for:
+**Note:** Current artwork is placeholder/prototype quality. Actively looking towards:
 - Better character sprites
 - Improved enemy designs
 - Enhanced visual effects
 - More polished UI elements
 - Background assets
 
-## 🔧 Installation
+## 🔧 Run in editor for debugging
 
 1. Clone the repository:
 ```bash
 git clone https://codeberg.org/username/just-keep-chasing.git
 ```
 
-2. Navigate to the project directory:
-```bash
-cd just-keep-chasing
-```
+2. Run it in the godot editor.
 
-3. [Additional installation steps if required]
 
 ## 🕹️ How to Play
 
 - WASD or Arrow Keys: Move
-- Mouse: Aim
-- Left Click: Shoot
-- E: Collect drops
-- Q: Use collected items
-- Space: Dash (if unlocked)
+
 
 ## 🛠️ Built With
 
@@ -80,30 +65,23 @@ We welcome contributions! If you'd like to help, please:
 
 ## 📝 License
 
-This project is licensed under the [License Type] - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPL 3.0 only license - see the [LICENSE](LICENSE) file for details.
 
 ## 🎮 Development Status
 
-Current Version: 0.3.0 (Pre-alpha)
+Current Version: 0.?.0 (Pre-alpha)
 
 ### Known Issues
-- [List of current known issues]
+- FIXME or HACK entries
 - Placeholder artwork needs replacement
-- [Other known issues]
 
 ## 📞 Contact
 
-- [Project discussion forum/channel] Later
+- [Project discussion forum/channel] Later in masto or lemmy?
 
 ## 🙏 Acknowledgments
 
-- Will be added to the credits.md file
-
-- [Credits for any assets/resources used]
-- [Contributors]
+- [Credits for any assets/resources used]{credits.md}
+- Contributors
 
 ---
-
-*Last Updated: [Date]*
-
-Remember to star ⭐ the repository if you find it interesting!

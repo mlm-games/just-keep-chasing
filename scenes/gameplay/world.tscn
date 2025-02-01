@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene load_steps=20 format=3 uid="uid://4fyoq8npekf0"]
 
 [ext_resource type="Script" uid="uid://lgsfy3lj2y0g" path="res://scenes/gameplay/world.gd" id="1_li0ht"]
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes/characters/player.tscn" id="3_vhnxw"]
 [ext_resource type="PackedScene" uid="uid://byks0f5xqnv20" path="res://scenes/gameplay/blockade.tscn" id="4_l562g"]
 [ext_resource type="Script" uid="uid://cso3agrkbovv8" path="res://scenes/saves/saver_loader.gd" id="5_m8xuy"]
 [ext_resource type="PackedScene" uid="uid://p3ijv0nq3035" path="res://scenes/UI/hud.tscn" id="6_vltvt"]
+[ext_resource type="Shader" uid="uid://bpib10m6uoyvv" path="res://resources/shaders/slow_motion.gdshader" id="9_k1kj5"]
 [ext_resource type="Script" uid="uid://buv40e5a827xo" path="res://scenes/powerups/powerup_manager.gd" id="13_wcqrj"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="14_su07q"]
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="18_r7okl"]
@@ -17,6 +18,11 @@ point_count = 5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
 radius = 42.86
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xyviv"]
+shader = ExtResource("9_k1kj5")
+shader_parameter/chromatic_aberration = 0.0
+shader_parameter/vignette_intensity = 0.0
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wcqrj"]
 
@@ -45,6 +51,132 @@ adjustment_brightness = 1.1
 adjustment_contrast = 1.2
 adjustment_saturation = 1.1
 
+[sub_resource type="Animation" id="Animation_xyviv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Player/Camera2D:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_22uad"]
+resource_name = "slow_motion_end"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.3, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Player/Camera2D:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_k1kj5"]
+resource_name = "slow_motion_start"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Player/Camera2D:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_22uad"]
+_data = {
+&"RESET": SubResource("Animation_xyviv"),
+&"slow_motion_end": SubResource("Animation_22uad"),
+&"slow_motion_start": SubResource("Animation_k1kj5")
+}
+
 [node name="World" type="Node2D"]
 script = ExtResource("1_li0ht")
 
@@ -65,6 +197,8 @@ curve = SubResource("Curve2D_xsefa")
 unique_name_in_owner = true
 position = Vector2(-77, -43)
 rotation = -0.00231124
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
 
 [node name="EnemiesNode" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -139,18 +273,36 @@ repeat_size = Vector2(1152, 896)
 
 [node name="BackgroundRect" type="TextureRect" parent="Control/CanvasLayer/BackgroundParallax2D"]
 modulate = Color(0.858824, 0.858824, 0.858824, 0.498039)
-offset_right = 1152.0
+offset_left = 1.0
+offset_right = 1153.0
 offset_bottom = 896.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("18_r7okl")
 stretch_mode = 1
 
+[node name="Vignette" type="ColorRect" parent="Control/CanvasLayer/BackgroundParallax2D"]
+visible = false
+material = SubResource("ShaderMaterial_xyviv")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1151.0
+offset_right = 1151.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.9, 1, 1.1, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_su07q")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_22uad")
+}
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="timeout" from="PowerupSpawnTimer" to="." method="_on_powerup_spawn_timer_timeout"]

@@ -1,15 +1,15 @@
 class_name Player extends CharacterBody2D
 
 @onready var health_component: HealthComponent = %HealthComponent
-@onready var camera: Camera2D = %Camera2D
 @onready var progress_bar: ProgressBar = %ProgressBar
 @onready var animation_tree: AnimationTree = $AnimationTree
 
 var taking_damage : bool = false
+var base_gun: BaseGun
 
 func _ready() -> void:
 	var initial_gun_data: GunData = GameState.collection_res.guns["pistol"]
-	var base_gun: BaseGun = initial_gun_data.weapon_scene.instantiate()
+	base_gun = initial_gun_data.weapon_scene.instantiate()
 	base_gun.gun_data = initial_gun_data
 	add_child(base_gun)
 
@@ -33,7 +33,7 @@ func _on_health_component_entity_died() -> void:
 
 func _on_health_component_taking_damage() -> void:
 	taking_damage = true
-	ScreenEffects.screen_shake(0.1, 0.5, camera)
+	ScreenEffects.screen_shake(0.1, 0.5)
 	await get_tree().create_timer(0.1).timeout
 	taking_damage = false
 	#fixme:  Taking damage should be false unless taking damage

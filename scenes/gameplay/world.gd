@@ -19,7 +19,18 @@
 #hack: Add a non-heavy graphics type and normal type, if menu fps above 450 fps, use normal type?
 extends Node2D
 
+const NORMAL_TIME = 1.0
+const SLOW_TIME = 0.75
+const SLOW_DURATION = 2.0
+const TRANSITION_DURATION = 0.3
+
+@onready var time_scale_tween: Tween
+
 const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.tscn")
+
+@onready var animation_player = $AnimationPlayer
+@onready var vignette = $Control/CanvasLayer/BackgroundParallax2D/Vignette
+#@onready var time_scale_tween: Tween
 
 @export var guns: Array[GunData] = []
 
@@ -100,14 +111,15 @@ func get_random_powerup() -> PowerupData:
 func switch_weapon() -> void:
 	if guns.size() != 0:
 		current_gun_index = (current_gun_index + 1) % guns.size()
-		get_tree().call_group("Weapons", "queue_free")
+		player.base_gun.queue_free()
 		var gun_instance: BaseGun
 		if guns[current_gun_index] is ShotgunData:
 			gun_instance = preload("res://scenes/weapons-related/base_shotgun.tscn").instantiate()
 		else:
 			gun_instance = preload("res://scenes/weapons-related/base_gun.tscn").instantiate()
 		gun_instance.gun_data = guns[current_gun_index]
-		player.add_child(gun_instance)
+		player.base_gun = gun_instance
+		player.add_child(player.base_gun)
 
 func throw_weapon() -> void:
 	if guns.size() != 0:
@@ -140,10 +152,8 @@ func use_powerup(powerup_type: int) -> void:
 		GameState.powerups[powerup_type] -= 1
 		match powerup_type:
 			GameState.PowerupType.SLOW_TIME:
-				if Engine.time_scale != 0:
-					Engine.time_scale = 0.75
-					await get_tree().create_timer(2.0).timeout
-					Engine.time_scale = 1.0
+				if Engine.time_scale == 1:
+					activate_slow_motion()
 				else:
 					GameState.powerups[powerup_type] += 1
 			GameState.PowerupType.SCREEN_BLAST:
@@ -173,3 +183,34 @@ func _on_trial_completed(success: bool, gun: GunData) -> void:
 	else:
 		# Show failure message
 		print("Trial failed! Try again!")
+
+# Replace your slow time powerup implementation with this:
+func activate_slow_motion():
+	if Engine.time_scale == NORMAL_TIME:
+		# Create smooth transition for time scale
+		time_scale_tween = create_tween()
+		time_scale_tween.tween_property(Engine, "time_scale", SLOW_TIME, TRANSITION_DURATION)\
+			.set_trans(Tween.TRANS_SINE)\
+			.set_ease(Tween.EASE_OUT)
+		
+		# Play visual effects
+		animation_player.play("slow_motion_start")
+		vignette.visible = true
+		
+		#Fixme: Play sound effect
+		#play_slow_motion_sound()
+		
+		# Wait for duration then deactivate
+		await get_tree().create_timer(SLOW_DURATION).timeout
+		deactivate_slow_motion()
+
+func deactivate_slow_motion():
+	time_scale_tween = create_tween()
+	time_scale_tween.tween_property(Engine, "time_scale", NORMAL_TIME, TRANSITION_DURATION)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_IN)
+	
+	animation_player.play("slow_motion_end")
+	vignette.visible = false
+	
+	#FIXME: play_normal_time_sound where it plays right before the timer is about to end (like star powerups in super mario)

@@ -55,6 +55,9 @@ enum Stats {
 	FLAT_ENEMY_HEALTH_REDUCTION,
 	ENEMY_HEALTH_MULT,
 	FIRE_SPEED_REDUCTION_MULT,
+	GUN_ENEMY_DAMAGE_MULT,
+	RAW_GUN_ENEMY_DAMAGE_REDUCTION,
+	GUN_ENEMY_TARGETTING_RANGE_MULT,
 }
 
 # Making the firespeed go very fast when health goes below 20%
@@ -93,6 +96,9 @@ var game_stats: Dictionary[GameState.Stats, Variant] = {
 	Stats.FLAT_ENEMY_HEALTH_REDUCTION: 0,
 	Stats.ENEMY_HEALTH_MULT: 1,
 	Stats.FIRE_SPEED_REDUCTION_MULT: 1,
+	Stats.RAW_GUN_ENEMY_DAMAGE_REDUCTION: 0,
+	Stats.GUN_ENEMY_DAMAGE_MULT: 1,
+	
 }
 
 # Player-related properties
@@ -179,7 +185,9 @@ func get_currency_bbcode() -> String:
 
 func apply_augment(augment: Augments) -> void:
 	for stat:StatsModifier in augment.stats_to_modify:
-		if stat.key in game_stats.keys():
+		if stat.key == Stats.PLAYER_HEALTH:
+			get_tree().get_nodes_in_group("Player")[0].health_component.heal_or_damage(stat.value)
+		elif stat.key in game_stats.keys():
 			match stat.operation:
 				Operation.REPLACE:
 					game_stats[stat.key] = stat.value
@@ -192,10 +200,6 @@ func apply_augment(augment: Augments) -> void:
 			if stat.key == Stats.PLAYER_MAX_HEALTH:
 				#Update max_health in player's health component
 				get_tree().get_nodes_in_group("Player")[0].update_max_health(game_stats[Stats.PLAYER_MAX_HEALTH])
-		else:
-			match stat.key:
-				Stats.PLAYER_HEALTH:
-					get_tree().get_nodes_in_group("Player")[0].health_component.heal_or_damage(stat.value)
 
 func update_highest_game_time(time: float) -> void:
 	if time > highest_game_time:
