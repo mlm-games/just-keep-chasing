@@ -29,7 +29,8 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/HBoxContainer/MarginContainer"]
+[node name="Icon" type="TextureRect" parent="PanelContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
@@ -37,16 +38,48 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="VirusEradicationGoalsName" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="UnlockCondition" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="RichTextLabel3" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+[node name="Reward" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AchievementsContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 
 [node name="UnlockButton" type="Button" parent="PanelContainer/HBoxContainer"]
 layout_mode = 2
 script = ExtResource("2_av81j")
 metadata/_custom_type_script = ExtResource("2_av81j")
+
+[node name="IconBackground" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.474537
+anchor_right = 1.0
+anchor_bottom = 0.525463
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true

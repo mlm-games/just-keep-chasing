@@ -29,7 +29,8 @@ func damage(attack: Attack) -> void:
 		if get_parent() is Player:
 			# Apply damage reduction for player
 			final_damage *= (1 - GameStats.get_stat(GameStats.Stats.PLAYER_DAMAGE_REDUCTION))
-			
+		if get_parent() is BaseEnemy:
+			CountStats.increment_stat("damage_dealt", int(final_damage))
 		current_health -= final_damage
 		taking_damage.emit()
 		health_changed.emit(current_health)
@@ -38,7 +39,7 @@ func damage(attack: Attack) -> void:
 func heal_or_damage(amount: float) -> void:
 	if amount > 0 and get_parent() is Player:
 		# Apply healing multiplier for player
-		amount *= GameState.game_stats[GameState.Stats.HEALING_MULT]
+		amount *= GameStats.get_stat(GameStats.Stats.HEALING_MULT)
 		
 	if amount > 0:
 		var tween = create_tween().set_ease(Tween.EASE_OUT_IN)

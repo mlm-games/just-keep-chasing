@@ -17,6 +17,23 @@
 #HACK: Use the canvascolor node to change environiment colors when new waves appear...
 #HACK: Make the bouncy anim button effect global so that it doesnt need to be duplicated
 #hack: Add a non-heavy graphics type and normal type, if menu fps above 450 fps, use normal type?
+
+# Common sounds
+	#button_hover,
+	#button_down,
+	#button_up,
+	#button_click,
+	#pickup_initial,
+	#pickup_collected,
+	#hit,
+	#lose,
+	#win,
+	#mouse_down,
+	#mouse_up,
+	#transition_in,
+	#transition_out,
+
+
 extends Node2D
 
 const NORMAL_TIME = 1.0
@@ -79,7 +96,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("switch-weapon"):
 		switch_weapon()
 	elif event.is_action_pressed("throw_weapon"):
-		throw_weapon()
+		throw_or_remove_gun_from_player(true)
 	elif event.is_action_pressed("pick_up_weapon"):
 		pick_up_weapon()
 
@@ -121,17 +138,19 @@ func switch_weapon() -> void:
 		player.base_gun = gun_instance
 		player.add_child(player.base_gun)
 
-func throw_weapon() -> void:
+func throw_or_remove_gun_from_player(throw: bool = true) -> void:
 	if guns.size() != 0:
-		var thrown_weapon = get_tree().get_first_node_in_group("Weapons")
+		var thrown_weapon = player.base_gun
 		var thrown_weapon_scene = guns[current_gun_index]
 		if thrown_weapon:
 			guns.erase(thrown_weapon_scene)
-		thrown_guns.append(thrown_weapon_scene)
-		thrown_weapon.reparent(self)
-		thrown_weapon.remove_from_group("Weapons")
-		thrown_weapon.add_to_group("Dropped Weapons")
+		if throw:
+			thrown_guns.append(thrown_weapon_scene)
+			thrown_weapon.reparent(self)
+			thrown_weapon.remove_from_group("Weapons")
+			thrown_weapon.add_to_group("Dropped Weapons")
 		switch_weapon()
+		
 
 func pick_up_weapon() -> void:
 	#Todo: When near the gun, it is highlighted, so that it can be clicked.
@@ -148,6 +167,7 @@ func pick_up_weapon() -> void:
 
 
 func use_powerup(powerup_type: int) -> void:
+	CountStats.increment_stat(powerup_type, 1, CountStats.powerup_use_stats)
 	if GameState.powerups[powerup_type] > 0:
 		GameState.powerups[powerup_type] -= 1
 		match powerup_type:
@@ -159,8 +179,6 @@ func use_powerup(powerup_type: int) -> void:
 			GameState.PowerupType.SCREEN_BLAST:
 				ScreenEffects.transition("slightFlash")
 				get_tree().call_group("On Screen Enemies", "queue_free")
-				#for enemy in get_tree().get_nodes_in_group("Enemies"):
-					#enemy.queue_free()
 			GameState.PowerupType.HEAL:
 				player.health_component.heal_or_damage(20)
 			GameState.PowerupType.INVINCIBLE:

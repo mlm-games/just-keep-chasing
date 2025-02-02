@@ -18,6 +18,7 @@ enum Stats {
 	PLAYER_HEALTH,
 	PLAYER_SPEED,
 	PLAYER_DAMAGE_MULT,
+	HEALING_MULT,
 	RAW_DAMAGE_MOD,
 	RELOAD_SPEED_REDUCTION_MULT,
 	TARGETTING_RANGE_MULT,
@@ -44,9 +45,10 @@ enum Operation {
 
 var _stats: Dictionary[Stats, StatDefinition] = {
 	Stats.PLAYER_MAX_HEALTH: StatDefinition.new(100),
-	Stats.PLAYER_HEALTH: StatDefinition.new(250),
+	Stats.PLAYER_HEALTH: StatDefinition.new(100),
 	Stats.PLAYER_SPEED: StatDefinition.new(250),
 	Stats.PLAYER_DAMAGE_MULT: StatDefinition.new(1),
+	Stats.HEALING_MULT: StatDefinition.new(1),
 	Stats.RAW_DAMAGE_MOD: StatDefinition.new(0),
 	Stats.RELOAD_SPEED_REDUCTION_MULT: StatDefinition.new(1),
 	Stats.TARGETTING_RANGE_MULT: StatDefinition.new(1),
@@ -71,10 +73,9 @@ func get_stat(stat_name: Stats) -> float:
 func modify_stat(stat_name: Stats, operation: Operation, value: float) -> void:
 	if not _stats.has(stat_name):
 		return
-		
+	
 	var stat = _stats[stat_name]
 	var old_value = stat.current_value
-	
 	match operation:
 		Operation.ADD:
 			stat.current_value = clamp(stat.current_value + value, 
@@ -93,11 +94,15 @@ func modify_stat(stat_name: Stats, operation: Operation, value: float) -> void:
 									 stat.min_value,
 									 stat.max_value)
 	
+	if stat_name == Stats.PLAYER_HEALTH:
+		get_tree().get_nodes_in_group("Player")[0].health_component.heal_or_damage(value)
+	elif stat_name == Stats.PLAYER_MAX_HEALTH:
+		get_tree().get_first_node_in_group("Player").update_max_health(stat.current_value)
 	emit_signal("stat_changed", stat_name, old_value, stat.current_value)
 
 #func apply_stat_modifier(stat: StatModifier) -> void:
 	#if stat.key == Stats.PLAYER_HEALTH:
-		#get_tree().get_nodes_in_group("Player")[0].health_component.heal_or_damage(stat.value)
+		#
 	#elif stat.key in game_stats.keys():
 		#match stat.operation:
 			#Operation.REPLACE:
@@ -114,12 +119,11 @@ func modify_stat(stat_name: Stats, operation: Operation, value: float) -> void:
 
 
 # enemy_id: no of kills
-var kill_count: Dictionary[String, int] = { 
+var enemy_kill_count: Dictionary[String, int] = { 
 	"small_slime": 0,
 	"basic_slime": 0,
 	"evolved_slime": 0,
 }
-
 
 func save_stats() -> Dictionary:
 	var save_data := {}
