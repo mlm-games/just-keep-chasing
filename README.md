@@ -81,7 +81,7 @@ Current Version: 0.?.0 (Pre-alpha)
 
 ## 🙏 Acknowledgments
 
-- [Credits for any assets/resources used]{credits.md}
+- [Credits for any assets/resources used](credits.md)
 - Contributors
 
 ---
