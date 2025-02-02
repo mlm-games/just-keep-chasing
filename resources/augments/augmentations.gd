@@ -5,5 +5,5 @@ class_name Augments extends BaseData
 @export var augment_price : int = 9999
 
 @export_group("Data")
-@export var stats_to_modify : Array[StatsModifier]
+@export var stats_to_modify : Array[StatModifier]
 @export var rarity : float

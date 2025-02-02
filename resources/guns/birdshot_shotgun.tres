@@ -7,8 +7,6 @@
 
 [resource]
 script = ExtResource("1_t0yg6")
-pellets_per_shot = 15
-pellet_spread = 45.0
 unlocked = false
 weapon_scene = ExtResource("4_62yvp")
 sprite = ExtResource("3_62yvp")
@@ -26,6 +24,8 @@ sprite_modulate = Color(1, 1, 1, 1)
 bullet_spawn_offset = Vector2(388.5, -19.661)
 fire_animation_skew = 5.0
 fire_animation_duration = null
+bullets_per_shot = 15
+bullet_spread = 45.0
 screen_shake_frequency = 100.0
 screen_shake_amplitude = 0.25
 id = "birdshot_shotgun"

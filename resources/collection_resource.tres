@@ -1,48 +1,50 @@
-[gd_resource type="Resource" script_class="CollectionResource" load_steps=19 format=3]
+[gd_resource type="Resource" script_class="CollectionResource" load_steps=20 format=3]
 
-[ext_resource type="Resource" path="res://resources/augments/basic_repair.tres" id="1_b1f1p"]
-[ext_resource type="Resource" path="res://resources/augments/bullet_buffer.tres" id="2_147fk"]
-[ext_resource type="Resource" path="res://resources/augments/immuno_boosters.tres" id="3_vuj70"]
-[ext_resource type="Resource" path="res://resources/enemies/basic_slime.tres" id="4_lnlmf"]
-[ext_resource type="Resource" path="res://resources/enemies/evolved_slime.tres" id="5_fdhpn"]
-[ext_resource type="Resource" path="res://resources/enemies/gunner_slime.tres" id="6_7r3w1"]
-[ext_resource type="Resource" path="res://resources/enemies/small_slime.tres" id="7_46x2v"]
-[ext_resource type="Resource" path="res://resources/guns/birdshot_shotgun.tres" id="8_vu3x2"]
-[ext_resource type="Resource" path="res://resources/guns/buckshot_shotgun.tres" id="9_51ty7"]
-[ext_resource type="Resource" path="res://resources/guns/double_barrel_shotgun.tres" id="10_21i0v"]
-[ext_resource type="Resource" path="res://resources/guns/machine_gun.tres" id="11_18ovc"]
-[ext_resource type="Resource" path="res://resources/guns/pistol.tres" id="12_ega57"]
-[ext_resource type="Resource" path="res://resources/guns/pump_action_shotgun.tres" id="13_f63db"]
-[ext_resource type="Resource" path="res://resources/powerups/heal_powerup.tres" id="14_5d78j"]
-[ext_resource type="Resource" path="res://resources/powerups/screen_blast_powerup.tres" id="15_hecn4"]
-[ext_resource type="Resource" path="res://resources/powerups/slow_time_powerup.tres" id="16_ohxkr"]
-[ext_resource type="Resource" path="res://resources/powerups/temp_invincible_powerup.tres" id="17_131m2"]
-[ext_resource type="Script" path="res://resources/collection_resource.gd" id="18_52q21"]
+[ext_resource type="Resource" path="res://resources/augments/basic_repair.tres" id="1_147fk"]
+[ext_resource type="Resource" path="res://resources/augments/bullet_buffer.tres" id="2_vuj70"]
+[ext_resource type="Resource" path="res://resources/augments/immuno_boosters.tres" id="3_lnlmf"]
+[ext_resource type="Resource" path="res://resources/augments/range_enhancer.tres" id="4_fdhpn"]
+[ext_resource type="Resource" path="res://resources/enemies/basic_slime.tres" id="5_7r3w1"]
+[ext_resource type="Resource" path="res://resources/enemies/evolved_slime.tres" id="6_46x2v"]
+[ext_resource type="Resource" path="res://resources/enemies/gunner_slime.tres" id="7_vu3x2"]
+[ext_resource type="Resource" path="res://resources/enemies/small_slime.tres" id="8_51ty7"]
+[ext_resource type="Resource" path="res://resources/guns/birdshot_shotgun.tres" id="9_21i0v"]
+[ext_resource type="Resource" path="res://resources/guns/buckshot_shotgun.tres" id="10_18ovc"]
+[ext_resource type="Resource" path="res://resources/guns/double_barrel_shotgun.tres" id="11_ega57"]
+[ext_resource type="Resource" path="res://resources/guns/machine_gun.tres" id="12_f63db"]
+[ext_resource type="Resource" path="res://resources/guns/pistol.tres" id="13_5d78j"]
+[ext_resource type="Resource" path="res://resources/guns/pump_action_shotgun.tres" id="14_hecn4"]
+[ext_resource type="Resource" path="res://resources/powerups/heal_powerup.tres" id="15_ohxkr"]
+[ext_resource type="Resource" path="res://resources/powerups/screen_blast_powerup.tres" id="16_131m2"]
+[ext_resource type="Resource" path="res://resources/powerups/slow_time_powerup.tres" id="17_52q21"]
+[ext_resource type="Resource" path="res://resources/powerups/temp_invincible_powerup.tres" id="18_uwrhl"]
+[ext_resource type="Script" path="res://resources/collection_resource.gd" id="19_u2rfg"]
 
 [resource]
-script = ExtResource("18_52q21")
+script = ExtResource("19_u2rfg")
 enemies = Dictionary[StringName, Variant]({
-&"basic_slime": ExtResource("4_lnlmf"),
-&"evolved_slime": ExtResource("5_fdhpn"),
-&"gunner_slime": ExtResource("6_7r3w1"),
-&"small_slime": ExtResource("7_46x2v")
+&"basic_slime": ExtResource("5_7r3w1"),
+&"evolved_slime": ExtResource("6_46x2v"),
+&"gunner_slime": ExtResource("7_vu3x2"),
+&"small_slime": ExtResource("8_51ty7")
 })
 augments = Dictionary[StringName, Variant]({
-&"basic_repair": ExtResource("1_b1f1p"),
-&"bullet_buffer": ExtResource("2_147fk"),
-&"immuno_boosters": ExtResource("3_vuj70")
+&"basic_repair": ExtResource("1_147fk"),
+&"bullet_buffer": ExtResource("2_vuj70"),
+&"immuno_boosters": ExtResource("3_lnlmf"),
+&"range_enhancer": ExtResource("4_fdhpn")
 })
 powerups = Dictionary[StringName, Variant]({
-&"heal_powerup": ExtResource("14_5d78j"),
-&"screen_blast_powerup": ExtResource("15_hecn4"),
-&"slow_time_powerup": ExtResource("16_ohxkr"),
-&"temp_invincible_powerup": ExtResource("17_131m2")
+&"heal_powerup": ExtResource("15_ohxkr"),
+&"screen_blast_powerup": ExtResource("16_131m2"),
+&"slow_time_powerup": ExtResource("17_52q21"),
+&"temp_invincible_powerup": ExtResource("18_uwrhl")
 })
 guns = Dictionary[StringName, Variant]({
-&"birdshot_shotgun": ExtResource("8_vu3x2"),
-&"buckshot_shotgun": ExtResource("9_51ty7"),
-&"double_barrel_shotgun": ExtResource("10_21i0v"),
-&"machine_gun": ExtResource("11_18ovc"),
-&"pistol": ExtResource("12_ega57"),
-&"pump_action_shotgun": ExtResource("13_f63db")
+&"birdshot_shotgun": ExtResource("9_21i0v"),
+&"buckshot_shotgun": ExtResource("10_18ovc"),
+&"double_barrel_shotgun": ExtResource("11_ega57"),
+&"machine_gun": ExtResource("12_f63db"),
+&"pistol": ExtResource("13_5d78j"),
+&"pump_action_shotgun": ExtResource("14_hecn4")
 })

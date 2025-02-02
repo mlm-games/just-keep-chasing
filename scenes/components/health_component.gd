@@ -1,5 +1,5 @@
 class_name HealthComponent extends Node
-#TODO: Sending out the anims for each powerups (like shockwaves for screenblast, starry colors on player for invincible)
+
 signal entity_died
 signal taking_damage
 signal health_changed(new_health: float)
@@ -12,17 +12,42 @@ var invincible: bool = false
 var prev_health := max_health
 
 func _ready() -> void:
-	max_health -= GameState.Stats.FLAT_ENEMY_HEALTH_REDUCTION
-	max_health *= GameState.Stats.ENEMY_HEALTH_MULT
+	if get_parent() is BaseEnemy:
+		# Apply enemy health modifications from game stats
+		max_health -= GameStats.get_stat(GameStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION)
+		max_health *= GameStats.get_stat(GameStats.Stats.ENEMY_HEALTH_MULT)
+	else:
+		# For player, use player health stat
+		max_health = GameStats.get_stat(GameStats.Stats.PLAYER_MAX_HEALTH)
+	
 	current_health = max_health
 	health_changed.emit(current_health)
 
 func damage(attack: Attack) -> void:
 	if not invincible:
-		current_health -= attack.attack_damage
+		var final_damage = attack.attack_damage
+		if get_parent() is Player:
+			# Apply damage reduction for player
+			final_damage *= (1 - GameStats.get_stat(GameStats.Stats.PLAYER_DAMAGE_REDUCTION))
+			
+		current_health -= final_damage
 		taking_damage.emit()
 		health_changed.emit(current_health)
 		check_health()
+
+func heal_or_damage(amount: float) -> void:
+	if amount > 0 and get_parent() is Player:
+		# Apply healing multiplier for player
+		amount *= GameState.game_stats[GameState.Stats.HEALING_MULT]
+		
+	if amount > 0:
+		var tween = create_tween().set_ease(Tween.EASE_OUT_IN)
+		var color_backup = get_parent().modulate
+		tween.tween_property(get_parent(), "modulate", Color.LIGHT_GREEN, 0.1)
+		tween.tween_property(get_parent(), "modulate", color_backup, 0.1)
+	
+	current_health = clampf(current_health + amount, 0, max_health)
+	health_changed.emit(current_health)
 
 func dot(attack: Attack) -> void:
 	if not invincible:
@@ -34,15 +59,6 @@ func dot(attack: Attack) -> void:
 			taking_damage.emit()
 			health_changed.emit(current_health)
 			check_health()
-
-func heal_or_damage(amount: float) -> void:
-	if amount > 0:
-		var tween = create_tween().set_ease(Tween.EASE_OUT_IN)
-		var color_backup = get_parent().modulate
-		tween.tween_property(get_parent(), "modulate", Color.LIGHT_GREEN, 0.1)
-		tween.tween_property(get_parent(), "modulate", color_backup, 0.1)
-	current_health = clampf(current_health + amount, 0, max_health)
-	health_changed.emit(current_health) 
 
 
 func is_alive() -> bool:

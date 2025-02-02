@@ -7,8 +7,6 @@
 
 [resource]
 script = ExtResource("1_bq3ia")
-pellets_per_shot = 4
-pellet_spread = 10.0
 unlocked = true
 weapon_scene = ExtResource("4_lldrk")
 sprite = ExtResource("3_lldrk")
@@ -26,6 +24,8 @@ sprite_modulate = Color(0, 1, 1, 1)
 bullet_spawn_offset = Vector2(406.187, 20.724)
 fire_animation_skew = 4.94764
 fire_animation_duration = null
+bullets_per_shot = 4
+bullet_spread = 10.0
 screen_shake_frequency = 10.0
 screen_shake_amplitude = 0.5
 id = "pump_action_shotgun"

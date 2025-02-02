@@ -40,65 +40,11 @@ var powerups := {
 	PowerupType.INVINCIBLE: 0,
 }
 
-enum Stats {
-	PLAYER_MAX_HEALTH,
-	PLAYER_HEALTH,
-	PLAYER_SPEED,
-	DAMAGE_MULT,
-	RAW_DAMAGE_MOD,
-	RELOAD_SPEED_REDUCTION_MULT,
-	TARGETTING_RANGE_MULT,
-	SHOP_COST_MULT,
-	RAW_AMMO_INC,
-	AMMO_INC_MULT,
-	HEALTH_REGEN,
-	FLAT_ENEMY_HEALTH_REDUCTION,
-	ENEMY_HEALTH_MULT,
-	FIRE_SPEED_REDUCTION_MULT,
-	GUN_ENEMY_DAMAGE_MULT,
-	RAW_GUN_ENEMY_DAMAGE_REDUCTION,
-	GUN_ENEMY_TARGETTING_RANGE_MULT,
-}
-
 # Making the firespeed go very fast when health goes below 20%
 # Other effects from my browser
 # Can do this after all the polish and marketing stuff...
 enum Effects {
 	 
-}
-
-enum Operation {
-	ADD,
-	MULTIPLY,
-	REPLACE,
-	EXPONENTIAL,
-}
-
-# enemy_id: no of kills
-var kill_count: Dictionary[String, int] = { 
-	"small_slime_enemy": 0,
-	"basic_slime_enemy": 0,
-	"evolved_slime_enemy": 0,
-}
-
-var game_stats: Dictionary[GameState.Stats, Variant] = {
-	Stats.PLAYER_MAX_HEALTH: 100,
-	Stats.PLAYER_HEALTH: 250,
-	Stats.PLAYER_SPEED: 250,
-	Stats.DAMAGE_MULT: 1,
-	Stats.RAW_DAMAGE_MOD: 0,
-	Stats.RELOAD_SPEED_REDUCTION_MULT: 1,
-	Stats.TARGETTING_RANGE_MULT: 1,
-	Stats.SHOP_COST_MULT: 1,
-	Stats.RAW_AMMO_INC: 0,
-	Stats.AMMO_INC_MULT: 1,
-	Stats.HEALTH_REGEN: 0,
-	Stats.FLAT_ENEMY_HEALTH_REDUCTION: 0,
-	Stats.ENEMY_HEALTH_MULT: 1,
-	Stats.FIRE_SPEED_REDUCTION_MULT: 1,
-	Stats.RAW_GUN_ENEMY_DAMAGE_REDUCTION: 0,
-	Stats.GUN_ENEMY_DAMAGE_MULT: 1,
-	
 }
 
 # Player-related properties
@@ -183,23 +129,13 @@ func powerup_collected(powerup_type: int) -> void:
 func get_currency_bbcode() -> String:
 	return "[img=40px]%s[/img]" % RESEARCH_TEXTURE
 
+
+
+
 func apply_augment(augment: Augments) -> void:
-	for stat:StatsModifier in augment.stats_to_modify:
-		if stat.key == Stats.PLAYER_HEALTH:
-			get_tree().get_nodes_in_group("Player")[0].health_component.heal_or_damage(stat.value)
-		elif stat.key in game_stats.keys():
-			match stat.operation:
-				Operation.REPLACE:
-					game_stats[stat.key] = stat.value
-				Operation.ADD:
-					game_stats[stat.key] += stat.value
-				Operation.MULTIPLY:
-					game_stats[stat.key] *= stat.value
-				Operation.EXPONENTIAL:
-					game_stats[stat.key] = pow(game_stats[stat.key], stat.value)
-			if stat.key == Stats.PLAYER_MAX_HEALTH:
-				#Update max_health in player's health component
-				get_tree().get_nodes_in_group("Player")[0].update_max_health(game_stats[Stats.PLAYER_MAX_HEALTH])
+	for stat:StatModifier in augment.stats_to_modify:
+		GameStats.modify_stat(stat.key, stat.operation, stat.value)
+
 
 func update_highest_game_time(time: float) -> void:
 	if time > highest_game_time:

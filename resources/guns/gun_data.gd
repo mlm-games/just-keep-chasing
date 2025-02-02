@@ -28,5 +28,7 @@ class_name GunData extends BaseData
 @export var fire_animation_skew: float = (-0.0523599 + 5) # Default skew value from machine gun
 @export var fire_animation_duration: float = fire_rate
 
+@export var bullets_per_shot: int = 1
+@export var bullet_spread: float = 0.0
 @export var screen_shake_frequency : float = 10
 @export var screen_shake_amplitude : float = 0.5

@@ -7,8 +7,6 @@
 
 [resource]
 script = ExtResource("1_61nn0")
-pellets_per_shot = 7
-pellet_spread = 20.0
 unlocked = false
 weapon_scene = ExtResource("4_84eyl")
 sprite = ExtResource("3_84eyl")
@@ -26,6 +24,8 @@ sprite_modulate = Color(1, 1, 1, 1)
 bullet_spawn_offset = Vector2(773.938, -41.18)
 fire_animation_skew = 4.94764
 fire_animation_duration = null
+bullets_per_shot = 7
+bullet_spread = 20.0
 screen_shake_frequency = 10.0
 screen_shake_amplitude = 0.5
 id = "double_barrel_shotgun"

@@ -12,10 +12,13 @@ func _ready() -> void:
 	base_gun = initial_gun_data.weapon_scene.instantiate()
 	base_gun.gun_data = initial_gun_data
 	add_child(base_gun)
+	
+	# Initialize health with game stats
+	update_max_health(GameStats.get_stat(GameStats.Stats.PLAYER_MAX_HEALTH))
 
 func _physics_process(_delta):
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	velocity = direction.normalized() * GameState.game_stats[GameState.Stats.PLAYER_SPEED]
+	velocity = direction.normalized() * GameStats.get_stat(GameStats.Stats.PLAYER_SPEED)
 	
 	if velocity.x > 0:
 		%Sprite2D.flip_h = true
@@ -36,7 +39,6 @@ func _on_health_component_taking_damage() -> void:
 	ScreenEffects.screen_shake(0.1, 0.5)
 	await get_tree().create_timer(0.1).timeout
 	taking_damage = false
-	#fixme:  Taking damage should be false unless taking damage
 
 
 func _on_health_component_health_changed(new_health: float) -> void:
@@ -45,6 +47,7 @@ func _on_health_component_health_changed(new_health: float) -> void:
 func update_max_health(new_max_health: float) -> void:
 	%ProgressBar.max_value = new_max_health
 	health_component.max_health = new_max_health
+	
 #func on_save_game(saved_data: Array[SaveData]):
 	#if health_component.is_alive():
 		#var my_data = CharacterSaveData.new()
