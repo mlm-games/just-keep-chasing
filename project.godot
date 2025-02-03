@@ -15,7 +15,7 @@ config/description="You are an advanced AI nanobot and are tasked to kill some v
 config/version="0.0.1"
 run/main_scene="res://scenes/UI/menu.tscn"
 config/features=PackedStringArray("4.4")
-config/icon="res://assets/sprites/Gun-sprite.png"
+config/icon="uid://duc0bvo61ljvv"
 
 [autoload]
 

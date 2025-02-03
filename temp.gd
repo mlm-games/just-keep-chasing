@@ -8,92 +8,119 @@ var ripples: Array[ColorRect] = []
 @export var pressed_style : StyleBoxFlat
 @export var disabled_style : StyleBoxFlat
 
+var tooltip
+
 func _ready() -> void:
-	normal_style = StyleBoxFlat.new()
-	normal_style.bg_color = Color("#2a2a2e")
-	normal_style.border_color = Color("#4a4a4f")
-	normal_style.border_width_left = 2
-	normal_style.border_width_top = 2
-	normal_style.border_width_right = 2
-	normal_style.border_width_bottom = 2
-	normal_style.corner_radius_top_left = 8
-	normal_style.corner_radius_top_right = 8
-	normal_style.corner_radius_bottom_right = 8
-	normal_style.corner_radius_bottom_left = 8
-	normal_style.shadow_color = Color("#00000066")
-	normal_style.shadow_size = 4
-	normal_style.shadow_offset = Vector2(0, 2)
+	tooltip = $VectorTooltipControl
+	tooltip.attach(self)
+	tooltip.show_stat_info("Character Stats", {
+		"Health": 75,
+		"Energy": 45,
+		"Shield": 90
+	})
+	
+	await  get_tree().create_timer(1).timeout
+	tooltip.detach()
+	#normal_style = StyleBoxFlat.new()
+	#normal_style.bg_color = Color("#2a2a2e")
+	#normal_style.border_color = Color("#4a4a4f")
+	#normal_style.border_width_left = 2
+	#normal_style.border_width_top = 2
+	#normal_style.border_width_right = 2
+	#normal_style.border_width_bottom = 2
+	#normal_style.corner_radius_top_left = 8
+	#normal_style.corner_radius_top_right = 8
+	#normal_style.corner_radius_bottom_right = 8
+	#normal_style.corner_radius_bottom_left = 8
+	#normal_style.shadow_color = Color("#00000066")
+	#normal_style.shadow_size = 4
+	#normal_style.shadow_offset = Vector2(0, 2)
 	
 	
 	
 	# Add glow...
-	normal_style.border_blend = true
-	normal_style.anti_aliasing = true
-	normal_style.anti_aliasing_size = 0.8
-
-	# Button Hover State
-	hover_style = StyleBoxFlat.new()
-	hover_style.bg_color = Color("#3a3a3f")
-	hover_style.border_color = Color("#5a5a5f")
-	hover_style.border_width_left = 2
-	hover_style.border_width_top = 2
-	hover_style.border_width_right = 2
-	hover_style.border_width_bottom = 2
-	hover_style.corner_radius_top_left = 8
-	hover_style.corner_radius_top_right = 8
-	hover_style.corner_radius_bottom_right = 8
-	hover_style.corner_radius_bottom_left = 8
-	hover_style.shadow_color = Color("#00000088")
-	hover_style.shadow_size = 6
-	hover_style.shadow_offset = Vector2(0, 3)
+	#normal_style.border_blend = true
+	#normal_style.anti_aliasing = true
+	#normal_style.anti_aliasing_size = 0.8
+#
+	## Button Hover State
+	#hover_style = StyleBoxFlat.new()
+	#hover_style.bg_color = Color("#3a3a3f")
+	#hover_style.border_color = Color("#5a5a5f")
+	#hover_style.border_width_left = 2
+	#hover_style.border_width_top = 2
+	#hover_style.border_width_right = 2
+	#hover_style.border_width_bottom = 2
+	#hover_style.corner_radius_top_left = 8
+	#hover_style.corner_radius_top_right = 8
+	#hover_style.corner_radius_bottom_right = 8
+	#hover_style.corner_radius_bottom_left = 8
+	#hover_style.shadow_color = Color("#00000088")
+	#hover_style.shadow_size = 6
+	#hover_style.shadow_offset = Vector2(0, 3)
 
 	# Button Pressed State
-	pressed_style = StyleBoxFlat.new()
-	pressed_style.bg_color = Color("#1a1a1e")
-	pressed_style.border_color = Color("#3a3a3f")
-	pressed_style.border_width_left = 2
-	pressed_style.border_width_top = 2
-	pressed_style.border_width_right = 2
-	pressed_style.border_width_bottom = 2
-	pressed_style.corner_radius_top_left = 8
-	pressed_style.corner_radius_top_right = 8
-	pressed_style.corner_radius_bottom_right = 8
-	pressed_style.corner_radius_bottom_left = 8
-	pressed_style.shadow_color = Color("#00000044")
-	pressed_style.shadow_size = 2
-	pressed_style.shadow_offset = Vector2(0, 1)
-
-	# Button Disabled State
-	disabled_style = StyleBoxFlat.new()
-	disabled_style.bg_color = Color("#1a1a1e99")
-	disabled_style.border_color = Color("#3a3a3f66")
-	disabled_style.border_width_left = 2
-	disabled_style.border_width_top = 2
-	disabled_style.border_width_right = 2
-	disabled_style.border_width_bottom = 2
-	disabled_style.corner_radius_top_left = 8
-	disabled_style.corner_radius_top_right = 8
-	disabled_style.corner_radius_bottom_right = 8
-	disabled_style.corner_radius_bottom_left = 8
+	#pressed_style = StyleBoxFlat.new()
+	#pressed_style.bg_color = Color("#1a1a1e")
+	#pressed_style.border_color = Color("#3a3a3f")
+	#pressed_style.border_width_left = 2
+	#pressed_style.border_width_top = 2
+	#pressed_style.border_width_right = 2
+	#pressed_style.border_width_bottom = 2
+	#pressed_style.corner_radius_top_left = 8
+	#pressed_style.corner_radius_top_right = 8
+	#pressed_style.corner_radius_bottom_right = 8
+	#pressed_style.corner_radius_bottom_left = 8
+	#pressed_style.shadow_color = Color("#00000044")
+	#pressed_style.shadow_size = 2
+	#pressed_style.shadow_offset = Vector2(0, 1)
+#
+	## Button Disabled State
+	#disabled_style = StyleBoxFlat.new()
+	#disabled_style.bg_color = Color("#1a1a1e99")
+	#disabled_style.border_color = Color("#3a3a3f66")
+	#disabled_style.border_width_left = 2
+	#disabled_style.border_width_top = 2
+	#disabled_style.border_width_right = 2
+	#disabled_style.border_width_bottom = 2
+	#disabled_style.corner_radius_top_left = 8
+	#disabled_style.corner_radius_top_right = 8
+	#disabled_style.corner_radius_bottom_right = 8
+	#disabled_style.corner_radius_bottom_left = 8
 	
 	# Font settings
-	theme.set_font_size("font_size", "Button", 20)
-	#theme.set_font("font", "Button", load("res://path_to_your_font.ttf"))
-
-	# Colors
-	theme.set_color("font_color", "Button", Color("#ffffff"))
-	theme.set_color("font_pressed_color", "Button", Color("#ffffffee"))
-	theme.set_color("font_hover_color", "Button", Color("#ffffff"))
-	theme.set_color("font_disabled_color", "Button", Color("#ffffff66"))
-
-	# Content margins
-	theme.set_constant("h_separation", "Button", 16)
-	
+	#theme.set_font_size("font_size", "Button", 20)
+	##theme.set_font("font", "Button", load("res://path_to_your_font.ttf"))
+#
+	## Colors
+	#theme.set_color("font_color", "Button", Color("#ffffff"))
+	#theme.set_color("font_pressed_color", "Button", Color("#ffffffee"))
+	#theme.set_color("font_hover_color", "Button", Color("#ffffff"))
+	#theme.set_color("font_disabled_color", "Button", Color("#ffffff66"))
+#
+	## Content margins
+	#theme.set_constant("h_separation", "Button", 16)
+	#
 	#ResourceSaver.save(normal_style,"res://style1.tres")
 	#ResourceSaver.save(hover_style,"res://style2.tres")
 	#ResourceSaver.save(pressed_style,"res://style3.tres")
 	#ResourceSaver.save(disabled_style,"res://style4.tres")
 	#ResourceSaver.save(theme, "res://theme-button.tres")
+	
+
+	#tooltip.show_ability_info({
+		#"name": "Energy Blast",
+		#"description": "Release a powerful burst of energy",
+		#"cooldown": 5,
+		#"cost": 30
+	#})
+	#
+	## Show progress
+	#tooltip.show_progress_info(75, 100, "Download Progress")
+
+# Smooth follow
+	#tooltip.set_pos(get_viewport().get_mouse_position() + Vector2(20, 20))
+
 
 
 func _add_shine_effect():
@@ -142,3 +169,11 @@ func _create_ripple(pos: Vector2) -> void:
 
 func _update_ripple(value: float, ripple: ColorRect) -> void:
 	ripple.material.set_shader_parameter("progress", value)
+
+
+func _on_mouse_entered() -> void:
+	tooltip.show()
+
+
+func _on_mouse_exited() -> void:
+	tooltip.hide()

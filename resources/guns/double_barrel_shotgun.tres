@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("1_61nn0")
-unlocked = false
+unlocked = true
 weapon_scene = ExtResource("4_84eyl")
 sprite = ExtResource("3_84eyl")
 bullet = ExtResource("1_rodho")
@@ -16,7 +16,7 @@ max_ammo = 2
 ammo = null
 targeting_range = 1000.0
 fire_rate = 0.5
-sprite_scale = Vector2(0.05, 0.1)
+sprite_scale = Vector2(0.105, 0.105)
 sprite_position = Vector2(46.8, 15.117)
 sprite_rotation_degrees = 0.0
 sprite_flip_h = false

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckqthyukac8wf"]
 
 [ext_resource type="Script" uid="uid://63xs5b3mf230" path="res://scenes/UI/achievements_screen.gd" id="1_0xjh1"]
-[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="2_av81j"]
+[ext_resource type="Theme" uid="uid://d2j8plpna1rmh" path="res://resources/menu-test_theme.tres" id="1_av81j"]
 
 [node name="AchievementsScreenControl" type="Control"]
 layout_mode = 3
@@ -10,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_av81j")
 script = ExtResource("1_0xjh1")
 metadata/_edit_use_anchors_ = true
 
@@ -29,57 +30,41 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Icon" type="TextureRect" parent="PanelContainer/HBoxContainer/MarginContainer"]
+[node name="IconBackground" type="Panel" parent="PanelContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/HBoxContainer/MarginContainer/IconBackground"]
 unique_name_in_owner = true
 layout_mode = 2
+offset_right = 380.0
+offset_bottom = 648.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="VirusEradicationGoalsName" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="UnlockCondition" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Reward" type="RichTextLabel" parent="PanelContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="AchievementsContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/ScrollContainer"]
-layout_mode = 2
-
-[node name="UnlockButton" type="Button" parent="PanelContainer/HBoxContainer"]
-layout_mode = 2
-script = ExtResource("2_av81j")
-metadata/_custom_type_script = ExtResource("2_av81j")
-
-[node name="IconBackground" type="Panel" parent="."]
+[node name="VirusEradicationGoalsName" type="RichTextLabel" parent="PanelContainer/HBoxContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+layout_mode = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="UnlockCondition" type="RichTextLabel" parent="PanelContainer/HBoxContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.474537
-anchor_right = 1.0
-anchor_bottom = 0.525463
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+layout_mode = 2
+
+[node name="Reward" type="RichTextLabel" parent="PanelContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="AchievementsContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2

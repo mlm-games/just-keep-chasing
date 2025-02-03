@@ -79,9 +79,7 @@ func spawn_bullet() -> void:
 			ScreenEffects.smooth_screen_shake(screen_shake_frequency, screen_shake_amplitude) 
 			bullet_instance.projectile_data = bullet_data
 			get_tree().current_scene.add_child(bullet_instance)
-			ammo -= 1
-	else:
-		reload()
+		ammo -= 1
 
 func reload() -> void:
 	# Use similar anim for shooting

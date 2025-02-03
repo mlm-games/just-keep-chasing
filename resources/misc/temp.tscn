@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://b25jc43b1rvi5"]
+[gd_scene load_steps=7 format=3 uid="uid://b25jc43b1rvi5"]
 
 [ext_resource type="Script" uid="uid://bqnokttfjhv30" path="res://temp.gd" id="1_3c8th"]
-[ext_resource type="Shader" uid="uid://bc2jjkf388bi5" path="res://resources/misc/button_ripple.gdshader" id="1_b2ss7"]
+[ext_resource type="Shader" uid="uid://08dhjnpcan4i" path="res://resources/misc/button_shine.gdshader" id="1_7ejqv"]
+[ext_resource type="Texture2D" uid="uid://b7b32402tako6" path="res://assets/sprites/star_powerup.svg" id="2_60qiw"]
+[ext_resource type="Script" uid="uid://bbfbroyew60ff" path="res://resources/misc/instant_tooltip_control.gd" id="3_7ejqv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7ejqv"]
-shader = ExtResource("1_b2ss7")
-shader_parameter/progress = 0.0
+shader = ExtResource("1_7ejqv")
+shader_parameter/shine_gradient = ExtResource("2_60qiw")
+shader_parameter/shine_speed = 0.97
 
 [sub_resource type="Theme" id="Theme_b2ss7"]
 
@@ -18,3 +21,23 @@ offset_bottom = 242.0
 theme = SubResource("Theme_b2ss7")
 text = "hiujuuh"
 script = ExtResource("1_3c8th")
+
+[node name="VectorTooltipControl" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 557.0
+offset_bottom = 179.0
+script = ExtResource("3_7ejqv")
+metadata/_custom_type_script = ExtResource("3_7ejqv")
+
+[node name="TooltipText" type="RichTextLabel" parent="VectorTooltipControl"]
+layout_mode = 0
+offset_top = 180.0
+offset_right = 561.0
+offset_bottom = 315.0
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
