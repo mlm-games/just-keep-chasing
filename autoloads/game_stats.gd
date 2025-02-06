@@ -28,6 +28,7 @@ enum Stats {
 	HEALTH_REGEN,
 	FLAT_ENEMY_HEALTH_REDUCTION,
 	ENEMY_HEALTH_MULT,
+	ITEM_LEND_THRESHOLD,
 	FIRE_SPEED_REDUCTION_MULT,
 	GUN_ENEMY_DAMAGE_MULT,
 	RAW_GUN_ENEMY_DAMAGE_REDUCTION,
@@ -52,6 +53,7 @@ var _stats: Dictionary[Stats, StatDefinition] = {
 	Stats.RAW_DAMAGE_MOD: StatDefinition.new(0),
 	Stats.RELOAD_SPEED_REDUCTION_MULT: StatDefinition.new(1),
 	Stats.TARGETTING_RANGE_MULT: StatDefinition.new(1),
+	Stats.GUN_ENEMY_TARGETTING_RANGE_MULT: StatDefinition.new(1),
 	Stats.SHOP_COST_MULT: StatDefinition.new(1),
 	Stats.RAW_AMMO_INC: StatDefinition.new(0),
 	Stats.AMMO_INC_MULT: StatDefinition.new(1),
@@ -61,6 +63,7 @@ var _stats: Dictionary[Stats, StatDefinition] = {
 	Stats.FIRE_SPEED_REDUCTION_MULT: StatDefinition.new(1),
 	Stats.RAW_GUN_ENEMY_DAMAGE_REDUCTION: StatDefinition.new(0),
 	Stats.GUN_ENEMY_DAMAGE_MULT: StatDefinition.new(1),
+	Stats.ITEM_LEND_THRESHOLD: StatDefinition.new(0,-1000,0),
 	Stats.PLAYER_DAMAGE_REDUCTION: StatDefinition.new(0, 0, 0.5),
 	Stats.ENEMY_DAMAGE_REDUCTION: StatDefinition.new(0, 0, 0.5),
 }
@@ -74,6 +77,7 @@ func modify_stat(stat_name: Stats, operation: Operation, value: float) -> void:
 	if not _stats.has(stat_name):
 		return
 	
+	#FIXME: Not possible, idk why it assigns a random stat definition for item_lend_threshold.
 	var stat = _stats[stat_name]
 	var old_value = stat.current_value
 	match operation:

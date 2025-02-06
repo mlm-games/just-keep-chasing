@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cs2fl7pw33da1"]
 
-[ext_resource type="Theme" uid="uid://bjirml4gi4wee" path="res://theme-button-dark.tres" id="1_jhk12"]
+[ext_resource type="Theme" uid="uid://bjirml4gi4wee" path="res://resources/theme-button-dark.tres" id="1_jhk12"]
 [ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="1_s85m3"]
 
 [sub_resource type="Gradient" id="Gradient_s85m3"]

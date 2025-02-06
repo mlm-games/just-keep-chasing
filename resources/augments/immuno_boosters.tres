@@ -9,11 +9,12 @@ script = ExtResource("3_aaedq")
 value = 10.0
 key = 2
 operation = 0
+duration = 0.0
 
 [resource]
 script = ExtResource("2_1auth")
 augment_icon = ExtResource("1_e4qs5")
 augment_price = 15
 stats_to_modify = Array[ExtResource("3_aaedq")]([SubResource("Resource_3ju77")])
-rarity = 0.0
-id = &"immuno_booster"
+rarity = 1.0
+id = null

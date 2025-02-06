@@ -146,7 +146,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.8
 bbcode_enabled = true
-vertical_alignment = 1
 
 [node name="SpacerControl2" type="Control" parent="Control/PanelContainer/HBoxContainer"]
 layout_mode = 2

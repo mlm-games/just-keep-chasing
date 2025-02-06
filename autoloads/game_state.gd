@@ -119,6 +119,7 @@ func get_resource_paths_in_directory(resources_dir: String, load_resource_paths:
 		for res:String in dir.get_files():
 			if res.ends_with(".tres"):
 				var loaded_res = load(resources_dir + res)
+				loaded_res.id = res.trim_suffix(".tres")
 				res_list.get_or_add(res.trim_suffix(".tres"), loaded_res)
 	return res_list
 

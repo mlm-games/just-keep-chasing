@@ -48,6 +48,8 @@ func _physics_process(delta: float) -> void:
 func move_towards_player() -> void:
 	var direction = global_position.direction_to(player.global_position)
 	velocity = direction * speed
+	if enemy_data_resource.id == "accelerator_slime":
+		velocity += Vector2(speed*0.1, speed*0.1)
 	move_and_slide()
 
 func update_animation() -> void:

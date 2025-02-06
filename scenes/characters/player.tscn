@@ -1,7 +1,7 @@
 [gd_scene load_steps=28 format=3 uid="uid://b3mf65fcnvmvu"]
 
-[ext_resource type="Script" uid="uid://crf18oy3oc75j" path="res://scenes/characters/player.gd" id="1_cvyhv"]
-[ext_resource type="Texture2D" uid="uid://6df1pxb6h2bi" path="res://assets/sprites/player.png" id="2_vw3ki"]
+[ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_cvyhv"]
+[ext_resource type="Texture2D" uid="uid://brk1vhy0k5ah2" path="res://assets/sprites/player.svg" id="2_atpat"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="4_pwyjt"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="6_8qvmc"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="6_bedk8"]
@@ -172,10 +172,8 @@ script = ExtResource("1_cvyhv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-rotation = 0.00160509
-scale = Vector2(0.23, 0.23)
-texture = ExtResource("2_vw3ki")
-flip_h = true
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_atpat")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4, -15)

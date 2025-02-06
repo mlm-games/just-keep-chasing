@@ -2,7 +2,7 @@ extends Control
 
 const WorldScene = "res://scenes/gameplay/world.tscn"
 const SettingsScene = "res://scenes/UI/settings.tscn"
-const AchievementsScene = "res://scenes/UI/achievements.tscn"
+const AchievementsScene = "res://scenes/UI/achievements_screen.tscn"
 
 @onready var btn_play = $MarginContainer/Control/VBoxContainer/PlayButton
 @onready var btn_exit = $MarginContainer/Control/VBoxContainer/ExitButton

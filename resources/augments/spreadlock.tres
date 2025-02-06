@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Augments" load_steps=6 format=3 uid="uid://cpoybg7bupnm3"]
+
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_dj52t"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_7wbi6"]
+
+[sub_resource type="Gradient" id="Gradient_dj52t"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7wbi6"]
+gradient = SubResource("Gradient_dj52t")
+
+[sub_resource type="Resource" id="Resource_dj52t"]
+script = ExtResource("2_7wbi6")
+value = 0.0
+key = 2
+operation = 0
+duration = 0.0
+metadata/_custom_type_script = ExtResource("2_7wbi6")
+
+[resource]
+script = ExtResource("1_dj52t")
+augment_icon = SubResource("GradientTexture2D_7wbi6")
+augment_price = 50
+stats_to_modify = Array[ExtResource("2_7wbi6")]([SubResource("Resource_dj52t")])
+rarity = 1.0
+id = ""
+metadata/_custom_type_script = ExtResource("1_dj52t")

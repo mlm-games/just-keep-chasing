@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://rks5cvegm0tb"]
+[gd_scene load_steps=7 format=3 uid="uid://rks5cvegm0tb"]
 
 [ext_resource type="Script" uid="uid://du4pwh4pfavvs" path="res://scenes/weapons-related/base_shotgun.gd" id="1_oy78b"]
-[ext_resource type="Resource" uid="uid://ccjjel7gxlyjx" path="res://resources/bullets/pellet.tres" id="2_6l5ya"]
 [ext_resource type="Texture2D" uid="uid://dccuva7i61u0n" path="res://assets/sprites/double_barrel_shotgun.png" id="3_7eh4x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
@@ -49,11 +48,6 @@ _data = {
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_oy78b")
-bullet = ExtResource("2_6l5ya")
-reload_time = 0.75
-max_ammo = 2
-targeting_range = 1000.0
-fire_rate = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_we32q")

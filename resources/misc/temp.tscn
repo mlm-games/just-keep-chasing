@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://b25jc43b1rvi5"]
 
-[ext_resource type="Script" uid="uid://bqnokttfjhv30" path="res://temp.gd" id="1_3c8th"]
+[ext_resource type="Script" uid="uid://bqnokttfjhv30" path="res://scenes/UI/temp.gd" id="1_3c8th"]
 [ext_resource type="Shader" uid="uid://08dhjnpcan4i" path="res://resources/misc/button_shine.gdshader" id="1_7ejqv"]
 [ext_resource type="Texture2D" uid="uid://b7b32402tako6" path="res://assets/sprites/star_powerup.svg" id="2_60qiw"]
 [ext_resource type="Script" uid="uid://bbfbroyew60ff" path="res://resources/misc/instant_tooltip_control.gd" id="3_7ejqv"]

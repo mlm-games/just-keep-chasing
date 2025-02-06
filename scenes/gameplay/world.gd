@@ -38,15 +38,15 @@ extends Node2D
 
 const NORMAL_TIME = 1.0
 const SLOW_TIME = 0.75
-const SLOW_DURATION = 2.0
+const SLOW_DURATION = 4.0
 const TRANSITION_DURATION = 0.3
 
 @onready var time_scale_tween: Tween
 
 const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.tscn")
 
-@onready var animation_player = $AnimationPlayer
-@onready var vignette = $Control/CanvasLayer/BackgroundParallax2D/Vignette
+@onready var animation_player = %AnimationPlayer
+@onready var vignette = %Vignette
 #@onready var time_scale_tween: Tween
 
 @export var guns: Array[GunData] = []
@@ -59,12 +59,11 @@ const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.ts
 @onready var enemy_spawn_timer: Timer = %EnemySpawnTimer
 @onready var powerup_spawn_timer: Timer = %PowerupSpawnTimer
 
-var enemy_health_mult = 1 
 var enemy_spawn_type_range = Vector2(1, 1)
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
 
-var spawnable_enemies : Array = []
+var spawnable_enemies : Dictionary = {} #key: spawn_range, value: Enemydata
 
 func _ready() -> void:
 		# Only add unlocked guns to the available guns array
@@ -72,20 +71,27 @@ func _ready() -> void:
 	for gun in GameState.collection_res.guns.values():
 		if gun.unlocked:
 			guns.append(gun)
-	spawnable_enemies = GameState.collection_res.enemies.values()
+	spawnable_enemies = GameState.collection_res.get_enemy_dict_by_key()
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	spawn_enemy()
-	if hud.elapsed_time == 120:
-		enemy_spawn_type_range.y = 2
-		enemy_spawn_timer.wait_time = 1.9
-	elif hud.elapsed_time == 240:
-		enemy_spawn_type_range.y = 3
-		enemy_spawn_timer.wait_time = 1.8
-	else:
-		enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
-		if enemy_spawn_timer.wait_time == 0.5:
-			enemy_health_mult += 0.1
+	match hud.elapsed_time:
+		60:
+			enemy_spawn_type_range.y = 2
+			enemy_spawn_timer.wait_time = 1.9
+		90:
+			enemy_spawn_type_range.y = 3
+			enemy_spawn_timer.wait_time = 1.8
+		120: 
+			enemy_spawn_type_range.y = 4
+			enemy_spawn_timer.wait_time = 1.7
+		180:
+			enemy_spawn_type_range.y = 5
+			enemy_spawn_timer.wait_time = 1.5
+		_:
+			enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
+			if enemy_spawn_timer.wait_time == 0.5:
+				GameStats.modify_stat(GameStats.Stats.ENEMY_HEALTH_MULT, GameStats.Operation.ADD, 0.1)
 
 func _on_powerup_spawn_timer_timeout() -> void:
 	if hud.elapsed_time > 1:
@@ -101,11 +107,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		pick_up_weapon()
 
 func spawn_enemy() -> void:
-	var enemy_data = spawnable_enemies.pick_random()
+	var enemy_data = spawnable_enemies[randi_range(enemy_spawn_type_range.x, enemy_spawn_type_range.y)]
 	var enemy_scene = enemy_data.base_enemy_scene
 	var enemy_instance:SlimeEnemy = enemy_scene.instantiate()
 	enemy_instance.set_data_values(enemy_data)
-	enemy_instance.get_node("HealthComponent").max_health *= enemy_health_mult
+	enemy_instance.get_node("HealthComponent").max_health *= GameStats.get_stat(GameStats.Stats.ENEMY_HEALTH_MULT)
 	out_of_view_spawn_location.progress_ratio = randf()
 	enemy_instance.global_position = out_of_view_spawn_location.global_position
 	enemies_node.add_child(enemy_instance)
@@ -214,6 +220,7 @@ func activate_slow_motion():
 		# Play visual effects
 		animation_player.play("slow_motion_start")
 		vignette.visible = true
+		player.base_gun.set_ignore_time_scale()
 		
 		#Fixme: Play sound effect
 		#play_slow_motion_sound()
@@ -230,5 +237,6 @@ func deactivate_slow_motion():
 	
 	animation_player.play("slow_motion_end")
 	vignette.visible = false
+	player.base_gun.unset_ignore_time_scale()
 	
 	#FIXME: play_normal_time_sound where it plays right before the timer is about to end (like star powerups in super mario)

@@ -2,7 +2,7 @@ class_name SlotContainer extends MarginContainer
 
 signal slot_clicked
 #FIXME: Pick based on spawn chance
-@export var augment : Augments = GameState.collection_res.augments.values().pick_random()
+@export var augment : Augments
 
 var panel_entered : bool = false
 var original_scale : Vector2
@@ -13,28 +13,28 @@ var hover_tween : Tween
 var display_price: int
 
 func _ready() -> void:
+	augment = pick_augment_by_rarity()
 	original_scale = scale
 	setup_slot()
-	setup_hover_effects()
 	pivot_offset = size / 2
+
+func pick_augment_by_rarity() -> Augments:
+	var temp_augment : Augments = GameState.collection_res.augments.values().pick_random()
+	if temp_augment.rarity.current_value < randf():
+		temp_augment = pick_augment_by_rarity()
+	return temp_augment
 
 func setup_slot() -> void:
 	if augment != null:
+		@warning_ignore("narrowing_conversion")
 		display_price = augment.augment_price * GameState.price_multiplier
 		%TextureRect.texture = augment.augment_icon
 		%UpgradeLabel.text = tr(augment.id.capitalize())
 		%PriceContainer.text = GameState.get_currency_bbcode() + str(display_price)
 		red_out_unbuyable_slots()
 
-func setup_hover_effects() -> void:
-	# Add a subtle shadow or glow effect
-	var style_box = get_theme_stylebox("panel").duplicate()
-	style_box.shadow_size = 4
-	style_box.shadow_color = Color(0, 0, 0, 0.3)
-	add_theme_stylebox_override("panel", style_box)
-
 func red_out_unbuyable_slots() -> void:
-	if display_price > GameState.research_points:
+	if display_price > GameState.research_points - GameStats.get_stat(GameStats.Stats.ITEM_LEND_THRESHOLD):
 		%PriceContainer.modulate = Color(1.0, 0.333, 0.11)
 		modulate = Color(0.7, 0.7, 0.7) # Dim the whole slot
 
@@ -70,7 +70,7 @@ func _on_panel_mouse_exited() -> void:
 func _input(event: InputEvent) -> void:
 	if panel_entered and event.is_pressed():
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-			# Visual feedback for click
+			# Click anim when unbuyable
 			var click_tween = create_tween()
 			click_tween.set_trans(Tween.TRANS_CUBIC)
 			click_tween.set_ease(Tween.EASE_OUT).set_ignore_time_scale()
@@ -78,7 +78,7 @@ func _input(event: InputEvent) -> void:
 			click_tween.tween_property(self, "scale", hover_scale, 0.1)
 			
 			# FIXME: Play click sound
-			#AudioManager.play_sfx("click")
+			#Sound.play_sfx("click")
 			
 			slot_clicked.emit()
 			panel_entered = false

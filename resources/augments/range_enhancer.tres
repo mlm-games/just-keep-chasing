@@ -1,20 +1,26 @@
-[gd_resource type="Resource" script_class="Augments" load_steps=4 format=3 uid="uid://vkrfjwuxjcky"]
+[gd_resource type="Resource" script_class="Augments" load_steps=6 format=3 uid="uid://vkrfjwuxjcky"]
 
 [ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_xk0ku"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_33m5x"]
 
+[sub_resource type="Gradient" id="Gradient_xk0ku"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_33m5x"]
+gradient = SubResource("Gradient_xk0ku")
+
 [sub_resource type="Resource" id="Resource_xk0ku"]
 script = ExtResource("2_33m5x")
 value = 1.1
-key = 6
+key = 7
 operation = 1
 duration = 0.0
 metadata/_custom_type_script = ExtResource("2_33m5x")
 
 [resource]
 script = ExtResource("1_xk0ku")
-augment_price = 9999
+augment_icon = SubResource("GradientTexture2D_33m5x")
+augment_price = 24
 stats_to_modify = Array[ExtResource("2_33m5x")]([SubResource("Resource_xk0ku")])
-rarity = 0.0
+rarity = 1.0
 id = ""
 metadata/_custom_type_script = ExtResource("1_xk0ku")

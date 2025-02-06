@@ -9,17 +9,18 @@ script = ExtResource("3_itdj1")
 value = 5.0
 key = 0
 operation = 0
+duration = 0.0
 
 [sub_resource type="Resource" id="Resource_aveke"]
 script = ExtResource("3_itdj1")
 value = 20.0
 key = 1
 operation = 0
+duration = 0.0
 
 [resource]
 script = ExtResource("2_53ewh")
 augment_icon = ExtResource("1_m5far")
 augment_price = 10
 stats_to_modify = Array[ExtResource("3_itdj1")]([SubResource("Resource_hmhfi"), SubResource("Resource_aveke")])
-rarity = 0.0
-id = &"basic_repair"
+id = null

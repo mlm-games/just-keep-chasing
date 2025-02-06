@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://b383ofsmpqt55"]
 
-[ext_resource type="Script" uid="uid://bv26fkvrv8bar" path="res://scenes/characters/slime_enemy.gd" id="1_spd34"]
+[ext_resource type="Script" path="res://scenes/characters/slime_enemy.gd" id="1_spd34"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_d2gw2"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="3_cak1k"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_oqv1l"]

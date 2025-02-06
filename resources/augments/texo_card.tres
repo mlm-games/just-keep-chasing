@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Augments" load_steps=6 format=3 uid="uid://dmqj0880bqma2"]
+
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_cd0ui"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_pef1a"]
+
+[sub_resource type="Curve" id="Curve_cd0ui"]
+_data = [Vector2(0.125, 0.0786518), 0.0, 0.0, 0, 0, Vector2(0.598958, 0.52809), 0.0, 0.0, 0, 0, Vector2(0.901042, 0.853933), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_cd0ui"]
+curve = SubResource("Curve_cd0ui")
+
+[sub_resource type="Resource" id="Resource_cd0ui"]
+script = ExtResource("2_pef1a")
+value = 1.0
+key = 8
+operation = 0
+duration = 0.0
+metadata/_custom_type_script = ExtResource("2_pef1a")
+
+[resource]
+script = ExtResource("1_cd0ui")
+augment_icon = SubResource("CurveTexture_cd0ui")
+augment_price = 20
+stats_to_modify = Array[ExtResource("2_pef1a")]([SubResource("Resource_cd0ui")])
+rarity = 0.15
+id = ""
+metadata/_custom_type_script = ExtResource("1_cd0ui")

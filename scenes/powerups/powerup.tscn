@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://x2gb17exe2xq"]
+[gd_scene load_steps=6 format=3 uid="uid://x2gb17exe2xq"]
 
 [ext_resource type="Script" uid="uid://buv40e5a827xo" path="res://scenes/powerups/powerup_manager.gd" id="1_hl65c"]
 
@@ -7,6 +7,16 @@ radius = 42.86
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7gkke"]
 size = Vector2(33, 34)
+
+[sub_resource type="Gradient" id="Gradient_spd34"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.780899)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d6bl0"]
+gradient = SubResource("Gradient_spd34")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [node name="Powerup" type="Area2D"]
 script = ExtResource("1_hl65c")
@@ -18,5 +28,11 @@ shape = SubResource("CircleShape2D_rxdp3")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.347817, 0.347817, 0.347817, 1)
 texture = SubResource("PlaceholderTexture2D_7gkke")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.716281, 0.712721, 0, 1)
+energy = 0.87
+texture = SubResource("GradientTexture2D_d6bl0")
+texture_scale = 2.21
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene load_steps=22 format=3 uid="uid://4fyoq8npekf0"]
 
 [ext_resource type="Script" uid="uid://lgsfy3lj2y0g" path="res://scenes/gameplay/world.gd" id="1_li0ht"]
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes/characters/player.tscn" id="3_vhnxw"]
@@ -12,17 +12,22 @@
 
 [sub_resource type="Curve2D" id="Curve2D_xsefa"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -77, -43, 0, 0, 0, 0, 1221, -46, 0, 0, 0, 0, 1230, 676, 0, 0, 0, 0, -77, 676, 0, 0, 0, 0, -77, -43)
+"points": PackedVector2Array(0, 0, 0, 0, -77, -43, 0, 0, 0, 0, 628, -208, 0, 0, 0, 0, 1221, -46, 0, 0, 0, 0, 1321, 360, 0, 0, 0, 0, 1230, 676, 0, 0, 0, 0, 574, 777, 0, 0, 0, 0, -77, 676, 0, 0, 0, 0, -77, -43)
 }
-point_count = 5
+point_count = 8
+
+[sub_resource type="Gradient" id="Gradient_k1kj5"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.780899)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xyviv"]
+gradient = SubResource("Gradient_k1kj5")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
 radius = 42.86
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xyviv"]
-shader = ExtResource("9_k1kj5")
-shader_parameter/chromatic_aberration = 0.0
-shader_parameter/vignette_intensity = 0.0
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wcqrj"]
 
@@ -56,7 +61,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
+tracks/0/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -68,7 +73,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
+tracks/1/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -96,7 +101,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
+tracks/0/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -108,7 +113,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
+tracks/1/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -136,7 +141,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
+tracks/0/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -148,7 +153,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/CanvasLayer/BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
+tracks/1/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -177,6 +182,11 @@ _data = {
 &"slow_motion_start": SubResource("Animation_k1kj5")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xyviv"]
+shader = ExtResource("9_k1kj5")
+shader_parameter/chromatic_aberration = 0.0
+shader_parameter/vignette_intensity = 0.0
+
 [node name="World" type="Node2D"]
 script = ExtResource("1_li0ht")
 
@@ -190,15 +200,24 @@ position = Vector2(581, 323)
 collision_layer = 3
 
 [node name="OutOfViewPath" type="Path2D" parent="Player"]
-position = Vector2(-581, -323)
+position = Vector2(-675.492, -306.529)
+scale = Vector2(1.07153, 1.07919)
 curve = SubResource("Curve2D_xsefa")
 
 [node name="OutOfViewSpawnLocation" type="PathFollow2D" parent="Player/OutOfViewPath"]
 unique_name_in_owner = true
 position = Vector2(-77, -43)
-rotation = -0.00231124
+rotation = -0.229904
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="PointLight2D" type="PointLight2D" parent="Player"]
+z_index = 11
+position = Vector2(-3, -6)
+scale = Vector2(4.6875, 4.28125)
+energy = 0.15
+texture = SubResource("GradientTexture2D_xyviv")
+texture_scale = 6.13
 
 [node name="EnemiesNode" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -266,22 +285,23 @@ metadata/_edit_use_anchors_ = true
 layer = -1
 follow_viewport_enabled = true
 
-[node name="BackgroundParallax2D" type="Parallax2D" parent="Control/CanvasLayer"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_su07q")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_22uad")
+}
+
+[node name="BackgroundParallax2D" type="Parallax2D" parent="."]
+show_behind_parent = true
 scroll_scale = Vector2(0.625, 0.625)
 scroll_offset = Vector2(1, 0)
 repeat_size = Vector2(1152, 896)
 
-[node name="BackgroundRect" type="TextureRect" parent="Control/CanvasLayer/BackgroundParallax2D"]
-modulate = Color(0.858824, 0.858824, 0.858824, 0.498039)
-offset_left = 1.0
-offset_right = 1153.0
-offset_bottom = 896.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource("18_r7okl")
-stretch_mode = 1
-
-[node name="Vignette" type="ColorRect" parent="Control/CanvasLayer/BackgroundParallax2D"]
+[node name="Vignette" type="ColorRect" parent="BackgroundParallax2D"]
+unique_name_in_owner = true
 visible = false
 material = SubResource("ShaderMaterial_xyviv")
 anchors_preset = 15
@@ -293,16 +313,18 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
+[node name="BackgroundRect" type="TextureRect" parent="BackgroundParallax2D"]
+modulate = Color(0.859, 0.859, 0.859, 1)
+offset_left = 1.0
+offset_right = 1153.0
+offset_bottom = 896.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("18_r7okl")
+stretch_mode = 1
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.9, 1, 1.1, 1)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_su07q")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_22uad")
-}
+color = Color(0.695503, 0.695503, 0.695503, 1)
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="timeout" from="PowerupSpawnTimer" to="." method="_on_powerup_spawn_timer_timeout"]
