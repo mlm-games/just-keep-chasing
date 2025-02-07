@@ -18,7 +18,13 @@ func _ready():
 	GameState.reset_stats()
 
 func _on_PlayButton_pressed() -> void:
-	ScreenEffects.change_scene_with_transition(WorldScene)
+	ScreenEffects.transition("fadeToBlack", true)
+	await ScreenEffects.transition_player.animation_finished
+	get_tree().change_scene_to_file(WorldScene)
+	ScreenEffects.transition("circleOut", false, 1.5)
+	#await get_tree().create_timer(0.01).timeout
+	
+	
 
 
 func _on_ExitButton_pressed() -> void:

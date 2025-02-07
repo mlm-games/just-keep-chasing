@@ -3,7 +3,10 @@
 [ext_resource type="Script" uid="uid://b13rnxpo5kt4b" path="res://autoloads/transitions.gd" id="1_mlxrt"]
 [ext_resource type="Shader" uid="uid://dnms5hsmipkyv" path="res://resources/shaders/circletransition.gdshader" id="2_bdbvc"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6dxx3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t7n6f"]
+shader = ExtResource("2_bdbvc")
+shader_parameter/progress = 0.0
+shader_parameter/color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_8o81u"]
 length = 0.001
@@ -34,14 +37,14 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("ShaderRect:material:shader_parameter/progress")
+tracks/2/path = NodePath("TransitionRect:material:shader_parameter/progress")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_0p84c"]
@@ -50,7 +53,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ShaderRect:material:shader_parameter/progress")
+tracks/0/path = NodePath("TransitionRect:material:shader_parameter/progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -65,7 +68,7 @@ resource_name = "circleOut"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ShaderRect:material:shader_parameter/progress")
+tracks/0/path = NodePath("TransitionRect:material:shader_parameter/progress")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -144,9 +147,8 @@ layer = 99
 script = ExtResource("1_mlxrt")
 
 [node name="TransitionRect" type="ColorRect" parent="."]
-visible = false
 modulate = Color(1, 1, 1, 0)
-material = SubResource("ShaderMaterial_6dxx3")
+material = SubResource("ShaderMaterial_t7n6f")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

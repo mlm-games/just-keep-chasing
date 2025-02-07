@@ -84,7 +84,7 @@ func aim_at_target() -> void:
 	if not _target_in_range.is_empty():
 		var target = _target_in_range[0]
 		var direction = (target.global_position - global_position).normalized()
-		rotation = direction.angle()
+		rotation = lerp_angle(rotation, direction.angle(), 0.2)
 		rotation = wrapf(rotation, -PI/2, 3*PI/2)
 		
 
