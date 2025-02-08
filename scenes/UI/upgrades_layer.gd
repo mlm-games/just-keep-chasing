@@ -34,6 +34,7 @@ func red_out_unbuyable_slots() -> void:
 			slot.red_out_unbuyable_slots()
 
 func _on_close_button_pressed() -> void:
+	GameState.upgrade_shop_spawn_divisor += %OptionsContainer.get_child_count() * 5
 	var tween = get_tree().create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_ignore_time_scale()
 	tween.tween_property(Engine, "time_scale", 1, 0.1)
 	tween.tween_property($Control, "modulate", Color.TRANSPARENT, 0.1)

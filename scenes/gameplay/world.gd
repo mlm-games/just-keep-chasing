@@ -49,7 +49,6 @@ const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.ts
 @onready var vignette = %Vignette
 #@onready var time_scale_tween: Tween
 
-@export var guns: Array[GunData] = []
 
 @onready var hud: HUD = %HUD
 @onready var out_of_view_spawn_location: PathFollow2D = %OutOfViewSpawnLocation
@@ -62,7 +61,7 @@ const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.ts
 var enemy_spawn_type_range = Vector2(1, 1)
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
-
+var guns: Array[GunData] = []
 var spawnable_enemies : Dictionary = {} #key: spawn_range, value: Enemydata
 
 func _ready() -> void:
@@ -86,12 +85,12 @@ func _on_enemy_spawn_timer_timeout() -> void:
 			enemy_spawn_type_range.y = 4
 			enemy_spawn_timer.wait_time = 1.7
 		180:
-			enemy_spawn_type_range.y = 5
+			#enemy_spawn_type_range.y = 4
 			enemy_spawn_timer.wait_time = 1.5
 		_:
 			enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
 			if enemy_spawn_timer.wait_time == 0.5:
-				GameStats.modify_stat(GameStats.Stats.ENEMY_HEALTH_MULT, GameStats.Operation.ADD, 0.1)
+				GameStats.modify_stat(GameStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION, GameStats.Operation.ADD, -0.1)
 
 func _on_powerup_spawn_timer_timeout() -> void:
 	if hud.elapsed_time > 1:

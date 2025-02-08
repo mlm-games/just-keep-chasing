@@ -113,16 +113,16 @@ func play_reload_animation() -> void:
 	if tween:
 		tween.kill()
 	tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
-	tween.tween_property(%Sprite2D, "rotation_degrees", 360*(gun_data.reload_time/RELOAD_LOOP_TIME), gun_data.reload_time)
+	tween.tween_property(%Sprite2D, "rotation_degrees", snappedf(720*gun_data.reload_time/RELOAD_LOOP_TIME, 360), gun_data.reload_time)
 
 func set_ignore_time_scale() -> void:
 	_reload_timer.ignore_time_scale = true
 	_fire_rate_timer.ignore_time_scale = true
-	tween.set_ignore_time_scale()
+	if tween: tween.set_ignore_time_scale()
 
 func unset_ignore_time_scale() -> void:
 	_reload_timer.ignore_time_scale = false
 	_fire_rate_timer.ignore_time_scale = false
-	tween.set_ignore_time_scale(false)
+	if tween: tween.set_ignore_time_scale(false)
 	
 	

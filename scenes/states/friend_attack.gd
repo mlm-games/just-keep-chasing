@@ -10,10 +10,10 @@ func Enter():
 	attack.attack_damage = 999
 	enemy.hitbox_component.damage(attack)
 	#friend.get_parent().call_deferred("remove_child", friend)
-	if friend.modulate == Color.TRANSPARENT: friend.queue_free()
+	
  
 func state_process(_delta: float):
-	pass
+	if friend.modulate == Color.TRANSPARENT: friend.queue_free()
 	#fixme: Have to have a consume animation for wbc (white blood cell)
 
 	

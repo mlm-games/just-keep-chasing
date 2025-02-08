@@ -8,11 +8,11 @@
 [ext_resource type="Resource" path="res://resources/augments/spreadlock.tres" id="6_ega57"]
 [ext_resource type="Resource" path="res://resources/augments/texo_card.tres" id="7_f63db"]
 [ext_resource type="Resource" path="res://resources/augments/ultra_texo_card.tres" id="8_5d78j"]
-[ext_resource type="Resource" path="res://resources/enemies/accelerator_slime.tres" id="9_hecn4"]
-[ext_resource type="Resource" path="res://resources/enemies/basic_slime.tres" id="10_ohxkr"]
-[ext_resource type="Resource" path="res://resources/enemies/evolved_slime.tres" id="11_131m2"]
-[ext_resource type="Resource" path="res://resources/enemies/gunner_slime.tres" id="12_52q21"]
-[ext_resource type="Resource" path="res://resources/enemies/small_slime.tres" id="13_uwrhl"]
+[ext_resource type="Resource" path="res://resources/enemies/basic_slime.tres" id="9_hecn4"]
+[ext_resource type="Resource" path="res://resources/enemies/evolved_slime.tres" id="10_ohxkr"]
+[ext_resource type="Resource" path="res://resources/enemies/gunner_slime.tres" id="11_131m2"]
+[ext_resource type="Resource" path="res://resources/enemies/small_slime.tres" id="12_52q21"]
+[ext_resource type="Resource" path="res://resources/enemies/temp_slime.tres" id="13_uwrhl"]
 [ext_resource type="Resource" path="res://resources/guns/birdshot_shotgun.tres" id="14_u2rfg"]
 [ext_resource type="Resource" path="res://resources/guns/buckshot_shotgun.tres" id="15_o1j6m"]
 [ext_resource type="Resource" path="res://resources/guns/double_barrel_shotgun.tres" id="16_g5768"]
@@ -28,11 +28,11 @@
 [resource]
 script = ExtResource("24_twkyw")
 enemies = Dictionary[StringName, Variant]({
-&"accelerator_slime": ExtResource("9_hecn4"),
-&"basic_slime": ExtResource("10_ohxkr"),
-&"evolved_slime": ExtResource("11_131m2"),
-&"gunner_slime": ExtResource("12_52q21"),
-&"small_slime": ExtResource("13_uwrhl")
+&"basic_slime": ExtResource("9_hecn4"),
+&"evolved_slime": ExtResource("10_ohxkr"),
+&"gunner_slime": ExtResource("11_131m2"),
+&"small_slime": ExtResource("12_52q21"),
+&"temp_slime": ExtResource("13_uwrhl")
 })
 augments = Dictionary[StringName, Variant]({
 &"basic_repair": ExtResource("1_46x2v"),

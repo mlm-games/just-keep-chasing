@@ -69,7 +69,7 @@ func _on_timer_timeout() -> void:
 	update_timer_label()
 	check_time_condition()
 	pop_up_on_screen = false
-#Fixme: Getting the character upgrade screen and te game win screen causes the game to run normally with the game end screen after closing the upgrade screen.
+#Fixme: Getting the character upgrade screen and the game win screen causes the game to run normally with the game end screen after closing the upgrade screen.
 
 func _on_slow_time_button_pressed() -> void:
 	get_parent().use_powerup(0)
