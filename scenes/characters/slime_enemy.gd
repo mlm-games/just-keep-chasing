@@ -2,6 +2,7 @@ class_name SlimeEnemy extends BaseEnemy
 
 const ANIMATION_FOLLOW_X = "follow-x"
 const ANIMATION_FOLLOW_Y = "follow-y"
+const LoadedParticlesScene = preload("res://scenes/components/modular_hit_particles.tscn")
 
 
 @onready var player = get_tree().get_first_node_in_group("Player")
@@ -105,5 +106,5 @@ func _on_health_component_entity_died() -> void:
 
 
 func _on_health_component_taking_damage() -> void:
-	modular_hit_particles_2d.emitting = true
+	add_child(LoadedParticlesScene.instantiate())
 	

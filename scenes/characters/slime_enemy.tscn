@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b383ofsmpqt55"]
+[gd_scene load_steps=8 format=3 uid="uid://b383ofsmpqt55"]
 
 [ext_resource type="Script" uid="uid://bv26fkvrv8bar" path="res://scenes/characters/slime_enemy.gd" id="1_spd34"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_d2gw2"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="3_cak1k"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_oqv1l"]
 [ext_resource type="AnimationLibrary" uid="uid://bo5gtqkkhod47" path="res://scenes/characters/slime_enemy_anims.tres" id="5_2rcg4"]
-[ext_resource type="PackedScene" uid="uid://dfbi8k6eqssuk" path="res://scenes/components/modular_hit_particles.tscn" id="6_d2gw2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
 size = Vector2(44, 40)
@@ -48,8 +47,6 @@ autoplay = "follow-x"
 speed_scale = 2.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-
-[node name="ModularHitParticles2D" parent="." instance=ExtResource("6_d2gw2")]
 
 [connection signal="area_exited" from="EnemyHitboxComponent" to="." method="_on_enemy_hitbox_component_area_exited"]
 [connection signal="taking_damage" from="HealthComponent" to="." method="_on_health_component_taking_damage"]

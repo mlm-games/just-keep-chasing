@@ -1,6 +1,8 @@
 class_name BaseProjectile extends Area2D
 
-@export var speed :float
+const SpawnParticles = preload("res://scenes/components/bullet_spawn_particles.tscn")
+
+@export var speed : float
 @export var projectile_range := 1000
 @export var damage : float
 @export var spread : float
@@ -17,6 +19,7 @@ var travelled_distance := 0.0
 
 func _ready() -> void:
 	set_projectile_values(projectile_data)
+	add_child(SpawnParticles.instantiate())
 
 func _physics_process(delta: float) -> void:
 	var direction = Vector2.RIGHT.rotated(rotation + _rand_spread)
