@@ -14,6 +14,5 @@ func Enter():
  
 func state_process(_delta: float):
 	if friend.modulate == Color.TRANSPARENT: friend.queue_free()
-	#fixme: Have to have a consume animation for wbc (white blood cell)
 
 	
