@@ -1,49 +1,29 @@
 [gd_scene load_steps=23 format=3 uid="uid://c2gocuhw2o7py"]
 
-[ext_resource type="Theme" uid="uid://d26u4ffjbtvf8" path="res://resources/test_theme.tres" id="1_svcqa"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="2_b641b"]
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="2_ny0ke"]
+[ext_resource type="Texture2D" uid="uid://b5wy5qam2nw48" path="res://assets/sprites/background_rbc.svg" id="3_svcqa"]
 [ext_resource type="Script" uid="uid://hgvitycqq2iu" path="res://scenes/UI/game_version.gd" id="4_3hod2"]
-[ext_resource type="Shader" uid="uid://cx3foo3o15go8" path="res://scenes/gameplay/wavy_effect.gdshader" id="4_78n2u"]
 [ext_resource type="Script" uid="uid://d3qxlw41khhgp" path="res://scenes/UI/menu.gd" id="5"]
 [ext_resource type="Script" uid="uid://cplyjxscurihv" path="res://scenes/UI/godot_version.gd" id="5_fdyjp"]
 [ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="7_ypw4e"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_78n2u"]
-shader = ExtResource("4_78n2u")
-shader_parameter/amplitude = 0.02
-shader_parameter/frequency = 3.0
-shader_parameter/speed = 2.0
-shader_parameter/modulate_color = Vector4(1, 1, 1, 1)
+[sub_resource type="Gradient" id="Gradient_aklih"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.0784314, 0.552941, 0.611765, 1)
 
-[sub_resource type="Gradient" id="Gradient_78n2u"]
-offsets = PackedFloat32Array(0, 0.960177, 1)
-colors = PackedColorArray(0, 1, 0, 0.498039, 0.67451, 1, 0.32549, 0.498039, 1, 0.647059, 0.337255, 0.498039)
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wav1i"]
+gradient = SubResource("Gradient_aklih")
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_svcqa"]
-gradient = SubResource("Gradient_78n2u")
-fill_to = Vector2(1, 0.0299145)
+[sub_resource type="Curve" id="Curve_svcqa"]
+_limits = [-200.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.545, 164.045), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofy2k"]
-shader = ExtResource("4_78n2u")
-shader_parameter/amplitude = 0.01
-shader_parameter/frequency = 2.0
-shader_parameter/speed = 1.0
-shader_parameter/modulate_color = Vector4(1, 1, 1, 0.7)
+[sub_resource type="Gradient" id="Gradient_ofy2k"]
+colors = PackedColorArray(0.94, 0.00939999, 0.50572, 1, 1, 0.945098, 0.917647, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_svcqa"]
-shader = ExtResource("4_78n2u")
-shader_parameter/amplitude = 0.02
-shader_parameter/frequency = 3.0
-shader_parameter/speed = 2.0
-shader_parameter/modulate_color = Vector4(1, 1, 1, 1)
-
-[sub_resource type="Gradient" id="Gradient_ny0ke"]
-interpolation_mode = 1
-colors = PackedColorArray(0.345309, 0.187035, 0.438541, 0.901961, 1, 0.14902, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_78n2u"]
-gradient = SubResource("Gradient_ny0ke")
 
 [sub_resource type="SystemFont" id="SystemFont_ny0ke"]
 font_names = PackedStringArray("Comic Sans MS")
@@ -56,6 +36,16 @@ outline_size = 20
 outline_color = Color(0, 0.219608, 0.607843, 1)
 shadow_size = 10
 shadow_color = Color(0, 0, 0, 0.746)
+
+[sub_resource type="Animation" id="Animation_svcqa"]
+resource_name = "SlightBounce"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ofy2k"]
+_data = {
+&"SlightBounce": SubResource("Animation_svcqa")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofy2k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_78n2u"]
 
@@ -97,43 +87,47 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_svcqa")
 script = ExtResource("5")
 
-[node name="TextureRect2" type="TextureRect" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_78n2u")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("GradientTexture2D_svcqa")
-metadata/_edit_use_anchors_ = true
-
-[node name="Parallax2D" type="Parallax2D" parent="."]
-repeat_size = Vector2(1152, 896)
-
-[node name="BackgroundTextureRect" type="TextureRect" parent="Parallax2D"]
-modulate = Color(1, 1, 1, 0.172549)
-material = SubResource("ShaderMaterial_ofy2k")
+[node name="BackgroundTextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.513726)
+layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 896.0
 texture = ExtResource("2_ny0ke")
 stretch_mode = 1
 
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_svcqa")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("GradientTexture1D_78n2u")
-metadata/_edit_use_anchors_ = true
+[node name="Parallax2D" type="Parallax2D" parent="."]
+repeat_size = Vector2(1152, 896)
+
+[node name="TextureRect2" type="TextureRect" parent="Parallax2D"]
+offset_right = 1155.0
+offset_bottom = 897.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("GradientTexture1D_wav1i")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(1551, 142)
+amount = 40
+texture = ExtResource("3_svcqa")
+lifetime = 20.0
+randomness = 0.52
+lifetime_randomness = 0.5
+emission_shape = 5
+emission_points = PackedVector2Array(0, 500, 0, 0, 0, 0)
+emission_normals = PackedVector2Array()
+emission_colors = PackedColorArray()
+direction = Vector2(-1, 0)
+gravity = Vector2(0, 0)
+initial_velocity_min = 156.6
+initial_velocity_max = 423.42
+angular_velocity_max = 20.0
+linear_accel_max = 30.63
+linear_accel_curve = SubResource("Curve_svcqa")
+scale_amount_min = 0.02
+scale_amount_max = 0.25
+color_initial_ramp = SubResource("Gradient_ofy2k")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -161,26 +155,37 @@ grow_vertical = 2
 
 [node name="Title" type="Label" parent="MarginContainer/Control/CenterContainer"]
 modulate = Color(0.705882, 0.839216, 0.407843, 1)
+material = SubResource("ShaderMaterial_svcqa")
 layout_mode = 2
 text = "GAME_TITLE"
 label_settings = SubResource("LabelSettings_78n2u")
 uppercase = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/Control/CenterContainer/Title"]
+libraries = {
+&"": SubResource("AnimationLibrary_ofy2k")
+}
+
+[node name="Title2" type="Label" parent="MarginContainer/Control/CenterContainer/Title"]
+modulate = Color(0.705882, 0.839216, 0.407843, 1)
+material = SubResource("ShaderMaterial_ofy2k")
+text = "GAME_TITLE"
+label_settings = SubResource("LabelSettings_78n2u")
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -128.5
-offset_top = -328.0
-offset_right = 128.5
+anchors_preset = -1
+anchor_left = 0.0251736
+anchor_top = 0.637346
+anchor_right = 1.05035
+anchor_bottom = 0.796296
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 16
+metadata/_edit_use_anchors_ = true
 
-[node name="ResumeButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
@@ -190,35 +195,35 @@ text = "MENU_LABEL_CONTINUE"
 script = ExtResource("7_ypw4e")
 metadata/_custom_type_script = ExtResource("7_ypw4e")
 
-[node name="PlayButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
+[node name="PlayButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_NEW_GAME"
 script = ExtResource("7_ypw4e")
 metadata/_custom_type_script = ExtResource("7_ypw4e")
 
-[node name="SettingsButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_SETTINGS"
 script = ExtResource("7_ypw4e")
 metadata/_custom_type_script = ExtResource("7_ypw4e")
 
-[node name="AchievementsButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
+[node name="AchievementsButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_ACHIEVEMENTS"
 script = ExtResource("7_ypw4e")
 metadata/_custom_type_script = ExtResource("7_ypw4e")
 
-[node name="ExitButton" type="Button" parent="MarginContainer/Control/VBoxContainer"]
+[node name="ExitButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_EXIT"
 script = ExtResource("7_ypw4e")
 metadata/_custom_type_script = ExtResource("7_ypw4e")
 
-[node name="Control" type="Control" parent="MarginContainer/Control/VBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/Control/HBoxContainer"]
 layout_mode = 2
 
 [node name="Version" type="VBoxContainer" parent="MarginContainer/Control"]
@@ -303,8 +308,8 @@ texture = SubResource("GradientTexture2D_ofy2k")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.9, 1, 1.1, 1)
 
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/ResumeButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/AchievementsButton" to="." method="_on_achievements_button_pressed"]
-[connection signal="pressed" from="MarginContainer/Control/VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/ResumeButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/AchievementsButton" to="." method="_on_achievements_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]

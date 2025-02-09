@@ -4,9 +4,12 @@ const WorldScene = "res://scenes/gameplay/world.tscn"
 const SettingsScene = "res://scenes/UI/settings.tscn"
 const AchievementsScene = "res://scenes/UI/achievements_screen.tscn"
 
-@onready var btn_play = $MarginContainer/Control/VBoxContainer/PlayButton
-@onready var btn_exit = $MarginContainer/Control/VBoxContainer/ExitButton
+@onready var btn_play = $MarginContainer/Control/HBoxContainer/PlayButton
+@onready var btn_exit = $MarginContainer/Control/HBoxContainer/ExitButton
 #Hack: hold r to restart, press r to reload
+
+#FIXME: Add the giggle effect to the title label, only flows near the bottom of the text
+
 
 func _ready():
 	GameState.load_settings(true)

@@ -104,7 +104,7 @@ func  _ready() -> void:
 		collection_res.powerups = get_resource_paths_in_directory(POWERUPS_DIR)
 		collection_res.enemies = get_resource_paths_in_directory(ENEMY_DATA_DIR)
 		collection_res.guns = get_resource_paths_in_directory(GUN_DATA_DIR)
-		print(ResourceSaver.save(collection_res, "res://resources/collection_resource.tres"))
+		print("Collection res save output:" + str(ResourceSaver.save(collection_res, "res://resources/collection_resource.tres")))
 	if collection_res.augments.is_empty():
 		collection_res = load("res://resources/collection_resource.tres")
 
