@@ -8,6 +8,7 @@ const ANIMATION_FOLLOW_Y = "follow-y"
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var hitbox_component: HitboxComponent = %EnemyHitboxComponent
 @onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var modular_hit_particles_2d: CPUParticles2D = $ModularHitParticles2D
 
 var player_hitbox: HitboxComponent
 var can_deal_damage := false
@@ -18,6 +19,7 @@ func _ready() -> void:
 	hitbox_component.area_exited.connect(_on_hitbox_component_area_exited.bind())
 	visible_on_screen_notifier_2d.screen_entered.connect(_on_visible_on_screen_notifier_2d_screen_entered)
 	visible_on_screen_notifier_2d.screen_exited.connect(_on_visible_on_screen_notifier_2d_screen_exited)
+	
 
 func set_data_values(enemy_data: EnemyData):
 	contact_attack_damage = enemy_data.base_contact_damage
@@ -100,3 +102,8 @@ func _on_health_component_entity_died() -> void:
 	animation_player.play("death")
 	await animation_player.animation_finished
 	queue_free()
+
+
+func _on_health_component_taking_damage() -> void:
+	modular_hit_particles_2d.emitting = true
+	

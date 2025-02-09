@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfbi8k6eqssuk"]
+
+[ext_resource type="Texture2D" uid="uid://dkcqpdo5mlrjx" path="res://assets/sprites/slime_hit_particles.svg" id="1_dyu55"]
+[ext_resource type="Script" uid="uid://dk41yw0sd5m5u" path="res://scenes/components/modular_hit_particles.gd" id="2_rb66u"]
+
+[sub_resource type="Curve" id="Curve_fcux4"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), -466.355, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_jmlwo"]
+_limits = [0.0, 0.786517, 0.0, 1.0]
+_data = [Vector2(0, 0.786517), 0.0, -2.34934, 0, 0, Vector2(0.34, 0.256281), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="ModularHitParticles2D" type="CPUParticles2D"]
+emitting = false
+amount = 5
+texture = ExtResource("1_dyu55")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.9
+spread = 100.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 150.0
+angle_max = 40.0
+angle_curve = SubResource("Curve_fcux4")
+scale_amount_min = 0.1
+scale_amount_max = 0.25
+scale_amount_curve = SubResource("Curve_jmlwo")
+script = ExtResource("2_rb66u")

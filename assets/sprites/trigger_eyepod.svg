@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100mm"
+   height="100mm"
+   viewBox="0 0 100 100"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1">
+    <rect
+       style="fill:#000000;stroke-width:0.297839;opacity:0.753"
+       id="rect4"
+       width="42.502216"
+       height="48.694592"
+       x="28.710106"
+       y="26.176863"
+       rx="48.008194"
+       ry="13.598829" />
+    <rect
+       style="fill:#ffb380;stroke-width:0.264583;opacity:0.953"
+       id="rect1"
+       width="37.435726"
+       height="43.628101"
+       x="28.147163"
+       y="28.710108"
+       rx="42.285362"
+       ry="12.183922" />
+    <rect
+       style="display:inline;opacity:0.624;fill:#28170b;stroke-width:0.126822"
+       id="rect2"
+       width="13.229166"
+       height="28.365145"
+       x="28.608765"
+       y="36.341587"
+       rx="14.942947"
+       ry="7.9214702" />
+    <rect
+       style="display:inline;opacity:0.624;fill:#28170b;stroke-width:0.169742"
+       id="rect3"
+       width="19.14007"
+       height="35.120464"
+       x="28.608765"
+       y="32.963928"
+       rx="21.619583"
+       ry="9.808013" />
+  </g>
+</svg>

@@ -167,6 +167,7 @@ libraries = {
 [node name="Title2" type="Label" parent="MarginContainer/Control/CenterContainer/Title"]
 modulate = Color(0.705882, 0.839216, 0.407843, 1)
 material = SubResource("ShaderMaterial_ofy2k")
+layout_mode = 0
 text = "GAME_TITLE"
 label_settings = SubResource("LabelSettings_78n2u")
 uppercase = true
