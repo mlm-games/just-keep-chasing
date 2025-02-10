@@ -9,7 +9,6 @@ const LoadedParticlesScene = preload("res://scenes/components/modular_hit_partic
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var hitbox_component: HitboxComponent = %EnemyHitboxComponent
 @onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
-@onready var modular_hit_particles_2d: CPUParticles2D = $ModularHitParticles2D
 
 var player_hitbox: HitboxComponent
 var can_deal_damage := false

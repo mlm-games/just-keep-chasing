@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene load_steps=24 format=3 uid="uid://4fyoq8npekf0"]
 
 [ext_resource type="Script" uid="uid://lgsfy3lj2y0g" path="res://scenes/gameplay/world.gd" id="1_li0ht"]
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes/characters/player.tscn" id="3_vhnxw"]
@@ -9,6 +9,17 @@
 [ext_resource type="Script" uid="uid://buv40e5a827xo" path="res://scenes/powerups/powerup_manager.gd" id="13_wcqrj"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="14_su07q"]
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="18_r7okl"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k1kj5"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xyviv"]
+noise = SubResource("FastNoiseLite_k1kj5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xyviv"]
+shader = ExtResource("9_k1kj5")
+shader_parameter/chromatic_aberration = 0.0
+shader_parameter/vignette_intensity = 0.0
 
 [sub_resource type="Curve2D" id="Curve2D_xsefa"]
 _data = {
@@ -182,17 +193,55 @@ _data = {
 &"slow_motion_start": SubResource("Animation_k1kj5")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xyviv"]
-shader = ExtResource("9_k1kj5")
-shader_parameter/chromatic_aberration = 0.0
-shader_parameter/vignette_intensity = 0.0
-
 [node name="World" type="Node2D"]
 script = ExtResource("1_li0ht")
 
 [node name="HUD" parent="." instance=ExtResource("6_vltvt")]
 unique_name_in_owner = true
 layer = 20
+
+[node name="NoiseParallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.15, 1.15)
+repeat_size = Vector2(1152, 648)
+
+[node name="TextureRect" type="TextureRect" parent="NoiseParallax2D"]
+modulate = Color(1, 1, 1, 0.219608)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_xyviv")
+
+[node name="BackgroundParallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.625, 0.625)
+scroll_offset = Vector2(1, 0)
+repeat_size = Vector2(1152, 896)
+
+[node name="Vignette" type="ColorRect" parent="BackgroundParallax2D"]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_xyviv")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1151.0
+offset_right = 1151.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="BackgroundRect" type="TextureRect" parent="BackgroundParallax2D"]
+modulate = Color(0.859, 0.859, 0.859, 1)
+offset_left = 1.0
+offset_right = 1153.0
+offset_bottom = 896.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("18_r7okl")
+stretch_mode = 1
 
 [node name="Player" parent="." instance=ExtResource("3_vhnxw")]
 unique_name_in_owner = true
@@ -293,35 +342,6 @@ unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_22uad")
 }
-
-[node name="BackgroundParallax2D" type="Parallax2D" parent="."]
-show_behind_parent = true
-scroll_scale = Vector2(0.625, 0.625)
-scroll_offset = Vector2(1, 0)
-repeat_size = Vector2(1152, 896)
-
-[node name="Vignette" type="ColorRect" parent="BackgroundParallax2D"]
-unique_name_in_owner = true
-visible = false
-material = SubResource("ShaderMaterial_xyviv")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1151.0
-offset_right = 1151.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="BackgroundRect" type="TextureRect" parent="BackgroundParallax2D"]
-modulate = Color(0.859, 0.859, 0.859, 1)
-offset_left = 1.0
-offset_right = 1153.0
-offset_bottom = 896.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource("18_r7okl")
-stretch_mode = 1
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.695503, 0.695503, 0.695503, 1)

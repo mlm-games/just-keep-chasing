@@ -85,6 +85,7 @@ var accessibility: Dictionary = {
 var gameplay_options: Dictionary = {
 	"max_fps": 60,
 	"pause_on_lost_focus": true,
+	"hide_touch_buttons": true,
 }
 var video: Dictionary = {
 	"borderless": false,

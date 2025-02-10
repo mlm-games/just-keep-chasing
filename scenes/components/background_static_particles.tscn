@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dafuydxct5f01"]
+
+[ext_resource type="Texture2D" uid="uid://cxnlpb6ei2d5g" path="res://assets/sprites/bg_static_particles.svg" id="1_bkjun"]
+
+[sub_resource type="Curve" id="Curve_pn38s"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_bfvva"]
+curve = SubResource("Curve_pn38s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vp81k"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(500, 400, 1)
+gravity = Vector3(0, 0, 0)
+scale_min = 0.05
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_bfvva")
+
+[node name="BackgroundStaticParticles" type="GPUParticles2D"]
+position = Vector2(551, 300)
+amount = 50
+texture = ExtResource("1_bkjun")
+lifetime = 50.0
+preprocess = 10.0
+fixed_fps = 0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_vp81k")

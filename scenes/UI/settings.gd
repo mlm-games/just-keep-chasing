@@ -56,13 +56,13 @@ var locales := {
 ]
 
 
-func _ready() -> void:
+func _ready() -> void: 
 	language_options_button.grab_focus()
 	languages_ready()
 	video_ready()
 	gameplay_ready()
 	audio_ready()
-	ready.emit()
+	ready.emit() #Load options from save file and ready up
 
 #region Accessibility
 
@@ -94,6 +94,8 @@ func handle_locale_mismatch(current_locale: String) -> String:
 func gameplay_ready() -> void:
 	%MaxFPSSpinBox.value = GameState.gameplay_options["max_fps"]
 	Engine.set_max_fps(%MaxFPSSpinBox.value)
+	%HideTouchControlsButton.button_pressed = GameState.gameplay_options["hide_touch_buttons"]
+	#FIXME: The button wont work if the setting is nott present in the dictionary, make it so the dictionary values if not present are added to the save file or not considered until saved...
 
 #endregion
 
@@ -213,3 +215,8 @@ func _on_language_options_button_item_selected(index: int) -> void:
 
 func _on_save_button_pressed() -> void:
 	GameState.save_settings()
+
+
+func _on_check_button_toggled(toggled_on: bool) -> void:
+	GameState.gameplay_options["hide_touch_buttons"] = toggled_on
+	

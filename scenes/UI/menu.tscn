@@ -1,12 +1,14 @@
-[gd_scene load_steps=23 format=3 uid="uid://c2gocuhw2o7py"]
+[gd_scene load_steps=22 format=3 uid="uid://c2gocuhw2o7py"]
 
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="2_b641b"]
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="2_ny0ke"]
 [ext_resource type="Texture2D" uid="uid://b5wy5qam2nw48" path="res://assets/sprites/background_rbc.svg" id="3_svcqa"]
 [ext_resource type="Script" uid="uid://hgvitycqq2iu" path="res://scenes/UI/game_version.gd" id="4_3hod2"]
+[ext_resource type="Shader" uid="uid://can28j4dr15ly" path="res://scenes/UI/cartoony_title.gdshader" id="4_ypw4e"]
 [ext_resource type="Script" uid="uid://d3qxlw41khhgp" path="res://scenes/UI/menu.gd" id="5"]
 [ext_resource type="Script" uid="uid://cplyjxscurihv" path="res://scenes/UI/godot_version.gd" id="5_fdyjp"]
 [ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="7_ypw4e"]
+[ext_resource type="PackedScene" uid="uid://dafuydxct5f01" path="res://scenes/components/background_static_particles.tscn" id="8_ofy2k"]
 
 [sub_resource type="Gradient" id="Gradient_aklih"]
 offsets = PackedFloat32Array(0)
@@ -24,6 +26,10 @@ point_count = 3
 colors = PackedColorArray(0.94, 0.00939999, 0.50572, 1, 1, 0.945098, 0.917647, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_svcqa"]
+shader = ExtResource("4_ypw4e")
+shader_parameter/bounce_height = 1.0
+shader_parameter/squash = 1.095
+shader_parameter/rotation = 0.0
 
 [sub_resource type="SystemFont" id="SystemFont_ny0ke"]
 font_names = PackedStringArray("Comic Sans MS")
@@ -36,16 +42,6 @@ outline_size = 20
 outline_color = Color(0, 0.219608, 0.607843, 1)
 shadow_size = 10
 shadow_color = Color(0, 0, 0, 0.746)
-
-[sub_resource type="Animation" id="Animation_svcqa"]
-resource_name = "SlightBounce"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ofy2k"]
-_data = {
-&"SlightBounce": SubResource("Animation_svcqa")
-}
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofy2k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_78n2u"]
 
@@ -107,11 +103,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = SubResource("GradientTexture1D_wav1i")
 
+[node name="BackgroundStaticParticles" parent="." instance=ExtResource("8_ofy2k")]
+
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2(1551, 142)
 amount = 40
 texture = ExtResource("3_svcqa")
 lifetime = 13.45
+preprocess = 10.0
 emission_shape = 5
 emission_points = PackedVector2Array(0, 500, 0, 0, 0, 0)
 emission_normals = PackedVector2Array()
@@ -140,49 +139,30 @@ grow_vertical = 2
 [node name="Control" type="Control" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -8.0
-offset_right = -8.0
-offset_bottom = -339.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Title" type="Label" parent="MarginContainer/Control/CenterContainer"]
+[node name="Title" type="Label" parent="MarginContainer/Control"]
+unique_name_in_owner = true
 modulate = Color(0.705882, 0.839216, 0.407843, 1)
 material = SubResource("ShaderMaterial_svcqa")
 layout_mode = 2
-text = "GAME_TITLE"
-label_settings = SubResource("LabelSettings_78n2u")
-uppercase = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/Control/CenterContainer/Title"]
-libraries = {
-&"": SubResource("AnimationLibrary_ofy2k")
-}
-
-[node name="Title2" type="Label" parent="MarginContainer/Control/CenterContainer/Title"]
-modulate = Color(0.705882, 0.839216, 0.407843, 1)
-material = SubResource("ShaderMaterial_ofy2k")
-layout_mode = 0
+offset_left = 577.0
+offset_top = 200.0
+offset_right = 975.0
+offset_bottom = 284.0
 text = "GAME_TITLE"
 label_settings = SubResource("LabelSettings_78n2u")
 uppercase = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0251736
-anchor_top = 0.637346
-anchor_right = 1.05035
-anchor_bottom = 0.796296
-grow_horizontal = 2
-grow_vertical = 0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 68.0
+offset_right = 1181.0
+offset_bottom = 138.0
+grow_vertical = 2
 theme_override_constants/separation = 16
-metadata/_edit_use_anchors_ = true
+alignment = 1
 
 [node name="ResumeButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 visible = false

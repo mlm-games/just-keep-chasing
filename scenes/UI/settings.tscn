@@ -48,9 +48,10 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 
 [node name="AccessibilityContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = 10
@@ -115,7 +116,6 @@ rounded = true
 alignment = 1
 
 [node name="GameplayContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = 10
@@ -154,6 +154,19 @@ max_value = 300.0
 step = 5.0
 rounded = true
 alignment = 1
+
+[node name="HideButtonsLabel" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/GameplayContainer/PanelContainer/MarginContainer/GameplayContainer"]
+layout_mode = 2
+text = "UI_LABEL_HIDE_BUTTONS"
+
+[node name="FPSContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/GameplayContainer/PanelContainer/MarginContainer/GameplayContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="HideTouchControlsButton" type="CheckButton" parent="MarginContainer/VBoxContainer/TabContainer/GameplayContainer/PanelContainer/MarginContainer/GameplayContainer/FPSContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="VideoContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
 visible = false
@@ -337,6 +350,7 @@ bus = &"SFX"
 
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/TabContainer/AccessibilityContainer/PanelContainer/MarginContainer/AccessibilityContainer/LanguageOptionsButton" to="." method="_on_language_options_button_item_selected"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/TabContainer/GameplayContainer/PanelContainer/MarginContainer/GameplayContainer/FPSContainer/MaxFPSSpinBox" to="." method="_on_max_fps_spin_box_value_changed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/TabContainer/GameplayContainer/PanelContainer/MarginContainer/GameplayContainer/FPSContainer2/HideTouchControlsButton" to="." method="_on_check_button_toggled"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/TabContainer/VideoContainer/PanelContainer/MarginContainer/VideoContainer/FullscreenContainer/FullscreenButton" to="." method="_on_fullscreen_button_toggled"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/TabContainer/VideoContainer/PanelContainer/MarginContainer/VideoContainer/BorderlessContainer/BorderlessButton" to="." method="_on_borderless_button_toggled"]
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/TabContainer/VideoContainer/PanelContainer/MarginContainer/VideoContainer/ResolutionContainer/ResolutionButton" to="." method="_on_resolution_button_item_selected"]

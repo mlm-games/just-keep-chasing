@@ -1,7 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://rhergnlmde1y"]
+[gd_scene load_steps=6 format=3 uid="uid://rhergnlmde1y"]
 
-[ext_resource type="Texture2D" uid="uid://dkcqpdo5mlrjx" path="res://assets/sprites/slime_hit_particles.svg" id="1_5lj6h"]
 [ext_resource type="Script" uid="uid://dk41yw0sd5m5u" path="res://scenes/components/modular_hit_particles.gd" id="2_ftxu4"]
+
+[sub_resource type="Gradient" id="Gradient_xekpn"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5lj6h"]
+gradient = SubResource("Gradient_xekpn")
+width = 50
 
 [sub_resource type="Curve" id="Curve_fcux4"]
 _limits = [-360.0, 360.0, 0.0, 1.0]
@@ -9,28 +16,25 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), -466.355, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_jmlwo"]
-_limits = [0.0, 0.786517, 0.0, 1.0]
 _data = [Vector2(0, 0.220932), 0.0, -0.45214, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [node name="ModularHitParticles2D" type="CPUParticles2D"]
 emitting = false
 amount = 4
-texture = ExtResource("1_5lj6h")
+texture = SubResource("GradientTexture1D_5lj6h")
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 direction = Vector2(-1, 0)
 spread = 20.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 50.0
-initial_velocity_max = 250.0
-orbit_velocity_min = -2.5
-orbit_velocity_max = 2.5
+initial_velocity_min = 10.0
+initial_velocity_max = 50.0
+orbit_velocity_min = -1.0
+orbit_velocity_max = 1.0
 angle_max = 40.0
 angle_curve = SubResource("Curve_fcux4")
-scale_amount_min = 0.1
-scale_amount_max = 0.25
+scale_amount_max = 1.25
 scale_amount_curve = SubResource("Curve_jmlwo")
-color = Color(0.960784, 0.494118, 0.129412, 1)
 script = ExtResource("2_ftxu4")
