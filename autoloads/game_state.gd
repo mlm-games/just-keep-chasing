@@ -272,8 +272,8 @@ func unlock_gun(gun: GunData) -> void:
 #func is_gun_unlocked(gun: BaseGun) -> bool:
 	#return gun.unlocked
 
-func emit_research_points(enemy_position: Vector2, research_points: int) -> void:
-	for i in research_points:
+func emit_research_points(enemy_position: Vector2, research_point_drops: int) -> void:
+	for i in research_point_drops:
 		var drop: CurrencyDrop = LoadedCurrencyScene.instantiate()
 		drop.global_position = enemy_position
 		world.call_deferred("add_child", drop)
