@@ -71,7 +71,7 @@ func _ready() -> void:
 	for gun in GameState.collection_res.guns.values():
 		if gun.unlocked:
 			guns.append(gun)
-	spawnable_enemies = GameState.collection_res.get_enemy_dict_by_key()
+	spawnable_enemies = GameState.collection_res.get_enemy_dict_by_spawn_order()
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	spawn_enemy()

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d4nafedjghyog" path="res://assets/sprites/currency.svg" id="2_ff12p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
-radius = 42.86
+radius = 9.64
 
 [sub_resource type="Gradient" id="Gradient_spd34"]
 interpolation_mode = 2
@@ -17,7 +17,6 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="CurrencyPickup" type="Area2D"]
-scale = Vector2(0.225, 0.225)
 script = ExtResource("1_m2agr")
 metadata/_edit_group_ = true
 
@@ -26,8 +25,7 @@ shape = SubResource("CircleShape2D_rxdp3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.703808, 0.703808, 0.703808, 1)
-position = Vector2(-0.75, -0.76619)
-scale = Vector2(1.01079, 1.01079)
+scale = Vector2(0.225, 0.225)
 texture = ExtResource("2_ff12p")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

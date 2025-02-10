@@ -2,6 +2,9 @@ class_name Powerup extends PickUp
 
 @export var powerup_type : GameState.PowerupType
 
+func _ready() -> void:
+	$CollisionShape2D.shape.radius = GameStats.get_stat(GameStats.Stats.POWERUP_PICKUP_RANGE)
+
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		

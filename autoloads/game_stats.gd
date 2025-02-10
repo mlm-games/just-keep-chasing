@@ -1,6 +1,5 @@
 extends Node
 
-# Define your stats as a custom resource
 class StatDefinition extends Resource:
 	var base_value: float
 	var current_value: float
@@ -36,6 +35,8 @@ enum Stats {
 	PLAYER_DAMAGE_REDUCTION,
 	ENEMY_DAMAGE_REDUCTION,
 	GUN_TARGETTING_SPEED,
+	POWERUP_PICKUP_RANGE,
+	CURRENCY_PICKUP_RANGE,
 }
 
 enum Operation {
@@ -68,6 +69,8 @@ var _stats: Dictionary[Stats, StatDefinition] = {
 	Stats.PLAYER_DAMAGE_REDUCTION: StatDefinition.new(0, 0, 0.5),
 	Stats.ENEMY_DAMAGE_REDUCTION: StatDefinition.new(0, 0, 0.5),
 	Stats.GUN_TARGETTING_SPEED: StatDefinition.new(0.2, 0, 1), # lower -> slower, todo: make it appear higher in tooltip (multiply the change with 100) 
+	Stats.POWERUP_PICKUP_RANGE: StatDefinition.new(42.86, 0.01),
+	Stats.CURRENCY_PICKUP_RANGE: StatDefinition.new(9.64, 0.01),
 }
 
 signal stat_changed(stat_name: String, old_value: float, new_value: float)
