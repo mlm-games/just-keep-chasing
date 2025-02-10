@@ -2,12 +2,13 @@ extends Node
 
 const MenuScene = "res://scenes/UI/menu.tscn"
 const SettingsScene = "res://scenes/UI/settings.tscn"
+const LoadedCurrencyScene = preload("res://scenes/powerups/currency_drop.tscn")
 
 const AUGMENTS_DIR : String = "res://resources/augments/"
 const POWERUPS_DIR : String = "res://resources/powerups/"
 const ENEMY_DATA_DIR : String = "res://resources/enemies/"
 const GUN_DATA_DIR : String = "res://resources/guns/"
-const CONFIG_PATH: String ="user://settings.tres"
+const CONFIG_PATH: String = "user://settings.tres"
 const RESEARCH_TEXTURE = "assets/sprites/currency.png"
 
 var collection_res : CollectionResource = CollectionResource.new()
@@ -99,6 +100,9 @@ var audio: Dictionary = {
 }
 #endregion
 
+var world: World
+var player: Player
+
 func  _ready() -> void:
 	if OS.has_feature("editor"):
 		collection_res.augments = get_resource_paths_in_directory(AUGMENTS_DIR)
@@ -108,6 +112,10 @@ func  _ready() -> void:
 		print("Collection res save output:" + str(ResourceSaver.save(collection_res, "res://resources/collection_resource.tres")))
 	if collection_res.augments.is_empty():
 		collection_res = load("res://resources/collection_resource.tres")
+
+func on_new_game_start() -> void:
+	world = get_tree().get_first_node_in_group("World")
+	player = get_tree().get_first_node_in_group("Player")
 
 func get_resource_paths_in_directory(resources_dir: String, load_resource_paths: bool = false) -> Dictionary[StringName, Variant]:
 	var dir : DirAccess = DirAccess.open(resources_dir)
@@ -259,18 +267,16 @@ var all_possible_guns
 
 func unlock_gun(gun: GunData) -> void:
 	gun.unlocked = true
-	save_unlocked_guns()
+	#TODO: save_unlocked_guns()
 
 #func is_gun_unlocked(gun: BaseGun) -> bool:
 	#return gun.unlocked
 
-func save_unlocked_guns() -> void:
-	# Save to file system
-	pass
-
-func load_unlocked_guns() -> void:
-	# Load from file system
-	pass
+func emit_research_points(enemy_position: Vector2, research_points: int) -> void:
+	for i in research_points:
+		var drop: CurrencyDrop = LoadedCurrencyScene.instantiate()
+		drop.global_position = enemy_position
+		world.call_deferred("add_child", drop)
 
 
 

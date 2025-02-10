@@ -35,6 +35,7 @@ enum Stats {
 	GUN_ENEMY_TARGETTING_RANGE_MULT,
 	PLAYER_DAMAGE_REDUCTION,
 	ENEMY_DAMAGE_REDUCTION,
+	GUN_TARGETTING_SPEED,
 }
 
 enum Operation {
@@ -62,10 +63,11 @@ var _stats: Dictionary[Stats, StatDefinition] = {
 	Stats.ENEMY_HEALTH_MULT: StatDefinition.new(1),
 	Stats.FIRE_SPEED_REDUCTION_MULT: StatDefinition.new(1),
 	Stats.RAW_GUN_ENEMY_DAMAGE_REDUCTION: StatDefinition.new(0),
-	Stats.GUN_ENEMY_DAMAGE_MULT: StatDefinition.new(1),
+	Stats.GUN_ENEMY_DAMAGE_MULT: StatDefinition.new(1), # todo: like gun_targetting_speed but with a % symbol
 	Stats.ITEM_LEND_THRESHOLD: StatDefinition.new(0,-1000,0),
 	Stats.PLAYER_DAMAGE_REDUCTION: StatDefinition.new(0, 0, 0.5),
 	Stats.ENEMY_DAMAGE_REDUCTION: StatDefinition.new(0, 0, 0.5),
+	Stats.GUN_TARGETTING_SPEED: StatDefinition.new(0.2, 0, 1), # lower -> slower, todo: make it appear higher in tooltip (multiply the change with 100) 
 }
 
 signal stat_changed(stat_name: String, old_value: float, new_value: float)
@@ -121,13 +123,6 @@ func modify_stat(stat_name: Stats, operation: Operation, value: float) -> void:
 			##Update max_health in player's health component
 			#get_tree().get_nodes_in_group("Player")[0].update_max_health(game_stats[Stats.PLAYER_MAX_HEALTH])
 
-
-# enemy_id: no of kills
-var enemy_kill_count: Dictionary[String, int] = { 
-	"small_slime": 0,
-	"basic_slime": 0,
-	"evolved_slime": 0,
-}
 
 func save_stats() -> Dictionary:
 	var save_data := {}

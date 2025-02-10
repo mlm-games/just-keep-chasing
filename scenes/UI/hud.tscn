@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://p3ijv0nq3035"]
+[gd_scene load_steps=19 format=3 uid="uid://p3ijv0nq3035"]
 
 [ext_resource type="Script" uid="uid://cvt3rh70tefcl" path="res://scenes/UI/HUD.gd" id="1_ldp5k"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="2_vgwca"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/sprites/heal_powerup.png" id="4_lcl0g"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="5_6lg4h"]
 [ext_resource type="Texture2D" uid="uid://bambopn2wqgdd" path="res://assets/sprites/Gun-sprite.png" id="6_e60p3"]
+[ext_resource type="PackedScene" uid="uid://dqnb688fw4wpi" path="res://scenes/UI/currency_label.tscn" id="7_7wvwv"]
 [ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes/gameplay/pause-layer/pause-layer.tscn" id="7_avxcw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_co5na"]
@@ -139,13 +140,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="CurrencyLabel" type="RichTextLabel" parent="Control/PanelContainer/HBoxContainer"]
+[node name="CurrencyLabel" parent="Control/PanelContainer/HBoxContainer" instance=ExtResource("7_7wvwv")]
 unique_name_in_owner = true
-process_mode = 3
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.8
-bbcode_enabled = true
 
 [node name="SpacerControl2" type="Control" parent="Control/PanelContainer/HBoxContainer"]
 layout_mode = 2

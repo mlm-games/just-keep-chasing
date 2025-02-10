@@ -7,11 +7,11 @@ uniform float rotation : hint_range(-0.2, 0.2) = 0.0;
 void vertex() {
     // Apply bounce height
     VERTEX.y -= bounce_height * 50.0;
-    
+
     // Apply squash and stretch
     VERTEX.y *= squash;
     VERTEX.x /= squash;
-    
+
     // Apply rotation
     float cos_rot = cos(rotation);
     float sin_rot = sin(rotation);

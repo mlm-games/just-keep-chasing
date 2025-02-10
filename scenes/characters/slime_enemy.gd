@@ -89,7 +89,8 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func _on_health_component_entity_died() -> void:
 	if not hitbox_component.health_component.dying:
-		GameState.research_points += research_point_value
+		GameState.emit_research_points(global_position, research_point_value)
+		#GameState.research_points += research_point_value
 		hitbox_component.health_component.dying = true
 		#Fixme: Update kill count
 		if CountStats.enemies_killed_stats.has(enemy_data_resource.id): 

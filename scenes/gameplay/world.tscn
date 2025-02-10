@@ -193,7 +193,7 @@ _data = {
 &"slow_motion_start": SubResource("Animation_k1kj5")
 }
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" groups=["World"]]
 script = ExtResource("1_li0ht")
 
 [node name="HUD" parent="." instance=ExtResource("6_vltvt")]
@@ -272,6 +272,9 @@ texture_scale = 6.13
 unique_name_in_owner = true
 
 [node name="PowerupsNode" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CurrencyNode" type="Node2D" parent="."]
 unique_name_in_owner = true
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]

@@ -34,7 +34,7 @@
 	#transition_out,
 
 
-extends Node2D
+class_name World extends Node2D
 
 const NORMAL_TIME = 1.0
 const SLOW_TIME = 0.75
@@ -65,6 +65,7 @@ var guns: Array[GunData] = []
 var spawnable_enemies : Dictionary = {} #key: spawn_range, value: Enemydata
 
 func _ready() -> void:
+	GameState.on_new_game_start()
 		# Only add unlocked guns to the available guns array
 	guns.clear()
 	for gun in GameState.collection_res.guns.values():

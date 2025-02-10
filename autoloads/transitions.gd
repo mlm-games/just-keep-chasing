@@ -94,3 +94,13 @@ func smooth_screen_shake(frequency: float, amplitude: float, camera: Camera2D = 
 	var camera_offset = Vector2(randf() * amplitude * 2 - amplitude, randf() * amplitude * 2 - amplitude)
 	tween.tween_property(camera, "position", original_position + camera_offset, 1/frequency)  
 	tween.tween_property(camera, "position", original_position, 1/frequency)
+
+
+func squash_simple(target: Object, x_force: float, y_force: float, duration: float = 0.3, trans_type: Tween.TransitionType = Tween.TRANS_QUAD, ):
+	var tween = create_tween()
+	# initial squash
+	tween.tween_property(target, "scale:x", 1 - x_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(target, "scale:y", 1 + y_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
+	# return to normal
+	tween.tween_property(target, "scale:x", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(target, "scale:y", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)

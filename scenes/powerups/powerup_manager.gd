@@ -1,4 +1,4 @@
-class_name Powerup extends Area2D
+class_name Powerup extends PickUp
 
 @export var powerup_type : GameState.PowerupType
 

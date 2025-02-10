@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqnb688fw4wpi"]
+
+[ext_resource type="Script" uid="uid://covleijnl8iu0" path="res://scenes/UI/currency_label.gd" id="1_7m8bs"]
+
+[node name="CurrencyLabel" type="RichTextLabel"]
+process_mode = 3
+offset_right = 111.0
+offset_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.8
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 0
+script = ExtResource("1_7m8bs")

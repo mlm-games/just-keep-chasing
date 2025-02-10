@@ -84,7 +84,7 @@ func aim_at_target() -> void:
 	if not _target_in_range.is_empty():
 		var target = _target_in_range[0]
 		var direction = (target.global_position - global_position).normalized()
-		rotation = lerp_angle(rotation, direction.angle(), 0.2)
+		rotation = lerp_angle(rotation, direction.angle(), GameStats.get_stat(GameStats.Stats.GUN_TARGETTING_SPEED))
 		rotation = wrapf(rotation, -PI/2, 3*PI/2)
 		
 
@@ -103,11 +103,11 @@ func _on_fire_rate_timer_timeout() -> void:
 			reload()
 
 func play_fire_animation() -> void:
-	if tween:
+	if tween: 
 		tween.kill()
 	tween = get_tree().create_tween().set_ease(Tween.EASE_OUT)
 	tween.tween_property(%Sprite2D, "skew", rad_to_deg(gun_data.fire_animation_skew), gun_data.fire_animation_duration/2)
-	tween.tween_property(%Sprite2D, "skew", rad_to_deg(0), gun_data.fire_animation_duration/2)
+	tween.tween_property(%Sprite2D, "skew", 0, gun_data.fire_animation_duration/2)
 
 func play_reload_animation() -> void:
 	if tween:

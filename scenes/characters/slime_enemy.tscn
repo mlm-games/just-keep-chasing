@@ -48,5 +48,4 @@ speed_scale = 2.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
-[connection signal="area_exited" from="EnemyHitboxComponent" to="." method="_on_enemy_hitbox_component_area_exited"]
 [connection signal="taking_damage" from="HealthComponent" to="." method="_on_health_component_taking_damage"]
