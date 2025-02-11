@@ -1,11 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://dal5r3uc7pbf2"]
+[gd_scene load_steps=3 format=3 uid="uid://dal5r3uc7pbf2"]
 
 [ext_resource type="Script" uid="uid://cucwvdoltssyj" path="res://scenes/components/damage_numbers.gd" id="1_26up0"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_26up0"]
+
 [node name="DamageNumbers" type="Label"]
+modulate = Color(0.905882, 0.901961, 0.894118, 0)
 offset_right = 40.0
 offset_bottom = 29.0
 text = "380"
+label_settings = SubResource("LabelSettings_26up0")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("1_26up0")

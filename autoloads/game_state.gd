@@ -86,7 +86,6 @@ var accessibility: Dictionary = {
 var gameplay_options: Dictionary = {
 	"max_fps": 60,
 	"pause_on_lost_focus": true,
-	"hide_touch_buttons": true,
 }
 var video: Dictionary = {
 	"borderless": false,
@@ -134,12 +133,10 @@ func get_resource_paths_in_directory(resources_dir: String, load_resource_paths:
 
 func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1
-	get_node("/root/World/HUD").update_hud()
+	world.hud.update_hud_buttons()
 	
 func get_currency_bbcode() -> String:
 	return "[img=40px]%s[/img]" % RESEARCH_TEXTURE
-
-
 
 
 func apply_augment(augment: Augments) -> void:
@@ -164,29 +161,6 @@ func update_highest_game_time(time: float) -> void:
 	#respawn_position = Vector2.ZERO
 	# Reinitialize the player?
 
-#
-#func add_to_inventory(item: String, quantity: int = 1) -> void:
-	#if inventory.has(item):
-		#inventory[item] += quantity
-	#else:
-		#inventory[item] = quantity
-#
-#func remove_from_inventory(item: String, quantity: int = 1) -> void:
-	#if inventory.has(item):
-		#inventory[item] -= quantity
-		#if inventory[item] <= 0:
-			#inventory.erase(item)
-#
-#func collect_item(item: String) -> void:
-	#if not collected_items.has(item):
-		#collected_items.append(item)
-#
-#func has_collected_item(item: String) -> bool:
-	#return collected_items.has(item)
-#
-#func set_checkpoint(position: Vector2) -> void:
-	#last_checkpoint = position
-
 
 
 #region Saving and loading
@@ -198,16 +172,6 @@ func save_game() -> void:
 func load_game() -> void:
 		# Implement loading game state from a file or database
 	pass
-
-func respawn_player() -> void:
-		# Implement respawning the player at the last checkpoint or respawn position
-	pass
-
-#func get_or_create_dir(path: String) -> DirAccess:
-	#var dir := DirAccess.open(BASE_DIR)
-	#if !dir.dir_exists(path):
-		#dir.make_dir_recursive(path)
-	#return dir
 	
 func save_settings() -> void:
 	var new_save := GameSettingsSave.new()

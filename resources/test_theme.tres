@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://d26u4ffjbtvf8"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://d26u4ffjbtvf8"]
 
 [ext_resource type="FontFile" uid="uid://deua0cnkdxve8" path="res://assets/fonts/Exo_2/static/Exo2-SemiBold.ttf" id="1_uu6bd"]
 
@@ -14,15 +14,15 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.843184, 0.843184, 0.843184, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
 corner_detail = 5
-expand_margin_left = 1.0
-expand_margin_top = 1.0
-expand_margin_right = 1.0
-expand_margin_bottom = 1.0
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
 bg_color = Color(0.109804, 0.584314, 0.576471, 1)
@@ -31,10 +31,14 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.180392, 0.8, 0.792157, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.133333, 0.694118, 0.686275, 0.8)
@@ -43,10 +47,50 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.180392, 0.8, 0.792157, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sd3rj"]
+bg_color = Color(0.109804, 0.584314, 0.576471, 1)
+border_color = Color(0.180392, 0.8, 0.792157, 1)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rb6tg"]
+bg_color = Color(0.133333, 0.694118, 0.686275, 0.8)
+border_color = Color(0.180392, 0.8, 0.792157, 1)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpjcf"]
+bg_color = Color(0.109804, 0.584314, 0.576471, 1)
+border_color = Color(0.180392, 0.8, 0.792157, 0.741176)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
 
 [resource]
 default_font = ExtResource("1_uu6bd")
@@ -57,7 +101,16 @@ Button/styles/focus = SubResource("StyleBoxFlat_uu6bd")
 Button/styles/hover = SubResource("StyleBoxFlat_2")
 Button/styles/normal = SubResource("StyleBoxFlat_1")
 Button/styles/pressed = SubResource("StyleBoxFlat_2")
+HBoxContainer/constants/separation = 16
 Label/colors/font_color = Color(0.9, 0.9, 0.9, 1)
 Label/colors/font_outline_color = Color(0.12, 0.12, 0.12, 1)
 Label/constants/outline_size = 2
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
 Panel/styles/panel = SubResource("StyleBoxFlat_1")
+PowerupButton/base_type = &"Button"
+PowerupButton/styles/hover = SubResource("StyleBoxFlat_sd3rj")
+PowerupButton/styles/normal = SubResource("StyleBoxFlat_rb6tg")
+PowerupButton/styles/pressed = SubResource("StyleBoxFlat_vpjcf")
