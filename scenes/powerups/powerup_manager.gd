@@ -20,6 +20,10 @@ func _on_body_entered(body: Node2D) -> void:
 
 func collect_powerup() -> void:
 	GameState.powerup_collected(powerup_type)
+	
+	GameState.world.use_powerup(powerup_type)
+	#Hack: Use the non button implementation, then make the powerup buttons unlockable by achievements.. 
+
 
 func set_powerup_data(powerup_data:PowerupData) -> void:
 	$Sprite2D.texture = powerup_data.icon

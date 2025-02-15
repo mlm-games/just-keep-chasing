@@ -70,7 +70,6 @@ func check_time_condition() -> void:
 			ScreenEffects.transition("circleOut")
 
 func _input(event: InputEvent) -> void:
-	print(event.get_class())
 	if event is InputEventScreenTouch and !touching and event.is_pressed():
 		touching = true
 		initial_touch_position = event.position

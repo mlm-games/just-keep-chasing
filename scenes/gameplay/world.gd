@@ -189,7 +189,7 @@ func use_powerup(powerup_type: int) -> void:
 				player.health_component.heal_or_damage(20)
 			GameState.PowerupType.INVINCIBLE:
 				player.health_component.disable_for_secs(20)
-		hud.update_hud()
+		hud.update_hud_buttons()
 
 func start_gun_trial(gun: GunData) -> void:
 	# Instance the trial scene
