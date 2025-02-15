@@ -4,7 +4,9 @@
 class_name HUD extends CanvasLayer
 
 const TIMER_FORMAT = "%02d:%02d"
-var pop_up_on_screen = false
+var pop_up_on_screen : bool = false
+var touching : bool = false
+var initial_touch_position : Vector2
 
 @onready var slow_time_button: Button = %SlowTimeButton
 @onready var screen_blast_button: Button = %ScreenBlastButton
@@ -14,7 +16,11 @@ var pop_up_on_screen = false
 @onready var player : Player = get_tree().get_first_node_in_group("Player")
 @onready var currency_label: RichTextLabel = %CurrencyLabel
 
-var elapsed_time = 0
+var elapsed_time : int = 0
+
+func _ready() -> void:
+	if GameState.gameplay_options["hide_touch_buttons"]:
+		pass
 
 func update_timer_label() -> void:
 	@warning_ignore("integer_division")
@@ -22,11 +28,12 @@ func update_timer_label() -> void:
 	var seconds = elapsed_time % 60
 	timer_label.text = TIMER_FORMAT % [minutes, seconds]
 
-func update_hud() -> void:
-	update_slow_time_button()
-	update_screen_blast_button()
-	update_heal_button()
-	update_invincible_button()
+func update_hud_buttons() -> void:
+	if !GameState.gameplay_options["hide_touch_buttons"]:
+		update_slow_time_button()
+		update_screen_blast_button()
+		update_heal_button()
+		update_invincible_button()
 
 func update_currency_label() -> void:
 	currency_label.text = GameState.get_currency_bbcode() + str(GameState.research_points)
@@ -48,7 +55,7 @@ func check_time_condition() -> void:
 	if GameState.research_points / GameState.upgrade_shop_spawn_divisor > 1.0 and GameState.research_points != 0:
 		GameState.upgrade_shop_spawn_divisor += 10 + (10 * (elapsed_time * 0.001))
 		var upgrades_scene = load("res://scenes/UI/upgrades_layer.tscn").instantiate()
-		#hack: Add it like a pop up like a 0.01 sec anim? also some kind of sound for sure
+		#Hack: also some kind of sound for sure
 		add_child(upgrades_scene)
 	
 	
@@ -61,6 +68,25 @@ func check_time_condition() -> void:
 			var win_scene = load("res://scenes/UI/win_screen.tscn").instantiate()
 			add_child(win_scene)
 			ScreenEffects.transition("circleOut")
+
+func _input(event: InputEvent) -> void:
+	print(event.get_class())
+	if event is InputEventScreenTouch and !touching and event.is_pressed():
+		touching = true
+		initial_touch_position = event.position
+		%JoystickSprite2D._assign_start_point(event.position)
+	elif event is InputEventScreenTouch:
+		touching = false
+		%JoystickSprite2D.hide()
+		
+		#Dont include the below line to keep the player moving in the last direction after release
+		GameState.joystick_direction = Vector2.ZERO
+		
+	if event is InputEventScreenDrag:
+		%JoystickSprite2D._update_target_point(event.position)
+		GameState.joystick_direction = (event.position - initial_touch_position).normalized()
+		
+
 
 #region Signals
 

@@ -18,6 +18,10 @@ func _ready() -> void:
 
 func _physics_process(_delta):
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	
+	if GameState.joystick_direction != Vector2.ZERO:
+		direction = GameState.joystick_direction
+	
 	velocity = direction.normalized() * GameStats.get_stat(GameStats.Stats.PLAYER_SPEED)
 	
 	if velocity.x > 0:

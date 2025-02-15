@@ -20,6 +20,9 @@ var price_increase_rate: float = 0.05  # Increase by 10% each time
 
 var highest_game_time: float = 0.0
 
+## If screen is being touched, then use this direction
+var joystick_direction : Vector2 = Vector2.ZERO
+
 enum PowerupType {
 	SLOW_TIME,
 	SCREEN_BLAST,
