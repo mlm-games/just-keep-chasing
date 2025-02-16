@@ -70,18 +70,23 @@ func check_time_condition() -> void:
 			ScreenEffects.transition("circleOut")
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch and !touching and event.is_pressed():
+	print(event.get_class())
+	if event is InputEventMouseButton and !touching and event.is_pressed() and event.position < (get_viewport().get_visible_rect().position + get_viewport().get_visible_rect().size)/2: # Only work if touching on left half of screen
 		touching = true
 		initial_touch_position = event.position
 		%JoystickSprite2D._assign_start_point(event.position)
-	elif event is InputEventScreenTouch:
+	elif event is InputEventMouseButton:
 		touching = false
 		%JoystickSprite2D.hide()
-		
-		#Dont include the below line to keep the player moving in the last direction after release
+				#Dont include the below line to keep the player moving in the last direction after release
 		GameState.joystick_direction = Vector2.ZERO
 		
-	if event is InputEventScreenDrag:
+	## Doesnt work
+	#elif event is InputEventMouseButton and event.is_double_click():
+		#Input.action_press("drop-weapon")
+	
+		
+	if event is InputEventMouseMotion and touching: #remove touching for a new conrol scheme
 		%JoystickSprite2D._update_target_point(event.position)
 		GameState.joystick_direction = (event.position - initial_touch_position).normalized()
 		
@@ -115,8 +120,5 @@ func _on_invincible_button_pressed() -> void:
 	update_invincible_button()
 
 func _on_guns_button_pressed() -> void:
-	Input.action_press("switch-weapon")
-	await get_tree().create_timer(0.01).timeout
-	Input.action_release("switch-weapon")
-	pass  # Hack: THe pic changes to the currently held gun
+	GameState.world.switch_weapon()
 #endregion

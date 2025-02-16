@@ -153,21 +153,19 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 114.0
-grow_horizontal = 2
-alignment = 2
-
-[node name="GunsButton" type="TouchScreenButton" parent="Control/HBoxContainer"]
+[node name="GunsButton" type="TextureButton" parent="Control"]
 unique_name_in_owner = true
-visible = false
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
-position = Vector2(1036, 4)
-scale = Vector2(3.625, 2.625)
+custom_minimum_size = Vector2(125, 125)
+offset_left = 1149.0
+offset_top = 5.0
+offset_right = 1274.0
+offset_bottom = 130.0
+rotation = 1.5708
 texture_normal = ExtResource("6_e60p3")
+ignore_texture_size = true
+stretch_mode = 4
+flip_v = true
 
 [node name="JoystickSprite2D" parent="." instance=ExtResource("9_7wvwv")]
 unique_name_in_owner = true
@@ -179,4 +177,4 @@ scale = Vector2(0.26, 0.26)
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/HealButton" to="." method="_on_heal_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/ScreenBlastButton" to="." method="_on_screen_blast_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/SlowTimeButton" to="." method="_on_slow_time_button_pressed"]
-[connection signal="pressed" from="Control/HBoxContainer/GunsButton" to="." method="_on_guns_button_pressed"]
+[connection signal="pressed" from="Control/GunsButton" to="." method="_on_guns_button_pressed"]

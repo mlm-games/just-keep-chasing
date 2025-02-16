@@ -21,4 +21,5 @@ base_health = 50.0
 base_speed = 100.0
 modifiers = Array[ExtResource("3_2ra1y")]([])
 id = "evolved_slime"
+local_to_scene = false
 metadata/_custom_type_script = ExtResource("1_pgwt5")

@@ -9,6 +9,7 @@ const LoadedParticlesScene = preload("res://scenes/components/modular_hit_partic
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var hitbox_component: HitboxComponent = %EnemyHitboxComponent
 @onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+@onready var health_component: HealthComponent = $HealthComponent
 
 var player_hitbox: HitboxComponent
 var can_deal_damage := false
@@ -19,6 +20,9 @@ func _ready() -> void:
 	hitbox_component.area_exited.connect(_on_hitbox_component_area_exited.bind())
 	visible_on_screen_notifier_2d.screen_entered.connect(_on_visible_on_screen_notifier_2d_screen_entered)
 	visible_on_screen_notifier_2d.screen_exited.connect(_on_visible_on_screen_notifier_2d_screen_exited)
+	
+	health_component.max_health = enemy_data_resource.base_health
+	health_component.current_health = health_component.max_health
 	
 
 func set_data_values(enemy_data: EnemyData):

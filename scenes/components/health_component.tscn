@@ -4,7 +4,6 @@
 
 [node name="HealthComponent" type="Node"]
 script = ExtResource("1_c6b3v")
-max_health = 100.0
 
 [node name="EffectsAudioPlayer2D" type="AudioStreamPlayer2D" parent="."]
 attenuation = 2.21914

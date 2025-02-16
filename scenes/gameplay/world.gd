@@ -76,10 +76,10 @@ func _ready() -> void:
 func _on_enemy_spawn_timer_timeout() -> void:
 	spawn_enemy()
 	match hud.elapsed_time:
-		60:
+		30:
 			enemy_spawn_type_range.y = 2
 			enemy_spawn_timer.wait_time = 1.9
-		90:
+		75:
 			enemy_spawn_type_range.y = 3
 			enemy_spawn_timer.wait_time = 1.8
 		120: 
