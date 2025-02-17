@@ -157,6 +157,7 @@ size_flags_stretch_ratio = 0.25
 unique_name_in_owner = true
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
 custom_minimum_size = Vector2(125, 125)
+layout_mode = 0
 offset_left = 1149.0
 offset_top = 5.0
 offset_right = 1274.0
