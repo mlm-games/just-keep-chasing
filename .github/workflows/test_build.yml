@@ -1,0 +1,73 @@
+name: Test Build Game
+
+on:
+  push:
+    branches: '**'
+  pull_request:
+    branches: '**'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag name'
+        required: true
+        default: 'v1.0.0'
+      upload_releases:
+        description: 'Upload releases'
+        required: true
+        default: 'true'
+        type: boolean
+      mark_prerelease:
+        description: 'Mark as prerelease'
+        required: true
+        default: 'false'
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: ["Windows Desktop", "Linux/X11", macOS, "Android"]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build
+        uses: mlm-games/godot-build-action@main #Idk why v1 doesnt work...
+        with:
+          GODOT_PREVIEW_BUILDS: true
+          EXPORT_PRESET_NAME: ${{ matrix.platform }}
+          ITCH_USER_SLASH_GAME: ragebreaker/just-keep-chasing
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
+          KEYSTORE_PASSPHRASE: ${{ secrets.KEYSTORE_PASSPHRASE }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+  
+      - name: Set artifact name
+        id: artifact-name
+        shell: bash
+        run: |
+          PLATFORM="${{ matrix.platform }}"
+          SAFE_NAME="${PLATFORM//[^a-zA-Z0-9_]/_}"
+          echo "name=${SAFE_NAME}" >> $GITHUB_OUTPUT
+      
+      - name: Upload Artifact
+        if: inputs.upload_releases == false
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.artifact-name.outputs.name }}-build
+          path: ${{ github.workspace }}/builds/
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        if: inputs.upload_releases == true
+        with:
+          files: |
+            ${{ github.workspace }}/builds/*
+          name: ${{ inputs.tag_name }}
+          tag_name: ${{ inputs.tag_name }}
+          body: |
+            Can compare the commits for changelog if the changelog file isnt present (will be soon ig) 
+          prerelease: ${{ inputs.mark_prerelease }}
+          generate_release_notes: true

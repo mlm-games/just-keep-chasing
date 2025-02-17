@@ -1,5 +1,6 @@
 class_name BaseProjectile extends Area2D
 
+const BaseScene = preload("res://scenes/weapons-related/base_projectile.tscn")
 const SpawnParticles = preload("res://scenes/components/bullet_spawn_particles.tscn")
 
 @export var speed : float
@@ -16,6 +17,12 @@ var attack := Attack.new()
 var travelled_distance := 0.0
 
 @onready var _rand_spread = deg_to_rad(randf_range(-projectile_data.projectile_spread, projectile_data.projectile_spread))
+
+static func new_instance(data: ProjectileData):
+	var instance : BaseProjectile = BaseScene.instantiate()
+	instance.projectile_data = data
+	
+
 
 func _ready() -> void:
 	set_collision_mask_value(projectile_data.collision_shape_mask, true)

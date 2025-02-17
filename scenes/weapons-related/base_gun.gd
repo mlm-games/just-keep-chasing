@@ -1,7 +1,6 @@
 class_name BaseGun extends Area2D
 
 const RELOAD_LOOP_TIME = 0.5
-const BaseBulletScene = preload("res://scenes/weapons-related/base_projectile.tscn")
 
 @export var unlocked: bool = false
 
@@ -25,7 +24,7 @@ func _ready() -> void:
 	%Sprite2D.rotation = gun_data.sprite_rotation_degrees
 	%Sprite2D.flip_h = gun_data.sprite_flip_h
 	
-	_bullet_spawn_point.position = gun_data.bullet_spawn_offset
+	%BulletSpawnPoint.position = gun_data.bullet_spawn_offset
 	
 	$CollisionShape2D.shape.radius = gun_data.targeting_range
 	

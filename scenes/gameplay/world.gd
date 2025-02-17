@@ -43,8 +43,6 @@ const TRANSITION_DURATION = 0.3
 
 @onready var time_scale_tween: Tween
 
-const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.tscn")
-
 @onready var animation_player = %AnimationPlayer
 @onready var vignette = %Vignette
 #@onready var time_scale_tween: Tween
@@ -118,14 +116,13 @@ func spawn_enemy() -> void:
 
 func spawn_powerup() -> void:
 	var powerup_data = get_random_powerup()
-	var powerup_instance = BasePowerupScene.instantiate()
-	powerup_instance.set_powerup_data(powerup_data)
+	var powerup_instance = Powerup.create_new_powerup(powerup_data)
 	out_of_view_spawn_location.progress_ratio = randf()
 	powerup_instance.global_position = out_of_view_spawn_location.global_position
 	powerups_node.add_child(powerup_instance)
 
 func get_random_powerup() -> PowerupData:
-	#TODO: Replace randfs in the powertype scene itself or implement a better version
+	#TODO: Replace randfs in the powertype scene or script (as a static fn?) itself or implement a better version
 	var powerup_data: PowerupData = GameState.collection_res.powerups.values().pick_random()
 	if powerup_data.spawn_chance_percent / 100 < randf():
 		powerup_data = get_random_powerup()
