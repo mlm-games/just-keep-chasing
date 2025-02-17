@@ -18,10 +18,10 @@ var travelled_distance := 0.0
 
 @onready var _rand_spread = deg_to_rad(randf_range(-projectile_data.projectile_spread, projectile_data.projectile_spread))
 
-static func new_instance(data: ProjectileData):
+static func new_instance(data: ProjectileData) -> BaseProjectile:
 	var instance : BaseProjectile = BaseScene.instantiate()
 	instance.projectile_data = data
-	
+	return instance
 
 
 func _ready() -> void:

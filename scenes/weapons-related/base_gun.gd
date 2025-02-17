@@ -49,10 +49,7 @@ func spawn_bullet() -> void:
 	if ammo > 0:
 		%Sprite2D.rotation_degrees = 0
 		for _i in range(gun_data.bullets_per_shot):
-			var bullet_instance : BaseProjectile = BaseBulletScene.instantiate()
 			var bullet_data: ProjectileData = gun_data.bullet.duplicate(true)
-			bullet_instance.global_position = _bullet_spawn_point.global_position
-			bullet_instance.global_rotation_degrees = _bullet_spawn_point.global_rotation_degrees + randf_range(-gun_data.bullet_spread, gun_data.bullet_spread)
 			if get_parent() is Player:
 				bullet_data.projectile_damage *= GameStats.get_stat(GameStats.Stats.PLAYER_DAMAGE_MULT)
 				bullet_data.projectile_damage += GameStats.get_stat(GameStats.Stats.RAW_DAMAGE_MOD)
@@ -65,7 +62,9 @@ func spawn_bullet() -> void:
 				#@warning_ignore("narrowing_conversion")
 				#bullet_data.projectile_range *= GameStats.get_stat(GameStats.Stats.GUN_ENEMY_TARGETTING_RANGE_MULT)
 			ScreenEffects.smooth_screen_shake(gun_data.screen_shake_frequency, gun_data.screen_shake_amplitude) 
-			bullet_instance.projectile_data = bullet_data
+			var bullet_instance = BaseProjectile.new_instance(bullet_data)
+			bullet_instance.global_position = _bullet_spawn_point.global_position
+			bullet_instance.global_rotation_degrees = _bullet_spawn_point.global_rotation_degrees + randf_range(-gun_data.bullet_spread, gun_data.bullet_spread)
 			get_tree().current_scene.add_child(bullet_instance)
 		ammo -= 1
 

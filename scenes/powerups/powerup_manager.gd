@@ -2,11 +2,11 @@ class_name Powerup extends PickUp
 
 const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.tscn")
 
-var powerup_data : PowerupData
+@export var powerup_data : PowerupData
 
-static func create_new_powerup(powerup_data: PowerupData) -> Powerup:
+static func create_new_powerup(passed_data: PowerupData) -> Powerup:
 	var powerup_instance : Powerup = BasePowerupScene.instantiate()
-	powerup_instance.powerup_data = powerup_data
+	powerup_instance.powerup_data = passed_data
 	return powerup_instance
 
 func _ready() -> void:
