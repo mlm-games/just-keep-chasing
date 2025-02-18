@@ -6,7 +6,7 @@ class StatDefinition extends Resource:
 	var min_value: float
 	var max_value: float
 	
-	func _init(base: float, min_val: float = 0, max_val: float = INF):
+	func _init(base: float, min_val: float = 0, max_val: float = INF) -> void:
 		base_value = base
 		current_value = base
 		min_value = min_val
@@ -83,8 +83,8 @@ func modify_stat(stat_name: Stats, operation: Operation, value: float) -> void:
 		return
 	
 	#FIXME: Not possible, idk why it assigns a random stat definition for item_lend_threshold.
-	var stat = _stats[stat_name]
-	var old_value = stat.current_value
+	var stat : StatDefinition = _stats[stat_name]
+	var old_value : float = stat.current_value
 	match operation:
 		Operation.ADD:
 			stat.current_value = clamp(stat.current_value + value, 
@@ -140,9 +140,9 @@ func save_stats() -> Dictionary:
 
 
 func load_stats(save_data: Dictionary) -> void:
-	for stat_name in save_data:
+	for stat_name:Stats in save_data:
 		if _stats.has(stat_name):
-			var stat_data = save_data[stat_name]
+			var stat_data : StatDefinition = save_data[stat_name]
 			_stats[stat_name] = StatDefinition.new(
 				stat_data.base_value,
 				stat_data.min_value,

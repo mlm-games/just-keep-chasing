@@ -55,7 +55,11 @@ enum Effects {
 #var player_lives: int = 1
 
 # Game-related properties
-var research_points : int = 0
+var research_points : int = 0:
+	set(val):
+		research_points = val
+		if world: world.hud.update_currency_label()
+
 #var current_level: int = 1
 var is_game_paused: bool = false
 var is_game_over: bool = false

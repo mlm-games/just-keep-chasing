@@ -1,6 +1,6 @@
 extends Node
 
-var total_count_stats = {
+var total_count_stats : Dictionary[StringName, int] = {
 	"damage_dealt": 0,
 	"enemies_killed": 0,
 	"powerups_used": 0,
@@ -14,12 +14,13 @@ var total_count_stats = {
 
 var powerup_use_stats: Dictionary = GameState.powerups.duplicate(true)
 
-var enemies_killed_stats = {}
+var enemies_killed_stats : Dictionary[StringName, int] = {}
 
-var bullets_fired_by_type_stats = {}
+var bullets_fired_by_type_stats : Dictionary[StringName, int] = {}
 
-var augment_collection_stats = {}
+var augment_collection_stats : Dictionary[StringName, int] = {}
 
+@warning_ignore("untyped_declaration")
 func increment_stat(stat_name, amount: int = 1, stat_dict: Dictionary = total_count_stats) -> void:
 	if stat_dict.has(stat_name):
 		stat_dict[stat_name] += amount

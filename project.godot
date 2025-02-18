@@ -30,6 +30,10 @@ AchievementsData="*res://autoloads/achievements_data.gd"
 
 property_name=1
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+
 [display]
 
 window/stretch/mode="canvas_items"

@@ -11,25 +11,25 @@ const FLOATING_DAMAGE_TEXT = preload("res://scenes/components/damage_numbers.tsc
 @onready var effects_player: AnimationPlayer = $OnScreenEffectsRect/EffectsPlayer
 @onready var shader_rect: ColorRect = $ShaderRect
 
-var single_transition
+var single_transition : bool
 
-func _ready():
+func _ready() -> void:
 	transition_rect.visible = false
 	white_rect.visible = false
 	shader_rect.visible = false
 
-func change_scene_with_transition(scene_path: String, anim_name: String = "fadeToBlack", pop_up: bool = false):
+func change_scene_with_transition(scene_path: String, anim_name: String = "fadeToBlack", pop_up: bool = false) -> void:
 	transition(anim_name)
 	await screen_covered
 	if !pop_up:
 		get_tree().change_scene_to_file(scene_path)
 
-func change_scene_with_transition_packed(scene: PackedScene, anim_name: String = "fadeToBlack"):
+func change_scene_with_transition_packed(scene: PackedScene, anim_name: String = "fadeToBlack") -> void:
 	transition(anim_name)
 	await screen_covered
 	get_tree().change_scene_to_packed(scene)
 
-func transition(anim_name: StringName = "fadeToBlack", single_transition_only: bool = false, speed_scale: float = 1, pop_up: bool = false):
+func transition(anim_name: StringName = "fadeToBlack", single_transition_only: bool = false, speed_scale: float = 1, pop_up: bool = false) -> void:
 	if single_transition_only:
 		single_transition = true
 	match anim_name:
@@ -59,7 +59,7 @@ func transition(anim_name: StringName = "fadeToBlack", single_transition_only: b
 
 
 
-func _on_animation_player_animation_finished(anim_name: StringName):
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if !single_transition:
 		match anim_name:
 			"fadeToBlack":
@@ -81,24 +81,24 @@ func _input(_event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 #hack: insert no of cycles formula/ use frequency instead of duration for another function called smooth screen shake?
-func screen_shake(duration: float, amplitude: float, camera: Camera2D = get_viewport().get_camera_2d()):
-	var tween = create_tween()
-	var original_position = camera.position
+func screen_shake(duration: float, amplitude: float, camera: Camera2D = get_viewport().get_camera_2d()) -> void:
+	var tween : Tween = create_tween()
+	var original_position : Vector2 = camera.position
 	for i in range(int(duration * 60)):  # Assuming 60 FPS
-		var camera_offset = Vector2(randf() * amplitude * 2 - amplitude, 0)
+		var camera_offset : Vector2 = Vector2(randf() * amplitude * 2 - amplitude, 0)
 		tween.tween_property(camera, "position", original_position + camera_offset, 1.0 / 60)  # Tween for 1 frame
 	tween.tween_property(camera, "position", original_position, 1.0 / 60)  # Return to original position
 
-func smooth_screen_shake(frequency: float, amplitude: float, camera: Camera2D = get_viewport().get_camera_2d()):
-	var tween = create_tween()
-	var original_position = camera.position
-	var camera_offset = Vector2(randf() * amplitude * 2 - amplitude, randf() * amplitude * 2 - amplitude)
+func smooth_screen_shake(frequency: float, amplitude: float, camera: Camera2D = get_viewport().get_camera_2d()) -> void:
+	var tween : Tween = create_tween()
+	var original_position : Vector2 = camera.position
+	var camera_offset : Vector2 = Vector2(randf() * amplitude * 2 - amplitude, randf() * amplitude * 2 - amplitude)
 	tween.tween_property(camera, "position", original_position + camera_offset, 1/frequency)  
 	tween.tween_property(camera, "position", original_position, 1/frequency)
 
 
-func squash_simple(target: Object, x_force: float, y_force: float, duration: float = 0.3, trans_type: Tween.TransitionType = Tween.TRANS_QUAD, ):
-	var tween = create_tween()
+func squash_simple(target: Object, x_force: float, y_force: float, duration: float = 0.3, trans_type: Tween.TransitionType = Tween.TRANS_QUAD, ) -> void:
+	var tween : Tween = create_tween()
 	# initial squash
 	tween.tween_property(target, "scale:x", 1 - x_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(target, "scale:y", 1 + y_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=28 format=3 uid="uid://b3mf65fcnvmvu"]
+[gd_scene load_steps=29 format=3 uid="uid://b3mf65fcnvmvu"]
 
 [ext_resource type="Script" uid="uid://crf18oy3oc75j" path="res://scenes/characters/player.gd" id="1_cvyhv"]
 [ext_resource type="Texture2D" uid="uid://brk1vhy0k5ah2" path="res://assets/sprites/player.svg" id="2_atpat"]
+[ext_resource type="Script" uid="uid://b0adtik6828d2" path="res://scenes/characters/pickups_checker_component.gd" id="4_kqtwu"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="4_pwyjt"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="6_8qvmc"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="6_bedk8"]
@@ -164,7 +165,8 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-position = Vector2(407, 223)
+collision_layer = 9
+collision_mask = 9
 motion_mode = 1
 platform_on_leave = 2
 platform_floor_layers = 4294967292
@@ -183,12 +185,15 @@ shape = SubResource("CircleShape2D_d6keb")
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_pwyjt")]
 unique_name_in_owner = true
 collision_layer = 2
-collision_mask = 4
+collision_mask = 12
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 position = Vector2(-2, -20)
 shape = SubResource("CircleShape2D_8iqyn")
+
+[node name="PickupsCheckerComponent" type="Node2D" parent="HitboxComponent"]
+script = ExtResource("4_kqtwu")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 unique_name_in_owner = true
@@ -216,6 +221,7 @@ libraries = {
 
 [node name="PlayerAnimation" type="Node2D" parent="."]
 
+[connection signal="area_entered" from="HitboxComponent" to="HitboxComponent/PickupsCheckerComponent" method="_on_hitbox_component_area_entered"]
 [connection signal="entity_died" from="HealthComponent" to="." method="_on_health_component_entity_died"]
 [connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
 [connection signal="taking_damage" from="HealthComponent" to="." method="_on_health_component_taking_damage"]

@@ -43,8 +43,8 @@ const TRANSITION_DURATION = 0.3
 
 @onready var time_scale_tween: Tween
 
-@onready var animation_player = %AnimationPlayer
-@onready var vignette = %Vignette
+@onready var animation_player := %AnimationPlayer
+@onready var vignette := %Vignette
 #@onready var time_scale_tween: Tween
 
 
@@ -56,7 +56,7 @@ const TRANSITION_DURATION = 0.3
 @onready var enemy_spawn_timer: Timer = %EnemySpawnTimer
 @onready var powerup_spawn_timer: Timer = %PowerupSpawnTimer
 
-var enemy_spawn_type_range = Vector2(1, 1)
+var enemy_spawn_type_range := Vector2(1, 1)
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
 var guns: Array[GunData] = []
@@ -66,7 +66,7 @@ func _ready() -> void:
 	GameState.on_new_game_start()
 		# Only add unlocked guns to the available guns array
 	guns.clear()
-	for gun in GameState.collection_res.guns.values():
+	for gun:GunData in GameState.collection_res.guns.values():
 		if gun.unlocked:
 			guns.append(gun)
 	spawnable_enemies = GameState.collection_res.get_enemy_dict_by_spawn_order()

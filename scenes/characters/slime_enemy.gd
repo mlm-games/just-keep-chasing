@@ -5,7 +5,7 @@ const ANIMATION_FOLLOW_Y = "follow-y"
 const LoadedParticlesScene = preload("res://scenes/components/modular_hit_particles.tscn")
 
 
-@onready var player = get_tree().get_first_node_in_group("Player")
+@onready var player : Player = get_tree().get_first_node_in_group("Player")
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var hitbox_component: HitboxComponent = %EnemyHitboxComponent
 @onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
@@ -25,7 +25,7 @@ func _ready() -> void:
 	health_component.current_health = health_component.max_health
 	
 
-func set_data_values(enemy_data: EnemyData):
+func set_data_values(enemy_data: EnemyData) -> void:
 	contact_attack_damage = enemy_data.base_contact_damage
 	speed = enemy_data.base_speed
 	research_point_value = enemy_data.research_point_value
@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 	apply_contact_damage(delta)
 
 func move_towards_player(delta) -> void:
-	var direction = global_position.direction_to(player.global_position)
+	var direction : Vector2 = global_position.direction_to(player.global_position)
 	if enemy_data_resource.id == "accelerator_slime":
 		velocity = velocity.lerp(direction * speed, 100 * delta)
 	else:
@@ -68,7 +68,7 @@ func update_animation() -> void:
 
 func apply_contact_damage(delta: float) -> void:
 	if can_deal_damage and player_hitbox:
-		var contact_attack = Attack.new()
+		var contact_attack : Attack = Attack.new()
 		contact_attack.attack_damage = contact_attack_damage * delta
 		player_hitbox.damage(contact_attack)
 

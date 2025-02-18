@@ -1,8 +1,6 @@
 # Just Keep Chasing
 
-A work-in-progress wave-based shooter game where survival is key. Fight through endless waves of enemies while collecting upgrades and managing resources.
-
-*Screenshot later*
+A wave-based shooter game where survival is key. Fight through endless waves of enemies while collecting upgrades and managing resources.
 
 ## 🎮 Current Features
 
@@ -43,12 +41,7 @@ git clone https://codeberg.org/username/just-keep-chasing.git
 ## 🕹️ How to Play
 
 - WASD or Arrow Keys: Move
-
-
-## 🛠️ Built With
-
-- [Godot](https://godotengine.org/)
-- [Additional technologies used]
+- Space to change gun
 
 ## 👥 Contributing
 
@@ -69,19 +62,15 @@ This project is licensed under the GPL 3.0 only license - see the [LICENSE](LICE
 
 ## 🎮 Development Status
 
-Current Version: 0.?.0 (Pre-alpha)
+Current Version: 0.7.1 (Pre-alpha)
 
 ### Known Issues
 - FIXME or HACK entries
-- Placeholder artwork needs replacement
-
-## 📞 Contact
-
-- [Project discussion forum/channel] Later in masto or lemmy?
+- artwork needs replacement
 
 ## 🙏 Acknowledgments
 
 - [Credits for any assets/resources used](credits.md)
-- Contributors
+- And all the Contributors
 
 ---

@@ -17,6 +17,8 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="CurrencyPickup" type="Area2D"]
+collision_layer = 9
+monitoring = false
 script = ExtResource("1_m2agr")
 metadata/_edit_group_ = true
 
@@ -32,5 +34,3 @@ texture = ExtResource("2_ff12p")
 color = Color(0.716281, 0.712721, 0, 1)
 energy = 0.2
 texture = SubResource("GradientTexture2D_d6bl0")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
