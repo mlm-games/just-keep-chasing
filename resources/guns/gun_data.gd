@@ -25,7 +25,7 @@ class_name GunData extends BaseData
 @export var bullet_spawn_offset: Vector2
 
 # Animation properties
-@export var fire_animation_skew: float = (-0.0523599 + 5) # Default skew value from machine gun, doesnt work for pistol for some reason
+@export var fire_animation_skew: float = (-0.0523599 + 5) # Default skew value from machine gun, doesnt work for pistol for some reason				
 @export var fire_animation_duration: float = fire_rate
 
 @export var bullets_per_shot: int = 1
