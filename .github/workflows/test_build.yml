@@ -21,13 +21,18 @@ on:
         required: true
         default: 'false'
         type: boolean
+      upload_to_itch:
+        description: 'Upload exported files to itch.io?'
+        required: false
+        default: 'false'
+        type: boolean
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: ["Windows Desktop", "Linux/X11", macOS, "Android"]
+        platform: ["Windows Desktop", "Linux/X11", macOS, "Android", "Linux/X11 arm64", "Web"]
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
@@ -43,7 +48,21 @@ jobs:
           KEYSTORE_PASSPHRASE: ${{ secrets.KEYSTORE_PASSPHRASE }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-  
+          BUTLER_UPLOAD: ${{ inputs.upload_to_itch || false }}
+
+      - name: Debug printing
+        if: always()
+        run: |
+          ls ~/.local/share/godot/*/*/*
+          ls ~/.local/share/godot/*
+          ls ~/.local/share/godot/*/*
+          ls ~/.local/share/godot
+          ls ~/.config/godot
+          find ~ -name "editor_settings-*.tres" -print
+          cat $(find ~ -name "editor_settings-*.tres" -print)
+          echo $GODOT_ANDROID_KEYSTORE_RELEASE_PATH
+        continue-on-error: true
+          
       - name: Set artifact name
         id: artifact-name
         shell: bash
@@ -53,7 +72,7 @@ jobs:
           echo "name=${SAFE_NAME}" >> $GITHUB_OUTPUT
       
       - name: Upload Artifact
-        if: inputs.upload_releases == false
+        if: inputs.upload_releases == 'false'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.artifact-name.outputs.name }}-build
@@ -61,7 +80,7 @@ jobs:
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v2
-        if: inputs.upload_releases == true
+        if: inputs.upload_releases == 'true'
         with:
           files: |
             ${{ github.workspace }}/builds/*
