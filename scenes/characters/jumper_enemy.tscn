@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c53e5ffabqvci"]
+[gd_scene load_steps=15 format=3 uid="uid://c53e5ffabqvci"]
 
 [ext_resource type="Script" uid="uid://bf8tgk53pdptr" path="res://scenes/characters/jumper_enemy.gd" id="1_3sin1"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_8846s"]
@@ -8,6 +8,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://bo5gtqkkhod47" path="res://scenes/characters/slime_enemy_anims.tres" id="5_m58gs"]
 [ext_resource type="Script" uid="uid://dsl73aknxcjur" path="res://addons/godot_state_charts/state_chart.gd" id="6_242sf"]
 [ext_resource type="Script" uid="uid://c8ff8j0tad7ib" path="res://addons/godot_state_charts/compound_state.gd" id="7_m58gs"]
+[ext_resource type="Script" uid="uid://bjo0e727so813" path="res://addons/godot_state_charts/parallel_state.gd" id="8_f4ol1"]
 [ext_resource type="Script" uid="uid://bxipn0uqdba0a" path="res://addons/godot_state_charts/atomic_state.gd" id="8_pmltr"]
 [ext_resource type="PackedScene" uid="uid://donfbhh5giyfy" path="res://addons/godot_state_charts/utilities/editor_debugger/editor_debugger.tscn" id="9_pmltr"]
 
@@ -60,14 +61,21 @@ speed_scale = 2.0
 script = ExtResource("6_242sf")
 metadata/_custom_type_script = "uid://dsl73aknxcjur"
 
-[node name="Root" type="Node" parent="StateChart"]
-script = ExtResource("7_m58gs")
-initial_state = NodePath("Chase")
+[node name="ParallelState" type="Node" parent="StateChart"]
+script = ExtResource("8_f4ol1")
+metadata/_custom_type_script = "uid://bjo0e727so813"
 
-[node name="Chase" type="Node" parent="StateChart/Root"]
+[node name="Alive" type="Node" parent="StateChart/ParallelState"]
+script = ExtResource("7_m58gs")
+initial_state = NodePath("JumpFoward")
+
+[node name="JumpFoward" type="Node" parent="StateChart/ParallelState/Alive"]
 script = ExtResource("8_pmltr")
 
-[node name="Die" type="Node" parent="StateChart/Root"]
+[node name="AtomicState" type="Node" parent="StateChart/ParallelState/Alive"]
+script = ExtResource("8_pmltr")
+
+[node name="Die" type="Node" parent="StateChart/ParallelState"]
 script = ExtResource("8_pmltr")
 
 [node name="DebugNode" type="Node" parent="."]
@@ -83,4 +91,5 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DebugNode/CharacterBody2D"]
+position = Vector2(97, 228)
 shape = SubResource("CircleShape2D_pmltr")

@@ -4,8 +4,6 @@ const RELOAD_LOOP_TIME = 0.5
 
 @export var unlocked: bool = false
 
-# needed properites for gun data
-
 @export var ammo: int = 0
 
 @onready var _bullet_spawn_point: Marker2D = %BulletSpawnPoint
@@ -40,8 +38,11 @@ func _ready() -> void:
 	
 
 func _physics_process(_delta: float) -> void:
+	if !GameState.gameplay_options["use_auto_aim"]:
+		manual_aim_at_target()
+		return
 	if not _target_in_range.is_empty():
-		aim_at_target()
+		auto_aim_at_target()
 		if _fire_rate_timer.is_stopped() and _reload_timer.is_stopped():
 			_fire_rate_timer.start()
 
@@ -78,13 +79,17 @@ func reload() -> void:
 func _on_reload_timer_timeout() -> void:
 	ammo = gun_data.max_ammo
 
-func aim_at_target() -> void:
+func auto_aim_at_target() -> void:
 	if not _target_in_range.is_empty():
 		var target : Area2D = _target_in_range[0]
 		var direction : Vector2 = (target.global_position - global_position).normalized()
 		rotation = lerp_angle(rotation, direction.angle(), GameStats.get_stat(GameStats.Stats.GUN_TARGETTING_SPEED))
 		rotation = wrapf(rotation, -PI/2, 3*PI/2)
-		
+
+func manual_aim_at_target() -> void:
+	var direction : Vector2 = GameState.shooting_joystick_direction
+	rotation = lerp_angle(rotation, direction.angle(), GameStats.get_stat(GameStats.Stats.GUN_TARGETTING_SPEED))
+	rotation = wrapf(rotation, -PI/2, 3*PI/2)
 
 func _on_base_weapon_area_entered(area: Area2D) -> void:
 	_target_in_range.append(area)

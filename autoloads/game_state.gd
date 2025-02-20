@@ -8,7 +8,7 @@ const AUGMENTS_DIR : String = "res://resources/augments/"
 const POWERUPS_DIR : String = "res://resources/powerups/"
 const ENEMY_DATA_DIR : String = "res://resources/enemies/"
 const GUN_DATA_DIR : String = "res://resources/guns/"
-const CONFIG_PATH: String = "user://settings.tres"
+const SETTINGS_RES_PATH: String = "user://settings.tres"
 const RESEARCH_TEXTURE = "assets/sprites/currency.png"
 
 var collection_res : CollectionResource = CollectionResource.new()
@@ -98,6 +98,7 @@ var gameplay_options: Dictionary = {
 	"max_fps": 60,
 	"pause_on_lost_focus": true,
 	"show_damage_numbers": true,
+	"use_auto_aim": true,
 }
 var video: Dictionary = {
 	"borderless": false,
@@ -197,15 +198,15 @@ func save_settings() -> void:
 	new_save.audio = audio.duplicate(true)
 	
 	#get_or_create_dir(CONFIG_DIR)
-	var save_result := ResourceSaver.save(new_save, CONFIG_PATH)
+	var save_result := ResourceSaver.save(new_save, SETTINGS_RES_PATH)
 	
 	if save_result != OK:
-		push_error("Failed to save settings to: %s" % CONFIG_PATH)
+		push_error("Failed to save settings to: %s" % SETTINGS_RES_PATH)
 	else:
-		print("Settings successfully saved to: %s" % CONFIG_PATH)
+		print("Settings successfully saved to: %s" % SETTINGS_RES_PATH)
 
 func load_settings(with_ui_update : bool = false) -> bool:
-	if !ResourceLoader.exists(CONFIG_PATH):
+	if !ResourceLoader.exists(SETTINGS_RES_PATH):
 		print("Settings save file not found.")
 		if with_ui_update == true:
 			var settings_instance : SettingsUI = load(SettingsScene).instantiate()
@@ -216,10 +217,10 @@ func load_settings(with_ui_update : bool = false) -> bool:
 		return false
 	
 	print("Settings file was found.")
-	var new_load: GameSettingsSave = ResourceLoader.load(CONFIG_PATH, "Resource", ResourceLoader.CACHE_MODE_REUSE)
+	var new_load: GameSettingsSave = ResourceLoader.load(SETTINGS_RES_PATH, "Resource", ResourceLoader.CACHE_MODE_REUSE)
 	
 	if new_load == null:
-		push_error("Failed to load settings from: %s" % CONFIG_PATH)
+		push_error("Failed to load settings from: %s" % SETTINGS_RES_PATH)
 		return false
 	
 	first_time_setup = new_load.first_time_setup
