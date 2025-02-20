@@ -1,7 +1,7 @@
 extends Control
 
 const WorldScene = "res://scenes/gameplay/world.tscn"
-const SettingsScene = "res://scenes/UI/settings.tscn"
+const SettingsScene = "res://addons/basic_settings_menu/settings.tscn"
 const AchievementsScene = "res://scenes/UI/achievements_screen.tscn"
 
 @onready var btn_play := $MarginContainer/Control/HBoxContainer/PlayButton
@@ -10,7 +10,6 @@ const AchievementsScene = "res://scenes/UI/achievements_screen.tscn"
 var tween: Tween
 
 func _ready() -> void:
-	GameState.load_settings(true)
 	get_tree().paused = false
 	# needed for gamepads to work
 	btn_play.grab_focus()

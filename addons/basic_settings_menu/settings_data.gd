@@ -1,76 +1,51 @@
 extends Node
 
-const CONFIG_PATH: String ="user://settings.tres"
-const SettingsScene: String = "res://addons/basic_setings_menu/settings.tscn"
+const SETTINGS_SAVE_RES_PATH: String = "user://settings.tres"
+const SettingsScene: String = "res://addons/basic_settings_menu/settings.tscn"
 
-
-var first_time_setup: bool = true
-
-var accessibility: Dictionary = {
-	"current_locale": "en",
-	"small_text_font_size": 20,
-	"big_text_font_size": 64,
-}
-var gameplay_options: Dictionary = {
-	"max_fps": 60,
-	"pause_on_lost_focus": true,
-	"show_damage_numbers": true,
-	"use_auto_aim": true,
-}
-var video: Dictionary = {
-	"borderless": false,
-	"fullscreen": true,
-	"resolution": Vector2i(1080, 720),
-}
-var audio: Dictionary = {
-	"Master": 100,
-	"Music": 100,
-	"SFX": 100,
-}
+@onready var loaded_data : GameSettingsSave = GameSettingsSave.new()
 
 func _ready():
 	load_settings(true)
 
-
 func save_settings() -> void:
-	var new_save := GameSettingsSave.new()
-	new_save.first_time_setup = first_time_setup
-	new_save.accessibility = accessibility.duplicate(true)
-	new_save.gameplay_options = gameplay_options.duplicate(true)
-	new_save.video = video.duplicate(true)
-	new_save.audio = audio.duplicate(true)
+	var new_save : GameSettingsSave = GameSettingsSave.new()
+	new_save.accessibility.merge(loaded_data.accessibility.duplicate(true))
+	new_save.gameplay_options.merge(loaded_data.gameplay_options.duplicate(true))
+	new_save.video.merge(loaded_data.video.duplicate(true))
+	new_save.audio.merge(loaded_data.audio.duplicate(true))
 	
 	#get_or_create_dir(CONFIG_DIR)
-	var save_result := ResourceSaver.save(new_save, CONFIG_PATH)
+	var save_result := ResourceSaver.save(new_save, SETTINGS_SAVE_RES_PATH)
 	
 	if save_result != OK:
-		push_error("Failed to save settings to: %s" % CONFIG_PATH)
+		push_error("Failed to save settings to: %s" % SETTINGS_SAVE_RES_PATH)
 	else:
-		print("Settings successfully saved to: %s" % CONFIG_PATH)
+		print("Settings successfully saved to: %s" % SETTINGS_SAVE_RES_PATH)
 
-func load_settings(with_ui_update : bool = false) -> bool:
-	if !ResourceLoader.exists(CONFIG_PATH):
+func load_settings(with_ui_update : bool = false, safe: bool = true) -> bool:
+	if !ResourceLoader.exists(SETTINGS_SAVE_RES_PATH):
 		print("Settings save file not found.")
-		if with_ui_update == true:
-			var settings_instance = load(SettingsScene).instantiate()
-			add_child(settings_instance)
-			#await settings_instance.sign
-			remove_child(settings_instance)
-			settings_instance.queue_free()
 		return false
 	
 	print("Settings file was found.")
-	var new_load: GameSettingsSave = ResourceLoader.load(CONFIG_PATH, "Resource", ResourceLoader.CACHE_MODE_REUSE)
+	var loaded_data: GameSettingsSave = ResourceLoader.load(SETTINGS_SAVE_RES_PATH, "Resource", ResourceLoader.CACHE_MODE_REUSE)
 	
-	if new_load == null:
-		push_error("Failed to load settings from: %s" % CONFIG_PATH)
+	if loaded_data == null:
+		push_error("Failed to load settings from: %s" % SETTINGS_SAVE_RES_PATH)
 		return false
 	
-	first_time_setup = new_load.first_time_setup
-	accessibility = new_load.accessibility.duplicate(true)
-	gameplay_options = new_load.gameplay_options.duplicate(true)
-	video = new_load.video.duplicate(true)
-	audio = new_load.audio.duplicate(true)
+	#if safe:
+		#for i in accessibility.keys():
+			#if loaded_data.accessibility[i]: accessibility[i] = loaded_data.accessibility[i]; accessibility.get_or_add(i, accessibility[i])
+			#if loaded_data.audio[i]: audio[i] = loaded_data.audio[i]
+			#if loaded_data.video[i]: video[i] = loaded_data.video[i]
+			#if loaded_data.gameplay_options[i]: gameplay_options[i] = loaded_data.gameplay_options[i]
+	#else:
+		#accessibility.merge(loaded_data.accessibility.duplicate(true), true)
+		#gameplay_options.merge(loaded_data.gameplay_options.duplicate(true), true)
+		#video.merge(loaded_data.video.duplicate(true), true)
+		#audio.merge(loaded_data.audio.duplicate(true), true)
 	
 	if with_ui_update == true:
 		var settings_instance = load(SettingsScene).instantiate()
@@ -81,8 +56,9 @@ func load_settings(with_ui_update : bool = false) -> bool:
 	
 	return true
 
-func go_back_to_previous_scene_or_main_scene():
-	get_tree().change_scene_to_file(ProjectSettings.get_setting("application/run/main_scene"))
+func go_back_to_previous_scene_or_main_scene(main_scene: bool = true):
+	if main_scene:
+		get_tree().change_scene_to_file(ProjectSettings.get_setting("application/run/main_scene"))
 
 func exit_settings(settings_scene: SettingsUI):
 	settings_scene.queue_free()

@@ -1,7 +1,7 @@
 extends Node
 
 const MenuScene = "res://scenes/UI/menu.tscn"
-const SettingsScene = "res://scenes/UI/settings.tscn"
+const SettingsScene = "res://addons/basic_settings_menu/settings.tscn"
 const LoadedCurrencyScene = preload("res://scenes/powerups/currency_drop.tscn")
 
 const AUGMENTS_DIR : String = "res://resources/augments/"
@@ -189,54 +189,7 @@ func load_game() -> void:
 		# Implement loading game state from a file or database
 	pass
 	
-func save_settings() -> void:
-	var new_save := GameSettingsSave.new()
-	new_save.first_time_setup = first_time_setup
-	new_save.accessibility = accessibility.duplicate(true)
-	new_save.gameplay_options = gameplay_options.duplicate(true)
-	new_save.video = video.duplicate(true)
-	new_save.audio = audio.duplicate(true)
-	
-	#get_or_create_dir(CONFIG_DIR)
-	var save_result := ResourceSaver.save(new_save, SETTINGS_RES_PATH)
-	
-	if save_result != OK:
-		push_error("Failed to save settings to: %s" % SETTINGS_RES_PATH)
-	else:
-		print("Settings successfully saved to: %s" % SETTINGS_RES_PATH)
 
-func load_settings(with_ui_update : bool = false) -> bool:
-	if !ResourceLoader.exists(SETTINGS_RES_PATH):
-		print("Settings save file not found.")
-		if with_ui_update == true:
-			var settings_instance : SettingsUI = load(SettingsScene).instantiate()
-			add_child(settings_instance)
-			#await settings_instance.sign
-			remove_child(settings_instance)
-			settings_instance.queue_free()
-		return false
-	
-	print("Settings file was found.")
-	var new_load: GameSettingsSave = ResourceLoader.load(SETTINGS_RES_PATH, "Resource", ResourceLoader.CACHE_MODE_REUSE)
-	
-	if new_load == null:
-		push_error("Failed to load settings from: %s" % SETTINGS_RES_PATH)
-		return false
-	
-	first_time_setup = new_load.first_time_setup
-	accessibility = new_load.accessibility.duplicate(true)
-	gameplay_options = new_load.gameplay_options.duplicate(true)
-	video = new_load.video.duplicate(true)
-	audio = new_load.audio.duplicate(true)
-	
-	if with_ui_update == true:
-		var settings_instance : SettingsUI = load(SettingsScene).instantiate()
-		add_child(settings_instance)
-		#await settings_instance.sign
-		remove_child(settings_instance)
-		settings_instance.queue_free()
-	
-	return true
 #Use a initial resource with all initial values and reset to that...? No that is for save reset... Just delete save file lul
 func reset_stats() -> void:
 	research_points = 0
