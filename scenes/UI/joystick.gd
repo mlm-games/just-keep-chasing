@@ -13,11 +13,11 @@ func _assign_start_point(point : Vector2) -> void:
 
 
 func _update_target_point(point : Vector2) -> void:
-	var distance = clamp(
+	var distance : float = clamp(
 		start_point.distance_to(point),
 		0.0,
 		boundary_size
 		)
-	var direction = start_point.direction_to(point)
+	var direction : Vector2 = start_point.direction_to(point)
 	target_point = direction * distance
 	%Stick.set_position(target_point)

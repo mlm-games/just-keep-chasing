@@ -21,7 +21,9 @@ var price_increase_rate: float = 0.05  # Increase by 10% each time
 var highest_game_time: float = 0.0
 
 ## If screen is being touched, then use this direction
-var joystick_direction : Vector2 = Vector2.ZERO
+var movement_joystick_direction : Vector2 = Vector2.ZERO
+
+var shooting_joystick_direction : Vector2 = Vector2.ZERO
 
 enum PowerupType {
 	SLOW_TIME,
@@ -133,7 +135,7 @@ func get_resource_paths_in_directory(resources_dir: String, load_resource_paths:
 	else:
 		for res:String in dir.get_files():
 			if res.ends_with(".tres"):
-				var loaded_res = load(resources_dir + res)
+				var loaded_res : Resource = load(resources_dir + res)
 				loaded_res.id = res.trim_suffix(".tres")
 				res_list.get_or_add(res.trim_suffix(".tres"), loaded_res)
 	return res_list
@@ -200,7 +202,7 @@ func load_settings(with_ui_update : bool = false) -> bool:
 	if !ResourceLoader.exists(CONFIG_PATH):
 		print("Settings save file not found.")
 		if with_ui_update == true:
-			var settings_instance = load(SettingsScene).instantiate()
+			var settings_instance : SettingsUI = load(SettingsScene).instantiate()
 			add_child(settings_instance)
 			#await settings_instance.sign
 			remove_child(settings_instance)
@@ -221,7 +223,7 @@ func load_settings(with_ui_update : bool = false) -> bool:
 	audio = new_load.audio.duplicate(true)
 	
 	if with_ui_update == true:
-		var settings_instance = load(SettingsScene).instantiate()
+		var settings_instance : SettingsUI = load(SettingsScene).instantiate()
 		add_child(settings_instance)
 		#await settings_instance.sign
 		remove_child(settings_instance)
@@ -234,7 +236,7 @@ func reset_stats() -> void:
 	price_multiplier = 1
 
 var unlocked_guns: Dictionary = {}  # gun_name: bool
-var all_possible_guns
+var all_possible_guns : Dictionary
 
 func unlock_gun(gun: GunData) -> void:
 	gun.unlocked = true

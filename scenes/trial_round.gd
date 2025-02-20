@@ -14,7 +14,7 @@ func _ready() -> void:
 
 func setup_trial() -> void:
 	# Give player the trial gun
-	var gun_instance = trial_gun.instantiate()
+	var gun_instance : BaseGun = trial_gun.instantiate()
 	player.add_child(gun_instance)
 
 func _on_player_died() -> void:

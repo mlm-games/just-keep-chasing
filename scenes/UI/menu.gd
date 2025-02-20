@@ -4,12 +4,12 @@ const WorldScene = "res://scenes/gameplay/world.tscn"
 const SettingsScene = "res://scenes/UI/settings.tscn"
 const AchievementsScene = "res://scenes/UI/achievements_screen.tscn"
 
-@onready var btn_play = $MarginContainer/Control/HBoxContainer/PlayButton
-@onready var btn_exit = $MarginContainer/Control/HBoxContainer/ExitButton
+@onready var btn_play := $MarginContainer/Control/HBoxContainer/PlayButton
+@onready var btn_exit := $MarginContainer/Control/HBoxContainer/ExitButton
 #Hack: hold r to restart, press r to reload
 var tween: Tween
 
-func _ready():
+func _ready() -> void:
 	GameState.load_settings(true)
 	get_tree().paused = false
 	# needed for gamepads to work

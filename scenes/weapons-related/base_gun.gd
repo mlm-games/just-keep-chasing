@@ -62,7 +62,7 @@ func spawn_bullet() -> void:
 				#@warning_ignore("narrowing_conversion")
 				#bullet_data.projectile_range *= GameStats.get_stat(GameStats.Stats.GUN_ENEMY_TARGETTING_RANGE_MULT)
 			ScreenEffects.smooth_screen_shake(gun_data.screen_shake_frequency, gun_data.screen_shake_amplitude) 
-			var bullet_instance = BaseProjectile.new_instance(bullet_data)
+			var bullet_instance : BaseProjectile = BaseProjectile.new_instance(bullet_data)
 			bullet_instance.global_position = _bullet_spawn_point.global_position
 			bullet_instance.global_rotation_degrees = _bullet_spawn_point.global_rotation_degrees + randf_range(-gun_data.bullet_spread, gun_data.bullet_spread)
 			get_tree().current_scene.add_child(bullet_instance)
@@ -80,8 +80,8 @@ func _on_reload_timer_timeout() -> void:
 
 func aim_at_target() -> void:
 	if not _target_in_range.is_empty():
-		var target = _target_in_range[0]
-		var direction = (target.global_position - global_position).normalized()
+		var target : Area2D = _target_in_range[0]
+		var direction : Vector2 = (target.global_position - global_position).normalized()
 		rotation = lerp_angle(rotation, direction.angle(), GameStats.get_stat(GameStats.Stats.GUN_TARGETTING_SPEED))
 		rotation = wrapf(rotation, -PI/2, 3*PI/2)
 		

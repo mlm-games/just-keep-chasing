@@ -105,8 +105,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		pick_up_weapon()
 
 func spawn_enemy() -> void:
-	var enemy_data = spawnable_enemies[randi_range(enemy_spawn_type_range.x, enemy_spawn_type_range.y)]
-	var enemy_scene = enemy_data.base_enemy_scene
+	var enemy_data : EnemyData = spawnable_enemies[randi_range(enemy_spawn_type_range.x, enemy_spawn_type_range.y)]
+	var enemy_scene : PackedScene = enemy_data.base_enemy_scene
 	var enemy_instance:SlimeEnemy = enemy_scene.instantiate()
 	enemy_instance.set_data_values(enemy_data)
 	enemy_instance.get_node("HealthComponent").max_health *= GameStats.get_stat(GameStats.Stats.ENEMY_HEALTH_MULT)
@@ -115,8 +115,8 @@ func spawn_enemy() -> void:
 	enemies_node.add_child(enemy_instance)
 
 func spawn_powerup() -> void:
-	var powerup_data = get_random_powerup()
-	var powerup_instance = Powerup.create_new_powerup(powerup_data)
+	var powerup_data : PowerupData = get_random_powerup()
+	var powerup_instance : Powerup = Powerup.create_new_powerup(powerup_data)
 	out_of_view_spawn_location.progress_ratio = randf()
 	powerup_instance.global_position = out_of_view_spawn_location.global_position
 	powerups_node.add_child(powerup_instance)
@@ -143,8 +143,8 @@ func switch_weapon() -> void:
 
 func throw_or_remove_gun_from_player(throw: bool = true) -> void:
 	if guns.size() != 0:
-		var thrown_weapon = player.base_gun
-		var thrown_weapon_scene = guns[current_gun_index]
+		var thrown_weapon : BaseGun = player.base_gun
+		var thrown_weapon_scene : GunData = guns[current_gun_index]
 		if thrown_weapon:
 			guns.erase(thrown_weapon_scene)
 		if throw:
@@ -159,7 +159,7 @@ func pick_up_weapon() -> void:
 	#Todo: When near the gun, it is highlighted, so that it can be clicked.
 	print(thrown_guns.size())
 	if thrown_guns.size() > 0:
-		var weapon = get_tree().get_first_node_in_group("Dropped Weapons")
+		var weapon : BaseGun = get_tree().get_first_node_in_group("Dropped Weapons")
 		add_child(weapon)
 		weapon.remove_from_group("Dropped Weapons")
 		weapon.add_to_group("Weapons")
@@ -190,7 +190,7 @@ func use_powerup(powerup_type: int) -> void:
 
 func start_gun_trial(gun: GunData) -> void:
 	# Instance the trial scene
-	var trial_scene = preload("res://scenes/trial_round.tscn").instantiate()
+	var trial_scene : Node = preload("res://scenes/trial_round.tscn").instantiate()
 	trial_scene.trial_gun = gun
 	trial_scene.trial_completed.connect(_on_trial_completed.bind(gun))
 	add_child(trial_scene)
@@ -206,7 +206,7 @@ func _on_trial_completed(success: bool, gun: GunData) -> void:
 		print("Trial failed! Try again!")
 
 # Replace your slow time powerup implementation with this:
-func activate_slow_motion():
+func activate_slow_motion() -> void:
 	if Engine.time_scale == NORMAL_TIME:
 		# Create smooth transition for time scale
 		time_scale_tween = create_tween()
@@ -226,7 +226,7 @@ func activate_slow_motion():
 		await get_tree().create_timer(SLOW_DURATION).timeout
 		deactivate_slow_motion()
 
-func deactivate_slow_motion():
+func deactivate_slow_motion() -> void:
 	time_scale_tween = create_tween()
 	time_scale_tween.tween_property(Engine, "time_scale", NORMAL_TIME, TRANSITION_DURATION)\
 		.set_trans(Tween.TRANS_SINE)\

@@ -7,7 +7,7 @@ const BUS_MASTER = "Master"
 const BUS_MUSIC = "Music"
 const BUS_SFX = "SFX"
 
-var awaiting_input
+var awaiting_input : bool
 
 @onready var language_options_button: OptionButton = %LanguageOptionsButton
 
@@ -67,10 +67,10 @@ func _ready() -> void:
 #region Accessibility
 
 func languages_ready() -> void:
-	var current_locale = TranslationServer.get_locale()
+	var current_locale := TranslationServer.get_locale()
 	var saved_locale_index := 0
 	
-	for locale in locales:
+	for locale:String in locales:
 		language_options_button.add_item(locales[locale])
 		language_options_button.set_item_metadata(language_options_button.get_item_count() - 1, locale)
 		if current_locale.begins_with(locale):
@@ -80,7 +80,7 @@ func languages_ready() -> void:
 
 func handle_locale_mismatch(current_locale: String) -> String:
 	# Iterate through locales and find a matching language code
-	for locale in locales:
+	for locale:String in locales:
 		if current_locale.begins_with(locale):
 			return locale
 
@@ -101,7 +101,7 @@ func gameplay_ready() -> void:
 
 #region Video
 
-func video_ready():
+func video_ready() -> void:
 	
 	var window : Window = get_window()
 	window.connect("size_changed", _preselect_resolution.bind(window))
@@ -110,22 +110,22 @@ func video_ready():
 		var resolution_string : String = "%d x %d" % [resolution.x, resolution.y]
 		%ResolutionButton.add_item(resolution_string)
 
-func _update_ui(window : Window = get_window()):
+func _update_ui(window : Window = get_window()) -> void:
 	%FullscreenButton.button_pressed = GameState.video["fullscreen"]
 	if !GameState.video["fullscreen"]:
-			var ws = GameState.video["resolution"]
+			var ws : Vector2 = GameState.video["resolution"]
 			window.size = ws
-			var ss = DisplayServer.screen_get_size()
+			var ss : Vector2 = DisplayServer.screen_get_size()
 			window.position = ss*0.5-ws*0.5
 
 	_preselect_resolution(window)
 	_update_resolution_options_enabled()
 
-func _preselect_resolution(window : Window):
+func _preselect_resolution(window : Window) -> void:
 	%ResolutionButton.text = str(window.size)
 	GameState.video["resolution"] = window.size
 
-func _update_resolution_options_enabled():
+func _update_resolution_options_enabled() -> void:
 	if OS.has_feature("web"):
 		%ResolutionButton.disabled = true
 		%ResolutionButton.tooltip_text = "Disabled for web"
@@ -147,7 +147,7 @@ func audio_ready() -> void:
 
 
 func on_audio_value_changed(bus: String ,value: float) -> void:
-	var _audio_bus = AudioServer.get_bus_index(bus)
+	var _audio_bus := AudioServer.get_bus_index(bus)
 	AudioServer.set_bus_volume_db(_audio_bus, linear_to_db(value))
 	GameState.audio[bus] = value
 
@@ -174,9 +174,9 @@ func _on_max_fps_spin_box_value_changed(value: int) -> void:
 
 func _on_resolution_button_item_selected(index: int) -> void:
 	DisplayServer.window_set_mode(DisplayServer.WindowMode.WINDOW_MODE_WINDOWED)
-	var ws = resolutions_array[index]
+	var ws : Vector2 = resolutions_array[index]
 	DisplayServer.window_set_size(ws)
-	var ss = DisplayServer.screen_get_size()
+	var ss : Vector2 = DisplayServer.screen_get_size()
 	DisplayServer.window_set_position(ss*0.5-ws*0.5)
 	
 
@@ -194,9 +194,9 @@ func _on_borderless_button_toggled(toggled_on: bool) -> void:
 func _on_fullscreen_button_toggled(toggled_on: bool) -> void:
 	if !toggled_on:
 		DisplayServer.window_set_mode(DisplayServer.WindowMode.WINDOW_MODE_WINDOWED)
-		var ws = Vector2(1920, 1080)
+		var ws : Vector2 = Vector2(1920, 1080)
 		DisplayServer.window_set_size(ws)
-		var ss = DisplayServer.screen_get_size()
+		var ss : Vector2 = DisplayServer.screen_get_size()
 		DisplayServer.window_set_position(ss*0.5-ws*0.5)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)

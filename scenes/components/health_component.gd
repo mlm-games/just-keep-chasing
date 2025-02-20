@@ -11,7 +11,7 @@ var dying: bool = false
 var invincible: bool = false
 var prev_health := max_health
 
-@onready var parent = get_parent()
+@onready var parent : Node2D = get_parent()
 
 func _ready() -> void:
 	if parent is BaseEnemy:
@@ -27,7 +27,7 @@ func _ready() -> void:
 
 func damage(attack: Attack) -> void:
 	if not invincible:
-		var final_damage = attack.attack_damage
+		var final_damage : float = attack.attack_damage
 		if parent is Player:
 			# Apply damage reduction for player
 			final_damage *= (1 - GameStats.get_stat(GameStats.Stats.PLAYER_DAMAGE_REDUCTION))
@@ -47,8 +47,8 @@ func heal_or_damage(amount: float) -> void:
 		amount *= GameStats.get_stat(GameStats.Stats.HEALING_MULT)
 		
 	if amount > 0:
-		var tween = create_tween().set_ease(Tween.EASE_OUT_IN)
-		var color_backup = parent.modulate
+		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT_IN)
+		var color_backup : Color = parent.modulate
 		tween.tween_property(parent, "modulate", Color.LIGHT_GREEN, 0.1)
 		tween.tween_property(parent, "modulate", color_backup, 0.1)
 	
@@ -90,8 +90,8 @@ func disable_for_secs(secs: float) -> void:
 	parent_sprite.material = null
 	
 
-func display_floating_dmg_numbers(dmg_val: float):
-	var nos_instance = ScreenEffects.FLOATING_DAMAGE_TEXT.instantiate()
+func display_floating_dmg_numbers(dmg_val: float) -> void:
+	var nos_instance := ScreenEffects.FLOATING_DAMAGE_TEXT.instantiate()
 	nos_instance.global_position = parent.global_position
 	GameState.world.add_child(nos_instance)
 	nos_instance.display(dmg_val)

@@ -5,7 +5,7 @@ class_name AnimButton extends Button
 
 var tween: Tween
 
-func _ready():
+func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	button_down.connect(_on_button_down)
@@ -20,7 +20,7 @@ func _ready():
 	#label.material.shader = preload("res://scenes/UI/misc/anim_text.gdshader")
 
 
-func _on_mouse_entered():
+func _on_mouse_entered() -> void:
 	#particles.emitting = true
 	if tween:
 		tween.kill()
@@ -36,7 +36,7 @@ func _on_mouse_entered():
 	#tween = create_tween()
 	#tween.tween_method(_update_text_effect, 0.0, 1.0, 0.3)
 
-func _on_mouse_exited():
+func _on_mouse_exited() -> void:
 	#particles.emitting = false
 	if tween:
 		tween.kill()
@@ -50,13 +50,13 @@ func _on_mouse_exited():
 	#tween = create_tween()
 	#tween.tween_method(_update_text_effect, 1.0, 0.0, 0.3)
 
-func _on_button_down():
+func _on_button_down() -> void:
 	if tween:
 		tween.kill()
 	tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(0.95, 0.95), 0.1).set_trans(Tween.TRANS_CUBIC)
 
-func _on_button_up():
+func _on_button_up() -> void:
 	if tween:
 		tween.kill()
 	tween = create_tween()

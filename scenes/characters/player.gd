@@ -16,11 +16,11 @@ func _ready() -> void:
 	# Initialize health with game stats
 	update_max_health(GameStats.get_stat(GameStats.Stats.PLAYER_MAX_HEALTH))
 
-func _physics_process(_delta):
-	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+func _physics_process(_delta: float) -> void:
+	var direction : Vector2 = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	
-	if GameState.joystick_direction != Vector2.ZERO:
-		direction = GameState.joystick_direction
+	if GameState.movement_joystick_direction != Vector2.ZERO:
+		direction = GameState.movement_joystick_direction
 	
 	velocity = direction.normalized() * GameStats.get_stat(GameStats.Stats.PLAYER_SPEED)
 	

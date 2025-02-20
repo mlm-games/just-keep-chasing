@@ -51,7 +51,7 @@ func _physics_process(delta: float) -> void:
 	update_animation()
 	apply_contact_damage(delta)
 
-func move_towards_player(delta) -> void:
+func move_towards_player(delta: float) -> void:
 	var direction : Vector2 = global_position.direction_to(player.global_position)
 	if enemy_data_resource.id == "accelerator_slime":
 		velocity = velocity.lerp(direction * speed, 100 * delta)

@@ -1,6 +1,6 @@
 extends Node
 
-var achievements = {
+var achievements : Dictionary = {
 	"damage_dealer": {
 		"name": tr("Damage Dealer"),
 		"description": tr("Deal 10000 total damage"),

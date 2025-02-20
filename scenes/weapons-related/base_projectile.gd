@@ -16,7 +16,7 @@ var projectile_data: ProjectileData
 var attack := Attack.new()
 var travelled_distance := 0.0
 
-@onready var _rand_spread = deg_to_rad(randf_range(-projectile_data.projectile_spread, projectile_data.projectile_spread))
+@onready var _rand_spread : float = deg_to_rad(randf_range(-projectile_data.projectile_spread, projectile_data.projectile_spread))
 
 static func new_instance(data: ProjectileData) -> BaseProjectile:
 	var instance : BaseProjectile = BaseScene.instantiate()
@@ -35,7 +35,7 @@ func _ready() -> void:
 	add_child(SpawnParticles.instantiate())
 
 func _physics_process(delta: float) -> void:
-	var direction = Vector2.RIGHT.rotated(rotation + _rand_spread)
+	var direction : Vector2 = Vector2.RIGHT.rotated(rotation + _rand_spread)
 	position += direction * projectile_data.projectile_speed * delta
 	travelled_distance += projectile_data.projectile_speed * delta
 	if travelled_distance > projectile_data.projectile_range:
