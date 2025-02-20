@@ -14,7 +14,7 @@
 #hack: if memory available (>90%), let upgrades layer stay, or else free from memory.
 #HACK: Give a first timer tutorial where how T works is told by a video? and Add a fast moving enemy in the end so the player dies, and for every new gun he gets, he will defeat a new wave (previously not impossible, but insane)
 #TODO: Bazooka, destroys obstacles instantly?
-#HACK: Use the canvascolor node to change environiment colors when new waves appear...
+#  Show like every enemy change like infurry runner
 #HACK: Make the bouncy anim button effect global so that it doesnt need to be duplicated
 #hack: Add a non-heavy graphics type and normal type, if menu fps above 450 fps, use normal type?
 
@@ -205,10 +205,8 @@ func _on_trial_completed(success: bool, gun: GunData) -> void:
 		# Show failure message
 		print("Trial failed! Try again!")
 
-# Replace your slow time powerup implementation with this:
 func activate_slow_motion() -> void:
 	if Engine.time_scale == NORMAL_TIME:
-		# Create smooth transition for time scale
 		time_scale_tween = create_tween()
 		time_scale_tween.tween_property(Engine, "time_scale", SLOW_TIME, TRANSITION_DURATION)\
 			.set_trans(Tween.TRANS_SINE)\
