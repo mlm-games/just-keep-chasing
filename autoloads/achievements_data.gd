@@ -23,7 +23,7 @@ var achievements : Dictionary = {
 		"stat_name": "powerups_used",
 		"required_value": 100,
 		"condition": func(): return CountStats.get_stat("powerups_used") >= 100,
-		"reward": tr("Highly increase rainbow powerup drop chance")
+		"reward": tr("Highly increase star powerup drop chance")
 	}
 }
 

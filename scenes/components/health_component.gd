@@ -38,8 +38,6 @@ func damage(attack: Attack) -> void:
 		taking_damage.emit()
 		health_changed.emit(current_health)
 		check_health()
-	else:
-		ScreenEffects.display_floating_dmg_numbers(0)
 
 func heal_or_damage(amount: float) -> void:
 	if amount > 0 and parent is Player:

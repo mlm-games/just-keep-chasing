@@ -16,6 +16,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_0bumm")
 script = ExtResource("2_m8nmd")
+metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
 modulate = Color(0.101961, 0.133333, 0.219608, 1)
@@ -327,13 +328,13 @@ layout_mode = 2
 size_flags_horizontal = 2
 text = "UI_SAVE"
 script = ExtResource("3_i4dvr")
-metadata/_custom_type_script = ExtResource("3_i4dvr")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/BottomContainer"]
 layout_mode = 2
 text = "UI_BACK"
 script = ExtResource("3_i4dvr")
-metadata/_custom_type_script = ExtResource("3_i4dvr")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="MasterBeepPlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true

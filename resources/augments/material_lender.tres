@@ -7,7 +7,7 @@
 [sub_resource type="Resource" id="Resource_34msf"]
 script = ExtResource("2_34msf")
 value = -20.0
-key = 15
+key = 14
 operation = 0
 duration = 0.0
 metadata/_custom_type_script = ExtResource("2_34msf")
@@ -18,4 +18,5 @@ augment_icon = ExtResource("1_34msf")
 augment_price = 5
 stats_to_modify = Array[ExtResource("2_34msf")]([SubResource("Resource_34msf")])
 id = ""
-metadata/_custom_type_script = ExtResource("1_xf436")
+local_to_scene = false
+metadata/_custom_type_script = "<GDScript#-9223369839106507383>o"

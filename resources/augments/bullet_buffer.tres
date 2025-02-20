@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://wp2hnmx1t1ox"]
 
 [ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_ahxqw"]
-[ext_resource type="Texture2D" uid="uid://dtwpm3uclaspj" path="res://assets/sprites/icon.png" id="1_cm1vo"]
+[ext_resource type="Texture2D" uid="uid://qxnxnrjoe7x3" path="res://assets/sprites/trigger_eyepod.svg" id="1_cm1vo"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_cm1vo"]
 
 [sub_resource type="Resource" id="Resource_2ns1m"]
@@ -19,4 +19,5 @@ augment_price = 25
 stats_to_modify = Array[ExtResource("2_cm1vo")]([SubResource("Resource_2ns1m")])
 rarity = 1.0
 id = "bullet_buffer"
-metadata/_custom_type_script = ExtResource("1_ahxqw")
+local_to_scene = false
+metadata/_custom_type_script = "uid://clxsmndukf026"

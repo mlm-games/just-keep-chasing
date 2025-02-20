@@ -10,7 +10,7 @@ var hover_scale : Vector2 = Vector2(1.1, 1.1)
 var hover_tween : Tween
 
 @warning_ignore("narrowing_conversion")
-var display_price: int
+var final_price: int
 
 func _ready() -> void:
 	augment = pick_augment_by_rarity()
@@ -27,14 +27,14 @@ func pick_augment_by_rarity() -> Augments:
 func setup_slot() -> void:
 	if augment != null:
 		@warning_ignore("narrowing_conversion")
-		display_price = augment.augment_price * GameState.price_multiplier
+		final_price = augment.augment_price * GameState.price_multiplier
 		%TextureRect.texture = augment.augment_icon
 		%UpgradeLabel.text = tr(augment.id.capitalize())
-		%PriceContainer.text = GameState.get_currency_bbcode() + str(display_price)
+		%PriceContainer.text = GameState.get_currency_bbcode() + str(final_price)
 		red_out_unbuyable_slots()
 
 func red_out_unbuyable_slots() -> void:
-	if display_price > GameState.research_points - GameStats.get_stat(GameStats.Stats.ITEM_LEND_THRESHOLD):
+	if final_price > GameState.research_points - GameStats.get_stat(GameStats.Stats.ITEM_LEND_THRESHOLD):
 		%PriceContainer.modulate = Color(1.0, 0.333, 0.11)
 		modulate = Color(0.7, 0.7, 0.7) # Dim the whole slot
 
@@ -67,11 +67,20 @@ func _on_panel_mouse_exited() -> void:
 	hover_tween.set_ease(Tween.EASE_OUT).set_ignore_time_scale()
 	hover_tween.tween_property(self, "scale", original_scale, 0.1)
 
+func buy_if_rich_enough() -> void:
+	if GameState.research_points + GameStats.get_stat(GameStats.Stats.ITEM_LEND_THRESHOLD) >= final_price:
+		GameState.apply_augment(augment)
+		# Increase the price multiplier after purchase
+		GameState.price_multiplier *= (1 + GameState.price_increase_rate)
+		GameState.research_points -= final_price
+		queue_free()
+
+
 func _input(event: InputEvent) -> void:
 	if panel_entered and event.is_pressed():
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 			# Click anim when unbuyable
-			var click_tween = create_tween()
+			var click_tween : Tween = create_tween()
 			click_tween.set_trans(Tween.TRANS_CUBIC)
 			click_tween.set_ease(Tween.EASE_OUT).set_ignore_time_scale()
 			click_tween.tween_property(self, "scale", original_scale * 0.95, 0.1)

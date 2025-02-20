@@ -15,7 +15,6 @@
 #HACK: Give a first timer tutorial where how T works is told by a video? and Add a fast moving enemy in the end so the player dies, and for every new gun he gets, he will defeat a new wave (previously not impossible, but insane)
 #TODO: Bazooka, destroys obstacles instantly?
 #  Show like every enemy change like infurry runner
-#HACK: Make the bouncy anim button effect global so that it doesnt need to be duplicated
 #hack: Add a non-heavy graphics type and normal type, if menu fps above 450 fps, use normal type?
 
 # Common sounds
@@ -56,7 +55,7 @@ const TRANSITION_DURATION = 0.3
 @onready var enemy_spawn_timer: Timer = %EnemySpawnTimer
 @onready var powerup_spawn_timer: Timer = %PowerupSpawnTimer
 
-var enemy_spawn_type_range := Vector2(1, 1)
+var enemy_spawn_type_range := Vector2i(1, 1)
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
 var guns: Array[GunData] = []
@@ -92,8 +91,7 @@ func _on_enemy_spawn_timer_timeout() -> void:
 				GameStats.modify_stat(GameStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION, GameStats.Operation.ADD, -0.1)
 
 func _on_powerup_spawn_timer_timeout() -> void:
-	if hud.elapsed_time > 1:
-		powerup_spawn_timer.start()
+	powerup_spawn_timer.start()
 	spawn_powerup()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -225,13 +223,14 @@ func activate_slow_motion() -> void:
 		deactivate_slow_motion()
 
 func deactivate_slow_motion() -> void:
-	time_scale_tween = create_tween()
-	time_scale_tween.tween_property(Engine, "time_scale", NORMAL_TIME, TRANSITION_DURATION)\
-		.set_trans(Tween.TRANS_SINE)\
-		.set_ease(Tween.EASE_IN)
-	
+	if !GameState.is_in_shop:
+		time_scale_tween = create_tween()
+		time_scale_tween.tween_property(Engine, "time_scale", NORMAL_TIME, TRANSITION_DURATION)\
+			.set_trans(Tween.TRANS_SINE)\
+			.set_ease(Tween.EASE_IN)
+			
+		player.base_gun.unset_ignore_time_scale()
 	animation_player.play("slow_motion_end")
 	vignette.visible = false
-	player.base_gun.unset_ignore_time_scale()
 	
 	#FIXME: play_normal_time_sound where it plays right before the timer is about to end (like star powerups in super mario)

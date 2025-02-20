@@ -83,7 +83,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("5")
+metadata/_edit_use_anchors_ = true
 
 [node name="BackgroundTextureRect" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.513726)
@@ -131,10 +134,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1.0
-offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Control" type="Control" parent="MarginContainer"]
 layout_mode = 2
@@ -154,14 +156,15 @@ uppercase = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control"]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = 14
 anchor_top = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = 68.0
-offset_right = 1181.0
-offset_bottom = 138.0
+offset_top = -35.0
+offset_bottom = 35.0
+grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 30
 alignment = 1
 
 [node name="ResumeButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
@@ -172,35 +175,35 @@ theme = ExtResource("2_b641b")
 disabled = true
 text = "MENU_LABEL_CONTINUE"
 script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="PlayButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_NEW_GAME"
 script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="SettingsButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_SETTINGS"
 script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="AchievementsButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_ACHIEVEMENTS"
 script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="ExitButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_EXIT"
 script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="Control" type="Control" parent="MarginContainer/Control/HBoxContainer"]
 layout_mode = 2

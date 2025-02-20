@@ -15,8 +15,8 @@ var collection_res : CollectionResource = CollectionResource.new()
 
 #region global_game_specific_variables
 
-var price_multiplier: float = 1.0
-var price_increase_rate: float = 0.05  # Increase by 10% each time
+var price_multiplier: float = 0.5
+var price_increase_rate: float = 0.07
 
 var highest_game_time: float = 0.0
 
@@ -65,6 +65,8 @@ var research_points : int = 0:
 #var current_level: int = 1
 var is_game_paused: bool = false
 var is_game_over: bool = false
+var is_in_shop : bool = false
+
 
 # Inventory and items
 #var inventory: Dictionary = {}
@@ -76,7 +78,7 @@ var is_game_over: bool = false
 
 var player_reload_speed_mult : float
 var player_health_mult : float
-var upgrade_shop_spawn_divisor : float = 20
+var upgrade_shop_spawn_divisor : float = 5
 
 
 #endregion
@@ -95,12 +97,14 @@ var accessibility: Dictionary = {
 var gameplay_options: Dictionary = {
 	"max_fps": 60,
 	"pause_on_lost_focus": true,
+	"show_damage_numbers": true,
 }
 var video: Dictionary = {
 	"borderless": false,
 	"fullscreen": true,
 	"resolution": Vector2i(1080, 720),
 }
+
 var audio: Dictionary = {
 	"Master": 100,
 	"Music": 100,
@@ -110,6 +114,7 @@ var audio: Dictionary = {
 
 var world: World
 var player: Player
+var hud: HUD
 
 func  _ready() -> void:
 	if OS.has_feature("editor"):
@@ -124,6 +129,7 @@ func  _ready() -> void:
 func on_new_game_start() -> void:
 	world = get_tree().get_first_node_in_group("World")
 	player = get_tree().get_first_node_in_group("Player")
+	hud = get_tree().get_first_node_in_group("HUD")
 
 func get_resource_paths_in_directory(resources_dir: String, load_resource_paths: bool = false) -> Dictionary[StringName, Variant]:
 	var dir : DirAccess = DirAccess.open(resources_dir)
@@ -250,7 +256,5 @@ func emit_research_points(enemy_position: Vector2, research_point_drops: int) ->
 		var drop: CurrencyDrop = LoadedCurrencyScene.instantiate()
 		drop.global_position = enemy_position
 		world.call_deferred("add_child", drop)
-
-
 
 #endregion

@@ -21,3 +21,4 @@ base_health = 10.0
 base_speed = 100.0
 modifiers = Array[ExtResource("2_mseqy")]([])
 id = ""
+local_to_scene = false

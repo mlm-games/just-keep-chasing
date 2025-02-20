@@ -4,7 +4,7 @@ const ANIMATION_FOLLOW_X = "follow-x"
 const ANIMATION_FOLLOW_Y = "follow-y"
 
 
-@onready var player = get_tree().get_first_node_in_group("Player")
+@onready var player : = $DebugNode/CharacterBody2D
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var hitbox_component: HitboxComponent = %EnemyHitboxComponent
 @onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
@@ -42,8 +42,8 @@ func _physics_process(delta: float) -> void:
 	update_animation()
 	apply_contact_damage(delta)
 
-func move_towards_player(delta) -> void:
-	var direction = global_position.direction_to(player.global_position)
+func move_towards_player(_delta: float) -> void:
+	var direction : Vector2 = global_position.direction_to(player.global_position)
 	velocity = direction * enemy_data_resource.current_speed
 	move_and_slide()
 
@@ -56,7 +56,7 @@ func update_animation() -> void:
 
 func apply_contact_damage(delta: float) -> void:
 	if can_deal_damage and player_hitbox:
-		var contact_attack = Attack.new()
+		var contact_attack : Attack = Attack.new()
 		contact_attack.attack_damage = enemy_data_resource.base_contact_damage * delta
 		player_hitbox.damage(contact_attack)
 

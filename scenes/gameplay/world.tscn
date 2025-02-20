@@ -313,17 +313,6 @@ scale = Vector2(3.21, 3.21)
 [node name="SaverLoader" type="Node" parent="."]
 script = ExtResource("5_m8xuy")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Control"]
-layer = -1
-follow_viewport_enabled = true
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_su07q")
 

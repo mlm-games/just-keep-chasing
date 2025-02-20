@@ -1,6 +1,5 @@
 #hack: Display ammo_count (reload status optional)
 #hack: touch_button_changing_icons...
-#Todo: WBC movement and texture like a ameoba(looks and anims in the direction of mov..)
 class_name HUD extends CanvasLayer
 
 const TIMER_FORMAT = "%02d:%02d"
@@ -17,6 +16,7 @@ var initial_touch_position : Vector2
 @onready var currency_label: RichTextLabel = %CurrencyLabel
 
 var elapsed_time : int = 0
+
 
 func _ready() -> void:
 	if GameState.gameplay_options["hide_touch_buttons"]:
@@ -55,7 +55,7 @@ func update_invincible_button() -> void:
 
 func check_time_condition() -> void:
 	#FIXME: Temp Upgrade condition, fix it later
-	if GameState.research_points / GameState.upgrade_shop_spawn_divisor > 1.0 and GameState.research_points != 0:
+	if GameState.research_points / GameState.upgrade_shop_spawn_divisor > 1.0 and GameState.research_points != 0 and !GameState.is_in_shop:
 		GameState.upgrade_shop_spawn_divisor += 10 + (10 * (elapsed_time * 0.001))
 		var upgrades_scene : Node = load("res://scenes/UI/upgrades_layer.tscn").instantiate()
 		#Hack: also some kind of sound for sure

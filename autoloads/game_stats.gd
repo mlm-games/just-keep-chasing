@@ -37,6 +37,7 @@ enum Stats {
 	GUN_TARGETTING_SPEED,
 	POWERUP_PICKUP_RANGE,
 	CURRENCY_PICKUP_RANGE,
+	DROP_VALUE_MULTIPLIER
 }
 
 enum Operation {
@@ -71,6 +72,7 @@ var _stats: Dictionary[Stats, StatDefinition] = {
 	Stats.GUN_TARGETTING_SPEED: StatDefinition.new(0.2, 0, 1), # lower -> slower, todo: make it appear higher in tooltip (multiply the change with 100) 
 	Stats.POWERUP_PICKUP_RANGE: StatDefinition.new(42.86, 0.01),
 	Stats.CURRENCY_PICKUP_RANGE: StatDefinition.new(9.64, 0.01),
+	Stats.DROP_VALUE_MULTIPLIER: StatDefinition.new(1, 0.1),
 }
 
 signal stat_changed(stat_name: String, old_value: float, new_value: float)
