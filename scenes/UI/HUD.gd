@@ -18,12 +18,12 @@ var initial_touch_position : Vector2
 var elapsed_time : int = 0
 
 
-func _ready() -> void:
-	if GameState.gameplay_options["hide_touch_buttons"]:
-		slow_time_button.hide()
-		screen_blast_button.hide()
-		heal_button.hide()
-		invincible_button.hide()
+#func _ready() -> void:
+	#if GameState.gameplay_options["hide_touch_buttons"]:
+		#slow_time_button.hide()
+		#screen_blast_button.hide()
+		#heal_button.hide()
+		#invincible_button.hide()
 
 func update_timer_label() -> void:
 	@warning_ignore("integer_division")
@@ -32,7 +32,7 @@ func update_timer_label() -> void:
 	timer_label.text = TIMER_FORMAT % [minutes, seconds]
 
 func update_hud_buttons() -> void:
-	if !GameState.gameplay_options["hide_touch_buttons"]:
+	#if !GameState.gameplay_options["hide_touch_buttons"]:
 		update_slow_time_button()
 		update_screen_blast_button()
 		update_heal_button()
