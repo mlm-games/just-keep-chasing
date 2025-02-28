@@ -27,8 +27,8 @@ func set_initial_state():
 			modifiable_part_of_setting.grab_focus()
 			populate_and_set_locale_button_item()
 		elif setting_name == "resolution":
-			populate_and_set_resolution_button_item()
-		else:
+			populate_resolution_button_items()
+		else: #FIXME
 			modifiable_part_of_setting.select(modifiable_part_of_setting.get_item_metadata(SettingsData.loaded_data.settings[category][setting_name]))
 	elif modifiable_part_of_setting is CheckButton:
 		modifiable_part_of_setting.button_pressed = SettingsData.loaded_data.settings[category][setting_name]
@@ -61,7 +61,9 @@ func _on_modifiable_part_of_setting_value_changed(value: float) -> void:
 			SettingsData.loaded_data.settings[category]["current_locale"] = locale
 		elif "resolution" in setting_name:
 			#HACK: Doesn't handle proper window placement, just resolution selection
-			SettingsData.loaded_data.settings[category]["resolution"] = value
+			SettingsData.loaded_data.settings[category]["resolution"] = GameSettingsSave.RESOLUTIONS_ARRAY[value]
+			set_resolution_button_item()
+			
 		else:
 			SettingsData.loaded_data.settings[category][setting_name] = value
 	
@@ -81,10 +83,12 @@ func populate_and_set_locale_button_item():
 	
 	modifiable_part_of_setting.select(saved_locale_index)
 
-func populate_and_set_resolution_button_item():
+func set_resolution_button_item():
 	var window : Window = get_window()
 	window.connect("size_changed", _preselect_resolution.bind(window))
 	_update_ui()
+
+func populate_resolution_button_items():
 	for resolution in GameSettingsSave.RESOLUTIONS_ARRAY:
 		var resolution_string : String = "%d x %d" % [resolution.x, resolution.y]
 		modifiable_part_of_setting.add_item(resolution_string)

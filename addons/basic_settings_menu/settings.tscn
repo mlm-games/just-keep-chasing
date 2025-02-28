@@ -114,7 +114,6 @@ rounded = true
 alignment = 1
 
 [node name="CurrentLocale" parent="MarginContainer/VBoxContainer/TabContainer/AccessibilityContainer/PanelContainer/MarginContainer/Accessibility" instance=ExtResource("3_3nbua")]
-unique_name_in_owner = true
 layout_mode = 2
 setting_name = &"UI_LABEL_LANGUAGE"
 
@@ -194,7 +193,6 @@ layout_mode = 2
 setting_name = &"UI_LABEL_BORDERLESS"
 
 [node name="Resolution" parent="MarginContainer/VBoxContainer/TabContainer/VideoContainer/PanelContainer/MarginContainer/Video" instance=ExtResource("3_3nbua")]
-unique_name_in_owner = true
 layout_mode = 2
 setting_name = &"UI_LABEL_RESOLUTION"
 
