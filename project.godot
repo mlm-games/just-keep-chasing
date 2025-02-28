@@ -36,8 +36,20 @@ DebugShortcuts="*res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.tscn
 GameState="*res://autoloads/game_state.gd"
 GameStats="*res://autoloads/game_stats.gd"
 CountStats="*res://autoloads/count_stats.gd"
-AchievementsData="*res://autoloads/achievements_data.gd"
 SettingsData="*res://addons/basic_settings_menu/settings_data.gd"
+BasicAchievements="*res://addons/achievements/achievements.gd"
+
+[basic_achievements]
+
+achievements/save_directory="user://achievements"
+achievements/local_source="res://resources/misc/achievements.json"
+achievements/save_file_name="achievements_save.dat"
+
+[basic_achievemnts]
+
+achievements/local_source="res://resources/misc/achievements.json"
+achievements/save_directory="user://achievements"
+achievements/save_file_name="achievements_save.dat"
 
 [category]
 
@@ -53,12 +65,19 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/basic_settings_menu/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
+enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/achievements/plugin.cfg", "res://addons/basic_settings_menu/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
 
 [filesystem]
 
 import/fbx2gltf/enabled=false
 import/blender/enabled=false
+
+[godot_paradise]
+
+achievements/local_source="res://resources/misc/achievements.json"
+achievements/remote_source=""
+achievements/save_file_name="achievements_save.dat"
+achievements/save_directory="user://achievements"
 
 [gui]
 
@@ -158,3 +177,4 @@ locale/translations=PackedStringArray("res://locale/translations.en.translation"
 [rendering]
 
 textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0.175731, 0.312917, 0.433562, 1)

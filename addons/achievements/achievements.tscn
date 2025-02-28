@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://chbh7u3gaccwi"]
+
+[ext_resource type="Script" uid="uid://dfiwimabvmceq" path="res://addons/achievements/achievements.gd" id="1_2sfsb"]
+
+[node name="Achievements" type="Node"]
+script = ExtResource("1_2sfsb")
