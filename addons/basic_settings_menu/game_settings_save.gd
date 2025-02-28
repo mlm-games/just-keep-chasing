@@ -92,9 +92,9 @@ const DEFAULT_SETTINGS = {
 			"resolution": Vector2i(1080, 720),
 		},
 	"audio": {
-			"Master": 100,
-			"Music": 100,
-			"SFX": 100,
+			"master": 100,
+			"music": 100,
+			"sfx": 100,
 		}
 }
 

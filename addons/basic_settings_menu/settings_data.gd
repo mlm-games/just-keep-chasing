@@ -58,5 +58,4 @@ func exit_settings(settings_scene: SettingsUI):
 
 
 
-
 const SETTINGS_SAVE_RES_PATH: String = "user://settings.tres"

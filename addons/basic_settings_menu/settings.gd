@@ -10,39 +10,17 @@ class_name SettingsUI extends Control
 var awaiting_input : bool = false
 var is_pop_up : bool = false
 
-@onready var language_options_button: OptionButton = %LanguageSelector.modifiable_part_of_setting
-@onready var resolution_button: OptionButton = %ResolutionSelector.modifiable_part_of_setting
+
 
 func _ready() -> void: 
-	language_options_button.grab_focus()
-	languages_ready()
-	#video_ready()
+	pass
 	#gameplay_ready()
 	#audio_ready()
-	ready.emit() #Load options from save file and ready up
 
 #region Accessibility
 
-func languages_ready() -> void:
-	var current_locale := TranslationServer.get_locale()
-	var saved_locale_index := 0
-	
-	for locale:String in SettingsData.loaded_data.LOCALES:
-		language_options_button.add_item(SettingsData.loaded_data.LOCALES[locale])
-		language_options_button.set_item_metadata(language_options_button.get_item_count() - 1, locale)
-		if current_locale.begins_with(locale):
-			saved_locale_index = language_options_button.get_item_count() - 1
-	
-	language_options_button.select(saved_locale_index)
 
-func handle_locale_mismatch(current_locale: String) -> String:
-	# Iterate through SettingsData.loaded_data.LOCALES and find a matching language code
-	for locale:String in SettingsData.loaded_data.LOCALES:
-		if current_locale.begins_with(locale):
-			return locale
-	
-	#If no match is found, use the default locale
-	return SettingsData.loaded_data.LOCALES.keys()[0]
+
 
 #endregion
 
@@ -58,41 +36,7 @@ func handle_locale_mismatch(current_locale: String) -> String:
 
 #region Video
 
-func video_ready() -> void:
-	#
-	#var window : Window = get_window()
-	#window.connect("size_changed", _preselect_resolution.bind(window))
-	#_update_ui()
-	for resolution in GameSettingsSave.RESOLUTIONS_ARRAY:
-		var resolution_string : String = "%d x %d" % [resolution.x, resolution.y]
-		resolution_button.add_item(resolution_string)
 
-#func _update_ui(window : Window = get_window()) -> void:
-	#%FullscreenButton.button_pressed = SettingsData.loaded_data.settings["video"]["fullscreen"]
-	#if !SettingsData.loaded_data.settings["video"]["fullscreen"]:
-			#var ws : Vector2 = SettingsData.loaded_data.settings["video"]["resolution"]
-			#window.size = ws
-			#var ss : Vector2 = DisplayServer.screen_get_size()
-			#window.position = ss*0.5-ws*0.5
-#
-	#_preselect_resolution(window)
-	#_update_resolution_options_enabled()
-
-func _preselect_resolution(window : Window) -> void:
-	resolution_button.text = str(window.size)
-	SettingsData.loaded_data.settings["video"]["resolution"] = window.size
-
-func _update_resolution_options_enabled() -> void:
-	#TODO: translation stuff
-	if OS.has_feature("web"):
-		resolution_button.disabled = true
-		resolution_button.tooltip_text = "Disabled for web"
-	elif SettingsData.loaded_data.settings["video"]["fullscreen"]:
-		resolution_button.disabled = true
-		resolution_button.tooltip_text = "Disabled for fullscreen"
-	else:
-		resolution_button.disabled = false
-		resolution_button.tooltip_text = "Select a screen size"
 
 #endregion
 

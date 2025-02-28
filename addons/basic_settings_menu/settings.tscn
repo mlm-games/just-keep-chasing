@@ -57,7 +57,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
-current_tab = 2
+current_tab = 1
 
 [node name="AccessibilityContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
 visible = false
@@ -113,13 +113,12 @@ max_value = 128.0
 rounded = true
 alignment = 1
 
-[node name="LanguageSelector" parent="MarginContainer/VBoxContainer/TabContainer/AccessibilityContainer/PanelContainer/MarginContainer/Accessibility" instance=ExtResource("3_3nbua")]
+[node name="CurrentLocale" parent="MarginContainer/VBoxContainer/TabContainer/AccessibilityContainer/PanelContainer/MarginContainer/Accessibility" instance=ExtResource("3_3nbua")]
 unique_name_in_owner = true
 layout_mode = 2
 setting_name = &"UI_LABEL_LANGUAGE"
 
 [node name="GameplayContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = 10
@@ -142,10 +141,11 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="FPSContainer" parent="MarginContainer/VBoxContainer/TabContainer/GameplayContainer/PanelContainer/MarginContainer/Gameplay" instance=ExtResource("4_3fk36")]
+[node name="MaxFPS" parent="MarginContainer/VBoxContainer/TabContainer/GameplayContainer/PanelContainer/MarginContainer/Gameplay" instance=ExtResource("4_3fk36")]
 layout_mode = 2
+setting_name = &"UI_LABEL_MAX_FPS"
 
-[node name="HideButtons" parent="MarginContainer/VBoxContainer/TabContainer/GameplayContainer/PanelContainer/MarginContainer/Gameplay" instance=ExtResource("5_2n80e")]
+[node name="HideTouchButtons" parent="MarginContainer/VBoxContainer/TabContainer/GameplayContainer/PanelContainer/MarginContainer/Gameplay" instance=ExtResource("5_2n80e")]
 visible = false
 layout_mode = 2
 setting_name = &"UI_LABEL_HIDE_BUTTONS"
@@ -154,7 +154,16 @@ setting_name = &"UI_LABEL_HIDE_BUTTONS"
 layout_mode = 2
 setting_name = &"UI_LABEL_LAZY_MODE"
 
+[node name="PauseOnLostFocus" parent="MarginContainer/VBoxContainer/TabContainer/GameplayContainer/PanelContainer/MarginContainer/Gameplay" instance=ExtResource("5_2n80e")]
+layout_mode = 2
+setting_name = &"UI_LABEL_PAUSE_ON_LOST_FOCUS"
+
+[node name="ShowDamageNumbers" parent="MarginContainer/VBoxContainer/TabContainer/GameplayContainer/PanelContainer/MarginContainer/Gameplay" instance=ExtResource("5_2n80e")]
+layout_mode = 2
+setting_name = &"UI_LABEL_SHOW_DAMAGE_NUMBERS"
+
 [node name="VideoContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = 10
@@ -176,15 +185,15 @@ metadata/_edit_use_anchors_ = true
 [node name="Video" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/VideoContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="FullscreenContainer" parent="MarginContainer/VBoxContainer/TabContainer/VideoContainer/PanelContainer/MarginContainer/Video" instance=ExtResource("5_2n80e")]
+[node name="Fullscreen" parent="MarginContainer/VBoxContainer/TabContainer/VideoContainer/PanelContainer/MarginContainer/Video" instance=ExtResource("5_2n80e")]
 layout_mode = 2
 setting_name = &"UI_LABEL_FULLSCREEN"
 
-[node name="BorderlessContainer2" parent="MarginContainer/VBoxContainer/TabContainer/VideoContainer/PanelContainer/MarginContainer/Video" instance=ExtResource("5_2n80e")]
+[node name="Borderless" parent="MarginContainer/VBoxContainer/TabContainer/VideoContainer/PanelContainer/MarginContainer/Video" instance=ExtResource("5_2n80e")]
 layout_mode = 2
 setting_name = &"UI_LABEL_BORDERLESS"
 
-[node name="ResolutionSelector" parent="MarginContainer/VBoxContainer/TabContainer/VideoContainer/PanelContainer/MarginContainer/Video" instance=ExtResource("3_3nbua")]
+[node name="Resolution" parent="MarginContainer/VBoxContainer/TabContainer/VideoContainer/PanelContainer/MarginContainer/Video" instance=ExtResource("3_3nbua")]
 unique_name_in_owner = true
 layout_mode = 2
 setting_name = &"UI_LABEL_RESOLUTION"

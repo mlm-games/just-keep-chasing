@@ -8,7 +8,6 @@ script = ExtResource("1_q0m8a")
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "ui_label_language"
 
 [node name="SpacerControl" type="Control" parent="."]
 layout_mode = 2
