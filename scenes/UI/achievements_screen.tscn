@@ -88,10 +88,12 @@ alignment = 1
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 
-[node name="AnimButton" type="Button" parent="PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="BackButton" type="Button" parent="PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 text = "UI_BACK"
 script = ExtResource("3_3cjmw")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
+
+[connection signal="pressed" from="PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

@@ -36,14 +36,10 @@ DebugShortcuts="*res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.tscn
 GameState="*res://autoloads/game_state.gd"
 GameStats="*res://autoloads/game_stats.gd"
 CountStats="*res://autoloads/count_stats.gd"
-SettingsData="*res://addons/basic_settings_menu/settings_data.gd"
-BasicAchievements="*res://addons/achievements/achievements.gd"
 
 [basic_achievements]
 
 achievements/save_directory="user://achievements"
-achievements/local_source="res://resources/misc/achievements.json"
-achievements/save_file_name="achievements_save.dat"
 
 [basic_achievemnts]
 

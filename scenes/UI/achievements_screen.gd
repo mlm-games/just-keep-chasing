@@ -32,3 +32,7 @@ func setup_achievements() -> void:
 		entry.achievement = achievement
 		achievements_container.add_child(entry)
 		entry.update_achievement_progress()
+
+
+func _on_back_button_pressed() -> void:
+	ScreenEffects.change_scene_with_transition(ProjectSettings.get_setting("application/run/main_scene"))
