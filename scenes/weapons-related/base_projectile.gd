@@ -1,7 +1,7 @@
 class_name BaseProjectile extends Area2D
 
-const BaseScene = preload("res://scenes/weapons-related/base_projectile.tscn")
-const SpawnParticles = preload("res://scenes/components/bullet_spawn_particles.tscn")
+const BaseScene = preload("uid://b5x54mjk1mls0")
+const SpawnParticles = preload("uid://rhergnlmde1y")
 
 @export var speed : float
 @export var projectile_range := 1000

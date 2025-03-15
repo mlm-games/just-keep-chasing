@@ -2,7 +2,7 @@ class_name SlimeEnemy extends BaseEnemy
 
 const ANIMATION_FOLLOW_X = "follow-x"
 const ANIMATION_FOLLOW_Y = "follow-y"
-const LoadedParticlesScene = preload("res://scenes/components/modular_hit_particles.tscn")
+const LoadedParticlesScene = preload("uid://dfbi8k6eqssuk")
 
 
 @onready var player : Player = get_tree().get_first_node_in_group("Player")

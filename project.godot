@@ -36,14 +36,15 @@ DebugShortcuts="*res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.tscn
 GameState="*res://autoloads/game_state.gd"
 GameStats="*res://autoloads/game_stats.gd"
 CountStats="*res://autoloads/count_stats.gd"
-BasicAchievements="*res://addons/achievements/achievements.gd"
 SettingsData="*res://addons/basic_settings_menu/settings_data.gd"
+BasicAchievements="*res://addons/achievements/achievements.gd"
 
 [basic_achievements]
 
-achievements/local_source="res://resources/misc/achievements.json"
 achievements/save_directory="user://achievements"
+achievements/local_source="res://achievements.json"
 achievements/save_file_name="achievements_save.dat"
+achievements/password="4D6v1kOp0YGZ68u64W3ZqSlud"
 
 [category]
 
@@ -65,13 +66,6 @@ enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/
 
 import/fbx2gltf/enabled=false
 import/blender/enabled=false
-
-[godot_paradise]
-
-achievements/local_source="res://resources/misc/achievements.json"
-achievements/remote_source=""
-achievements/save_file_name="achievements_save.dat"
-achievements/save_directory="user://achievements"
 
 [gui]
 

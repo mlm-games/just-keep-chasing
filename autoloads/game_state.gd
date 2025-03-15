@@ -1,8 +1,8 @@
 extends Node
 
-const MenuScene = "res://scenes/UI/menu.tscn"
-const SettingsScene = "res://addons/basic_settings_menu/settings.tscn"
-const LoadedCurrencyScene = preload("res://scenes/powerups/currency_drop.tscn")
+const MenuScene = "uid://c2gocuhw2o7py"
+const SettingsScene = "uid://dp42fom7cc3n0"
+const LoadedCurrencyScene = preload("uid://do1wux8nsle53")
 
 const AUGMENTS_DIR : String = "res://resources/augments/"
 const POWERUPS_DIR : String = "res://resources/powerups/"

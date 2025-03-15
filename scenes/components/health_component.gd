@@ -4,7 +4,7 @@ signal entity_died
 signal taking_damage
 signal health_changed(new_health: float)
 
-const INVINCIBLE_SHADER = preload("res://scenes/characters/star_effect.gdshader")
+const INVINCIBLE_SHADER = preload("uid://bdl51to7btcu8")
 var max_health: float 
 var current_health: float = max_health
 var dying: bool = false

@@ -1,8 +1,8 @@
 extends Control
 
-const WorldScene = "res://scenes/gameplay/world.tscn"
-const SettingsScene = "res://addons/basic_settings_menu/settings.tscn"
-const AchievementsScene = "res://scenes/UI/achievements_screen.tscn"
+const WorldScene = "uid://4fyoq8npekf0"
+const SettingsScene = "uid://dp42fom7cc3n0"
+const AchievementsScene = "uid://ckqthyukac8wf"
 
 @onready var btn_play := $MarginContainer/Control/HBoxContainer/PlayButton
 @onready var btn_exit := $MarginContainer/Control/HBoxContainer/ExitButton

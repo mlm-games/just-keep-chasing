@@ -14,6 +14,7 @@ var final_price: int
 
 func _ready() -> void:
 	augment = pick_augment_by_rarity()
+	#TODO: Change the text shadow background color based on its rarity (even the ninepatchrect or panel's color?)
 	original_scale = scale
 	setup_slot()
 	pivot_offset = size / 2

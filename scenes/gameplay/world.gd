@@ -60,9 +60,11 @@ var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
 var guns: Array[GunData] = []
 var spawnable_enemies : Dictionary = {} #key: spawn_range, value: Enemydata
+var random_autoscroll_speed: Vector2 = Vector2(randf_range(-500, 500), randf_range(-500, 500))
 
 func _ready() -> void:
 	GameState.on_new_game_start()
+	_on_autoscroll_timer_timeout()
 		# Only add unlocked guns to the available guns array
 	guns.clear()
 	for gun:GunData in GameState.collection_res.guns.values():
@@ -70,21 +72,27 @@ func _ready() -> void:
 			guns.append(gun)
 	spawnable_enemies = GameState.collection_res.get_enemy_dict_by_spawn_order()
 
+func _on_autoscroll_timer_timeout():
+	random_autoscroll_speed = Vector2(randf_range(-50, 50), randf_range(-50, 50))
+	var tween : Tween = create_tween().set_ease(Tween.EASE_IN)
+	tween.tween_property(%BackgroundParallax2D, "autoscroll", %BackgroundParallax2D.autoscroll + random_autoscroll_speed, 15)
+	#TODO: Make the bigger parts stay constant and the smaller things move? or just add a background layer that doesnt move so it doesnt cause dizzyness
+
 func _on_enemy_spawn_timer_timeout() -> void:
 	spawn_enemy()
 	match hud.elapsed_time:
 		30:
 			enemy_spawn_type_range.y = 2
-			enemy_spawn_timer.wait_time = 1.9
+			enemy_spawn_timer.wait_time = 3
 		75:
 			enemy_spawn_type_range.y = 3
-			enemy_spawn_timer.wait_time = 1.8
+			enemy_spawn_timer.wait_time = 4
 		120: 
 			enemy_spawn_type_range.y = 4
-			enemy_spawn_timer.wait_time = 1.7
+			enemy_spawn_timer.wait_time = 5
 		180:
 			#enemy_spawn_type_range.y = 4
-			enemy_spawn_timer.wait_time = 1.5
+			enemy_spawn_timer.wait_time = 2.5
 		_:
 			enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
 			if enemy_spawn_timer.wait_time == 0.5:
@@ -132,9 +140,9 @@ func switch_weapon() -> void:
 		player.base_gun.queue_free()
 		var gun_instance: BaseGun
 		if guns[current_gun_index] is ShotgunData:
-			gun_instance = preload("res://scenes/weapons-related/base_shotgun.tscn").instantiate()
+			gun_instance = preload("uid://rks5cvegm0tb").instantiate()
 		else:
-			gun_instance = preload("res://scenes/weapons-related/base_gun.tscn").instantiate()
+			gun_instance = preload("uid://djr17spwfqlsu").instantiate()
 		gun_instance.gun_data = guns[current_gun_index]
 		player.base_gun = gun_instance
 		player.add_child(player.base_gun)
@@ -188,7 +196,7 @@ func use_powerup(powerup_type: int) -> void:
 
 func start_gun_trial(gun: GunData) -> void:
 	# Instance the trial scene
-	var trial_scene : Node = preload("res://scenes/trial_round.tscn").instantiate()
+	var trial_scene : Node = load("uid://b6gtyg4gve1j").instantiate()
 	trial_scene.trial_gun = gun
 	trial_scene.trial_completed.connect(_on_trial_completed.bind(gun))
 	add_child(trial_scene)

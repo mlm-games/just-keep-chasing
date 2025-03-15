@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="GunData" load_steps=5 format=3 uid="uid://doth1xd85xeyo"]
+[gd_resource type="Resource" script_class="GunData" load_steps=6 format=3 uid="uid://doth1xd85xeyo"]
 
 [ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="1_6ux22"]
 [ext_resource type="Resource" uid="uid://peywrjmws6bp" path="res://resources/bullets/bullet.tres" id="1_h5tx8"]
+[ext_resource type="AudioStream" uid="uid://c0r5jbphbrp6y" path="res://assets/music/GUI_Sound_Effects_by_Lokif/negative.wav" id="2_i7n5r"]
 [ext_resource type="Texture2D" uid="uid://dyus754xmr41s" path="res://assets/sprites/pistol.png" id="3_a0tsk"]
 [ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="4_a0tsk"]
 
@@ -16,6 +17,7 @@ max_ammo = 6
 ammo = null
 targeting_range = 600.0
 fire_rate = 0.25
+fire_audio = ExtResource("2_i7n5r")
 sprite_scale = Vector2(0.08, 0.08)
 sprite_position = Vector2(45, 5)
 sprite_rotation_degrees = 0.0
@@ -30,4 +32,4 @@ screen_shake_frequency = 10.0
 screen_shake_amplitude = 0.5
 id = "pistol"
 local_to_scene = false
-metadata/_custom_type_script = ExtResource("1_6ux22")
+metadata/_custom_type_script = "uid://cvb1dimncgicl"

@@ -1,6 +1,6 @@
 @tool
 extends HBoxContainer
-
+#TODO: fix the setting of language to a different one
 @export var setting_name : StringName: # ="EXAMPLE_SETTING"
 	set(name):
 		setting_name = tr(name)
@@ -25,7 +25,7 @@ func set_initial_state():
 	if modifiable_part_of_setting is OptionButton: #For option buttons, add here
 		if setting_name == "current_locale":
 			modifiable_part_of_setting.grab_focus()
-			populate_and_set_locale_button_item()
+			populate_and_set_locale_and_button_item()
 		elif setting_name == "resolution":
 			populate_resolution_button_items()
 		else: #FIXME
@@ -44,7 +44,7 @@ func _on_modifiable_part_of_setting_value_changed(value: float) -> void:
 	var category = get_parent().name.to_lower()
 	
 	if modifiable_part_of_setting is Range:
-		if "Volume" in setting_name or "slider" in setting_name:
+		if "volume" in setting_name or "slider" in setting_name:
 			var bus_name = setting_name.replace("Volume", "").replace("_slider", "").capitalize()
 			SettingsData.loaded_data.settings[category][bus_name] = value
 			var audio_bus = AudioServer.get_bus_index(bus_name)
@@ -55,7 +55,7 @@ func _on_modifiable_part_of_setting_value_changed(value: float) -> void:
 	elif modifiable_part_of_setting is CheckButton:
 		SettingsData.loaded_data.settings[category][setting_name] = value
 	elif modifiable_part_of_setting is OptionButton:
-		if "language" in setting_name:
+		if "currentlocale" in setting_name:
 			var locale = modifiable_part_of_setting.get_item_metadata(value)
 			TranslationServer.set_locale(locale)
 			SettingsData.loaded_data.settings[category]["current_locale"] = locale
@@ -71,7 +71,7 @@ func _on_modifiable_part_of_setting_value_changed(value: float) -> void:
 	#emit_signal("setting_changed", category, setting_name, value)
 
 
-func populate_and_set_locale_button_item():
+func populate_and_set_locale_and_button_item():
 	var current_locale := TranslationServer.get_locale()
 	var saved_locale_index := 0
 	
@@ -82,6 +82,7 @@ func populate_and_set_locale_button_item():
 			saved_locale_index = modifiable_part_of_setting.get_item_count() - 1
 	
 	modifiable_part_of_setting.select(saved_locale_index)
+	
 
 func set_resolution_button_item():
 	var window : Window = get_window()

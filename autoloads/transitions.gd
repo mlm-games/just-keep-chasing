@@ -2,8 +2,8 @@ extends CanvasLayer
 
 signal screen_covered
 
-const CIRCLE_SHADER = preload("res://resources/shaders/circletransition.gdshader")
-const FLOATING_DAMAGE_TEXT = preload("res://scenes/components/damage_numbers.tscn")
+const CIRCLE_SHADER = preload("uid://dnms5hsmipkyv")
+const FLOATING_DAMAGE_TEXT = preload("uid://dal5r3uc7pbf2")
 
 @onready var transition_player: AnimationPlayer = $TransitionRect/TransitionPlayer
 @onready var transition_rect : ColorRect = $TransitionRect

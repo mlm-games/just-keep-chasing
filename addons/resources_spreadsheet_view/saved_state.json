@@ -7,10 +7,19 @@
       "resource_name": {
         "visibility": 0.0
       }
+    },
+    "res://resources/guns/": {
+      "resource_local_to_scene": {
+        "visibility": 0.0
+      },
+      "resource_name": {
+        "visibility": 0.0
+      }
     }
   },
   "recent_paths": [
-    "res://resources/augments/"
+    "res://resources/augments/",
+    "res://resources/guns/"
   ],
   "table_functions": {
     "filter": [

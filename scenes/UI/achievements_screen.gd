@@ -15,8 +15,8 @@ signal unlocked()
 #var virus_eradication_goals: VirusEradicationGoals
 
 
-@onready var achievements_container = %AchievementsContainer
-@onready var achievement_label_template = load("res://scenes/UI/achievement_entry.tscn")
+@onready var achievements_container := %AchievementsContainer
+@onready var achievement_label_template := load("uid://ba8wjuxwmjiug")
 
 
 func _ready() -> void:
@@ -26,8 +26,8 @@ func _ready() -> void:
 func setup_achievements() -> void:
 
 	# Add achievement entries
-	for achievement_id in BasicAchievements.achievements:
-		var achievement = BasicAchievements.achievements[achievement_id]
+	for achievement_id:StringName in BasicAchievements.achievements:
+		var achievement : BasicAchievements.Achievement = BasicAchievements.achievements[achievement_id]
 		var entry : AchievementEntry = achievement_label_template.instantiate()
 		entry.achievement = achievement
 		achievements_container.add_child(entry)

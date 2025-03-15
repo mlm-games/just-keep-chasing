@@ -46,10 +46,10 @@ func _exit_tree() -> void:
 func _setup_settings() -> void:
 	for setting in DEFAULT_SETTINGS:
 		if not ProjectSettings.has_setting(setting["name"]):
-			if setting["name"].ends_with("password"):
-				setting["value"] = _generate_random_string(25)
 			
 			ProjectSettings.set_setting(setting["name"], setting["value"])
+			if setting["name"].ends_with("password"):
+				ProjectSettings.set_setting(setting["name"], _generate_random_string(25))
 			
 			var property_info := {
 				"name": setting["name"],

@@ -213,6 +213,7 @@ grow_vertical = 2
 texture = SubResource("NoiseTexture2D_xyviv")
 
 [node name="BackgroundParallax2D" type="Parallax2D" parent="."]
+unique_name_in_owner = true
 scroll_scale = Vector2(0.625, 0.625)
 scroll_offset = Vector2(1, 0)
 repeat_size = Vector2(1152, 896)
@@ -288,6 +289,11 @@ unique_name_in_owner = true
 wait_time = 25.0
 autostart = true
 
+[node name="AutoscrollTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 25.0
+autostart = true
+
 [node name="Tree" parent="." instance=ExtResource("4_l562g")]
 visible = false
 position = Vector2(1002, 52)
@@ -327,3 +333,4 @@ color = Color(0.695503, 0.695503, 0.695503, 1)
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="timeout" from="PowerupSpawnTimer" to="." method="_on_powerup_spawn_timer_timeout"]
+[connection signal="timeout" from="AutoscrollTimer" to="." method="_on_autoscroll_timer_timeout"]

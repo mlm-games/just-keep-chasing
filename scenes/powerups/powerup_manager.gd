@@ -1,6 +1,6 @@
 class_name Powerup extends PickUp
 
-const BasePowerupScene : PackedScene = preload("res://scenes/powerups/powerup.tscn")
+const BasePowerupScene : PackedScene = preload("uid://x2gb17exe2xq")
 
 @export var powerup_data : PowerupData
 

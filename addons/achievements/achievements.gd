@@ -101,13 +101,12 @@ func reset_achievement(id: String) -> void:
 func _load_achievements() -> void:
 	var local_source = ProjectSettings.get_setting(SETTINGS_BASE + "/local_source")
 	if FileAccess.file_exists(local_source):
-		var file = FileAccess.open(local_source, FileAccess.READ)
-		var content = JSON.parse_string(file.get_as_text())
+		var content = load(local_source).achievements
 		if content:
 			for id in content:
 				achievements[id] = Achievement.from_dict(content[id])
 	else:
-		push_error("File doesnt exist.")
+		push_error("File doesn't exist.")
 
 func _sync_saved_achievements() -> void:
 	var save_path := _get_save_path()

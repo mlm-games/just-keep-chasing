@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="ShotgunData" load_steps=5 format=3 uid="uid://ceex6yhxwxp8f"]
+[gd_resource type="Resource" script_class="ShotgunData" load_steps=6 format=3 uid="uid://ceex6yhxwxp8f"]
 
 [ext_resource type="Resource" uid="uid://bljhro5a2wk67" path="res://resources/bullets/buckshot.tres" id="1_adtgj"]
 [ext_resource type="Script" uid="uid://d0a57wqy65ei8" path="res://resources/guns/shotgun_data.gd" id="1_ebba0"]
+[ext_resource type="AudioStream" uid="uid://c5uvopnlu5ibd" path="res://addons/basic_settings_menu/settings-test-sound.wav" id="2_jpars"]
 [ext_resource type="Texture2D" uid="uid://bjpnnh3ql7pt5" path="res://assets/sprites/mini-buck-shotgun.png" id="3_qd7hi"]
 [ext_resource type="PackedScene" uid="uid://rks5cvegm0tb" path="res://scenes/weapons-related/base_shotgun.tscn" id="4_qd7hi"]
 
@@ -16,6 +17,7 @@ max_ammo = 1
 ammo = null
 targeting_range = 1000.0
 fire_rate = 0.5
+fire_audio = ExtResource("2_jpars")
 sprite_scale = Vector2(0.1, 0.1)
 sprite_position = Vector2(73.3, 15.12)
 sprite_rotation_degrees = 0.0
@@ -29,4 +31,5 @@ bullet_spread = 45.0
 screen_shake_frequency = 20.0
 screen_shake_amplitude = 0.75
 id = "buckshot_shotgun"
-metadata/_custom_type_script = ExtResource("1_ebba0")
+local_to_scene = false
+metadata/_custom_type_script = "uid://d0a57wqy65ei8"

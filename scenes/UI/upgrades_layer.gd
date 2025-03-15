@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-const UpgradeScenePath = "res://scenes/UI/upgrade_slot.tscn"
+const UpgradeScenePath = "uid://dq2rptl6lv3tc"
 @onready var hud : HUD = get_tree().get_first_node_in_group("HUD")
 @onready var upgrade_slots_to_add_below_node: Control = %SpacerControl2
 

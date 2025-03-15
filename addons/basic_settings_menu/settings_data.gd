@@ -1,11 +1,13 @@
 extends Node
 
-const SettingsScene: String = "res://addons/basic_settings_menu/settings.tscn"
+const SettingsScene: String = "uid://dp42fom7cc3n0"
 
 @onready var loaded_data : GameSettingsSave
 
 func _ready():
 	load_settings(true)
+	TranslationServer.set_locale(SettingsData.loaded_data.settings["accessibility"]["current_locale"])
+	print(TranslationServer.get_locale())
 
 func save_settings() -> void:
 	if loaded_data == null:

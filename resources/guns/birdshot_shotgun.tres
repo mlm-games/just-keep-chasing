@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="ShotgunData" load_steps=5 format=3 uid="uid://ogus15l853w3"]
+[gd_resource type="Resource" script_class="ShotgunData" load_steps=6 format=3 uid="uid://ogus15l853w3"]
 
 [ext_resource type="Resource" uid="uid://cvll3ruomryrf" path="res://resources/bullets/birdshot.tres" id="1_3jueo"]
 [ext_resource type="Script" uid="uid://d0a57wqy65ei8" path="res://resources/guns/shotgun_data.gd" id="1_t0yg6"]
+[ext_resource type="AudioStream" uid="uid://7bj6814gfh03" path="res://assets/music/GUI_Sound_Effects_by_Lokif/misc_sound.wav" id="2_2gt81"]
 [ext_resource type="Texture2D" uid="uid://c36ulwt7082av" path="res://assets/sprites/birdshot_shotgun.png" id="3_62yvp"]
 [ext_resource type="PackedScene" uid="uid://rks5cvegm0tb" path="res://scenes/weapons-related/base_shotgun.tscn" id="4_62yvp"]
 
@@ -16,6 +17,7 @@ max_ammo = 1
 ammo = null
 targeting_range = 600.0
 fire_rate = 0.1
+fire_audio = ExtResource("2_2gt81")
 sprite_scale = Vector2(50.8, 15.11)
 sprite_position = Vector2(0.111, 0.158)
 sprite_rotation_degrees = 0.0
@@ -29,4 +31,5 @@ bullet_spread = 45.0
 screen_shake_frequency = 100.0
 screen_shake_amplitude = 0.25
 id = "birdshot_shotgun"
-metadata/_custom_type_script = ExtResource("1_t0yg6")
+local_to_scene = false
+metadata/_custom_type_script = "uid://d0a57wqy65ei8"

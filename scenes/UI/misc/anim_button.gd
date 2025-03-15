@@ -2,19 +2,24 @@ class_name AnimButton extends Button
 
 #@onready var particles = $MovementParticles2D
 #@onready var label: Label = $Label
+@onready var audio_stream_player: AudioStreamPlayer = AudioStreamPlayer.new()
 
 var tween: Tween
+
 
 func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 	button_down.connect(_on_button_down)
 	button_up.connect(_on_button_up)
+	pressed.connect(_on_pressed)
 	pivot_offset = size/2
+	
+	add_child(audio_stream_player)
 	
 	#Label stuff
 	#_setup_text_animation()
-
+#TODO
 #func _setup_text_animation():
 	#label.material = ShaderMaterial.new()
 	#label.material.shader = preload("res://scenes/UI/misc/anim_text.gdshader")
@@ -66,7 +71,10 @@ func _on_button_up() -> void:
 	#label.material.set_shader_parameter("effect_value", value)
 
 
-#func _on_pressed() -> void:
+func _on_pressed() -> void:
+	audio_stream_player.stream = load("res://assets/music/GUI_Sound_Effects_by_Lokif/click_2.wav")
+	audio_stream_player.play()
+	
 #FIXME: Doesnt work due to the timers not being syncronised properly, hence looking bad.
 	#await get_tree().create_timer(0.15).timeout
 	#_on_mouse_entered()

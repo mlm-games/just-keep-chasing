@@ -3,6 +3,7 @@ class_name JumperVirus extends BaseEnemy
 const ANIMATION_FOLLOW_X = "follow-x"
 const ANIMATION_FOLLOW_Y = "follow-y"
 
+#TODO: An enemy which fast forwards time by x when touching player and dies, An enemy which brings back dead enemies, an powerup option or event where time is reversed for 10 secs 
 
 @onready var player : = $DebugNode/CharacterBody2D
 @onready var animation_player: AnimationPlayer = %AnimationPlayer

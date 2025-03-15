@@ -11,7 +11,7 @@ func _ready():
 	ScreenEffects.transition("circleOut")
 
 func _on_menu_button_pressed() -> void:
-	ScreenEffects.change_scene_with_transition("res://scenes/UI/menu.tscn")
+	ScreenEffects.change_scene_with_transition("uid://c2gocuhw2o7py")
 
 
 func _on_continue_button_pressed() -> void:

@@ -78,5 +78,8 @@ unique_name_in_owner = true
 [node name="FireRateTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+
 [connection signal="area_entered" from="." to="." method="_on_base_weapon_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_base_weapon_area_exited"]

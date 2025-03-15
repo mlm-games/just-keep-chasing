@@ -57,7 +57,7 @@ func check_time_condition() -> void:
 	#FIXME: Temp Upgrade condition, fix it later
 	if GameState.research_points / GameState.upgrade_shop_spawn_divisor > 1.0 and GameState.research_points != 0 and !GameState.is_in_shop:
 		GameState.upgrade_shop_spawn_divisor += 10 + (10 * (elapsed_time * 0.001))
-		var upgrades_scene : Node = load("res://scenes/UI/upgrades_layer.tscn").instantiate()
+		var upgrades_scene : Node = load("uid://24v2w4t8hgkl").instantiate()
 		#Hack: also some kind of sound for sure
 		add_child(upgrades_scene)
 	
@@ -68,7 +68,7 @@ func check_time_condition() -> void:
 			pop_up_on_screen = true
 			ScreenEffects.transition("circleIn")
 			await ScreenEffects.transition_player.animation_finished
-			var win_scene : Node = load("res://scenes/UI/win_screen.tscn").instantiate()
+			var win_scene : Node = load("uid://degok78oygxw3").instantiate()
 			add_child(win_scene)
 			ScreenEffects.transition("circleOut")
 

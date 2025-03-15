@@ -36,7 +36,7 @@ func _on_health_component_entity_died() -> void:
 	hide()
 	process_mode = Node.PROCESS_MODE_DISABLED
 	await get_tree().create_timer(0.5).timeout
-	ScreenEffects.change_scene_with_transition("res://scenes/UI/game_over_screen.tscn", "circleIn")
+	ScreenEffects.change_scene_with_transition("uid://oqyl6r1j4383", "circleIn")
 
 func _on_health_component_taking_damage() -> void:
 	taking_damage = true
