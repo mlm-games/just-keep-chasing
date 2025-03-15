@@ -69,12 +69,26 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Generate safe artifact name
-        id: artifact-name
-        run: |
-          SAFE_NAME="${{ matrix.platform }//[^a-zA-Z0-9_]/_}"
-          echo "name=${SAFE_NAME}-build" >> $GITHUB_OUTPUT
+- name: Set artifact name
 
+
+
+        id: artifact-name
+
+
+        shell: bash
+
+
+        run: |
+
+
+          PLATFORM="${{ matrix.platform }}"
+
+
+          SAFE_NAME="${PLATFORM//[^a-zA-Z0-9_]/_}"
+
+
+          echo "name=${SAFE_NAME}" >> $GITHUB_OUTPUT
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
