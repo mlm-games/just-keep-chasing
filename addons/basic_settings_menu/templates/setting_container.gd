@@ -10,14 +10,17 @@ extends HBoxContainer
 @onready var label: Label = $Label
 
 func _ready() -> void:
+	set_initial_state()
 	label.text = setting_name
-	if modifiable_part_of_setting is Range:
+	if modifiable_part_of_setting is Slider:
+		modifiable_part_of_setting.value_changed.connect(_on_modifiable_part_of_setting_value_changed.bind())
+	if modifiable_part_of_setting is Range and not Slider:
 		modifiable_part_of_setting.value_changed.connect(_on_modifiable_part_of_setting_value_changed.bind())
 	if modifiable_part_of_setting is CheckButton:
 		modifiable_part_of_setting.toggled.connect(_on_modifiable_part_of_setting_value_changed.bind())
 	if modifiable_part_of_setting is OptionButton:
 		modifiable_part_of_setting.item_selected.connect(_on_modifiable_part_of_setting_value_changed.bind())
-	set_initial_state()
+	debug_audio_settings()
 
 func set_initial_state():
 	var setting_name = name.to_snake_case()
@@ -34,23 +37,33 @@ func set_initial_state():
 		modifiable_part_of_setting.button_pressed = SettingsData.loaded_data.settings[category][setting_name]
 	elif modifiable_part_of_setting is Range:
 		if "volume" in setting_name or "slider" in setting_name:
-			var bus_name = setting_name.replace("_volume", "").replace("_slider", "").capitalize()
-			SettingsData.loaded_data.settings[category][bus_name] = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index(bus_name)))
+			var bus_name := setting_name.replace("_volume", "").capitalize()
+			if SettingsData.loaded_data.settings[category].has(bus_name):
+				modifiable_part_of_setting.value = SettingsData.loaded_data.settings[category][bus_name] * 100
+			else:
+				# If setting doesn't exist, initialize with default
+				modifiable_part_of_setting.value = GameSettingsSave.DEFAULT_SETTINGS[category][bus_name] * 100
+				SettingsData.loaded_data.settings[category][bus_name] = GameSettingsSave.DEFAULT_SETTINGS[category][bus_name]
 		else:
 			modifiable_part_of_setting.value = SettingsData.loaded_data.settings[category][setting_name]
 
 func _on_modifiable_part_of_setting_value_changed(value: float) -> void:
-	var setting_name = name.to_lower()
-	var category = get_parent().name.to_lower()
+	var setting_name = name.to_snake_case()
+	var category = get_parent().name.to_snake_case()
 	
 	if modifiable_part_of_setting is Range:
 		if "volume" in setting_name or "slider" in setting_name:
-			var bus_name = setting_name.replace("Volume", "").replace("_slider", "").capitalize()
-			SettingsData.loaded_data.settings[category][bus_name] = value
-			var audio_bus = AudioServer.get_bus_index(bus_name)
-			AudioServer.set_bus_volume_db(audio_bus, linear_to_db(value))
+			var bus_name := setting_name.replace("_volume", "").capitalize()
+			SettingsData.loaded_data.settings[category][bus_name] = value / 100 # in terms of percentage
+			var bus_index : int = AudioServer.get_bus_index(bus_name)
+			AudioServer.set_bus_volume_db(bus_index, linear_to_db(value / 100))
+			if bus_index >= 0:
+				AudioServer.set_bus_volume_db(bus_index, linear_to_db(value / 100))
+			else:
+				push_error("Audio bus not found: " + bus_name)
+			SettingsData.test_play_sound(get_node("./" + bus_name + "BeepPlayer"))
 		else:
-			#Add your cutom stuff here
+			#Add your custom stuff here
 			SettingsData.loaded_data.settings[category][setting_name] = value
 	elif modifiable_part_of_setting is CheckButton:
 		SettingsData.loaded_data.settings[category][setting_name] = value
@@ -129,3 +142,26 @@ func handle_locale_mismatch(current_locale: String) -> String:
 	
 	#If no match is found, use the default locale
 	return SettingsData.loaded_data.LOCALES.keys()[0]
+
+
+
+func debug_audio_settings():
+	print("--- AUDIO SETTINGS DEBUG ---")
+	
+	# Print all available audio buses
+	print("Available audio buses:")
+	for i in range(AudioServer.get_bus_count()):
+		var bus_name = AudioServer.get_bus_name(i)
+		var volume_db = AudioServer.get_bus_volume_db(i)
+		var volume_linear = db_to_linear(volume_db)
+		print("  Bus #" + str(i) + ": " + bus_name + " (Volume: " + str(volume_db) + " dB, " + str(volume_linear * 100) + "%)")
+	
+	# Print stored audio settings
+	print("Stored audio settings:")
+	if SettingsData.loaded_data and SettingsData.loaded_data.settings.has("audio"):
+		for key in SettingsData.loaded_data.settings["audio"]:
+			print("  " + key + ": " + str(SettingsData.loaded_data.settings["audio"][key]))
+	else:
+		print("  No audio settings found!")
+	
+	print("------------------------")

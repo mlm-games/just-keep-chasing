@@ -219,17 +219,28 @@ metadata/_edit_use_anchors_ = true
 [node name="Audio" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/MENU_OPTIONS_SOUND/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="MainVolume" parent="MarginContainer/VBoxContainer/TabContainer/MENU_OPTIONS_SOUND/PanelContainer/MarginContainer/Audio" instance=ExtResource("6_hqw76")]
+[node name="MasterVolume" parent="MarginContainer/VBoxContainer/TabContainer/MENU_OPTIONS_SOUND/PanelContainer/MarginContainer/Audio" instance=ExtResource("6_hqw76")]
 layout_mode = 2
 setting_name = &"Volume"
+
+[node name="MasterBeepPlayer" type="AudioStreamPlayer" parent="MarginContainer/VBoxContainer/TabContainer/MENU_OPTIONS_SOUND/PanelContainer/MarginContainer/Audio/MasterVolume"]
+stream = ExtResource("3_08krg")
 
 [node name="MusicVolume" parent="MarginContainer/VBoxContainer/TabContainer/MENU_OPTIONS_SOUND/PanelContainer/MarginContainer/Audio" instance=ExtResource("6_hqw76")]
 layout_mode = 2
 setting_name = &"Music volume"
 
-[node name="SFXVolume" parent="MarginContainer/VBoxContainer/TabContainer/MENU_OPTIONS_SOUND/PanelContainer/MarginContainer/Audio" instance=ExtResource("6_hqw76")]
+[node name="MusicBeepPlayer" type="AudioStreamPlayer" parent="MarginContainer/VBoxContainer/TabContainer/MENU_OPTIONS_SOUND/PanelContainer/MarginContainer/Audio/MusicVolume"]
+stream = ExtResource("3_08krg")
+bus = &"Music"
+
+[node name="SfxVolume" parent="MarginContainer/VBoxContainer/TabContainer/MENU_OPTIONS_SOUND/PanelContainer/MarginContainer/Audio" instance=ExtResource("6_hqw76")]
 layout_mode = 2
 setting_name = &"Sound effect volume"
+
+[node name="SfxBeepPlayer" type="AudioStreamPlayer" parent="MarginContainer/VBoxContainer/TabContainer/MENU_OPTIONS_SOUND/PanelContainer/MarginContainer/Audio/SfxVolume"]
+stream = ExtResource("3_08krg")
+bus = &"Sfx"
 
 [node name="BottomContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -238,28 +249,15 @@ alignment = 2
 [node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/BottomContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "UI_LABEL_APPLY_AND_SAVE"
+text = "MENU_LABEL_APPLY_AND_SAVE"
 script = ExtResource("3_i4dvr")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/BottomContainer"]
 layout_mode = 2
-text = "UI_BACK"
+text = "MENU_LABEL_BACK"
 script = ExtResource("3_i4dvr")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
-
-[node name="MasterBeepPlayer" type="AudioStreamPlayer2D" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("3_08krg")
-
-[node name="MusicBeepPlayer" type="AudioStreamPlayer2D" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("3_08krg")
-
-[node name="SFXBeepPlayer" type="AudioStreamPlayer2D" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("3_08krg")
-bus = &"SFX"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomContainer/BackButton" to="." method="_on_back_button_pressed"]

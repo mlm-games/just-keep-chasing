@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://do1wux8nsle53"]
+[gd_scene load_steps=7 format=3 uid="uid://do1wux8nsle53"]
 
 [ext_resource type="Script" uid="uid://dn66uob7diy48" path="res://scenes/powerups/currency_drop.gd" id="1_m2agr"]
 [ext_resource type="Texture2D" uid="uid://d4nafedjghyog" path="res://assets/sprites/currency.svg" id="2_ff12p"]
+[ext_resource type="AudioStream" uid="uid://biich4lcrpmcr" path="res://assets/music/GUI_Sound_Effects_by_Lokif/positive.wav" id="3_imjud"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
 radius = 9.64
@@ -34,3 +35,7 @@ texture = ExtResource("2_ff12p")
 color = Color(0.716281, 0.712721, 0, 1)
 energy = 0.2
 texture = SubResource("GradientTexture2D_d6bl0")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_imjud")
+bus = &"Sfx"

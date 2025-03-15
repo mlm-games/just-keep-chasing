@@ -72,7 +72,7 @@ func _ready() -> void:
 			guns.append(gun)
 	spawnable_enemies = GameState.collection_res.get_enemy_dict_by_spawn_order()
 
-func _on_autoscroll_timer_timeout():
+func _on_autoscroll_timer_timeout() -> void:
 	random_autoscroll_speed = Vector2(randf_range(-50, 50), randf_range(-50, 50))
 	var tween : Tween = create_tween().set_ease(Tween.EASE_IN)
 	tween.tween_property(%BackgroundParallax2D, "autoscroll", %BackgroundParallax2D.autoscroll + random_autoscroll_speed, 15)

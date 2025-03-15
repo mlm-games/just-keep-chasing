@@ -55,11 +55,15 @@ func apply_settings(reload_and_apply: bool = false) -> void:
 			DisplayServer.window_set_position(screen_size * 0.5 - resolution * 0.5)
 	
 	if settings.has("audio"):
-		var audio = settings["audio"]
-		for bus_name in audio:
+		for bus_name in settings["audio"]: 
 			var bus_index = AudioServer.get_bus_index(bus_name)
+			
 			if bus_index >= 0:
-				AudioServer.set_bus_volume_db(bus_index, linear_to_db(audio[bus_name]))
+				# Convert percentage (0-100) to linear (0-1) then to dB
+				var volume_linear = settings["audio"][bus_name]
+				AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume_linear))
+			else:
+				push_error("Audio bus not found: " + bus_name + " (from setting key: " + bus_name + ")")
 	
 	#Add later stuff here
 	if settings.has("gameplay"):
@@ -70,7 +74,7 @@ func apply_settings(reload_and_apply: bool = false) -> void:
 	if settings.has("accessibility"):
 		var accessibility = settings["accessibility"]
 		if accessibility.has("current_locale"):
-			TranslationServer.set_locale(accessibility["current_locale"])
+			TranslationServer.set_locale(LOCALES.keys()[accessibility["current_locale"]])
 
 
 const DEFAULT_SETTINGS = {
@@ -92,9 +96,9 @@ const DEFAULT_SETTINGS = {
 			"resolution": Vector2i(1080, 720),
 		},
 	"audio": {
-			"master": 100,
-			"music": 100,
-			"sfx": 100,
+			"Master": 100,
+			"Music": 100,
+			"Sfx": 100,
 		}
 }
 

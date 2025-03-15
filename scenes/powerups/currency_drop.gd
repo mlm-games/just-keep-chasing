@@ -1,5 +1,7 @@
 class_name CurrencyDrop extends PickUp
 
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+
 var currency_value : int = 1:
 	get:
 		return currency_value * int(GameStats.get_stat(GameStats.Stats.DROP_VALUE_MULTIPLIER))
@@ -13,6 +15,8 @@ func _ready() -> void:
 	tween.tween_property(self, "global_position", global_position + 150*Vector2(randf_range(-1,1), randf_range(-1,1)), 0.75)
 
 func collect() -> void:
+	audio_stream_player.reparent(get_tree().get_root())
+	audio_stream_player.play()
 	GameState.research_points += currency_value
 	
 	queue_free()

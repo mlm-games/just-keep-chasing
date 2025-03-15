@@ -17,5 +17,4 @@ size_flags_stretch_ratio = 0.75
 [node name="ModifiablePartOfSetting" type="HSlider" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
-value = 100.0
 rounded = true

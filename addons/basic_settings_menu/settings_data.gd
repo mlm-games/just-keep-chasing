@@ -1,13 +1,16 @@
 extends Node
 
-const SettingsScene: String = "uid://dp42fom7cc3n0"
-
 @onready var loaded_data : GameSettingsSave
+
+var test_audio_player : AudioStreamPlayer = AudioStreamPlayer.new()
+
 
 func _ready():
 	load_settings(true)
-	TranslationServer.set_locale(SettingsData.loaded_data.settings["accessibility"]["current_locale"])
+	TranslationServer.set_locale(GameSettingsSave.LOCALES.keys()[SettingsData.loaded_data.settings["accessibility"]["current_locale"]])
 	print(TranslationServer.get_locale())
+	add_child(test_audio_player)
+	
 
 func save_settings() -> void:
 	if loaded_data == null:
@@ -46,18 +49,22 @@ func load_settings(with_ui_update : bool = false, safe: bool = true) -> bool:
 	return true
 
 func go_back_to_previous_scene_or_main_scene(main_scene: bool = true):
+	#TODO: add your transitions here
 	if main_scene:
 		get_tree().change_scene_to_file(ProjectSettings.get_setting("application/run/main_scene"))
 
-func exit_settings(settings_scene: SettingsUI):
+static func exit_settings(settings_scene: SettingsUI):
 	settings_scene.queue_free()
 
 
 
-
-
+func test_play_sound(audio_player: AudioStreamPlayer = test_audio_player, audio : StringName = SettingsTestSound) -> void:
+	audio_player.stream = load(audio)
+	audio_player.play()
 
 
 
 
 const SETTINGS_SAVE_RES_PATH: String = "user://settings.tres"
+const SettingsScene: String = "uid://dp42fom7cc3n0"
+const SettingsTestSound : String = "uid://cjom0wv26i64a"

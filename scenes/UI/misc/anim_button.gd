@@ -6,7 +6,6 @@ class_name AnimButton extends Button
 
 var tween: Tween
 
-
 func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
@@ -15,7 +14,9 @@ func _ready() -> void:
 	pressed.connect(_on_pressed)
 	pivot_offset = size/2
 	
-	add_child(audio_stream_player)
+	audio_stream_player.bus = "Sfx"
+	#audio_stream_player.volume_db += 100 #TODO: remove this with better sound...
+	get_tree().get_root().add_child.call_deferred(audio_stream_player)
 	
 	#Label stuff
 	#_setup_text_animation()
@@ -78,3 +79,6 @@ func _on_pressed() -> void:
 #FIXME: Doesnt work due to the timers not being syncronised properly, hence looking bad.
 	#await get_tree().create_timer(0.15).timeout
 	#_on_mouse_entered()
+
+func _exit_tree() -> void:
+	audio_stream_player.queue_free()

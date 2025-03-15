@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene load_steps=25 format=3 uid="uid://4fyoq8npekf0"]
 
 [ext_resource type="Script" uid="uid://lgsfy3lj2y0g" path="res://scenes/gameplay/world.gd" id="1_li0ht"]
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes/characters/player.tscn" id="3_vhnxw"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://x2gb17exe2xq" path="res://scenes/powerups/powerup.tscn" id="8_k1kj5"]
 [ext_resource type="Shader" uid="uid://bpib10m6uoyvv" path="res://resources/shaders/slow_motion.gdshader" id="9_k1kj5"]
 [ext_resource type="Resource" uid="uid://co1l4ykdh5yer" path="res://resources/powerups/slow_time_powerup.tres" id="9_xyviv"]
+[ext_resource type="AudioStream" uid="uid://bmiu5h0got4jq" path="res://assets/music/14._i_am_not_clumsy.mp3" id="10_22uad"]
+[ext_resource type="Script" uid="uid://cneut3slaadkb" path="res://scenes/components/bgm.gd" id="11_q3s4t"]
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="18_r7okl"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_k1kj5"]
@@ -330,6 +332,12 @@ libraries = {
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.695503, 0.695503, 0.695503, 1)
+
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_22uad")
+autoplay = true
+script = ExtResource("11_q3s4t")
+metadata/_custom_type_script = "uid://cneut3slaadkb"
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="timeout" from="PowerupSpawnTimer" to="." method="_on_powerup_spawn_timer_timeout"]

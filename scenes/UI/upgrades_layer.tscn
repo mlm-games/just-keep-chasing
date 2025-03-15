@@ -97,7 +97,7 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "UI_REFRESH"
 script = ExtResource("5_mqd2u")
-metadata/_custom_type_script = ExtResource("5_mqd2u")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/RefreshButton"]
 layout_mode = 0
@@ -114,7 +114,7 @@ layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "UI_CLOSE_SHOP"
 shortcut = SubResource("Shortcut_giq6u")
-text = "UI_CLOSE"
+text = "MENU_LABEL_CLOSE"
 
 [node name="Control" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
