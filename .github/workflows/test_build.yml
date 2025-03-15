@@ -1,4 +1,4 @@
-name: Test Build Game
+name: Build and Release Game
 
 on:
   push:
@@ -22,74 +22,85 @@ on:
         default: 'false'
         type: boolean
       upload_to_itch:
-        description: 'Upload exported files to itch.io?'
+        description: 'Upload to itch.io'
         required: false
         default: 'false'
         type: boolean
+
+# Define reusable platform configurations
+env:
+  DEFAULT_PLATFORMS: >-
+    [
+      {"name": "Windows Desktop", "artifact_suffix": "windows"},
+      {"name": "Linux/X11", "artifact_suffix": "linux"},
+      {"name": "macOS", "artifact_suffix": "macos"},
+      {"name": "Android", "artifact_suffix": "android"},
+      {"name": "Linux/X11 arm64", "artifact_suffix": "linux_arm64"},
+      {"name": "Android x86 and x86 64", "artifact_suffix": "android_x86"},
+      {"name": "Web", "artifact_suffix": "web"}
+    ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    
     strategy:
       matrix:
-        platform: ["Windows Desktop", "Linux/X11", macOS, "Android", "Linux/X11 arm64", "Android x86 and x86 64", "Web"]
+        platform: ${{ fromJson(env.DEFAULT_PLATFORMS) }}
       fail-fast: false
+    
     env:
-      UPLOAD_RELEASES: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.upload_releases || 'false' }}
+      SHOULD_UPLOAD_RELEASE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.upload_releases == 'true' }}
+      SHOULD_UPLOAD_ITCH: ${{ github.event.inputs.upload_to_itch == 'true' }}
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
       
-      - name: Build
-        uses: mlm-games/godot-build-action@main #Idk why v1 doesnt work...
+      - name: Build game for ${{ matrix.platform.name }}
+        uses: mlm-games/godot-build-action@main
         with:
           GODOT_PREVIEW_BUILDS: true
-          EXPORT_PRESET_NAME: ${{ matrix.platform }}
+          EXPORT_PRESET_NAME: ${{ matrix.platform.name }}
           ITCH_USER_SLASH_GAME: ragebreaker/just-keep-chasing
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
           KEYSTORE_PASSPHRASE: ${{ secrets.KEYSTORE_PASSPHRASE }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          BUTLER_UPLOAD: ${{ inputs.upload_to_itch || false }}
+          BUTLER_UPLOAD: ${{ env.SHOULD_UPLOAD_ITCH }}
 
-      - name: Debug printing
+      - name: Debug build information
         if: always()
         run: |
-          ls ~/.local/share/godot/*/*/*
-          ls ~/.local/share/godot/*
-          ls ~/.local/share/godot/*/*
-          ls ~/.local/share/godot
-          ls ~/.config/godot
-          find ~ -name "editor_settings-*.tres" -print
-          cat $(find ~ -name "editor_settings-*.tres" -print)
-          echo $GODOT_ANDROID_KEYSTORE_RELEASE_PATH
+          echo "Debugging Godot build environment for ${{ matrix.platform.name }}"
+          ls -la ~/.local/share/godot || true
+          ls -la ~/.config/godot || true
+          find ~ -name "editor_settings-*.tres" -print || true
+          echo "Android keystore path: $GODOT_ANDROID_KEYSTORE_RELEASE_PATH" || true
         continue-on-error: true
-          
-      - name: Set artifact name
-        id: artifact-name
-        shell: bash
-        run: |
-          PLATFORM="${{ matrix.platform }}"
-          SAFE_NAME="${PLATFORM//[^a-zA-Z0-9_]/_}"
-          echo "name=${SAFE_NAME}" >> $GITHUB_OUTPUT
       
-      - name: Upload Artifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.artifact-name.outputs.name }}-build
+          name: build-${{ matrix.platform.artifact_suffix }}
           path: ${{ github.workspace }}/builds/
+          retention-days: 7
 
-      - name: Upload to Release
+      - name: Create GitHub release
         uses: softprops/action-gh-release@v2
-        if: github.event_name == 'workflow_dispatch' && env.UPLOAD_RELEASES == 'true'
+        if: env.SHOULD_UPLOAD_RELEASE == 'true'
         with:
-          files: |
-            ${{ github.workspace }}/builds/*
+          files: ${{ github.workspace }}/builds/*
           name: ${{ inputs.tag_name }}
           tag_name: ${{ inputs.tag_name }}
           body: |
-            Can compare the commits for changelog if the changelog file isnt present (will be soon ig) 
+            # Release ${{ inputs.tag_name }}
+            
+            ## Platform: ${{ matrix.platform.name }}
+            
+            See generated release notes for changes since last release.
           prerelease: ${{ inputs.mark_prerelease }}
           generate_release_notes: true
