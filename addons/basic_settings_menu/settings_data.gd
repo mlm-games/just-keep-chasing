@@ -7,7 +7,18 @@ var test_audio_player : AudioStreamPlayer = AudioStreamPlayer.new()
 
 func _ready():
 	load_settings(true)
-	TranslationServer.set_locale(GameSettingsSave.LOCALES.keys()[SettingsData.loaded_data.settings["accessibility"]["current_locale"]])
+	var locale_index = SettingsData.loaded_data.settings["accessibility"]["current_locale"]
+	var locale = locale_index
+		
+		# If it's an integer (index), convert it to the actual locale code
+	if locale_index is float:
+			var locale_keys = GameSettingsSave.LOCALES.keys()
+			if locale_index >= 0 and locale_index < locale_keys.size():
+					locale = locale_keys[locale_index]
+	
+	# Now set the locale with the correct value
+	TranslationServer.set_locale(locale)
+	print("Setting locale to: " + locale)
 	print(TranslationServer.get_locale())
 	add_child(test_audio_player)
 	

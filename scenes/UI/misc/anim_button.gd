@@ -15,12 +15,11 @@ func _ready() -> void:
 	pivot_offset = size/2
 	
 	audio_stream_player.bus = "Sfx"
-	#audio_stream_player.volume_db += 100 #TODO: remove this with better sound...
 	get_tree().get_root().add_child.call_deferred(audio_stream_player)
 	
 	#Label stuff
 	#_setup_text_animation()
-#TODO
+
 #func _setup_text_animation():
 	#label.material = ShaderMaterial.new()
 	#label.material.shader = preload("res://scenes/UI/misc/anim_text.gdshader")

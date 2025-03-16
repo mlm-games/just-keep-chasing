@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c2gocuhw2o7py"]
+[gd_scene load_steps=24 format=3 uid="uid://c2gocuhw2o7py"]
 
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="2_b641b"]
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="2_ny0ke"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://cplyjxscurihv" path="res://scenes/UI/godot_version.gd" id="5_fdyjp"]
 [ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="7_ypw4e"]
 [ext_resource type="PackedScene" uid="uid://dafuydxct5f01" path="res://scenes/components/background_static_particles.tscn" id="8_ofy2k"]
+[ext_resource type="AudioStream" uid="uid://bmiu5h0got4jq" path="res://assets/music/14._i_am_not_clumsy.mp3" id="10_wav1i"]
+[ext_resource type="Script" uid="uid://cneut3slaadkb" path="res://scenes/components/bgm.gd" id="11_3b8ea"]
 
 [sub_resource type="Gradient" id="Gradient_aklih"]
 offsets = PackedFloat32Array(0)
@@ -270,8 +272,6 @@ theme_type_variation = &"LabelSmall"
 theme_override_colors/font_color = Color(0.886275, 0.87451, 0.87451, 1)
 text = "Developer 3"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_78n2u")
 
@@ -289,6 +289,14 @@ texture = SubResource("GradientTexture2D_ofy2k")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.9, 1, 1.1, 1)
+
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_wav1i")
+autoplay = true
+bus = &"Music"
+parameters/looping = true
+script = ExtResource("11_3b8ea")
+metadata/_custom_type_script = "uid://cneut3slaadkb"
 
 [connection signal="pressed" from="MarginContainer/Control/HBoxContainer/ResumeButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="MarginContainer/Control/HBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]

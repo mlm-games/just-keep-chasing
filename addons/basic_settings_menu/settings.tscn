@@ -57,10 +57,9 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
-current_tab = 3
+current_tab = 0
 
 [node name="MENU_OPTIONS_ACCESSIBILITY" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = 10
@@ -198,6 +197,7 @@ layout_mode = 2
 setting_name = &"Resolution"
 
 [node name="MENU_OPTIONS_SOUND" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_top = 10

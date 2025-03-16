@@ -25,7 +25,8 @@ func _ready() -> void:
 	%BulletSpawnPoint.position = gun_data.bullet_spawn_offset
 	
 	$CollisionShape2D.shape.radius = gun_data.targeting_range
-	%AudioStreamPlayer2D.stream = gun_data.fire_audio
+	%ShootAudioPlayer.stream = gun_data.fire_audio
+	%ReloadAudioPlayer.stream = gun_data.fire_audio #TODO
 	
 	reload_timer.wait_time = gun_data.reload_time
 	reload_timer.one_shot = true
@@ -48,7 +49,7 @@ func _physics_process(_delta: float) -> void:
 
 func spawn_bullet() -> void:
 	if ammo > 0:
-		%AudioStreamPlayer2D.play()
+		%ShootAudioPlayer.play()
 		%Sprite2D.rotation_degrees = 0
 		for _i in range(gun_data.bullets_per_shot):
 			var bullet_data: ProjectileData = gun_data.bullet.duplicate(true)
@@ -72,6 +73,7 @@ func spawn_bullet() -> void:
 
 func reload() -> void:
 	# Use similar anim for shooting
+	%ReloadAudioPlayer.play()
 	play_reload_animation()
 	if not reload_timer.is_stopped():
 		return

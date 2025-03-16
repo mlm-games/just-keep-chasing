@@ -36,7 +36,7 @@ class Achievement:
 			"active": active,
 			"reward": reward
 		}
-
+#TODO: A sound for reloading weapons
 	static func from_dict(dict: Dictionary) -> Achievement:
 		var achievement := Achievement.new()
 		achievement.name = dict.get("name", "")
@@ -99,7 +99,7 @@ func reset_achievement(id: String) -> void:
 		_save_achievements()
 
 func _load_achievements() -> void:
-	var local_source = ProjectSettings.get_setting(SETTINGS_BASE + "/local_source")
+	var local_source = "res://autoloads/achievements_data.gd" #ProjectSettings.get_setting(SETTINGS_BASE + "/local_source")
 	if FileAccess.file_exists(local_source):
 		var content = load(local_source).achievements
 		if content:

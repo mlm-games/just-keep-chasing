@@ -68,10 +68,13 @@ func _on_modifiable_part_of_setting_value_changed(value: float) -> void:
 	elif modifiable_part_of_setting is CheckButton:
 		SettingsData.loaded_data.settings[category][setting_name] = value
 	elif modifiable_part_of_setting is OptionButton:
-		if "currentlocale" in setting_name:
+		if setting_name == "current_locale":
+			# Get the actual locale code from the metadata
 			var locale = modifiable_part_of_setting.get_item_metadata(value)
 			TranslationServer.set_locale(locale)
-			SettingsData.loaded_data.settings[category]["current_locale"] = locale
+			# Store the index instead of the locale code
+			SettingsData.loaded_data.settings[category]["current_locale"] = value
+			print("Changed locale to: " + locale + " (index: " + str(value) + ")")
 		elif "resolution" in setting_name:
 			#HACK: Doesn't handle proper window placement, just resolution selection
 			SettingsData.loaded_data.settings[category]["resolution"] = GameSettingsSave.RESOLUTIONS_ARRAY[value]

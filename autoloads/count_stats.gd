@@ -14,7 +14,9 @@ var total_count_stats : Dictionary[StringName, int] = {
 
 var powerup_use_stats: Dictionary = GameState.powerups.duplicate(true)
 
-var enemies_killed_stats : Dictionary[StringName, int] = {}
+var enemies_killed_stats : Dictionary[StringName, int] = {
+	
+}
 
 var bullets_fired_by_type_stats : Dictionary[StringName, int] = {}
 

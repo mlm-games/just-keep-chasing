@@ -74,7 +74,19 @@ func apply_settings(reload_and_apply: bool = false) -> void:
 	if settings.has("accessibility"):
 		var accessibility = settings["accessibility"]
 		if accessibility.has("current_locale"):
-			TranslationServer.set_locale(LOCALES.keys()[accessibility["current_locale"]])
+			var locale_value = accessibility["current_locale"]
+			
+			# Handle both integer index and string locale code
+			if locale_value is float:
+				var locale_keys = LOCALES.keys()
+				if locale_value >= 0 and locale_value < locale_keys.size():
+					TranslationServer.set_locale(locale_keys[locale_value])
+					print("Applied locale from index: " + str(locale_value) + " -> " + locale_keys[locale_value])
+			else:
+				# Handle direct locale code
+				TranslationServer.set_locale(locale_value)
+				print("Applied locale directly: " + locale_value)
+
 
 
 const DEFAULT_SETTINGS = {
