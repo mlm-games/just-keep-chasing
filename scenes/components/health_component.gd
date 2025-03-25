@@ -11,6 +11,12 @@ var dying: bool = false
 var invincible: bool = false
 var prev_health := max_health
 
+enum HealthModificationType {
+	HEAL,
+	RAW_DAMAGE,
+	FIRE,
+}
+
 @onready var parent : Node2D = get_parent()
 
 func _ready() -> void:
@@ -39,12 +45,15 @@ func damage(attack: Attack) -> void:
 		health_changed.emit(current_health)
 		check_health()
 
-func heal_or_damage(amount: float) -> void:
-	if amount > 0 and parent is Player:
+func heal_or_damage(amount: float, type: HealthModificationType = HealthModificationType.RAW_DAMAGE) -> void:
+	if amount > 0 and type == HealthModificationType.HEAL:
+		if parent is Player:
 		# Apply healing multiplier for player
-		amount *= GameStats.get_stat(GameStats.Stats.HEALING_MULT)
+		#TODO: add heal particle effects
+			amount *= GameStats.get_stat(GameStats.Stats.HEALING_MULT)
+			
+			CountStats.total_count_stats["health_healed"] += amount
 		
-	if amount > 0:
 		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT_IN)
 		var color_backup : Color = parent.modulate
 		tween.tween_property(parent, "modulate", Color.LIGHT_GREEN, 0.1)

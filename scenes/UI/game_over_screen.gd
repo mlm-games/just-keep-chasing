@@ -6,3 +6,9 @@ func _ready() -> void:
 
 func _on_retry_button_pressed() -> void:
 	ScreenEffects.change_scene_with_transition("uid://c2gocuhw2o7py")
+	
+	print(CountStats.total_count_stats)
+	print(CountStats.enemies_type_killed_stats)
+	print(CountStats.augment_items_collection_stats)
+	print(CountStats.guns_fired_by_type_stats)
+	print(CountStats.powerup_collection_stats)

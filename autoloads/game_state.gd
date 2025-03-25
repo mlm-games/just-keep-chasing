@@ -11,7 +11,7 @@ const GUN_DATA_DIR : String = "res://resources/guns/"
 const SETTINGS_RES_PATH: String = "user://settings.tres"
 const RESEARCH_TEXTURE = "assets/sprites/currency.png"
 
-var collection_res : CollectionResource = CollectionResource.new()
+static var collection_res : CollectionResource = CollectionResource.new()
 
 #region global_game_specific_variables
 
@@ -81,36 +81,6 @@ var player_health_mult : float
 var upgrade_shop_spawn_divisor : float = 5
 
 
-#endregion
-
-#region settings_variables
-
-#func _process(delta: float) -> void:
-	#print(Engine.get_frames_per_second(), Engine.max_fps)
-#	Save file information
-var first_time_setup: bool = true
-var accessibility: Dictionary = {
-	"current_locale": "en",
-	"small_text_font_size": 20,
-	"big_text_font_size": 64,
-}
-var gameplay_options: Dictionary = {
-	"max_fps": 60,
-	"pause_on_lost_focus": true,
-	"show_damage_numbers": true,
-	"use_auto_aim": true,
-}
-var video: Dictionary = {
-	"borderless": false,
-	"fullscreen": true,
-	"resolution": Vector2i(1080, 720),
-}
-
-var audio: Dictionary = {
-	"Master": 100,
-	"Music": 100,
-	"SFX": 100,
-}
 #endregion
 
 var world: World
@@ -195,7 +165,7 @@ func reset_stats() -> void:
 	research_points = 0
 	price_multiplier = 1
 
-var unlocked_guns: Dictionary = {}  # gun_name: bool
+static var unlocked_guns: Dictionary = {}  # gun_name: bool
 var all_possible_guns : Dictionary
 
 func unlock_gun(gun: GunData) -> void:

@@ -85,8 +85,7 @@ func _on_health_component_entity_died() -> void:
 		GameState.research_points += enemy_data_resource.research_point_value
 		hitbox_component.health_component.dying = true
 		#Fixme: Update kill count
-		CountStats.enemies_killed_stats[enemy_data_resource.id] += 1
-	get_tree().get_first_node_in_group("HUD").update_currency_label()
+		CountStats.enemies_type_killed_stats[enemy_data_resource] += 1
 	$EnemyHitboxComponent/CollisionShape2D.set_deferred("disabled", true)
 	set_physics_process(false)
 	animation_player.play("death")

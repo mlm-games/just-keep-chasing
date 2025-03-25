@@ -176,7 +176,6 @@ func pick_up_weapon() -> void:
 
 
 func use_powerup(powerup_type: int) -> void:
-	CountStats.increment_stat(powerup_type, 1, CountStats.powerup_use_stats)
 	if GameState.powerups[powerup_type] > 0:
 		GameState.powerups[powerup_type] -= 1
 		match powerup_type:

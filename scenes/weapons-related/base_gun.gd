@@ -39,9 +39,9 @@ func _ready() -> void:
 	
 
 func _physics_process(_delta: float) -> void:
-	if !GameState.gameplay_options["use_auto_aim"]:
-		manual_aim_at_target()
-		return
+	#if !GameState.gameplay_options["use_auto_aim"]:
+		#manual_aim_at_target()
+		#return
 	if not _target_in_range.is_empty():
 		auto_aim_at_target()
 		if fire_rate_timer.is_stopped() and reload_timer.is_stopped():
@@ -49,7 +49,10 @@ func _physics_process(_delta: float) -> void:
 
 func spawn_bullet() -> void:
 	if ammo > 0:
+		
+		CountStats.guns_fired_by_type_stats[gun_data] += 1
 		%ShootAudioPlayer.play()
+		
 		%Sprite2D.rotation_degrees = 0
 		for _i in range(gun_data.bullets_per_shot):
 			var bullet_data: ProjectileData = gun_data.bullet.duplicate(true)
@@ -64,7 +67,7 @@ func spawn_bullet() -> void:
 				bullet_data.projectile_damage *= GameStats.get_stat(GameStats.Stats.GUN_ENEMY_DAMAGE_MULT)
 				#@warning_ignore("narrowing_conversion")
 				#bullet_data.projectile_range *= GameStats.get_stat(GameStats.Stats.GUN_ENEMY_TARGETTING_RANGE_MULT)
-			ScreenEffects.smooth_screen_shake(gun_data.screen_shake_frequency, gun_data.screen_shake_amplitude) 
+			ScreenEffects.camera_shake(gun_data.screen_shake_amplitude, gun_data.fire_rate) 
 			var bullet_instance : BaseProjectile = BaseProjectile.new_instance(bullet_data)
 			bullet_instance.global_position = bullet_spawn_point.global_position
 			bullet_instance.global_rotation_degrees = bullet_spawn_point.global_rotation_degrees + randf_range(-gun_data.bullet_spread, gun_data.bullet_spread)

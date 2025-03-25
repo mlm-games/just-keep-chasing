@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://b7b32402tako6" path="res://assets/sprites/star_powerup.svg" id="3_5i6h7"]
 [ext_resource type="Texture2D" uid="uid://ddkwkn3fyh6qq" path="res://assets/sprites/screen_blast_powerup_icon.png" id="3_ytqdl"]
 [ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/sprites/heal_powerup.png" id="4_lcl0g"]
-[ext_resource type="Texture2D" uid="uid://bambopn2wqgdd" path="res://assets/sprites/Gun-sprite.png" id="6_e60p3"]
 [ext_resource type="PackedScene" uid="uid://dqnb688fw4wpi" path="res://scenes/UI/currency_label.tscn" id="7_7wvwv"]
 [ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes/gameplay/pause-layer/pause-layer.tscn" id="7_avxcw"]
+[ext_resource type="Texture2D" uid="uid://1r3wv2gwfpw6" path="res://assets/sprites/change_gun.png" id="8_7wvwv"]
 [ext_resource type="PackedScene" uid="uid://durs0whgiacrv" path="res://scenes/UI/joystick.tscn" id="9_7wvwv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_co5na"]
@@ -158,12 +158,12 @@ unique_name_in_owner = true
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
 custom_minimum_size = Vector2(125, 125)
 layout_mode = 0
-offset_left = 1149.0
-offset_top = 5.0
-offset_right = 1274.0
-offset_bottom = 130.0
-rotation = 1.5708
-texture_normal = ExtResource("6_e60p3")
+offset_left = 1027.0
+offset_right = 1152.0
+offset_bottom = 125.0
+rotation = 3.14159
+pivot_offset = Vector2(62, 62)
+texture_normal = ExtResource("8_7wvwv")
 ignore_texture_size = true
 stretch_mode = 4
 flip_v = true

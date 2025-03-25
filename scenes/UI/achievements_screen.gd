@@ -27,7 +27,10 @@ func setup_achievements() -> void:
 
 	# Add achievement entries
 	for achievement_id:StringName in BasicAchievements.achievements:
-		var achievement : BasicAchievements.Achievement = BasicAchievements.achievements[achievement_id]
+		var achievement : Achievement = BasicAchievements.achievements[achievement_id]
+		
+		BasicAchievements.update_achievement(achievement_id, CountStats.get_stat(BasicAchievements.achievements[achievement_id].stat_name))
+		
 		var entry : AchievementEntry = achievement_label_template.instantiate()
 		entry.achievement = achievement
 		achievements_container.add_child(entry)

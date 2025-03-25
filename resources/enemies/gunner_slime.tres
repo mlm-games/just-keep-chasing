@@ -23,4 +23,5 @@ base_health = 30.0
 base_speed = 20.0
 modifiers = Array[ExtResource("4_o267r")]([])
 id = "gunner_slime"
+local_to_scene = false
 metadata/_custom_type_script = ExtResource("1_ijfsl")

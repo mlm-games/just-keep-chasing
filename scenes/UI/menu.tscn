@@ -149,66 +149,12 @@ modulate = Color(0.705882, 0.839216, 0.407843, 1)
 material = SubResource("ShaderMaterial_svcqa")
 layout_mode = 2
 offset_left = 577.0
-offset_top = 200.0
+offset_top = 170.0
 offset_right = 975.0
-offset_bottom = 284.0
+offset_bottom = 254.0
 text = "GAME_TITLE"
 label_settings = SubResource("LabelSettings_78n2u")
 uppercase = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -35.0
-offset_bottom = 35.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 30
-alignment = 1
-
-[node name="ResumeButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(200, 70)
-layout_mode = 2
-theme = ExtResource("2_b641b")
-disabled = true
-text = "MENU_LABEL_CONTINUE"
-script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = "uid://cmo5qw3rubish"
-
-[node name="PlayButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
-custom_minimum_size = Vector2(200, 70)
-layout_mode = 2
-text = "MENU_LABEL_NEW_GAME"
-script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = "uid://cmo5qw3rubish"
-
-[node name="SettingsButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
-custom_minimum_size = Vector2(200, 70)
-layout_mode = 2
-text = "MENU_LABEL_SETTINGS"
-script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = "uid://cmo5qw3rubish"
-
-[node name="AchievementsButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
-custom_minimum_size = Vector2(200, 70)
-layout_mode = 2
-text = "MENU_LABEL_ACHIEVEMENTS"
-script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = "uid://cmo5qw3rubish"
-
-[node name="ExitButton" type="Button" parent="MarginContainer/Control/HBoxContainer"]
-custom_minimum_size = Vector2(200, 70)
-layout_mode = 2
-text = "MENU_LABEL_EXIT"
-script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = "uid://cmo5qw3rubish"
-
-[node name="Control" type="Control" parent="MarginContainer/Control/HBoxContainer"]
-layout_mode = 2
 
 [node name="Version" type="VBoxContainer" parent="MarginContainer/Control"]
 visible = false
@@ -272,6 +218,71 @@ theme_type_variation = &"LabelSmall"
 theme_override_colors/font_color = Color(0.886275, 0.87451, 0.87451, 1)
 text = "Developer 3"
 
+[node name="PanelContainer" type="NinePatchRect" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -169.0
+offset_top = -400.0
+offset_right = 169.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("2_b641b")
+disabled = true
+text = "MENU_LABEL_CONTINUE"
+script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
+
+[node name="PlayButton" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+size_flags_vertical = 4
+text = "MENU_LABEL_NEW_GAME"
+script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
+
+[node name="SettingsButton" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+text = "MENU_LABEL_SETTINGS"
+script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
+
+[node name="AchievementsButton" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+text = "MENU_LABEL_ACHIEVEMENTS"
+script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
+
+[node name="ExitButton" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 70)
+layout_mode = 2
+text = "MENU_LABEL_EXIT"
+script = ExtResource("7_ypw4e")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
+
+[node name="Control" type="Control" parent="MarginContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_78n2u")
 
@@ -298,8 +309,8 @@ parameters/looping = true
 script = ExtResource("11_3b8ea")
 metadata/_custom_type_script = "uid://cneut3slaadkb"
 
-[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/ResumeButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/AchievementsButton" to="." method="_on_achievements_button_pressed"]
-[connection signal="pressed" from="MarginContainer/Control/HBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/HBoxContainer/ResumeButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/HBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/HBoxContainer/AchievementsButton" to="." method="_on_achievements_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/HBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]

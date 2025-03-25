@@ -74,6 +74,9 @@ func buy_if_rich_enough() -> void:
 		# Increase the price multiplier after purchase
 		GameState.price_multiplier *= (1 + GameState.price_increase_rate)
 		GameState.research_points -= final_price
+		
+		CountStats.augment_items_collection_stats[augment] += 1
+		
 		queue_free()
 
 

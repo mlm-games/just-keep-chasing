@@ -1,54 +1,6 @@
-extends Node
 #class_name AchievementManager
+extends Node
 
-class Achievement:
-	var name: String
-	var description: String
-	var is_secret: bool
-	var count_goal: int
-	var current_progress: float
-	var icon_path: String
-	var unlocked: bool
-	var active: bool
-	var reward: String
-	
-	func _init(p_name := "", p_description := "", p_is_secret := false, 
-			   p_count_goal := 0, p_icon_path := "", p_active := true, p_reward := "") -> void:
-		name = p_name
-		description = p_description
-		is_secret = p_is_secret
-		count_goal = p_count_goal
-		current_progress = 0.0
-		icon_path = p_icon_path
-		unlocked = false
-		active = p_active
-		reward = p_reward
-
-	func to_dict() -> Dictionary:
-		return {
-			"name": name,
-			"description": description,
-			"is_secret": is_secret,
-			"count_goal": count_goal,
-			"current_progress": current_progress,
-			"icon_path": icon_path,
-			"unlocked": unlocked,
-			"active": active,
-			"reward": reward
-		}
-#TODO: A sound for reloading weapons
-	static func from_dict(dict: Dictionary) -> Achievement:
-		var achievement := Achievement.new()
-		achievement.name = dict.get("name", "")
-		achievement.description = dict.get("description", "")
-		achievement.is_secret = dict.get("is_secret", false)
-		achievement.count_goal = dict.get("count_goal", 0)
-		achievement.current_progress = dict.get("current_progress", 0.0)
-		achievement.icon_path = dict.get("icon_path", "")
-		achievement.unlocked = dict.get("unlocked", false)
-		achievement.active = dict.get("active", true)
-		achievement.reward = dict.get("reward", "")
-		return achievement
 
 signal achievement_unlocked(achievement_id: String, achievement: Achievement)
 signal achievement_updated(achievement_id: String, achievement: Achievement)
@@ -58,7 +10,7 @@ signal all_achievements_unlocked
 const SETTINGS_BASE = "basic_achievements/achievements"
 
 var achievements: Dictionary = {}
-var unlocked_achievements: Dictionary = {}
+var unlocked_achievements: Array[String] = []
 
 func _ready() -> void:
 	_initialize_achievements()
@@ -84,7 +36,7 @@ func unlock_achievement(id: String) -> void:
 	if achievement and not achievement.unlocked:
 		achievement.unlocked = true
 		achievement.current_progress = achievement.count_goal
-		unlocked_achievements[id] = achievement
+		unlocked_achievements.append(id)
 		achievement_unlocked.emit(id, achievement)
 		_save_achievements()
 		_check_all_achievements()

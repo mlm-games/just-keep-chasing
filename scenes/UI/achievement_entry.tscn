@@ -99,10 +99,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 size_flags_stretch_ratio = 0.0
 theme_override_constants/align_to_largest_stylebox = 100
-text = "UI_CLAIM"
+text = "MENU_LABEL_CLAIM"
 script = ExtResource("1_5e44u")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+visible = false
 layout_mode = 2
 alignment = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/UnlockButton" to="." method="_on_unlock_button_pressed"]

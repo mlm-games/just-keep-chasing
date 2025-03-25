@@ -1,10 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://b383ofsmpqt55"]
+[gd_scene load_steps=12 format=3 uid="uid://b383ofsmpqt55"]
 
 [ext_resource type="Script" uid="uid://bv26fkvrv8bar" path="res://scenes/characters/slime_enemy.gd" id="1_spd34"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_d2gw2"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="3_cak1k"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_oqv1l"]
 [ext_resource type="AnimationLibrary" uid="uid://bo5gtqkkhod47" path="res://scenes/characters/slime_enemy_anims.tres" id="5_2rcg4"]
+[ext_resource type="Script" uid="uid://dsl73aknxcjur" path="res://addons/godot_state_charts/state_chart.gd" id="6_2rcg4"]
+[ext_resource type="Script" uid="uid://c8ff8j0tad7ib" path="res://addons/godot_state_charts/compound_state.gd" id="7_0wae7"]
+[ext_resource type="Script" uid="uid://bxipn0uqdba0a" path="res://addons/godot_state_charts/atomic_state.gd" id="8_yxwxp"]
+[ext_resource type="Script" uid="uid://bwwobtdaprobr" path="res://addons/godot_state_charts/transition.gd" id="9_eqqb8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
 size = Vector2(44, 40)
@@ -46,5 +50,24 @@ autoplay = "follow-x"
 speed_scale = 2.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("6_2rcg4")
+metadata/_custom_type_script = "uid://dsl73aknxcjur"
+
+[node name="CompoundState" type="Node" parent="StateChart"]
+script = ExtResource("7_0wae7")
+initial_state = NodePath("Chase")
+
+[node name="Chase" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("8_yxwxp")
+
+[node name="Transition" type="Node" parent="StateChart/CompoundState/Chase"]
+script = ExtResource("9_eqqb8")
+to = NodePath("../../Dying")
+delay_in_seconds = "0.0"
+
+[node name="Dying" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("8_yxwxp")
 
 [connection signal="taking_damage" from="HealthComponent" to="." method="_on_health_component_taking_damage"]

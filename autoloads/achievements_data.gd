@@ -1,4 +1,4 @@
-extends RefCounted
+class_name Achievement extends Resource
 
 static var achievements := {
 	"damage_dealer": {
@@ -46,7 +46,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/speed_demon.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "slow_time_used",
+		"stat_name": preload("uid://co1l4ykdh5yer"),
 		"reward": "Increases player speed by 10%"
 	},
 	"nuclear_option": {
@@ -58,7 +58,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/nuclear_option.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "screen_blast_used",
+		"stat_name": preload("uid://ff18iggvak6h"),
 		"reward": "Increases screen blast radius by 20%"
 	},
 	"survivor": {
@@ -106,7 +106,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/untouchable.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "invincible_used",
+		"stat_name": preload("uid://cw5xlfwubk72c"),
 		"reward": "Increases invincibility duration by 2 seconds"
 	},
 	"sharpshooter": {
@@ -158,3 +158,56 @@ static var achievements := {
 		"reward": "Reduces reload speed by 20%"
 	}
 }
+
+
+var name: String
+var description: String
+var is_secret: bool
+var count_goal: int
+var current_progress: float
+var icon_path: String
+var unlocked: bool
+var active: bool
+var stat_name: Variant
+var reward: String
+
+func _init(p_name := "", p_description := "", p_is_secret := false, 
+		   p_count_goal := 0, p_icon_path := "", p_active := true, p_stat_name := "", p_reward := "") -> void:
+	name = p_name
+	description = p_description
+	is_secret = p_is_secret
+	count_goal = p_count_goal
+	current_progress = 0.0
+	icon_path = p_icon_path
+	unlocked = false
+	active = p_active
+	stat_name = p_stat_name
+	reward = p_reward
+
+func to_dict() -> Dictionary:
+	return {
+		"name": name,
+		"description": description,
+		"is_secret": is_secret,
+		"count_goal": count_goal,
+		"current_progress": current_progress,
+		"icon_path": icon_path,
+		"unlocked": unlocked,
+		"active": active,
+		"stat_name": stat_name,
+		"reward": reward
+	}
+#TODO: A sound for reloading weapons
+static func from_dict(dict: Dictionary) -> Achievement:
+	var achievement := Achievement.new()
+	achievement.name = dict.get("name", "")
+	achievement.description = dict.get("description", "")
+	achievement.is_secret = dict.get("is_secret", false)
+	achievement.count_goal = dict.get("count_goal", 0)
+	achievement.current_progress = dict.get("current_progress", 0.0)
+	achievement.icon_path = dict.get("icon_path", "")
+	achievement.unlocked = dict.get("unlocked", false)
+	achievement.active = dict.get("active", true)
+	achievement.stat_name = dict.get("stat_name", "")
+	achievement.reward = dict.get("reward", "")
+	return achievement

@@ -4,19 +4,18 @@ const WorldScene = "uid://4fyoq8npekf0"
 const SettingsScene = "uid://dp42fom7cc3n0"
 const AchievementsScene = "uid://ckqthyukac8wf"
 
-@onready var btn_play := $MarginContainer/Control/HBoxContainer/PlayButton
-@onready var btn_exit := $MarginContainer/Control/HBoxContainer/ExitButton
 #Hack: hold r to restart, press r to reload
 var tween: Tween
 
 func _ready() -> void:
 	get_tree().paused = false
 	# needed for gamepads to work
-	btn_play.grab_focus()
+	%PlayButton.grab_focus()
 	#if OS.has_feature('web'):
-		#btn_exit.queue_free() # exit button dosn't make sense on HTML5
+		#%ExitButton.queue_free() # exit button dosn't make sense on HTML5
 	GameState.reset_stats()
-	set_title_anim()
+	run_title_anim()
+	#run_buttons_anim()
 
 func _on_PlayButton_pressed() -> void:
 	ScreenEffects.transition("fadeToBlack", true)
@@ -40,7 +39,7 @@ func _on_settings_button_pressed() -> void:
 func _on_achievements_button_pressed() -> void:
 	ScreenEffects.change_scene_with_transition(AchievementsScene)
 
-func set_title_anim() -> void:
+func run_title_anim() -> void:
 	tween = get_tree().create_tween().set_trans(Tween.TRANS_SINE).set_parallel()
 	tween.tween_property(%Title, "position:y", 117, 1.25).set_trans(Tween.TRANS_BACK)
 	tween.tween_property(%Title, "position:x", get_viewport_rect().size.x/2 - 300, 1.25) # Need to find a better way

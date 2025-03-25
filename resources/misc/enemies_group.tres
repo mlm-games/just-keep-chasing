@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ResourceGroup" load_steps=2 format=3 uid="uid://ic3pusbhxy60"]
+
+[ext_resource type="Script" uid="uid://cq5ape4ypic4e" path="res://addons/godot_resource_groups/resource_group.gd" id="1_1nfog"]
+
+[resource]
+script = ExtResource("1_1nfog")
+base_folder = "res://resources/enemies"
+includes = Array[String](["*.tres"])
+excludes = Array[String]([])
+paths = Array[String](["res://resources/enemies/basic_slime.tres", "res://resources/enemies/evolved_slime.tres", "res://resources/enemies/gunner_slime.tres", "res://resources/enemies/small_slime.tres", "res://resources/enemies/temp_slime.tres"])
+metadata/_custom_type_script = "uid://cq5ape4ypic4e"

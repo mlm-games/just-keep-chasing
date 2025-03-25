@@ -19,4 +19,6 @@ func collect() -> void:
 	audio_stream_player.play()
 	GameState.research_points += currency_value
 	
+	CountStats.total_count_stats["essence_collected"] += currency_value
+	
 	queue_free()
