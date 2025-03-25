@@ -24,12 +24,12 @@ var guns_fired_by_type_stats : Dictionary[GunData, int] = {}
 var augment_items_collection_stats : Dictionary[Augments, int] = {}
 
 
-func increment_stat(stat_name: Variant, amount: int = 1, stat_dict: Dictionary = total_count_stats) -> void:
-	if stat_dict.has(stat_name):
-		stat_dict[stat_name] += amount
-		stat_updated.emit(stat_name, stat_dict[stat_name])
+func increment_stat(stat_key: Variant, amount: int = 1, stat_dict: Dictionary = total_count_stats) -> void:
+	if stat_dict.has(stat_key):
+		stat_dict[stat_key] += amount
+		stat_updated.emit(stat_key, stat_dict[stat_key])
 
-signal stat_updated(stat_name: String, new_value: int)
+signal stat_updated(stat_key: String, new_value: int)
 
 func get_stat(stat_key: Variant) -> int:
 	if stat_key is String:

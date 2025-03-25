@@ -10,7 +10,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/damage_dealer.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "damage_dealt",
+		"stat_key": "damage_dealt",
 		"reward": "Unlocks weapon: Sawed off shotgun"
 	},
 	"mass_destroyer": {
@@ -22,7 +22,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/mass_destroyer.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "enemies_killed",
+		"stat_key": "enemies_killed",
 		"reward": "Unlocks enemy: Straight liner"
 	},
 	"power_user": {
@@ -34,7 +34,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/power_user.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "powerups_used",
+		"stat_key": "powerups_used",
 		"reward": "Highly increase star powerup drop chance"
 	},
 	"speed_demon": {
@@ -46,7 +46,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/speed_demon.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": preload("uid://co1l4ykdh5yer"),
+		"stat_key": preload("uid://co1l4ykdh5yer"),
 		"reward": "Increases player speed by 10%"
 	},
 	"nuclear_option": {
@@ -58,7 +58,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/nuclear_option.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": preload("uid://ff18iggvak6h"),
+		"stat_key": preload("uid://ff18iggvak6h"),
 		"reward": "Increases screen blast radius by 20%"
 	},
 	"survivor": {
@@ -70,7 +70,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/survivor.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "games_won",
+		"stat_key": "games_won",
 		"reward": "Unlocks new character skin"
 	},
 	"battle_hardened": {
@@ -82,7 +82,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/battle_hardened.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "games_played",
+		"stat_key": "games_played",
 		"reward": "Increases max health by 10%"
 	},
 	"medic": {
@@ -94,7 +94,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/medic.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "heal_used",
+		"stat_key": "heal_used",
 		"reward": "Increases healing multiplier by 15%"
 	},
 	"untouchable": {
@@ -106,7 +106,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/untouchable.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": preload("uid://cw5xlfwubk72c"),
+		"stat_key": preload("uid://cw5xlfwubk72c"),
 		"reward": "Increases invincibility duration by 2 seconds"
 	},
 	"sharpshooter": {
@@ -118,7 +118,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/sharpshooter.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "targeting_accuracy",
+		"stat_key": "targeting_accuracy",
 		"reward": "Increases targeting range by 25%"
 	},
 	"tank_buster": {
@@ -130,7 +130,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/tank_buster.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "armored_damage_dealt",
+		"stat_key": "armored_damage_dealt",
 		"reward": "Increases raw damage modifier by 10"
 	},
 	"wealthy_collector": {
@@ -142,7 +142,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/wealthy_collector.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "currency_collected",
+		"stat_key": "currency_collected",
 		"reward": "Increases currency pickup range by 50%"
 	},
 	"master_gunner": {
@@ -154,7 +154,7 @@ static var achievements := {
 		"icon_path": "res://assets/achievements/master_gunner.png",
 		"unlocked": false,
 		"active": true,
-		"stat_name": "bullets_fired",
+		"stat_key": "bullets_fired",
 		"reward": "Reduces reload speed by 20%"
 	}
 }
@@ -168,11 +168,11 @@ var current_progress: float
 var icon_path: String
 var unlocked: bool
 var active: bool
-var stat_name: Variant
+var stat_key: Variant
 var reward: String
 
 func _init(p_name := "", p_description := "", p_is_secret := false, 
-		   p_count_goal := 0, p_icon_path := "", p_active := true, p_stat_name := "", p_reward := "") -> void:
+		   p_count_goal := 0, p_icon_path := "", p_active := true, p_stat_key := "", p_reward := "") -> void:
 	name = p_name
 	description = p_description
 	is_secret = p_is_secret
@@ -181,7 +181,7 @@ func _init(p_name := "", p_description := "", p_is_secret := false,
 	icon_path = p_icon_path
 	unlocked = false
 	active = p_active
-	stat_name = p_stat_name
+	stat_key = p_stat_key
 	reward = p_reward
 
 func to_dict() -> Dictionary:
@@ -194,7 +194,7 @@ func to_dict() -> Dictionary:
 		"icon_path": icon_path,
 		"unlocked": unlocked,
 		"active": active,
-		"stat_name": stat_name,
+		"stat_key": stat_key,
 		"reward": reward
 	}
 #TODO: A sound for reloading weapons
@@ -208,6 +208,6 @@ static func from_dict(dict: Dictionary) -> Achievement:
 	achievement.icon_path = dict.get("icon_path", "")
 	achievement.unlocked = dict.get("unlocked", false)
 	achievement.active = dict.get("active", true)
-	achievement.stat_name = dict.get("stat_name", "")
+	achievement.stat_key = dict.get("stat_key", "")
 	achievement.reward = dict.get("reward", "")
 	return achievement

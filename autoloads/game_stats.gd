@@ -75,17 +75,17 @@ var _stats: Dictionary[Stats, StatDefinition] = {
 	Stats.DROP_VALUE_MULTIPLIER: StatDefinition.new(1, 0.1),
 }
 
-signal stat_changed(stat_name: String, old_value: float, new_value: float)
+signal stat_changed(stat_key: String, old_value: float, new_value: float)
 
-func get_stat(stat_name: Stats) -> float:
-	return _stats[stat_name].current_value if _stats.has(stat_name) else 0.0
+func get_stat(stat_key: Stats) -> float:
+	return _stats[stat_key].current_value if _stats.has(stat_key) else 0.0
 
-func modify_stat(stat_name: Stats, operation: Operation, value: float) -> void:
-	if not _stats.has(stat_name):
+func modify_stat(stat_key: Stats, operation: Operation, value: float) -> void:
+	if not _stats.has(stat_key):
 		return
 	
 	#FIXME: Not possible, idk why it assigns a random stat definition for item_lend_threshold.
-	var stat : StatDefinition = _stats[stat_name]
+	var stat : StatDefinition = _stats[stat_key]
 	var old_value : float = stat.current_value
 	match operation:
 		Operation.ADD:
@@ -105,11 +105,11 @@ func modify_stat(stat_name: Stats, operation: Operation, value: float) -> void:
 									 stat.min_value,
 									 stat.max_value)
 	
-	if stat_name == Stats.PLAYER_HEALTH:
+	if stat_key == Stats.PLAYER_HEALTH:
 		get_tree().get_nodes_in_group("Player")[0].health_component.heal_or_damage(value)
-	elif stat_name == Stats.PLAYER_MAX_HEALTH:
+	elif stat_key == Stats.PLAYER_MAX_HEALTH:
 		get_tree().get_first_node_in_group("Player").update_max_health(stat.current_value)
-	emit_signal("stat_changed", stat_name, old_value, stat.current_value)
+	emit_signal("stat_changed", stat_key, old_value, stat.current_value)
 
 #func apply_stat_modifier(stat: StatModifier) -> void:
 	#if stat.key == Stats.PLAYER_HEALTH:
@@ -131,23 +131,23 @@ func modify_stat(stat_name: Stats, operation: Operation, value: float) -> void:
 
 func save_stats() -> Dictionary:
 	var save_data := {}
-	for stat_name in _stats:
-		save_data[stat_name] = {
-			"base_value": _stats[stat_name].base_value,
-			"current_value": _stats[stat_name].current_value,
-			"min_value": _stats[stat_name].min_value,
-			"max_value": _stats[stat_name].max_value
+	for stat_key in _stats:
+		save_data[stat_key] = {
+			"base_value": _stats[stat_key].base_value,
+			"current_value": _stats[stat_key].current_value,
+			"min_value": _stats[stat_key].min_value,
+			"max_value": _stats[stat_key].max_value
 		}
 	return save_data
 
 
 func load_stats(save_data: Dictionary) -> void:
-	for stat_name:Stats in save_data:
-		if _stats.has(stat_name):
-			var stat_data : StatDefinition = save_data[stat_name]
-			_stats[stat_name] = StatDefinition.new(
+	for stat_key:Stats in save_data:
+		if _stats.has(stat_key):
+			var stat_data : StatDefinition = save_data[stat_key]
+			_stats[stat_key] = StatDefinition.new(
 				stat_data.base_value,
 				stat_data.min_value,
 				stat_data.max_value
 			)
-			_stats[stat_name].current_value = stat_data.current_value
+			_stats[stat_key].current_value = stat_data.current_value

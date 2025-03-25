@@ -58,11 +58,11 @@ func _ready() -> void:
 func show_stat_info(title: String, stats: Dictionary, max_value: float = 100.0) -> void:
 		var text = "[center][b]%s[/b][/center]\n\n" % title
 		
-		for stat_name in stats:
-				var value = stats[stat_name]
+		for stat_key in stats:
+				var value = stats[stat_key]
 				var percentage = (value / max_value) * 100
 				var bar = create_stat_bar(percentage)
-				text += "[center]%s: %s %d[/center]\n" % [stat_name, bar, value]
+				text += "[center]%s: %s %d[/center]\n" % [stat_key, bar, value]
 		
 		if has_node("TooltipText"):
 				get_node("TooltipText").text = text
