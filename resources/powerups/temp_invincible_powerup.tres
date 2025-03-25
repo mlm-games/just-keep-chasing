@@ -5,10 +5,11 @@
 
 [resource]
 script = ExtResource("1_w0ove")
-id = "star"
 icon = ExtResource("1_krgy0")
 icon_modulate = Color(1, 1, 1, 1)
 icon_scale = Vector2(0.3, 0.3)
 spawn_chance_percent = 10.0
 powerup_type = 3
+id = "star"
+local_to_scene = false
 metadata/_custom_type_script = ExtResource("1_w0ove")

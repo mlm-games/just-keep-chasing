@@ -24,4 +24,4 @@ base_speed = 20.0
 modifiers = Array[ExtResource("4_o267r")]([])
 id = "gunner_slime"
 local_to_scene = false
-metadata/_custom_type_script = ExtResource("1_ijfsl")
+metadata/_custom_type_script = "uid://bwk8dueikqaq0"

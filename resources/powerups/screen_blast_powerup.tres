@@ -5,10 +5,11 @@
 
 [resource]
 script = ExtResource("1_puui2")
-id = "shockwave"
 icon = ExtResource("1_y4tvk")
 icon_modulate = Color(0.34902, 0.34902, 0.34902, 1)
 icon_scale = Vector2(0.09, 0.093)
 spawn_chance_percent = 25.0
 powerup_type = 1
+id = "shockwave"
+local_to_scene = false
 metadata/_custom_type_script = ExtResource("1_puui2")

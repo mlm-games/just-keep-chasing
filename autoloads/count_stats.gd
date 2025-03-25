@@ -1,6 +1,6 @@
 extends Node
 
-
+const SAVE_FILE_PATH = "user://count_stats.save"
  
 var total_count_stats : Dictionary[StringName, int] = {
 	"damage_dealt": 0,
@@ -16,39 +16,14 @@ var total_count_stats : Dictionary[StringName, int] = {
 }
 
 var powerup_collection_stats: Dictionary[PowerupData, int] = {}
-
 var enemies_type_killed_stats : Dictionary[EnemyData, int] = {}
-
 var guns_fired_by_type_stats : Dictionary[GunData, int] = {}
-
 var augment_items_collection_stats : Dictionary[Augments, int] = {}
-
-
-func increment_stat(stat_key: Variant, amount: int = 1, stat_dict: Dictionary = total_count_stats) -> void:
-	if stat_dict.has(stat_key):
-		stat_dict[stat_key] += amount
-		stat_updated.emit(stat_key, stat_dict[stat_key])
-
-signal stat_updated(stat_key: String, new_value: int)
-
-func get_stat(stat_key: Variant) -> int:
-	if stat_key is String:
-		return total_count_stats.get(stat_key, 0)
-	elif stat_key is PowerupData:
-		return powerup_collection_stats.get(stat_key, 0)
-	elif stat_key is Augments:
-		return augment_items_collection_stats.get(stat_key, 0)
-	elif stat_key is GunData:
-		return guns_fired_by_type_stats.get(stat_key, 0)
-	else:
-		return enemies_type_killed_stats.get(stat_key, 0)
-
-
-
 
 
 func _ready() -> void:
 	_init_dicts()
+	load_stats()
 
 ## Auto adds the keys instead of manually having to change them everytime
 func _init_dicts() -> void:
@@ -64,6 +39,86 @@ func _init_dicts() -> void:
 	for powerup_type:PowerupData in GameState.collection_res.powerups.values():
 		powerup_collection_stats.get_or_add(powerup_type, 0)
 
-func save():
-	var save_stats : = total_count_stats.duplicate(true)
+func increment_stat(stat_key: Variant, amount: int = 1, stat_dict: Dictionary = total_count_stats) -> void:
+	if stat_dict.has(stat_key):
+		stat_dict[stat_key] += amount
+		stat_updated.emit(stat_key, stat_dict[stat_key])
+		
+		save_stats()
+
+signal stat_updated(stat_key: String, new_value: int)
+
+func get_stat(stat_key: Variant) -> int:
+	if stat_key is String:
+		return total_count_stats.get(stat_key, 0)
+	elif stat_key is PowerupData:
+		return powerup_collection_stats.get(stat_key, 0)
+	elif stat_key is Augments:
+		return augment_items_collection_stats.get(stat_key, 0)
+	elif stat_key is GunData:
+		return guns_fired_by_type_stats.get(stat_key, 0)
+	else:
+		return enemies_type_killed_stats.get(stat_key, 0)
+
+func save_stats():
+	var save_data = {
+		"total_count_stats": total_count_stats.duplicate(true),
+		"powerup_stats": _serialize_resource_dict(powerup_collection_stats),
+		"enemy_stats": _serialize_resource_dict(enemies_type_killed_stats),
+		"gun_stats": _serialize_resource_dict(guns_fired_by_type_stats),
+		"augment_stats": _serialize_resource_dict(augment_items_collection_stats)
+	}
 	
+	var file = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
+	if file: file.store_var(save_data); file = null # Deinit
+	else:
+		push_error("Failed to save stats data: " + str(FileAccess.get_open_error()))
+
+
+func load_stats() -> void:
+	if not FileAccess.file_exists(SAVE_FILE_PATH):
+		return
+	
+	var file = FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
+	if file:
+		var data = file.get_var()
+		file = null
+			
+		if data is Dictionary:
+			var loaded_stats = data["total_count_stats"]
+			for key in loaded_stats:
+					if total_count_stats.has(key):
+							total_count_stats[key] = loaded_stats[key]
+			
+			# Load resource-based stats
+			_deserialize_resource_dict(data.get("powerup_stats", {}), powerup_collection_stats, GameState.collection_res.powerups)
+			_deserialize_resource_dict(data.get("enemy_stats", {}), enemies_type_killed_stats, GameState.collection_res.enemies)
+			_deserialize_resource_dict(data.get("gun_stats", {}), guns_fired_by_type_stats, GameState.collection_res.guns)
+			_deserialize_resource_dict(data.get("augment_stats", {}), augment_items_collection_stats, GameState.collection_res.augments)
+	else:
+			push_error("Failed to load stats data: " + str(FileAccess.get_open_error()))
+
+
+static func _serialize_resource_dict(resource_dict: Dictionary) -> Dictionary:
+	var serialized = {}
+	
+	for resource:BaseData in resource_dict:
+			serialized[ResourceLoader.get_resource_uid(resource.resource_path)] = resource_dict[resource]
+			#print(ResourceUID.id_to_text(ResourceLoader.get_resource_uid(resource.resource_path)))
+	return serialized
+
+static func _deserialize_resource_dict(serialized_dict: Dictionary, target_dict: Dictionary, resource_collection: Dictionary) -> void:
+	for resource_uid_int in serialized_dict:
+		for resource in resource_collection.values():
+			
+			if ResourceLoader.get_resource_uid(resource.resource_path) == resource_uid_int:
+				target_dict[resource] = serialized_dict[resource_uid_int]
+				break
+			else:
+				printerr("Hi, click here")
+
+func update_longest_run_time(current_time: int) -> void:
+	if current_time > total_count_stats["longest_run_time"]:
+		total_count_stats["longest_run_time"] = current_time
+		stat_updated.emit("longest_run_time", current_time)
+		save_stats()

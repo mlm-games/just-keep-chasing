@@ -2,18 +2,6 @@ class_name VirusEradicationGoalsEntry
 extends Control
 
 signal unlocked()
-#
-#@onready var icon: TextureRect = %Icon
-#@onready var virus_eradication_goal_name: RichTextLabel = %VirusEradicationGoalsName
-#@onready var unlock_condition: RichTextLabel = %UnlockCondition
-#@onready var reward: RichTextLabel = %Reward
-#@onready var icon_background: Panel = %IconBackground
-
-#@export var active_color := Color("#6eb86f")
-#@export var disabled_color := Color("#454545")
-#@export var reward_color := Color("#d4af37")
-#var virus_eradication_goals: VirusEradicationGoals
-
 
 @onready var achievements_container := %AchievementsContainer
 @onready var achievement_label_template := load("uid://ba8wjuxwmjiug")

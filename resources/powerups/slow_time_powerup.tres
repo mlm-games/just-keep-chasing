@@ -5,10 +5,11 @@
 
 [resource]
 script = ExtResource("1_68hos")
-id = "slow_time"
 icon = ExtResource("1_ffv4k")
 icon_modulate = Color(1, 1, 1, 1)
 icon_scale = Vector2(0.069, 0.063)
 spawn_chance_percent = 100.0
 powerup_type = 0
+id = "slow_time"
+local_to_scene = false
 metadata/_custom_type_script = ExtResource("1_68hos")
