@@ -1,13 +1,12 @@
-[gd_scene load_steps=24 format=3 uid="uid://c2gocuhw2o7py"]
+[gd_scene load_steps=23 format=3 uid="uid://c2gocuhw2o7py"]
 
-[ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="2_b641b"]
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="2_ny0ke"]
 [ext_resource type="Texture2D" uid="uid://b5wy5qam2nw48" path="res://assets/sprites/background_rbc.svg" id="3_svcqa"]
 [ext_resource type="Script" uid="uid://hgvitycqq2iu" path="res://scenes/UI/game_version.gd" id="4_3hod2"]
 [ext_resource type="Shader" uid="uid://can28j4dr15ly" path="res://scenes/UI/cartoony_title.gdshader" id="4_ypw4e"]
 [ext_resource type="Script" uid="uid://d3qxlw41khhgp" path="res://scenes/UI/menu.gd" id="5"]
 [ext_resource type="Script" uid="uid://cplyjxscurihv" path="res://scenes/UI/godot_version.gd" id="5_fdyjp"]
-[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="7_ypw4e"]
+[ext_resource type="PackedScene" uid="uid://cs2fl7pw33da1" path="res://scenes/UI/misc/anim-button.tscn" id="8_aklih"]
 [ext_resource type="PackedScene" uid="uid://dafuydxct5f01" path="res://scenes/components/background_static_particles.tscn" id="8_ofy2k"]
 [ext_resource type="AudioStream" uid="uid://bmiu5h0got4jq" path="res://assets/music/14._i_am_not_clumsy.mp3" id="10_wav1i"]
 [ext_resource type="Script" uid="uid://cneut3slaadkb" path="res://scenes/components/bgm.gd" id="11_3b8ea"]
@@ -238,47 +237,27 @@ size_flags_vertical = 8
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="ResumeButton" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(200, 70)
+[node name="ResumeButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
 layout_mode = 2
-size_flags_vertical = 4
-theme = ExtResource("2_b641b")
-disabled = true
 text = "MENU_LABEL_CONTINUE"
-script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
-[node name="PlayButton" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer"]
+[node name="PlayButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
-size_flags_vertical = 4
 text = "MENU_LABEL_NEW_GAME"
-script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
-[node name="SettingsButton" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer"]
-custom_minimum_size = Vector2(200, 70)
+[node name="SettingsButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
 layout_mode = 2
 text = "MENU_LABEL_SETTINGS"
-script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
-[node name="AchievementsButton" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer"]
-custom_minimum_size = Vector2(200, 70)
+[node name="AchievementsButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
 layout_mode = 2
 text = "MENU_LABEL_ACHIEVEMENTS"
-script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
-[node name="ExitButton" type="Button" parent="MarginContainer/PanelContainer/HBoxContainer"]
+[node name="ExitButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 70)
 layout_mode = 2
 text = "MENU_LABEL_EXIT"
-script = ExtResource("7_ypw4e")
-metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="Control" type="Control" parent="MarginContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
@@ -308,9 +287,3 @@ bus = &"Music"
 parameters/looping = true
 script = ExtResource("11_3b8ea")
 metadata/_custom_type_script = "uid://cneut3slaadkb"
-
-[connection signal="pressed" from="MarginContainer/PanelContainer/HBoxContainer/ResumeButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="MarginContainer/PanelContainer/HBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="MarginContainer/PanelContainer/HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="MarginContainer/PanelContainer/HBoxContainer/AchievementsButton" to="." method="_on_achievements_button_pressed"]
-[connection signal="pressed" from="MarginContainer/PanelContainer/HBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]

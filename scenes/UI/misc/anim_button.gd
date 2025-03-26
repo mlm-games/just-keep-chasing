@@ -3,6 +3,7 @@ class_name AnimButton extends Button
 #@onready var particles = $MovementParticles2D
 #@onready var label: Label = $Label
 @onready var audio_stream_player: AudioStreamPlayer = AudioStreamPlayer.new()
+@onready var hover_sound: AudioStreamPlayer = $HoverSound
 
 var tween: Tween
 
@@ -12,6 +13,7 @@ func _ready() -> void:
 	button_down.connect(_on_button_down)
 	button_up.connect(_on_button_up)
 	pressed.connect(_on_pressed)
+	
 	pivot_offset = size/2
 	
 	audio_stream_player.bus = "Sfx"
@@ -31,7 +33,7 @@ func _on_mouse_entered() -> void:
 		tween.kill()
 	tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(1.075, 1.075), 0.1).set_trans(Tween.TRANS_CUBIC)
-	
+	hover_sound.play()
 	# smallish glow effect
 	#var style = get_theme_stylebox("normal").duplicate()
 	#style.shadow_size = 8
@@ -74,7 +76,8 @@ func _on_button_up() -> void:
 func _on_pressed() -> void:
 	audio_stream_player.stream = load("res://assets/music/GUI_Sound_Effects_by_Lokif/click_2.wav")
 	audio_stream_player.play()
-	
+
+
 #FIXME: Doesnt work due to the timers not being syncronised properly, hence looking bad.
 	#await get_tree().create_timer(0.15).timeout
 	#_on_mouse_entered()

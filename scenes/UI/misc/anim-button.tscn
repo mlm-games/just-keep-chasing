@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://bjirml4gi4wee" path="res://resources/theme-button-dark.tres" id="1_jhk12"]
 [ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="1_s85m3"]
-[ext_resource type="AudioStream" uid="uid://dlaoqea0g1d5i" path="res://assets/music/GUI_Sound_Effects_by_Lokif/click_2.wav" id="3_5b6ss"]
+[ext_resource type="AudioStream" uid="uid://qx8gmaebtcyn" path="res://assets/sfx/hover.ogg" id="3_5b6ss"]
 
 [sub_resource type="Gradient" id="Gradient_s85m3"]
 
@@ -21,8 +21,6 @@ offset_bottom = 74.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
-theme = ExtResource("1_jhk12")
-theme_type_variation = &"Button"
 script = ExtResource("1_s85m3")
 
 [node name="MovementParticles2D" type="CPUParticles2D" parent="."]
@@ -47,8 +45,10 @@ offset_bottom = 29.0
 theme = ExtResource("1_jhk12")
 text = "hihi"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-unique_name_in_owner = true
+[node name="HoverSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_5b6ss")
+volume_db = -20.0
+bus = &"Sfx"
 
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]
