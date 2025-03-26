@@ -46,7 +46,7 @@ unique_name_in_owner = true
 libraries = {
 &"": ExtResource("5_2rcg4")
 }
-autoplay = "follow-x"
+autoplay = "default"
 speed_scale = 2.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

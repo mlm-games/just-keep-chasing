@@ -10,7 +10,8 @@ signal unlocked()
 func _ready() -> void:
 	setup_achievements()
 	#_setup_styles()
-	
+	%BackButton.grab_focus()
+
 func setup_achievements() -> void:
 
 	# Add achievement entries

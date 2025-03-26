@@ -15,7 +15,7 @@ var total_count_stats : Dictionary[StringName, int] = {
 	"bullets_fired": 0
 }
 
-var powerup_collection_stats: Dictionary[PowerupData, int] = {}
+var powerup_collection_stats : Dictionary[PowerupData, int] = {}
 var enemies_type_killed_stats : Dictionary[EnemyData, int] = {}
 var guns_fired_by_type_stats : Dictionary[GunData, int] = {}
 var augment_items_collection_stats : Dictionary[Augments, int] = {}
@@ -60,8 +60,8 @@ func get_stat(stat_key: Variant) -> int:
 	else:
 		return enemies_type_killed_stats.get(stat_key, 0)
 
-func save_stats():
-	var save_data = {
+func save_stats() -> void:
+	var save_data := {
 		"total_count_stats": total_count_stats.duplicate(true),
 		"powerup_stats": _serialize_resource_dict(powerup_collection_stats),
 		"enemy_stats": _serialize_resource_dict(enemies_type_killed_stats),
@@ -69,7 +69,7 @@ func save_stats():
 		"augment_stats": _serialize_resource_dict(augment_items_collection_stats)
 	}
 	
-	var file = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
+	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
 	if file: file.store_var(save_data); file = null # Deinit
 	else:
 		push_error("Failed to save stats data: " + str(FileAccess.get_open_error()))
@@ -79,14 +79,14 @@ func load_stats() -> void:
 	if not FileAccess.file_exists(SAVE_FILE_PATH):
 		return
 	
-	var file = FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
+	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
 	if file:
-		var data = file.get_var()
+		var data : Variant = file.get_var()
 		file = null
 			
 		if data is Dictionary:
-			var loaded_stats = data["total_count_stats"]
-			for key in loaded_stats:
+			var loaded_stats : Dictionary[StringName, int] = data["total_count_stats"]
+			for key:String in loaded_stats:
 					if total_count_stats.has(key):
 							total_count_stats[key] = loaded_stats[key]
 			
@@ -100,7 +100,7 @@ func load_stats() -> void:
 
 
 static func _serialize_resource_dict(resource_dict: Dictionary) -> Dictionary:
-	var serialized = {}
+	var serialized := {}
 	
 	for resource:BaseData in resource_dict:
 			serialized[ResourceLoader.get_resource_uid(resource.resource_path)] = resource_dict[resource]
@@ -109,13 +109,13 @@ static func _serialize_resource_dict(resource_dict: Dictionary) -> Dictionary:
 
 static func _deserialize_resource_dict(serialized_dict: Dictionary, target_dict: Dictionary, resource_collection: Dictionary) -> void:
 	for resource_uid_int in serialized_dict:
-		for resource in resource_collection.values():
+		for resource:Resource in resource_collection.values():
 			
 			if ResourceLoader.get_resource_uid(resource.resource_path) == resource_uid_int:
 				target_dict[resource] = serialized_dict[resource_uid_int]
 				break
 			else:
-				printerr("Hi, click here")
+				printerr("Hi, click here for a suprise **")
 
 func update_longest_run_time(current_time: int) -> void:
 	if current_time > total_count_stats["longest_run_time"]:

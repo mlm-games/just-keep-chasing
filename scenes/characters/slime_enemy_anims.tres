@@ -1,4 +1,4 @@
-[gd_resource type="AnimationLibrary" load_steps=5 format=3 uid="uid://bo5gtqkkhod47"]
+[gd_resource type="AnimationLibrary" load_steps=6 format=3 uid="uid://bo5gtqkkhod47"]
 
 [sub_resource type="Animation" id="Animation_0xt00"]
 length = 0.001
@@ -47,6 +47,18 @@ tracks/3/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(0.057, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_wmkw4"]
@@ -120,10 +132,28 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(5, 0), Vector2(-5, 0), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_2knjx"]
+resource_name = "default"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 0.9, 1.63333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 0.9), Vector2(1, 1)]
+}
+
 [resource]
 _data = {
 &"RESET": SubResource("Animation_0xt00"),
 &"death": SubResource("Animation_wmkw4"),
+&"default": SubResource("Animation_2knjx"),
 &"follow-x": SubResource("Animation_txy4m"),
 &"follow-y": SubResource("Animation_2n6dd")
 }

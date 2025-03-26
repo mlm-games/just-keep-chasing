@@ -187,6 +187,7 @@ func use_powerup(powerup_type: int) -> void:
 			GameState.PowerupType.SCREEN_BLAST:
 				ScreenEffects.transition("slightFlash")
 				get_tree().call_group("On Screen Enemies", "queue_free")
+				ScreenEffects.screen_shake(1, 2.5)
 			GameState.PowerupType.HEAL:
 				player.health_component.heal_or_damage(20)
 			GameState.PowerupType.INVINCIBLE:

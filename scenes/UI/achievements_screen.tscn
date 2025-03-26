@@ -89,6 +89,7 @@ custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 
 [node name="BackButton" type="Button" parent="PanelContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
