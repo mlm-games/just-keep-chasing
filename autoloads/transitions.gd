@@ -3,7 +3,6 @@ extends CanvasLayer
 signal screen_covered
 
 const CIRCLE_SHADER = preload("uid://dnms5hsmipkyv")
-const FLOATING_DAMAGE_TEXT = preload("uid://dal5r3uc7pbf2")
 
 @onready var transition_player: AnimationPlayer = $TransitionRect/TransitionPlayer
 @onready var transition_rect : ColorRect = $TransitionRect

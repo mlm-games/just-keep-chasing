@@ -40,7 +40,7 @@ func damage(attack: Attack) -> void:
 		current_health -= final_damage
 		if parent is SlimeEnemy:
 			CountStats.increment_stat("damage_dealt", int(final_damage))
-			display_floating_dmg_numbers(final_damage)
+			GameState.world.add_child(DamageNumbers.new_damage_text(final_damage, parent.global_position))
 		taking_damage.emit()
 		health_changed.emit(current_health)
 		check_health()
@@ -97,8 +97,8 @@ func disable_for_secs(secs: float) -> void:
 	parent_sprite.material = null
 	
 
-func display_floating_dmg_numbers(dmg_val: float) -> void:
-	var nos_instance := ScreenEffects.FLOATING_DAMAGE_TEXT.instantiate()
-	nos_instance.global_position = parent.global_position
-	GameState.world.add_child(nos_instance)
-	nos_instance.display(dmg_val)
+#func display_floating_dmg_numbers(dmg_val: float) -> void:
+	#var nos_instance := ScreenEffects.FLOATING_DAMAGE_TEXT.instantiate()
+	#nos_instance.global_position = parent.global_position
+	#GameState.world.add_child(nos_instance)
+	#nos_instance.display(dmg_val)
