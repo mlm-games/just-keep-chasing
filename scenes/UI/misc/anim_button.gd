@@ -29,26 +29,23 @@ func _ready() -> void:
 
 func _on_mouse_entered() -> void:
 	#particles.emitting = true
-	if tween:
-		tween.kill()
-	tween = create_tween()
-	tween.tween_property(self, "scale", Vector2(1.075, 1.075), 0.1).set_trans(Tween.TRANS_CUBIC)
-	hover_sound.play()
+	reset_tween()
+	tween.tween_property(self, "scale", Vector2(1.075, 1.075), 0.15).set_trans(Tween.TRANS_CUBIC)
+	if hover_sound: hover_sound.play()
 	# smallish glow effect
 	#var style = get_theme_stylebox("normal").duplicate()
 	#style.shadow_size = 8
 	#add_theme_stylebox_override("normal", style)
 	
 	## Label stuff
+	
 	#tween = create_tween()
 	#tween.tween_method(_update_text_effect, 0.0, 1.0, 0.3)
 
 func _on_mouse_exited() -> void:
 	#particles.emitting = false
-	if tween:
-		tween.kill()
-	tween = create_tween()
-	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_CUBIC)
+	reset_tween()
+	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.15).set_trans(Tween.TRANS_CUBIC)
 	
 	# Reset glow
 	#add_theme_stylebox_override("normal", null)
@@ -58,15 +55,11 @@ func _on_mouse_exited() -> void:
 	#tween.tween_method(_update_text_effect, 1.0, 0.0, 0.3)
 
 func _on_button_down() -> void:
-	if tween:
-		tween.kill()
-	tween = create_tween()
+	reset_tween()
 	tween.tween_property(self, "scale", Vector2(0.95, 0.95), 0.1).set_trans(Tween.TRANS_CUBIC)
 
 func _on_button_up() -> void:
-	if tween:
-		tween.kill()
-	tween = create_tween()
+	reset_tween()
 	tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_CUBIC)
 
 #func _update_text_effect(value: float):
@@ -84,3 +77,8 @@ func _on_pressed() -> void:
 
 func _exit_tree() -> void:
 	audio_stream_player.queue_free()
+
+func reset_tween() -> void:
+	if tween:
+		tween.kill()
+	tween = create_tween()

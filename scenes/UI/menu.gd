@@ -6,7 +6,7 @@ const AchievementsScene = "uid://ckqthyukac8wf"
 
 #Hack: hold r to restart, press r to reload
 var tween: Tween
-
+#TODO: The upgrade screen should only have stuff that is buyable (atleast once) with the money available. Also reduce the first buy to 0.5 and increase from there? or maybe reduce the prices and increase the multiplier?
 func _ready() -> void:
 	get_tree().paused = false
 	# needed for gamepads to work
@@ -16,6 +16,11 @@ func _ready() -> void:
 	GameState.reset_stats()
 	run_title_anim()
 	#run_buttons_anim()
+	
+	%PlayButton.pressed.connect(_on_PlayButton_pressed)
+	%SettingsButton.pressed.connect(_on_settings_button_pressed)
+	%AchievementsButton.pressed.connect(_on_achievements_button_pressed)
+	%ExitButton.pressed.connect(_on_ExitButton_pressed)
 
 func _on_PlayButton_pressed() -> void:
 	ScreenEffects.transition("fadeToBlack", true)

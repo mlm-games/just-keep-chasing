@@ -238,6 +238,7 @@ theme_override_constants/separation = 30
 alignment = 1
 
 [node name="ResumeButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
+visible = false
 layout_mode = 2
 text = "MENU_LABEL_CONTINUE"
 
@@ -247,10 +248,12 @@ layout_mode = 2
 text = "MENU_LABEL_NEW_GAME"
 
 [node name="SettingsButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
+unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_SETTINGS"
 
 [node name="AchievementsButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
+unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_ACHIEVEMENTS"
 
