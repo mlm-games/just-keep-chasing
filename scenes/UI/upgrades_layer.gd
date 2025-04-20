@@ -1,6 +1,7 @@
-extends CanvasLayer
+class_name UpgradesLayer extends CanvasLayer
 
 const UpgradeScenePath = "uid://dq2rptl6lv3tc"
+const UPGRADES_LAYER = "uid://24v2w4t8hgkl"
 @onready var hud : HUD = get_tree().get_first_node_in_group("HUD")
 @onready var upgrade_slots_to_add_below_node: Control = %SpacerControl2
 
@@ -36,3 +37,6 @@ func _on_close_button_pressed() -> void:
 	await tween.finished
 	hide()
 	GameState.is_in_shop = false
+
+static func new_upgrade_layer() -> UpgradesLayer:
+	return load(UPGRADES_LAYER).instantiate()

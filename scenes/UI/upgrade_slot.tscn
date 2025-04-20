@@ -27,10 +27,13 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel/MarginContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/Panel/MarginContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
@@ -39,13 +42,26 @@ size_flags_stretch_ratio = 5.0
 texture = ExtResource("2_3bwd0")
 expand_mode = 1
 
-[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
 text = "Placeholder"
 label_settings = ExtResource("2_071u4")
 horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "gigbyig"
 
 [node name="PriceContainer" parent="VBoxContainer" instance=ExtResource("1_o3l4u")]
 unique_name_in_owner = true

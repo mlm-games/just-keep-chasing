@@ -19,3 +19,4 @@ stats_to_modify = Array[ExtResource("3_aaedq")]([SubResource("Resource_3ju77")])
 rarity = 1.0
 id = null
 local_to_scene = false
+enabled = true

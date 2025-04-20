@@ -55,7 +55,7 @@ size_flags_vertical = 8
 theme = ExtResource("2_dfho5")
 text = "Continue?"
 script = ExtResource("3_c1oj8")
-metadata/_custom_type_script = ExtResource("3_c1oj8")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="MenuButton" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 40)
@@ -65,7 +65,7 @@ size_flags_vertical = 8
 theme_override_constants/outline_size = 5
 text = "Quit to menu?"
 script = ExtResource("3_c1oj8")
-metadata/_custom_type_script = ExtResource("3_c1oj8")
+metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="GameOverLabel" type="Label" parent="MarginContainer"]
 layout_mode = 2

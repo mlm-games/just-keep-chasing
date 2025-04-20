@@ -22,3 +22,4 @@ base_speed = 0.0
 modifiers = Array[ExtResource("2_6fm2h")]([])
 id = ""
 local_to_scene = false
+enabled = true

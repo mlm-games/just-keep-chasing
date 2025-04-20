@@ -178,6 +178,18 @@ unique_name_in_owner = true
 visible = false
 scale = Vector2(0.26, 0.26)
 
+[node name="NextUpgradeBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 1.0
+show_percentage = false
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/InvincibleButton" to="." method="_on_invincible_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/HealButton" to="." method="_on_heal_button_pressed"]

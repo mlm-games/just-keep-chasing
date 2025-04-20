@@ -19,4 +19,4 @@ augment_price = 5
 stats_to_modify = Array[ExtResource("2_34msf")]([SubResource("Resource_34msf")])
 id = ""
 local_to_scene = false
-metadata/_custom_type_script = "<GDScript#-9223369839106507383>o"
+enabled = true

@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://24v2w4t8hgkl"]
+[gd_scene load_steps=8 format=3 uid="uid://24v2w4t8hgkl"]
 
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="1_etbkl"]
 [ext_resource type="Script" uid="uid://cdc8if22rnwsq" path="res://scenes/UI/upgrades_layer.gd" id="1_f2f6q"]
 [ext_resource type="LabelSettings" uid="uid://c7d047estc02" path="res://resources/theme/label-settings-default.tres" id="2_fr6u5"]
 [ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="5_mqd2u"]
+[ext_resource type="Texture2D" uid="uid://bs1javwtrk7ne" path="res://assets/sprites/nine_patch_rect.svg" id="5_s041v"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_lxedb"]
 action = &"pause"
@@ -119,5 +120,12 @@ text = "MENU_LABEL_CLOSE"
 [node name="Control" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+offset_right = 774.0
+offset_bottom = 641.0
+texture = ExtResource("5_s041v")
+draw_center = false
+region_rect = Rect2(144, 144, 224, 224)
 
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

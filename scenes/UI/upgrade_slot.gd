@@ -8,6 +8,8 @@ var panel_entered : bool = false
 var original_scale : Vector2
 var hover_scale : Vector2 = Vector2(1.1, 1.1)
 var hover_tween : Tween
+var tooltip_content: String = "Temp text"
+
 
 @warning_ignore("narrowing_conversion")
 var final_price: int
@@ -54,6 +56,10 @@ func _on_panel_mouse_entered() -> void:
 	
 	# Fixme: Play hover sound
 	#AudioManager.play_sfx("hover")
+	
+	var content = TooltipContent.new()
+	content.text = tooltip_text
+	TooltipManager.show_tooltip(content, self)
 
 func _on_panel_mouse_exited() -> void:
 	panel_entered = false

@@ -20,4 +20,5 @@ stats_to_modify = Array[ExtResource("2_7wbi6")]([SubResource("Resource_3epvh")])
 rarity = 1.0
 id = ""
 local_to_scene = false
+enabled = true
 metadata/_custom_type_script = "uid://clxsmndukf026"

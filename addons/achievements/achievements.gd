@@ -63,10 +63,10 @@ func _load_achievements() -> void:
 func _sync_saved_achievements() -> void:
 	var save_path := _get_save_path()
 	if FileAccess.file_exists(save_path):
-		var file := FileAccess.open_encrypted_with_pass(
+		var file := FileAccess.open(
 			save_path,
 			FileAccess.READ,
-			ProjectSettings.get_setting(SETTINGS_BASE + "/password")
+			#ProjectSettings.get_setting(SETTINGS_BASE + "/password")
 		)
 		if file:
 			var content = JSON.parse_string(file.get_as_text())
@@ -84,10 +84,10 @@ func _save_achievements() -> void:
 	for id in achievements:
 		save_data[id] = achievements[id].to_dict()
 	
-	var file := FileAccess.open_encrypted_with_pass(
+	var file := FileAccess.open(
 		_get_save_path(),
 		FileAccess.WRITE,
-		ProjectSettings.get_setting(SETTINGS_BASE + "/password")
+		#ProjectSettings.get_setting(SETTINGS_BASE + "/password")
 	)
 	if file:
 		file.store_string(JSON.stringify(save_data))

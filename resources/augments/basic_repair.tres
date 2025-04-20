@@ -25,3 +25,4 @@ augment_price = 10
 stats_to_modify = Array[ExtResource("3_itdj1")]([SubResource("Resource_hmhfi"), SubResource("Resource_aveke")])
 id = null
 local_to_scene = false
+enabled = true

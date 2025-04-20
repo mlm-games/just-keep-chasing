@@ -22,4 +22,5 @@ base_speed = 125.0
 modifiers = Array[ExtResource("3_r14q4")]([])
 id = "small_slime"
 local_to_scene = false
-metadata/_custom_type_script = ExtResource("1_e4fic")
+enabled = true
+metadata/_custom_type_script = "uid://bwk8dueikqaq0"

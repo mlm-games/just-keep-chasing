@@ -1,6 +1,6 @@
-class_name VectorTooltipControl
+#class_name VectorTooltipControl
 extends Control
-
+##USe this for panel stats ig
 var attached_to: Control = null
 var attach_offset: Vector2
 

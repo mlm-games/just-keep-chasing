@@ -15,6 +15,11 @@ static var collection_res : CollectionResource = CollectionResource.new()
 
 #region global_game_specific_variables
 
+var elapsed_time : int = 0:
+	set(val):
+		elapsed_time = val
+		world.time_based_enemy_type_changer()
+
 var price_multiplier: float = 0.5
 var price_increase_rate: float = 0.07
 
@@ -60,7 +65,9 @@ enum Effects {
 var research_points : int = 0:
 	set(val):
 		research_points = val
-		if world: world.hud.update_currency_label()
+		if world: 
+			world.hud.update_currency_label()
+			world.hud.next_upgrade_bar.value = minf(val / GameState.upgrade_shop_spawn_divisor, 1)
 
 #var current_level: int = 1
 var is_game_paused: bool = false
@@ -119,7 +126,7 @@ func get_resource_paths_in_directory(resources_dir: String, load_resource_paths:
 
 func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1
-	world.hud.update_hud_buttons()
+	#world.hud.update_hud_buttons()
 	
 func get_currency_bbcode() -> String:
 	return "[img=40px]%s[/img]" % RESEARCH_TEXTURE

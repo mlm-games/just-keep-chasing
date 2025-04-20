@@ -32,4 +32,5 @@ screen_shake_frequency = 10.0
 screen_shake_amplitude = 0.5
 id = "pistol"
 local_to_scene = false
+enabled = true
 metadata/_custom_type_script = "uid://cvb1dimncgicl"

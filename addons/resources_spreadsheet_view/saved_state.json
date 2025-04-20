@@ -8,6 +8,14 @@
         "visibility": 0.0
       }
     },
+    "res://resources/enemies/": {
+      "resource_local_to_scene": {
+        "visibility": 0.0
+      },
+      "resource_name": {
+        "visibility": 0.0
+      }
+    },
     "res://resources/guns/": {
       "resource_local_to_scene": {
         "visibility": 0.0
@@ -19,7 +27,8 @@
   },
   "recent_paths": [
     "res://resources/augments/",
-    "res://resources/guns/"
+    "res://resources/guns/",
+    "res://resources/enemies/"
   ],
   "table_functions": {
     "filter": [
