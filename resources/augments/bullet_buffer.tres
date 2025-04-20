@@ -20,4 +20,5 @@ stats_to_modify = Array[ExtResource("2_cm1vo")]([SubResource("Resource_2ns1m")])
 rarity = 1.0
 id = "bullet_buffer"
 local_to_scene = false
+enabled = true
 metadata/_custom_type_script = "uid://clxsmndukf026"

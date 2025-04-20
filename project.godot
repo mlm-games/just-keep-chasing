@@ -37,10 +37,15 @@ GameState="*res://autoloads/game_state.gd"
 GameStats="*res://autoloads/game_stats.gd"
 CountStats="*res://autoloads/count_stats.gd"
 SettingsData="*res://addons/basic_settings_menu/settings_data.gd"
+TooltipManager="*res://resources/misc/tooltip_manager.gd"
+BasicAchievements="*res://addons/achievements/achievements.gd"
 
 [basic_achievements]
 
 achievements/save_directory="user://achievements"
+achievements/local_source="res://achievements.json"
+achievements/save_file_name="achievements_save.dat"
+achievements/password="HPdS9ppq68cTJmTzQ8nugtGHz"
 
 [category]
 
@@ -70,6 +75,7 @@ auto_rebuild=true
 [gui]
 
 theme/custom="uid://d26u4ffjbtvf8"
+theme/custom_font="uid://cl7cmdn6sfwjb"
 
 [input]
 

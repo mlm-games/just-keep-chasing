@@ -55,11 +55,9 @@ const TRANSITION_DURATION = 0.3
 @onready var enemy_spawn_timer: Timer = %EnemySpawnTimer
 @onready var powerup_spawn_timer: Timer = %PowerupSpawnTimer
 
-var enemy_spawn_type_range := Vector2i(1, 1)
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
 var guns: Array[GunData] = []
-var spawnable_enemies : Dictionary = {} #key: spawn_range, value: Enemydata
 var random_autoscroll_speed: Vector2 = Vector2(randf_range(-500, 500), randf_range(-500, 500))
 
 func _ready() -> void:
@@ -70,7 +68,7 @@ func _ready() -> void:
 	for gun:GunData in GameState.collection_res.guns.values():
 		if gun.unlocked:
 			guns.append(gun)
-	spawnable_enemies = GameState.collection_res.get_enemy_dict_by_spawn_order()
+	EnemyData.spawnable_enemies = GameState.collection_res.get_enemy_dict_by_spawn_order()
 
 func _on_autoscroll_timer_timeout() -> void:
 	random_autoscroll_speed = Vector2(randf_range(-50, 50), randf_range(-50, 50))
@@ -80,23 +78,25 @@ func _on_autoscroll_timer_timeout() -> void:
 
 func _on_enemy_spawn_timer_timeout() -> void:
 	spawn_enemy()
-	match hud.elapsed_time:
-		30:
-			enemy_spawn_type_range.y = 2
+
+func time_based_enemy_type_changer() -> void:
+	match GameState.elapsed_time:
+		15:
+			EnemyData.enemy_spawn_type_range.y = 2
 			enemy_spawn_timer.wait_time = 3
-		75:
-			enemy_spawn_type_range.y = 3
+		45:
+			EnemyData.enemy_spawn_type_range.y = 3
 			enemy_spawn_timer.wait_time = 4
-		120: 
-			enemy_spawn_type_range.y = 4
+		75: 
+			EnemyData.enemy_spawn_type_range.y = 4
 			enemy_spawn_timer.wait_time = 5
-		180:
-			#enemy_spawn_type_range.y = 4
+		100:
+			EnemyData.enemy_spawn_type_range.y = 4
 			enemy_spawn_timer.wait_time = 2.5
-		_:
-			enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
-			if enemy_spawn_timer.wait_time == 0.5:
-				GameStats.modify_stat(GameStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION, GameStats.Operation.ADD, -0.1)
+		#_:
+			#enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
+			#if enemy_spawn_timer.wait_time == 0.5:
+				#GameStats.modify_stat(GameStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION, GameStats.Operation.ADD, -0.1)
 
 func _on_powerup_spawn_timer_timeout() -> void:
 	powerup_spawn_timer.start()
@@ -111,19 +111,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		pick_up_weapon()
 
 func spawn_enemy() -> void:
-	var enemy_data : EnemyData = spawnable_enemies[randi_range(enemy_spawn_type_range.x, enemy_spawn_type_range.y)]
-	var enemy_scene : PackedScene = enemy_data.base_enemy_scene
-	var enemy_instance:SlimeEnemy = enemy_scene.instantiate()
-	enemy_instance.set_data_values(enemy_data)
-	enemy_instance.get_node("HealthComponent").max_health *= GameStats.get_stat(GameStats.Stats.ENEMY_HEALTH_MULT)
 	out_of_view_spawn_location.progress_ratio = randf()
-	enemy_instance.global_position = out_of_view_spawn_location.global_position
-	enemies_node.add_child(enemy_instance)
+	
+	enemies_node.add_child(EnemyData.spawn_enemy(EnemyData.get_random_by_spawn_chance(), out_of_view_spawn_location.global_position))
 
 func spawn_powerup() -> void:
+	out_of_view_spawn_location.progress_ratio = randf()
+	
 	var powerup_data : PowerupData = get_random_powerup()
 	var powerup_instance : Powerup = Powerup.create_new_powerup(powerup_data)
-	out_of_view_spawn_location.progress_ratio = randf()
 	powerup_instance.global_position = out_of_view_spawn_location.global_position
 	powerups_node.add_child(powerup_instance)
 
@@ -192,7 +188,7 @@ func use_powerup(powerup_type: int) -> void:
 				player.health_component.heal_or_damage(20)
 			GameState.PowerupType.INVINCIBLE:
 				player.health_component.disable_for_secs(20)
-		hud.update_hud_buttons()
+		#hud.update_hud_buttons()
 
 func start_gun_trial(gun: GunData) -> void:
 	# Instance the trial scene

@@ -8,5 +8,5 @@ func _on_hitbox_component_area_entered(area: Area2D) -> void:
 		await tween.finished
 		
 		#TODO: play_audio()
-		area.collect()
+		if area: area.collect()
 		

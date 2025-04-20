@@ -1,4 +1,4 @@
-extends Control
+class_name WinScreen extends Control
 
 #@export var world_scene : PackedScene
 
@@ -19,3 +19,7 @@ func _on_continue_button_pressed() -> void:
 	get_tree().paused = false
 	#get_parent().remove_child(self)
 	#self.queue_free()
+
+static func new_win_screen() -> WinScreen:
+	return load("uid://degok78oygxw3").instantiate()
+	

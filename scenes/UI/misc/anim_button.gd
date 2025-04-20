@@ -5,6 +5,7 @@ class_name AnimButton extends Button
 @onready var audio_stream_player: AudioStreamPlayer = AudioStreamPlayer.new()
 @onready var hover_sound: AudioStreamPlayer = $HoverSound
 
+
 var tween: Tween
 
 func _ready() -> void:
@@ -17,7 +18,7 @@ func _ready() -> void:
 	pivot_offset = size/2
 	
 	audio_stream_player.bus = "Sfx"
-	get_tree().get_root().add_child.call_deferred(audio_stream_player)
+	get_tree().root.add_child.call_deferred(audio_stream_player)
 	
 	#Label stuff
 	#_setup_text_animation()
