@@ -16,12 +16,20 @@ var initial_touch_position : Vector2
 @onready var currency_label: RichTextLabel = %CurrencyLabel
 @onready var next_upgrade_bar: ProgressBar = %NextUpgradeBar
 
+var progress_bar_tween: Tween
+
 #func _ready() -> void:
 	#if GameState.gameplay_options["hide_touch_buttons"]:
 		#slow_time_button.hide()
 		#screen_blast_button.hide()
 		#heal_button.hide()
 		#invincible_button.hide()
+
+func update_progress_bar(val: int) -> void:
+	if progress_bar_tween: progress_bar_tween.kill()
+	
+	progress_bar_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	progress_bar_tween.tween_property(next_upgrade_bar, "value", minf(val / GameState.upgrade_shop_spawn_divisor, 1), 0.35)
 
 func update_timer_label() -> void:
 	@warning_ignore("integer_division")

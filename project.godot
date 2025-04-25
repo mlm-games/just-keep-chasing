@@ -34,7 +34,7 @@ config/icon="uid://duc0bvo61ljvv"
 ScreenEffects="*res://autoloads/transitions.tscn"
 DebugShortcuts="*res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.tscn"
 GameState="*res://autoloads/game_state.gd"
-GameStats="*res://autoloads/game_stats.gd"
+CharacterStats="*res://autoloads/character_stats.gd"
 CountStats="*res://autoloads/count_stats.gd"
 SettingsData="*res://addons/basic_settings_menu/settings_data.gd"
 TooltipManager="*res://resources/misc/tooltip_manager.gd"
@@ -45,7 +45,7 @@ BasicAchievements="*res://addons/achievements/achievements.gd"
 achievements/save_directory="user://achievements"
 achievements/local_source="res://achievements.json"
 achievements/save_file_name="achievements_save.dat"
-achievements/password="HPdS9ppq68cTJmTzQ8nugtGHz"
+achievements/password="p0Z5EhiLiQdmNCgd4jBJpDdn0"
 
 [category]
 

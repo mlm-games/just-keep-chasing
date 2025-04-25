@@ -23,7 +23,8 @@ func _ready() -> void:
 
 func pick_augment_by_rarity() -> Augments:
 	var temp_augment : Augments = GameState.collection_res.augments.values().pick_random()
-	if temp_augment.rarity.current_value < randf():
+	var is_buyable : bool = temp_augment.augment_price * GameState.price_multiplier < GameState.research_points - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD)
+	if temp_augment.rarity > randf() and !is_buyable:
 		temp_augment = pick_augment_by_rarity()
 	return temp_augment
 
@@ -37,7 +38,7 @@ func setup_slot() -> void:
 		red_out_unbuyable_slots()
 
 func red_out_unbuyable_slots() -> void:
-	if final_price > GameState.research_points - GameStats.get_stat(GameStats.Stats.ITEM_LEND_THRESHOLD):
+	if final_price > GameState.research_points - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD):
 		%PriceContainer.modulate = Color(1.0, 0.333, 0.11)
 		modulate = Color(0.7, 0.7, 0.7) # Dim the whole slot
 
@@ -75,7 +76,7 @@ func _on_panel_mouse_exited() -> void:
 	hover_tween.tween_property(self, "scale", original_scale, 0.1)
 
 func buy_if_rich_enough() -> void:
-	if GameState.research_points + GameStats.get_stat(GameStats.Stats.ITEM_LEND_THRESHOLD) >= final_price:
+	if GameState.research_points - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD) >= final_price:
 		GameState.apply_augment(augment)
 		# Increase the price multiplier after purchase
 		GameState.price_multiplier *= (1 + GameState.price_increase_rate)

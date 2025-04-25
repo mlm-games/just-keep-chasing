@@ -6,4 +6,6 @@ class_name Augments extends BaseData
 
 @export_group("Data")
 @export var stats_to_modify : Array[StatModifier]
-@export var rarity : GameStats.StatDefinition = GameStats.StatDefinition.new(1,0,1)
+@export var rarity : float = 1:
+	set(val):
+		rarity = clampf(val, 0, 1)

@@ -67,7 +67,6 @@ states/moving/position = Vector2(630, 100)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_qtdod"), "idle", "moving", SubResource("AnimationNodeStateMachineTransition_bmtj2"), "moving", "idle", SubResource("AnimationNodeStateMachineTransition_142j5")]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_k2410"]
-graph_offset = Vector2(-769.419, 59.2123)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_bs7f4")
 nodes/Add2/position = Vector2(80, 140)
 nodes/Hurt/node = SubResource("AnimationNodeStateMachine_bl56h")
@@ -195,7 +194,10 @@ shape = SubResource("CircleShape2D_8iqyn")
 [node name="PickupsCheckerComponent" type="Node2D" parent="HitboxComponent"]
 script = ExtResource("4_kqtwu")
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="HealthComponent" parent="." instance=ExtResource("6_bedk8")]
+unique_name_in_owner = true
+
+[node name="ProgressBar" type="ProgressBar" parent="HealthComponent"]
 unique_name_in_owner = true
 offset_left = -38.0
 offset_top = 42.0
@@ -203,9 +205,6 @@ offset_right = 42.0
 offset_bottom = 60.0
 theme = ExtResource("6_8qvmc")
 show_percentage = false
-
-[node name="HealthComponent" parent="." instance=ExtResource("6_bedk8")]
-unique_name_in_owner = true
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeBlendTree_k2410")

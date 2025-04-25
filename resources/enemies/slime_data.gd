@@ -34,6 +34,6 @@ static func spawn_enemy(enemy_data: EnemyData, global_pos: Vector2) -> SlimeEnem
 	var enemy_scene : PackedScene = enemy_data.base_enemy_scene
 	var enemy_instance:SlimeEnemy = enemy_scene.instantiate()
 	enemy_instance.set_data_values(enemy_data)
-	enemy_instance.get_node("HealthComponent").max_health *= GameStats.get_stat(GameStats.Stats.ENEMY_HEALTH_MULT)
+	enemy_instance.get_node("HealthComponent").max_health *= CharacterStats.get_stat(CharacterStats.Stats.ENEMY_HEALTH_MULT)
 	enemy_instance.global_position = global_pos
 	return enemy_instance

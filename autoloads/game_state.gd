@@ -13,6 +13,7 @@ const RESEARCH_TEXTURE = "assets/sprites/currency.png"
 
 static var collection_res : CollectionResource = CollectionResource.new()
 
+
 #region global_game_specific_variables
 
 var elapsed_time : int = 0:
@@ -66,8 +67,9 @@ var research_points : int = 0:
 	set(val):
 		research_points = val
 		if world: 
+			
 			world.hud.update_currency_label()
-			world.hud.next_upgrade_bar.value = minf(val / GameState.upgrade_shop_spawn_divisor, 1)
+			world.hud.update_progress_bar(val)
 
 #var current_level: int = 1
 var is_game_paused: bool = false
@@ -134,7 +136,7 @@ func get_currency_bbcode() -> String:
 
 func apply_augment(augment: Augments) -> void:
 	for stat:StatModifier in augment.stats_to_modify:
-		GameStats.modify_stat(stat.key, stat.operation, stat.value)
+		CharacterStats.modify_stat(stat.key, stat.operation, stat.value)
 
 
 func update_highest_game_time(time: float) -> void:

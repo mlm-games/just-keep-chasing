@@ -57,16 +57,16 @@ func spawn_bullet() -> void:
 		for _i in range(gun_data.bullets_per_shot):
 			var bullet_data: ProjectileData = gun_data.bullet.duplicate(true)
 			if get_parent() is Player:
-				bullet_data.projectile_damage *= GameStats.get_stat(GameStats.Stats.PLAYER_DAMAGE_MULT)
-				bullet_data.projectile_damage += GameStats.get_stat(GameStats.Stats.RAW_DAMAGE_MOD)
+				bullet_data.projectile_damage *= CharacterStats.get_stat(CharacterStats.Stats.PLAYER_DAMAGE_MULT)
+				bullet_data.projectile_damage += CharacterStats.get_stat(CharacterStats.Stats.RAW_DAMAGE_MOD)
 				#@warning_ignore("narrowing_conversion")
-				#bullet_data.projectile_range *= GameStats.get_stat(GameStats.Stats.TARGETTING_RANGE_MULT)
+				#bullet_data.projectile_range *= CharacterStats.get_stat(CharacterStats.Stats.TARGETTING_RANGE_MULT)
 				#bullet_data.projectile_speed *=
 			if get_parent() is SlimeEnemy:
-				bullet_data.projectile_damage += GameStats.get_stat(GameStats.Stats.RAW_GUN_ENEMY_DAMAGE_REDUCTION)
-				bullet_data.projectile_damage *= GameStats.get_stat(GameStats.Stats.GUN_ENEMY_DAMAGE_MULT)
+				bullet_data.projectile_damage += CharacterStats.get_stat(CharacterStats.Stats.RAW_GUN_ENEMY_DAMAGE_REDUCTION)
+				bullet_data.projectile_damage *= CharacterStats.get_stat(CharacterStats.Stats.GUN_ENEMY_DAMAGE_MULT)
 				#@warning_ignore("narrowing_conversion")
-				#bullet_data.projectile_range *= GameStats.get_stat(GameStats.Stats.GUN_ENEMY_TARGETTING_RANGE_MULT)
+				#bullet_data.projectile_range *= CharacterStats.get_stat(CharacterStats.Stats.GUN_ENEMY_TARGETTING_RANGE_MULT)
 			ScreenEffects.camera_shake(gun_data.screen_shake_amplitude, gun_data.fire_rate) 
 			var bullet_instance : BaseProjectile = BaseProjectile.new_instance(bullet_data)
 			bullet_instance.global_position = bullet_spawn_point.global_position
@@ -89,12 +89,12 @@ func auto_aim_at_target() -> void:
 	if not _target_in_range.is_empty():
 		var target : Area2D = _target_in_range[0]
 		var direction : Vector2 = (target.global_position - global_position).normalized()
-		rotation = lerp_angle(rotation, direction.angle(), GameStats.get_stat(GameStats.Stats.GUN_TARGETTING_SPEED))
+		rotation = lerp_angle(rotation, direction.angle(), CharacterStats.get_stat(CharacterStats.Stats.GUN_TARGETTING_SPEED))
 		rotation = wrapf(rotation, -PI/2, 3*PI/2)
 
 func manual_aim_at_target() -> void:
 	var direction : Vector2 = GameState.shooting_joystick_direction
-	rotation = lerp_angle(rotation, direction.angle(), GameStats.get_stat(GameStats.Stats.GUN_TARGETTING_SPEED))
+	rotation = lerp_angle(rotation, direction.angle(), CharacterStats.get_stat(CharacterStats.Stats.GUN_TARGETTING_SPEED))
 	rotation = wrapf(rotation, -PI/2, 3*PI/2)
 
 func _on_base_weapon_area_entered(area: Area2D) -> void:

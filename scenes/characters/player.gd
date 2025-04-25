@@ -14,7 +14,7 @@ func _ready() -> void:
 	add_child(base_gun)
 	
 	# Initialize health with game stats
-	update_max_health(GameStats.get_stat(GameStats.Stats.PLAYER_MAX_HEALTH))
+	update_max_health(CharacterStats.get_stat(CharacterStats.Stats.PLAYER_MAX_HEALTH))
 
 func _physics_process(_delta: float) -> void:
 	var direction : Vector2 = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -22,7 +22,7 @@ func _physics_process(_delta: float) -> void:
 	if GameState.movement_joystick_direction != Vector2.ZERO:
 		direction = GameState.movement_joystick_direction
 	
-	velocity = direction.normalized() * GameStats.get_stat(GameStats.Stats.PLAYER_SPEED)
+	velocity = direction.normalized() * CharacterStats.get_stat(CharacterStats.Stats.PLAYER_SPEED)
 	
 	if velocity.x > 0:
 		%Sprite2D.flip_h = true

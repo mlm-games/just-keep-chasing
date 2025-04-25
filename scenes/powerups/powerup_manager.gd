@@ -10,7 +10,7 @@ static func create_new_powerup(passed_data: PowerupData) -> Powerup:
 	return powerup_instance
 
 func _ready() -> void:
-	$CollisionShape2D.shape.radius = GameStats.get_stat(GameStats.Stats.POWERUP_PICKUP_RANGE)
+	$CollisionShape2D.shape.radius = CharacterStats.get_stat(CharacterStats.Stats.POWERUP_PICKUP_RANGE)
 	$Sprite2D.texture = powerup_data.icon
 	$Sprite2D.modulate = powerup_data.icon_modulate
 	$Sprite2D.scale = powerup_data.icon_scale

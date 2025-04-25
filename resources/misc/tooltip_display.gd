@@ -42,14 +42,14 @@ func set_content(content: TooltipContent) -> void:
 
 func position_relative_to(target: Control) -> void:
 		await get_tree().process_frame
-		center_above_if_space_or_below(target, Vector2(0, MARGIN))
+		if self: center_above_if_space_or_below(target, Vector2(0, MARGIN))
 
 func show_with_animation() -> void:
 		show()
 		scale = Vector2.ZERO
 		rotation_degrees = -5
 		
-		var tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC).parallel()
+		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC).parallel()
 		tween.tween_property(self, "scale", Vector2.ONE, 0.3)
 		tween.tween_property(self, "rotation_degrees", 0, 0.3)
 

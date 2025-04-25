@@ -22,11 +22,11 @@ enum HealthModificationType {
 func _ready() -> void:
 	if parent is BaseEnemy:
 		# Apply enemy health modifications from game stats
-		max_health -= GameStats.get_stat(GameStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION)
-		max_health *= GameStats.get_stat(GameStats.Stats.ENEMY_HEALTH_MULT)
+		max_health -= CharacterStats.get_stat(CharacterStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION)
+		max_health *= CharacterStats.get_stat(CharacterStats.Stats.ENEMY_HEALTH_MULT)
 	else:
 		# For player, use player health stat
-		max_health = GameStats.get_stat(GameStats.Stats.PLAYER_MAX_HEALTH)
+		max_health = CharacterStats.get_stat(CharacterStats.Stats.PLAYER_MAX_HEALTH)
 	
 	current_health = max_health
 	health_changed.emit(current_health)
@@ -36,7 +36,7 @@ func damage(attack: Attack) -> void:
 		var final_damage : float = attack.attack_damage
 		if parent is Player:
 			# Apply damage reduction for player
-			final_damage *= (1 - GameStats.get_stat(GameStats.Stats.PLAYER_DAMAGE_REDUCTION))
+			final_damage *= (1 - CharacterStats.get_stat(CharacterStats.Stats.PLAYER_DAMAGE_REDUCTION))
 		current_health -= final_damage
 		if parent is SlimeEnemy:
 			CountStats.increment_stat("damage_dealt", int(final_damage))
@@ -50,7 +50,7 @@ func heal_or_damage(amount: float, type: HealthModificationType = HealthModifica
 		if parent is Player:
 		# Apply healing multiplier for player
 		#TODO: add heal particle effects
-			amount *= GameStats.get_stat(GameStats.Stats.HEALING_MULT)
+			amount *= CharacterStats.get_stat(CharacterStats.Stats.HEALING_MULT)
 			
 			CountStats.total_count_stats["health_healed"] += amount
 		

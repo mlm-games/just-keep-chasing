@@ -96,7 +96,7 @@ func time_based_enemy_type_changer() -> void:
 		#_:
 			#enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
 			#if enemy_spawn_timer.wait_time == 0.5:
-				#GameStats.modify_stat(GameStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION, GameStats.Operation.ADD, -0.1)
+				#CharacterStats.modify_stat(CharacterStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION, CharacterStats.Operation.ADD, -0.1)
 
 func _on_powerup_spawn_timer_timeout() -> void:
 	powerup_spawn_timer.start()
