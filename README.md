@@ -1,5 +1,3 @@
-will archive until releases and tag syncing from github and codeberg has a proper implementation ..
-
 # Just Keep Chasing
 
 A wave-based shooter game where survival is key. Fight through endless waves of enemies while collecting upgrades and managing resources.
