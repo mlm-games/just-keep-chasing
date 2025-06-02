@@ -2,9 +2,9 @@ name: Build and Release Game
 
 on:
   push:
-    branches: ['main', 'develop']
+    branches: '**'
   pull_request:
-    branches: ['main']
+    branches: '**'
   workflow_dispatch:
     inputs:
       version:
@@ -32,7 +32,89 @@ env:
   BUILD_OUTPUT_DIR: '${{ github.workspace }}/builds'
 
 jobs:
-  # Generate release notes first if this is a release
+  # Detect export presets from the project
+  detect-platforms:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.detect.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Detect export presets
+        id: detect
+        run: |
+          # Extract preset names from export_presets.cfg
+          if [ ! -f "export_presets.cfg" ]; then
+            echo "Error: export_presets.cfg not found"
+            exit 1
+          fi
+          
+          # Parse preset names and create matrix
+          presets=$(grep -E '^name="[^"]*"' export_presets.cfg | sed 's/name="\([^"]*\)"/\1/')
+          
+          # Create JSON matrix
+          matrix_json='{"include":['
+          first=true
+          
+          while IFS= read -r preset; do
+            if [ -n "$preset" ]; then
+              # Determine artifact name and extension based on preset name
+              artifact_name=""
+              file_extension=""
+              
+              case "$preset" in
+                *"Windows"*)
+                  artifact_name="windows"
+                  file_extension=".exe"
+                  ;;
+                *"Linux/X11 arm64"*|*"Linux arm64"*)
+                  artifact_name="linux-arm64"
+                  file_extension=".arm64"
+                  ;;
+                *"Linux"*|*"X11"*)
+                  artifact_name="linux-x64"
+                  file_extension=".x86_64"
+                  ;;
+                *"macOS"*|*"Mac"*)
+                  artifact_name="macos"
+                  file_extension=".zip"
+                  ;;
+                *"Android x86"*)
+                  artifact_name="android-x86"
+                  file_extension=".apk"
+                  ;;
+                *"Android"*)
+                  artifact_name="android"
+                  file_extension=".apk"
+                  ;;
+                *"Web"*|*"HTML"*)
+                  artifact_name="web"
+                  file_extension=".html"
+                  ;;
+                *)
+                  # Generic fallback
+                  artifact_name=$(echo "$preset" | tr '[:upper:]' '[:lower:]' | tr ' /' '-')
+                  file_extension=""
+                  ;;
+              esac
+              
+              if [ "$first" = false ]; then
+                matrix_json+=','
+              fi
+              first=false
+              
+              matrix_json+="{\"platform\":\"$preset\",\"artifact_name\":\"$artifact_name\",\"file_extension\":\"$file_extension\"}"
+            fi
+          done <<< "$presets"
+          
+          matrix_json+=']}'
+          
+          echo "Detected platforms: $presets"
+          echo "Matrix JSON: $matrix_json"
+          echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
+
+  # Generate release notes if this is a release
   prepare-release:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
@@ -58,35 +140,13 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: [prepare-release]
-    if: always() && (needs.prepare-release.result == 'success' || needs.prepare-release.result == 'skipped')
+    needs: [detect-platforms, prepare-release]
+    if: always() && needs.detect-platforms.result == 'success' && (needs.prepare-release.result == 'success' || needs.prepare-release.result == 'skipped')
     permissions:
       contents: write
     
     strategy:
-      matrix:
-        include:
-          - platform: 'Windows Desktop'
-            artifact_name: 'windows'
-            file_extension: '.exe'
-          - platform: 'Linux/X11'
-            artifact_name: 'linux-x64'
-            file_extension: '.x86_64'
-          - platform: 'Linux/X11 arm64'
-            artifact_name: 'linux-arm64'
-            file_extension: '.arm64'
-          - platform: 'macOS'
-            artifact_name: 'macos'
-            file_extension: '.zip'
-          - platform: 'Android'
-            artifact_name: 'android'
-            file_extension: '.apk'
-          - platform: 'Android x86 and x86 64'
-            artifact_name: 'android-x86'
-            file_extension: '.apk'
-          - platform: 'Web'
-            artifact_name: 'web'
-            file_extension: '.html'
+      matrix: ${{ fromJson(needs.detect-platforms.outputs.matrix) }}
       fail-fast: false
 
     steps:
@@ -94,7 +154,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          lfs: true  # Enable Git LFS for large files
+          lfs: true
 
       - name: Setup Git LFS
         run: |
@@ -122,8 +182,9 @@ jobs:
           EXPORT_PRESET_NAME: ${{ matrix.platform }}
           ITCH_USER_SLASH_GAME: ${{ env.ITCH_GAME_PATH }}
           BUTLER_UPLOAD: ${{ github.event_name == 'workflow_dispatch' && inputs.upload_to_itch || false }}
-          IMPORT_TIMEOUT: '60'  # Increase timeout for large projects
-          VERBOSE_IMPORT: true  # Enable verbose import for debugging
+          INSTALL_BLENDER: false
+          IMPORT_TIMEOUT: '60'
+          VERBOSE_IMPORT: true
           # Sensitive data
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
@@ -134,39 +195,48 @@ jobs:
       - name: Prepare artifacts
         id: prepare
         run: |
-          # Create organized directory structure
-          ARTIFACT_DIR="${{ env.BUILD_OUTPUT_DIR }}/${{ matrix.artifact_name }}"
-          mkdir -p "$ARTIFACT_DIR"
+          # Find the actual exported file
+          cd "${{ env.BUILD_OUTPUT_DIR }}"
           
-          # Handle different platform outputs
-          case "${{ matrix.platform }}" in
-            "Web")
-              # For web builds, zip the entire web directory
-              if [ -d "${{ env.BUILD_OUTPUT_DIR }}/web" ]; then
-                cd "${{ env.BUILD_OUTPUT_DIR }}/web"
-                zip -r "../${{ matrix.artifact_name }}.zip" .
-                cd -
-                mv "${{ env.BUILD_OUTPUT_DIR }}/${{ matrix.artifact_name }}.zip" "$ARTIFACT_DIR/"
+          # Get the export path for this preset from export_presets.cfg
+          preset_section=$(awk "/name=\"${{ matrix.platform }}\"/{flag=1} flag && /^\[/{exit} flag" ../export_presets.cfg)
+          export_path=$(echo "$preset_section" | grep 'export_path=' | head -1 | sed 's/.*export_path="\([^"]*\)".*/\1/')
+          
+          if [ -n "$export_path" ]; then
+            # Extract just the filename
+            export_filename=$(basename "$export_path")
+            echo "Looking for exported file: $export_filename"
+            
+            # Find the file
+            exported_file=$(find . -name "$export_filename" -type f | head -1)
+            
+            if [ -n "$exported_file" ]; then
+              echo "Found exported file: $exported_file"
+              
+              # For web builds, create a zip
+              if [[ "${{ matrix.platform }}" == *"Web"* ]] || [[ "${{ matrix.platform }}" == *"HTML"* ]]; then
+                web_dir=$(dirname "$exported_file")
+                cd "$web_dir"
+                zip -r "../${{ matrix.artifact_name }}-v${{ inputs.version || github.sha }}.zip" .
+                cd ..
+                artifact_file="${{ matrix.artifact_name }}-v${{ inputs.version || github.sha }}.zip"
+              else
+                # For other platforms, rename the file with version
+                extension="${exported_file##*.}"
+                artifact_file="${{ matrix.artifact_name }}-v${{ inputs.version || github.sha }}.${extension}"
+                cp "$exported_file" "$artifact_file"
               fi
-              ;;
-            *)
-              # For other platforms, find and move the built files
-              find "${{ env.BUILD_OUTPUT_DIR }}" -type f \( -name "*${{ matrix.file_extension }}" -o -name "*.zip" -o -name "*.dmg" \) -exec mv {} "$ARTIFACT_DIR/" \;
-              ;;
-          esac
-          
-          # Create version file
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "${{ inputs.version }}" > "$ARTIFACT_DIR/version.txt"
-            echo "Version: ${{ inputs.version }}" > "$ARTIFACT_DIR/README.txt"
-            echo "Build Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> "$ARTIFACT_DIR/README.txt"
-            echo "Git Commit: ${{ github.sha }}" >> "$ARTIFACT_DIR/README.txt"
+              
+              echo "artifact_file=$artifact_file" >> $GITHUB_OUTPUT
+              echo "artifact_path=${{ env.BUILD_OUTPUT_DIR }}/$artifact_file" >> $GITHUB_OUTPUT
+            else
+              echo "Error: Could not find exported file"
+              exit 1
+            fi
           else
-            echo "${{ github.sha }}" > "$ARTIFACT_DIR/version.txt"
+            echo "Error: Could not determine export path for preset"
+            exit 1
           fi
-          
-          # Set output for artifact path
-          echo "artifact_path=$ARTIFACT_DIR" >> $GITHUB_OUTPUT
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -180,7 +250,7 @@ jobs:
     if: |
       github.event_name == 'workflow_dispatch' && 
       inputs.upload_releases
-    needs: [prepare-release, build]
+    needs: [detect-platforms, prepare-release, build]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -199,18 +269,12 @@ jobs:
           # Create release directory
           mkdir -p release-files
           
-          # Package each platform
-          for platform_dir in release-artifacts/*; do
-            if [ -d "$platform_dir" ]; then
-              platform_name=$(basename "$platform_dir")
-              cd "$platform_dir"
-              
-              # Create versioned archive
-              zip -r "../../release-files/just-keep-chasing-v${{ inputs.version }}-${platform_name}.zip" .
-              
-              cd ../..
-            fi
-          done
+          # Move all artifacts to release directory (they're already properly named)
+          find release-artifacts -type f -exec mv {} release-files/ \;
+          
+          # List files for debugging
+          echo "Release files:"
+          ls -la release-files/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -224,21 +288,14 @@ jobs:
             ${{ needs.prepare-release.outputs.release-notes }}
             
             ### 📦 Downloads
-            Choose the appropriate file for your platform:
-            - **Windows**: `just-keep-chasing-v${{ inputs.version }}-windows.zip`
-            - **Linux x64**: `just-keep-chasing-v${{ inputs.version }}-linux-x64.zip`
-            - **Linux ARM64**: `just-keep-chasing-v${{ inputs.version }}-linux-arm64.zip`
-            - **macOS**: `just-keep-chasing-v${{ inputs.version }}-macos.zip`
-            - **Android**: `just-keep-chasing-v${{ inputs.version }}-android.zip`
-            - **Android x86**: `just-keep-chasing-v${{ inputs.version }}-android-x86.zip`
-            - **Web**: `just-keep-chasing-v${{ inputs.version }}-web.zip`
+            Download the appropriate file for your platform from the assets below.
             
             ### 🚀 Installation
-            1. Download the appropriate file for your platform
-            2. Extract the archive
-            3. Run the executable (or install the APK for Android)
-            
-            For the web version, the files need to be hosted on a web server.
+            - **Windows**: Download the `.exe` file and run it
+            - **Linux**: Download the appropriate file, make it executable with `chmod +x`, then run it
+            - **macOS**: Download and extract the `.zip` file, then run the app
+            - **Android**: Download and install the `.apk` file
+            - **Web**: Download and extract the `.zip` file, then host on a web server
             
             ---
             Full changelog: [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
@@ -255,7 +312,7 @@ jobs:
   # Summary job
   summary:
     if: always()
-    needs: [build, create-release]
+    needs: [detect-platforms, build, create-release]
     runs-on: ubuntu-latest
     steps:
       - name: Build Summary
@@ -272,19 +329,16 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
           
-          echo "### Build Status" >> $GITHUB_STEP_SUMMARY
-          echo "| Platform | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|----------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "### Detected Platforms" >> $GITHUB_STEP_SUMMARY
+          echo "Platforms were automatically detected from export_presets.cfg" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           
-          # Check each platform build status
-          platforms=("windows" "linux-x64" "linux-arm64" "macos" "android" "android-x86" "web")
-          for platform in "${platforms[@]}"; do
-            if [ "${{ needs.build.result }}" == "success" ]; then
-              echo "| $platform | ✅ Success |" >> $GITHUB_STEP_SUMMARY
-                          else
-              echo "| $platform | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
-            fi
-          done
+          echo "### Build Status" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.build.result }}" == "success" ]; then
+            echo "✅ All builds completed successfully" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Some builds failed" >> $GITHUB_STEP_SUMMARY
+          fi
           
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Artifacts" >> $GITHUB_STEP_SUMMARY
@@ -296,7 +350,7 @@ jobs:
             echo "GitHub Release: [v${{ inputs.version }}](https://github.com/${{ github.repository }}/releases/tag/v${{ inputs.version }})" >> $GITHUB_STEP_SUMMARY
           fi
 
-  # Notify on failure
+
   notify-failure:
     if: failure()
     needs: [build, create-release]
@@ -330,4 +384,3 @@ jobs:
               body: body,
               labels: ['build-failure', 'automated']
             });
-
