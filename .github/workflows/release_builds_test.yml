@@ -185,7 +185,6 @@ jobs:
           INSTALL_BLENDER: false
           IMPORT_TIMEOUT: '60'
           VERBOSE_IMPORT: true
-          # Sensitive data
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
           KEYSTORE_PASSPHRASE: ${{ secrets.KEYSTORE_PASSPHRASE }}
@@ -377,38 +376,4 @@ jobs:
             echo "### Release" >> $GITHUB_STEP_SUMMARY
             echo "GitHub Release: [v${{ inputs.version }}](https://github.com/${{ github.repository }}/releases/tag/v${{ inputs.version }})" >> $GITHUB_STEP_SUMMARY
           fi
-
-
-  notify-failure:
-    if: failure()
-    needs: [build, create-release]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create failure issue
-        if: github.event_name == 'workflow_dispatch'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const title = `Build failed for v${{ inputs.version }}`;
-            const body = `## Build Failure Report
-            
-            The build workflow failed for version v${{ inputs.version }}.
-            
-            **Workflow Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-            **Triggered by:** @${{ github.actor }}
-            **Branch:** ${{ github.ref_name }}
-            
-            ### Configuration
-            - Pre-release: ${{ inputs.mark_prerelease }}
-            - Upload to GitHub: ${{ inputs.upload_releases }}
-            - Upload to itch.io: ${{ inputs.upload_to_itch }}
-            
-            Please check the workflow logs for more details.`;
-            
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: title,
-              body: body,
-              labels: ['build-failure', 'automated']
-            });
+  
