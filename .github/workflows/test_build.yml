@@ -2,66 +2,128 @@ name: Build and Release Game
 
 on:
   push:
-    branches: ['**']
+    branches: ['main', 'develop']
   pull_request:
-    branches: ['**']
+    branches: ['main']
   workflow_dispatch:
     inputs:
-      tag_name:
-        description: 'Release tag version'
+      version:
+        description: 'Version number (e.g., 1.0.0)'
         required: true
-        default: 'v1.0.0'
-      release_options:
-        type: object
-        properties:
-          upload_releases:
-            type: boolean
-            default: true
-            description: 'Upload to GitHub releases'
-          mark_prerelease:
-            type: boolean
-            default: false
-            description: 'Mark as pre-release'
-          upload_to_itch:
-            type: boolean
-            default: false
-            description: 'Upload to itch.io'
+        type: string
+      upload_releases:
+        description: 'Upload to GitHub releases'
+        required: false
+        default: true
+        type: boolean
+      mark_prerelease:
+        description: 'Mark as pre-release'
+        required: false
+        default: false
+        type: boolean
+      upload_to_itch:
+        description: 'Upload to itch.io'
+        required: false
+        default: false
+        type: boolean
 
-# Reusable configuration
 env:
   ITCH_GAME_PATH: 'ragebreaker/just-keep-chasing'
   BUILD_OUTPUT_DIR: '${{ github.workspace }}/builds'
 
 jobs:
+  # Generate release notes first if this is a release
+  prepare-release:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      release-notes: ${{ steps.notes.outputs.release-notes }}
+      release-name: ${{ steps.notes.outputs.release-name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate Release Notes
+        id: notes
+        uses: mlm-games/multi-release-notes@v1.0.2
+        with:
+          version: ${{ inputs.version }}
+          changelog-path: 'CHANGELOG.md'
+          format: '- {{subject}} by @{{author}}'
+          exclude-patterns: 'chore:,ci:,docs:,build:,Merge pull request'
+          auto-commit: 'true'
+          commit-message: 'chore: update changelog for v${{ inputs.version }}'
+
   build:
     runs-on: ubuntu-latest
+    needs: [prepare-release]
+    if: always() && (needs.prepare-release.result == 'success' || needs.prepare-release.result == 'skipped')
     permissions:
       contents: write
     
     strategy:
       matrix:
-        # Define platforms as a reusable list
-        platform:
-          - 'Windows Desktop'
-          - 'Linux/X11'
-          - 'Linux/X11 arm64'
-          - 'macOS'
-          - 'Android'
-          - 'Android x86 and x86 64'
-          - 'Web'
+        include:
+          - platform: 'Windows Desktop'
+            artifact_name: 'windows'
+            file_extension: '.exe'
+          - platform: 'Linux/X11'
+            artifact_name: 'linux-x64'
+            file_extension: '.x86_64'
+          - platform: 'Linux/X11 arm64'
+            artifact_name: 'linux-arm64'
+            file_extension: '.arm64'
+          - platform: 'macOS'
+            artifact_name: 'macos'
+            file_extension: '.zip'
+          - platform: 'Android'
+            artifact_name: 'android'
+            file_extension: '.apk'
+          - platform: 'Android x86 and x86 64'
+            artifact_name: 'android-x86'
+            file_extension: '.apk'
+          - platform: 'Web'
+            artifact_name: 'web'
+            file_extension: '.html'
       fail-fast: false
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true  # Enable Git LFS for large files
+
+      - name: Setup Git LFS
+        run: |
+          git lfs install
+          git lfs pull
+
+      - name: Cache Godot files
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/godot/
+            ~/.config/godot/
+            .godot/
+          key: ${{ runner.os }}-godot-${{ matrix.platform }}-${{ hashFiles('project.godot') }}
+          restore-keys: |
+            ${{ runner.os }}-godot-${{ matrix.platform }}-
+            ${{ runner.os }}-godot-
 
       - name: Build game for ${{ matrix.platform }}
+        id: build
         uses: mlm-games/godot-build-action@main
         with:
-          GODOT_PREVIEW_BUILDS: true
+          GODOT_VER: ''  # Empty string = use latest version
+          GODOT_PREVIEW_BUILDS: false
           EXPORT_PRESET_NAME: ${{ matrix.platform }}
           ITCH_USER_SLASH_GAME: ${{ env.ITCH_GAME_PATH }}
-          BUTLER_UPLOAD: ${{ inputs.release_options.upload_to_itch || false }}
+          BUTLER_UPLOAD: ${{ github.event_name == 'workflow_dispatch' && inputs.upload_to_itch || false }}
+          IMPORT_TIMEOUT: '60'  # Increase timeout for large projects
+          VERBOSE_IMPORT: true  # Enable verbose import for debugging
           # Sensitive data
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
@@ -69,34 +131,203 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Set artifact name
-        id: artifact-name
-        shell: bash
+      - name: Prepare artifacts
+        id: prepare
         run: |
-          PLATFORM="${{ matrix.platform }}"
-          SAFE_NAME="${PLATFORM//[^a-zA-Z0-9_]/_}"
-          echo "name=${SAFE_NAME}" >> $GITHUB_OUTPUT
-
+          # Create organized directory structure
+          ARTIFACT_DIR="${{ env.BUILD_OUTPUT_DIR }}/${{ matrix.artifact_name }}"
+          mkdir -p "$ARTIFACT_DIR"
           
+          # Handle different platform outputs
+          case "${{ matrix.platform }}" in
+            "Web")
+              # For web builds, zip the entire web directory
+              if [ -d "${{ env.BUILD_OUTPUT_DIR }}/web" ]; then
+                cd "${{ env.BUILD_OUTPUT_DIR }}/web"
+                zip -r "../${{ matrix.artifact_name }}.zip" .
+                cd -
+                mv "${{ env.BUILD_OUTPUT_DIR }}/${{ matrix.artifact_name }}.zip" "$ARTIFACT_DIR/"
+              fi
+              ;;
+            *)
+              # For other platforms, find and move the built files
+              find "${{ env.BUILD_OUTPUT_DIR }}" -type f \( -name "*${{ matrix.file_extension }}" -o -name "*.zip" -o -name "*.dmg" \) -exec mv {} "$ARTIFACT_DIR/" \;
+              ;;
+          esac
+          
+          # Create version file
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "${{ inputs.version }}" > "$ARTIFACT_DIR/version.txt"
+            echo "Version: ${{ inputs.version }}" > "$ARTIFACT_DIR/README.txt"
+            echo "Build Date: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> "$ARTIFACT_DIR/README.txt"
+            echo "Git Commit: ${{ github.sha }}" >> "$ARTIFACT_DIR/README.txt"
+          else
+            echo "${{ github.sha }}" > "$ARTIFACT_DIR/version.txt"
+          fi
+          
+          # Set output for artifact path
+          echo "artifact_path=$ARTIFACT_DIR" >> $GITHUB_OUTPUT
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.artifact-name.outputs.name }}
-          path: ${{ env.BUILD_OUTPUT_DIR }}
+          name: ${{ matrix.artifact_name }}
+          path: ${{ steps.prepare.outputs.artifact_path }}
+          retention-days: 30
 
-      - name: Create GitHub release
-        if: |
-          github.event_name == 'workflow_dispatch' && 
-          inputs.release_options.upload_releases
+  # Create release after all builds complete
+  create-release:
+    if: |
+      github.event_name == 'workflow_dispatch' && 
+      inputs.upload_releases
+    needs: [prepare-release, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts
+
+      - name: Prepare release files
+        run: |
+          # Create release directory
+          mkdir -p release-files
+          
+          # Package each platform
+          for platform_dir in release-artifacts/*; do
+            if [ -d "$platform_dir" ]; then
+              platform_name=$(basename "$platform_dir")
+              cd "$platform_dir"
+              
+              # Create versioned archive
+              zip -r "../../release-files/just-keep-chasing-v${{ inputs.version }}-${platform_name}.zip" .
+              
+              cd ../..
+            fi
+          done
+
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ env.BUILD_OUTPUT_DIR }}/*
-          name: ${{ inputs.tag_name }}
-          tag_name: ${{ inputs.tag_name }}
-          prerelease: ${{ inputs.release_options.mark_prerelease }}
-          generate_release_notes: true
+          tag_name: v${{ inputs.version }}
+          name: ${{ needs.prepare-release.outputs.release-name || format('Release v{0}', inputs.version) }}
           body: |
-            ## Release Notes
-            Please check the commit history for detailed changes.
+            ## 🎮 Just Keep Chasing - v${{ inputs.version }}
             
-            Full changelog will be available soon.
+            ### 📝 Release Notes
+            ${{ needs.prepare-release.outputs.release-notes }}
+            
+            ### 📦 Downloads
+            Choose the appropriate file for your platform:
+            - **Windows**: `just-keep-chasing-v${{ inputs.version }}-windows.zip`
+            - **Linux x64**: `just-keep-chasing-v${{ inputs.version }}-linux-x64.zip`
+            - **Linux ARM64**: `just-keep-chasing-v${{ inputs.version }}-linux-arm64.zip`
+            - **macOS**: `just-keep-chasing-v${{ inputs.version }}-macos.zip`
+            - **Android**: `just-keep-chasing-v${{ inputs.version }}-android.zip`
+            - **Android x86**: `just-keep-chasing-v${{ inputs.version }}-android-x86.zip`
+            - **Web**: `just-keep-chasing-v${{ inputs.version }}-web.zip`
+            
+            ### 🚀 Installation
+            1. Download the appropriate file for your platform
+            2. Extract the archive
+            3. Run the executable (or install the APK for Android)
+            
+            For the web version, the files need to be hosted on a web server.
+            
+            ---
+            Full changelog: [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
+          files: release-files/*
+          prerelease: ${{ inputs.mark_prerelease }}
+          draft: false
+
+      - name: Update major version tag
+        run: |
+          MAJOR_VERSION=$(echo "${{ inputs.version }}" | cut -d. -f1)
+          git tag -fa "v${MAJOR_VERSION}" -m "Update major version tag"
+          git push origin "v${MAJOR_VERSION}" --force
+
+  # Summary job
+  summary:
+    if: always()
+    needs: [build, create-release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Summary
+        run: |
+          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "### Release Information" >> $GITHUB_STEP_SUMMARY
+            echo "- **Version**: v${{ inputs.version }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Pre-release**: ${{ inputs.mark_prerelease }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Upload to GitHub**: ${{ inputs.upload_releases }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Upload to itch.io**: ${{ inputs.upload_to_itch }}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "### Build Status" >> $GITHUB_STEP_SUMMARY
+          echo "| Platform | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|--------|" >> $GITHUB_STEP_SUMMARY
+          
+          # Check each platform build status
+          platforms=("windows" "linux-x64" "linux-arm64" "macos" "android" "android-x86" "web")
+          for platform in "${platforms[@]}"; do
+            if [ "${{ needs.build.result }}" == "success" ]; then
+              echo "| $platform | ✅ Success |" >> $GITHUB_STEP_SUMMARY
+                          else
+              echo "| $platform | ❌ Failed |" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "Build artifacts are available in the [Actions artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) section." >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ inputs.upload_releases }}" == "true" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Release" >> $GITHUB_STEP_SUMMARY
+            echo "GitHub Release: [v${{ inputs.version }}](https://github.com/${{ github.repository }}/releases/tag/v${{ inputs.version }})" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # Notify on failure
+  notify-failure:
+    if: failure()
+    needs: [build, create-release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create failure issue
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `Build failed for v${{ inputs.version }}`;
+            const body = `## Build Failure Report
+            
+            The build workflow failed for version v${{ inputs.version }}.
+            
+            **Workflow Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            **Triggered by:** @${{ github.actor }}
+            **Branch:** ${{ github.ref_name }}
+            
+            ### Configuration
+            - Pre-release: ${{ inputs.mark_prerelease }}
+            - Upload to GitHub: ${{ inputs.upload_releases }}
+            - Upload to itch.io: ${{ inputs.upload_to_itch }}
+            
+            Please check the workflow logs for more details.`;
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['build-failure', 'automated']
+            });
+
