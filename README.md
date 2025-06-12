@@ -1,4 +1,4 @@
-# Just Keep Chasing
+# Just Keep Chasing (early alpha)
 
 A wave-based shooter game where survival is key. Fight through endless waves of enemies while collecting upgrades and managing resources.
 
