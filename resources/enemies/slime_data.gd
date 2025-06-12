@@ -19,6 +19,8 @@ class_name EnemyData extends BaseCharacterData
 
 @export var gun: GunData 
 
+
+
 static var spawnable_enemies: Dictionary[int, EnemyData] = {} #key: spawn_range, value: Enemydata
 static var enemy_spawn_type_range := Vector2i(1, 1)
 

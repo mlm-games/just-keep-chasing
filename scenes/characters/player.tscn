@@ -197,15 +197,6 @@ script = ExtResource("4_kqtwu")
 [node name="HealthComponent" parent="." instance=ExtResource("6_bedk8")]
 unique_name_in_owner = true
 
-[node name="ProgressBar" type="ProgressBar" parent="HealthComponent"]
-unique_name_in_owner = true
-offset_left = -38.0
-offset_top = 42.0
-offset_right = 42.0
-offset_bottom = 60.0
-theme = ExtResource("6_8qvmc")
-show_percentage = false
-
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeBlendTree_k2410")
 advance_expression_base_node = NodePath("..")
@@ -219,6 +210,15 @@ libraries = {
 }
 
 [node name="PlayerAnimation" type="Node2D" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+offset_left = -38.0
+offset_top = 42.0
+offset_right = 42.0
+offset_bottom = 60.0
+theme = ExtResource("6_8qvmc")
+show_percentage = false
 
 [connection signal="area_entered" from="HitboxComponent" to="HitboxComponent/PickupsCheckerComponent" method="_on_hitbox_component_area_entered"]
 [connection signal="entity_died" from="HealthComponent" to="." method="_on_health_component_entity_died"]

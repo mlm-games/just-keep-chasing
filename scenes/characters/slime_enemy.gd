@@ -51,6 +51,14 @@ func _physics_process(delta: float) -> void:
 	move_towards_player(delta)
 	update_animation()
 	apply_contact_damage(delta)
+	update_knock_timer(delta)
+
+func update_knock_timer(delta: float) -> void:
+	if knockback_timer > 0.0:
+		velocity = knockback
+		knockback_timer -= delta
+		if knockback_timer <= 0.0:
+			knockback = Vector2.ZERO
 
 func move_towards_player(delta: float) -> void:
 	var direction : Vector2 = global_position.direction_to(player.global_position)
@@ -58,6 +66,8 @@ func move_towards_player(delta: float) -> void:
 		velocity = velocity.lerp(direction * speed, 100 * delta)
 	else:
 		velocity = direction * speed
+	
+	update_knock_timer(delta)
 	move_and_slide()
 
 func update_animation() -> void:

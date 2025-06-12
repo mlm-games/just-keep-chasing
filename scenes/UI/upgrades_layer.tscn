@@ -95,7 +95,7 @@ layout_mode = 2
 [node name="RefreshButton" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 4
 text = "UI_REFRESH"
 script = ExtResource("5_mqd2u")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"

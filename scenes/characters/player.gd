@@ -1,4 +1,4 @@
-class_name Player extends CharacterBody2D
+class_name Player extends BaseCharacter
 
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var progress_bar: ProgressBar = %ProgressBar
@@ -6,6 +6,8 @@ class_name Player extends CharacterBody2D
 
 var taking_damage : bool = false
 var base_gun: BaseGun
+
+
 
 func _ready() -> void:
 	var initial_gun_data: GunData = GameState.collection_res.guns["pistol"]
@@ -16,7 +18,7 @@ func _ready() -> void:
 	# Initialize health with game stats
 	update_max_health(CharacterStats.get_stat(CharacterStats.Stats.PLAYER_MAX_HEALTH))
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var direction : Vector2 = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	
 	if GameState.movement_joystick_direction != Vector2.ZERO:
@@ -30,7 +32,15 @@ func _physics_process(_delta: float) -> void:
 		%Sprite2D.flip_h = false
 		
 	
+	update_knock_timer(delta)
 	move_and_slide()
+
+func update_knock_timer(delta: float) -> void:
+	if knockback_timer > 0.0:
+		velocity = knockback
+		knockback_timer -= delta
+		if knockback_timer <= 0.0:
+			knockback = Vector2.ZERO
 
 func _on_health_component_entity_died() -> void:
 	hide()

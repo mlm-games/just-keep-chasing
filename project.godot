@@ -45,7 +45,7 @@ BasicAchievements="*res://addons/achievements/achievements.gd"
 achievements/save_directory="user://achievements"
 achievements/local_source="res://achievements.json"
 achievements/save_file_name="achievements_save.dat"
-achievements/password="p0Z5EhiLiQdmNCgd4jBJpDdn0"
+achievements/password="orWThbw40jSDXXprcyBx055Zb"
 
 [category]
 

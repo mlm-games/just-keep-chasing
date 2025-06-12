@@ -30,11 +30,12 @@ texture = ExtResource("2_d2gw2")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mgdpr")
 
-[node name="EnemyHitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_cak1k")]
+[node name="EnemyHitboxComponent" parent="." node_paths=PackedStringArray("health_component", "parent") instance=ExtResource("3_cak1k")]
 unique_name_in_owner = true
 collision_layer = 4
 collision_mask = 3
 health_component = NodePath("../HealthComponent")
+parent = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitboxComponent"]
 shape = SubResource("RectangleShape2D_8pnp1")

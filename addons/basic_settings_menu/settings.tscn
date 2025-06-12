@@ -249,12 +249,14 @@ alignment = 2
 [node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/BottomContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
+size_flags_vertical = 4
 text = "MENU_LABEL_APPLY_AND_SAVE"
 script = ExtResource("3_i4dvr")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/BottomContainer"]
 layout_mode = 2
+size_flags_vertical = 4
 text = "MENU_LABEL_BACK"
 script = ExtResource("3_i4dvr")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"

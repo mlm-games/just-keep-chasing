@@ -1,4 +1,4 @@
-class_name BaseEnemy extends CharacterBody2D
+class_name BaseEnemy extends BaseCharacter
 
 #@onready var target = get_tree().get_first_node_in_group("Player")
 

@@ -15,6 +15,7 @@ var projectile_data: ProjectileData
 
 var attack := Attack.new()
 var travelled_distance := 0.0
+var direction : Vector2
 
 @onready var _rand_spread : float = deg_to_rad(randf_range(-projectile_data.projectile_spread, projectile_data.projectile_spread))
 
@@ -35,7 +36,7 @@ func _ready() -> void:
 	add_child(SpawnParticles.instantiate())
 
 func _physics_process(delta: float) -> void:
-	var direction : Vector2 = Vector2.RIGHT.rotated(rotation + _rand_spread)
+	direction = Vector2.RIGHT.rotated(rotation + _rand_spread)
 	position += direction * projectile_data.projectile_speed * delta
 	travelled_distance += projectile_data.projectile_speed * delta
 	if travelled_distance > projectile_data.projectile_range:
@@ -45,6 +46,8 @@ func _physics_process(delta: float) -> void:
 func _on_area_entered(body: Node2D) -> void:
 	if body is HitboxComponent:
 		attack.attack_damage = projectile_data.projectile_damage
+		
+		body.apply_knockback(direction, 10, 0.2)
 		if not is_nan(dot):
 			attack.dot_type = dot_type
 			attack.dot_duration = dot_duration
