@@ -38,14 +38,11 @@ CharacterStats="*res://autoloads/character_stats.gd"
 CountStats="*res://autoloads/count_stats.gd"
 SettingsData="*res://addons/basic_settings_menu/settings_data.gd"
 TooltipManager="*res://resources/misc/tooltip_manager.gd"
-BasicAchievements="*res://addons/achievements/achievements.gd"
+A="*res://addons/my_game_template/autoload.gd"
 
 [basic_achievements]
 
 achievements/save_directory="user://achievements"
-achievements/local_source="res://achievements.json"
-achievements/save_file_name="achievements_save.dat"
-achievements/password="orWThbw40jSDXXprcyBx055Zb"
 
 [category]
 

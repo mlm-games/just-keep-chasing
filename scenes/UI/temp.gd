@@ -19,7 +19,7 @@ func _ready() -> void:
 		"Shield": 90
 	})
 	
-	await  get_tree().create_timer(1).timeout
+	await get_tree().create_timer(1).timeout
 	tooltip.detach()
 	#normal_style = StyleBoxFlat.new()
 	#normal_style.bg_color = Color("#2a2a2e")

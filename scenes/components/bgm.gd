@@ -4,6 +4,7 @@ class_name BGMPlayer extends AudioStreamPlayer
 
 func _ready() -> void:
 	bus = "Music"
+	autoplay = true
 
 func fade_in_bgm() -> void:
 	var tween := create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_LINEAR)

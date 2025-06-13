@@ -50,6 +50,3 @@ text = "hihi"
 stream = ExtResource("3_5b6ss")
 volume_db = -20.0
 bus = &"Sfx"
-
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="pressed" from="." to="." method="_on_pressed"]

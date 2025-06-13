@@ -1,4 +1,5 @@
 class_name Powerup extends PickUp
+## Base powerup script
 
 const BasePowerupScene : PackedScene = preload("uid://x2gb17exe2xq")
 

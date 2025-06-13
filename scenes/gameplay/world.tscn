@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://x2gb17exe2xq" path="res://scenes/powerups/powerup.tscn" id="8_k1kj5"]
 [ext_resource type="Shader" uid="uid://bpib10m6uoyvv" path="res://resources/shaders/slow_motion.gdshader" id="9_k1kj5"]
 [ext_resource type="Resource" uid="uid://co1l4ykdh5yer" path="res://resources/powerups/slow_time_powerup.tres" id="9_xyviv"]
-[ext_resource type="AudioStream" uid="uid://bmiu5h0got4jq" path="res://assets/music/14._i_am_not_clumsy.mp3" id="10_22uad"]
+[ext_resource type="AudioStream" uid="uid://c64e8nsduvj6k" path="res://assets/music/restoration completed.ogg" id="10_22uad"]
 [ext_resource type="Script" uid="uid://cneut3slaadkb" path="res://scenes/components/bgm.gd" id="11_q3s4t"]
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="18_r7okl"]
 
@@ -335,6 +335,7 @@ color = Color(0.695503, 0.695503, 0.695503, 1)
 
 [node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_22uad")
+volume_db = -2.035
 autoplay = true
 script = ExtResource("11_q3s4t")
 metadata/_custom_type_script = "uid://cneut3slaadkb"
