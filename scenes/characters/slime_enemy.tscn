@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b383ofsmpqt55"]
+[gd_scene load_steps=14 format=3 uid="uid://b383ofsmpqt55"]
 
 [ext_resource type="Script" uid="uid://bv26fkvrv8bar" path="res://scenes/characters/slime_enemy.gd" id="1_spd34"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_d2gw2"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://c8ff8j0tad7ib" path="res://addons/godot_state_charts/compound_state.gd" id="7_0wae7"]
 [ext_resource type="Script" uid="uid://bxipn0uqdba0a" path="res://addons/godot_state_charts/atomic_state.gd" id="8_yxwxp"]
 [ext_resource type="Script" uid="uid://bwwobtdaprobr" path="res://addons/godot_state_charts/transition.gd" id="9_eqqb8"]
+[ext_resource type="Script" uid="uid://bh62la2plrk8u" path="res://scenes/components/velocity_component.gd" id="10_yxwxp"]
+[ext_resource type="Script" uid="uid://cjholoncokybo" path="res://scenes/components/follow_target_component.gd" id="11_eqqb8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
 size = Vector2(44, 40)
@@ -17,7 +19,6 @@ size = Vector2(44, 40)
 size = Vector2(56, 56)
 
 [node name="SlimeEnemy" type="CharacterBody2D" groups=["Enemies"]]
-position = Vector2(363, 235)
 motion_mode = 1
 platform_on_leave = 2
 platform_floor_layers = 4294967292
@@ -70,5 +71,13 @@ delay_in_seconds = "0.0"
 
 [node name="Dying" type="Node" parent="StateChart/CompoundState"]
 script = ExtResource("8_yxwxp")
+
+[node name="VelocityComponent" type="Node" parent="."]
+script = ExtResource("10_yxwxp")
+metadata/_custom_type_script = "uid://bh62la2plrk8u"
+
+[node name="FollowTargetComponent" type="Node" parent="."]
+script = ExtResource("11_eqqb8")
+metadata/_custom_type_script = "uid://cjholoncokybo"
 
 [connection signal="taking_damage" from="HealthComponent" to="." method="_on_health_component_taking_damage"]

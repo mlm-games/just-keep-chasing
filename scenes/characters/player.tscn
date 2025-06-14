@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b3mf65fcnvmvu"]
+[gd_scene load_steps=31 format=3 uid="uid://b3mf65fcnvmvu"]
 
 [ext_resource type="Script" uid="uid://crf18oy3oc75j" path="res://scenes/characters/player.gd" id="1_cvyhv"]
 [ext_resource type="Texture2D" uid="uid://brk1vhy0k5ah2" path="res://assets/sprites/player.svg" id="2_atpat"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="4_pwyjt"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="6_8qvmc"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="6_bedk8"]
+[ext_resource type="Script" uid="uid://bvb2hxpdk5tde" path="res://scenes/components/player_input_component.gd" id="7_6eyoc"]
+[ext_resource type="Script" uid="uid://bh62la2plrk8u" path="res://scenes/components/velocity_component.gd" id="8_eojnx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d6keb"]
 radius = 38.0132
@@ -171,6 +173,14 @@ platform_on_leave = 2
 platform_floor_layers = 4294967292
 script = ExtResource("1_cvyhv")
 
+[node name="VelocityComponent" type="Node" parent="."]
+script = ExtResource("8_eojnx")
+metadata/_custom_type_script = "uid://bh62la2plrk8u"
+
+[node name="PlayerInputComponent" type="Node" parent="."]
+script = ExtResource("7_6eyoc")
+metadata/_custom_type_script = "uid://bvb2hxpdk5tde"
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 scale = Vector2(0.3, 0.3)
@@ -221,6 +231,3 @@ theme = ExtResource("6_8qvmc")
 show_percentage = false
 
 [connection signal="area_entered" from="HitboxComponent" to="HitboxComponent/PickupsCheckerComponent" method="_on_hitbox_component_area_entered"]
-[connection signal="entity_died" from="HealthComponent" to="." method="_on_health_component_entity_died"]
-[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
-[connection signal="taking_damage" from="HealthComponent" to="." method="_on_health_component_taking_damage"]
