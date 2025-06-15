@@ -146,7 +146,6 @@ func _save_achievements() -> void:
 		file.store_string(JSON.stringify(save_data))
 		file.close()
 
-
 func _get_save_path() -> String:
 	var dir = ProjectSettings.get_setting(SETTINGS_BASE + "/save_directory")
 	DirAccess.make_dir_absolute(dir)

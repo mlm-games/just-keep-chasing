@@ -98,6 +98,6 @@ static func play_sfx_at_pos(sound: AudioStream, global_pos: Vector2i) -> void:
 static func _create_audio_player_with_bus(bus: NamedBus) -> AudioStreamPlayer2D:
 	var sfx_player := AudioStreamPlayer2D.new()
 	sfx_player.bus = AudioServer.get_bus_name(bus)
-	A.tree.root.add_child(sfx_player)
+	Engine.get_main_loop().current_scene.add_child(sfx_player)
 	return sfx_player
 	

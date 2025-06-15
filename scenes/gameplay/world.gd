@@ -71,7 +71,7 @@ func _ready() -> void:
 	EnemyData.spawnable_enemies = GameState.collection_res.get_enemy_dict_by_spawn_order()
 
 func _on_autoscroll_timer_timeout() -> void:
-	random_autoscroll_speed = Vector2(randf_range(-50, 50), randf_range(-50, 50))
+	random_autoscroll_speed = Vector2(randf_range(-20, 20), randf_range(-20, 20))
 	var tween : Tween = create_tween().set_ease(Tween.EASE_IN)
 	tween.tween_property(%BackgroundParallax2D, "autoscroll", %BackgroundParallax2D.autoscroll + random_autoscroll_speed, 15)
 	#TODO: Make the bigger parts stay constant and the smaller things move? or just add a background layer that doesnt move so it doesnt cause dizzyness

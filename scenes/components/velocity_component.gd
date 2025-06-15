@@ -49,7 +49,9 @@ func accelerate_in_direction(direction: Vector2) -> void:
 	if _is_knocked_back:
 		return
 		
-	velocity = direction.normalized() * speed
+	
+	## frame independent lerping for smoothness, low smoothing due to being present in liquid
+	velocity = velocity.lerp(direction.normalized() * speed, 1 - exp(-3 * get_physics_process_delta_time()))
 
 
 ## Applies an instant force, pushing the character back.

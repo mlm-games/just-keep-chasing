@@ -19,7 +19,7 @@ static var collection_res : CollectionResource = CollectionResource.new()
 var elapsed_time : int = 0:
 	set(val):
 		elapsed_time = val
-		world.time_based_enemy_type_changer()
+		if world: world.time_based_enemy_type_changer()
 
 var price_multiplier: float = 0.5
 var price_increase_rate: float = 0.07
@@ -145,8 +145,12 @@ func update_highest_game_time(time: float) -> void:
 
 
 # Methods for managing game state
-#func reset_game() -> void:
-	#research_points = 0
+func reset_game() -> void:
+	research_points = 0
+	elapsed_time = 0
+	price_multiplier = 0
+	price_increase_rate = 0.07
+	
 	#current_level = 1
 	#is_game_paused = false
 	#is_game_over = false
@@ -154,12 +158,12 @@ func update_highest_game_time(time: float) -> void:
 	#collected_items.clear()
 	#last_checkpoint = Vector2.ZERO
 	#respawn_position = Vector2.ZERO
-	# Reinitialize the player?
+	 #Reinitialize the player?
 
 
 
 #region Saving and loading
-
+#NOTE: To be done at the during the last phase of dev.
 func save_game() -> void:
 		# Implement saving game state to a file or database
 	pass
@@ -170,9 +174,6 @@ func load_game() -> void:
 	
 
 #Use a initial resource with all initial values and reset to that...? No that is for save reset... Just delete save file lul
-func reset_stats() -> void:
-	research_points = 0
-	price_multiplier = 1
 
 static var unlocked_guns: Dictionary = {}  # gun_name: bool
 var all_possible_guns : Dictionary
@@ -180,9 +181,6 @@ var all_possible_guns : Dictionary
 func unlock_gun(gun: GunData) -> void:
 	gun.unlocked = true
 	#TODO: save_unlocked_guns()
-
-#func is_gun_unlocked(gun: BaseGun) -> bool:
-	#return gun.unlocked
 
 func emit_research_points(enemy_position: Vector2, research_point_drops: int) -> void:
 	for i in research_point_drops:
