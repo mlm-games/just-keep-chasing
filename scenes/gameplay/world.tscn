@@ -4,24 +4,33 @@
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes/characters/player.tscn" id="3_vhnxw"]
 [ext_resource type="PackedScene" uid="uid://byks0f5xqnv20" path="res://scenes/gameplay/blockade.tscn" id="4_l562g"]
 [ext_resource type="Script" uid="uid://cso3agrkbovv8" path="res://scenes/saves/saver_loader.gd" id="5_m8xuy"]
+[ext_resource type="Shader" uid="uid://hinhyhe3jn5u" path="res://scenes/gameplay/blood_bg.gdshader" id="5_q3s4t"]
 [ext_resource type="PackedScene" uid="uid://p3ijv0nq3035" path="res://scenes/UI/hud.tscn" id="6_vltvt"]
 [ext_resource type="PackedScene" uid="uid://x2gb17exe2xq" path="res://scenes/powerups/powerup.tscn" id="8_k1kj5"]
-[ext_resource type="Shader" uid="uid://bpib10m6uoyvv" path="res://resources/shaders/slow_motion.gdshader" id="9_k1kj5"]
 [ext_resource type="Resource" uid="uid://co1l4ykdh5yer" path="res://resources/powerups/slow_time_powerup.tres" id="9_xyviv"]
 [ext_resource type="AudioStream" uid="uid://c64e8nsduvj6k" path="res://assets/music/restoration completed.ogg" id="10_22uad"]
 [ext_resource type="Script" uid="uid://cneut3slaadkb" path="res://scenes/components/bgm.gd" id="11_q3s4t"]
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="18_r7okl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y0ekr"]
+shader = ExtResource("5_q3s4t")
+shader_parameter/deep_color = Color(0.5, 0.05, 0.1, 1)
+shader_parameter/mid_color = Color(1, 0.1, 0.2, 1)
+shader_parameter/cell_color = Color(1, 0.5, 0.3, 1)
+shader_parameter/flow_speed = 0.023
+shader_parameter/noise_scale = 4.0
+shader_parameter/distortion_amount = 0.01
+shader_parameter/cell_scale = 25.0
+shader_parameter/cell_density = 0.15
+shader_parameter/cell_speed_multiplier = 1.5
+shader_parameter/vignette_intensity = 0.865
+shader_parameter/vignette_smoothness = 0.66
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_k1kj5"]
 noise_type = 2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xyviv"]
 noise = SubResource("FastNoiseLite_k1kj5")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xyviv"]
-shader = ExtResource("9_k1kj5")
-shader_parameter/chromatic_aberration = 0.0
-shader_parameter/vignette_intensity = 0.0
 
 [sub_resource type="Curve2D" id="Curve2D_xsefa"]
 _data = {
@@ -71,34 +80,10 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
+tracks/0/path = NodePath("Player/Camera2D:zoom")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Player/Camera2D:zoom")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -111,34 +96,10 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
-tracks/0/interp = 2
+tracks/0/path = NodePath("Player/Camera2D:zoom")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [2.0, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.3, 0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Player/Camera2D:zoom")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
@@ -151,34 +112,10 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/chromatic_aberration")
-tracks/0/interp = 2
+tracks/0/path = NodePath("Player/Camera2D:zoom")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 2.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BackgroundParallax2D/Vignette:material:shader_parameter/vignette_intensity")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.3]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Player/Camera2D:zoom")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
@@ -199,39 +136,11 @@ script = ExtResource("1_li0ht")
 unique_name_in_owner = true
 layer = 20
 
-[node name="NoiseParallax2D" type="Parallax2D" parent="."]
-scroll_scale = Vector2(1.15, 1.15)
-repeat_size = Vector2(1152, 648)
-
-[node name="TextureRect" type="TextureRect" parent="NoiseParallax2D"]
-modulate = Color(1, 1, 1, 0.219608)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1152.0
-offset_bottom = 648.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("NoiseTexture2D_xyviv")
-
 [node name="BackgroundParallax2D" type="Parallax2D" parent="."]
 unique_name_in_owner = true
 scroll_scale = Vector2(0.625, 0.625)
 scroll_offset = Vector2(1, 0)
 repeat_size = Vector2(1152, 896)
-
-[node name="Vignette" type="ColorRect" parent="BackgroundParallax2D"]
-unique_name_in_owner = true
-visible = false
-material = SubResource("ShaderMaterial_xyviv")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1151.0
-offset_right = 1151.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="BackgroundRect" type="TextureRect" parent="BackgroundParallax2D"]
 modulate = Color(0.859, 0.859, 0.859, 1)
@@ -242,6 +151,22 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("18_r7okl")
 stretch_mode = 1
+
+[node name="NoiseParallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.15, 1.15)
+repeat_size = Vector2(1152, 648)
+
+[node name="TextureRect" type="TextureRect" parent="NoiseParallax2D"]
+modulate = Color(1, 1, 1, 0.219608)
+material = SubResource("ShaderMaterial_y0ekr")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_xyviv")
 
 [node name="Player" parent="." instance=ExtResource("3_vhnxw")]
 unique_name_in_owner = true
@@ -279,6 +204,9 @@ position = Vector2(238, 226)
 powerup_data = ExtResource("9_xyviv")
 
 [node name="CurrencyNode" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="ProjectilesNode" type="Node2D" parent="." groups=["ProjectilesNode"]]
 unique_name_in_owner = true
 
 [node name="EnemySpawnTimer" type="Timer" parent="."]

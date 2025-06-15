@@ -6,7 +6,7 @@
 [ext_resource type="Shader" uid="uid://can28j4dr15ly" path="res://scenes/UI/cartoony_title.gdshader" id="4_ypw4e"]
 [ext_resource type="Script" uid="uid://d3qxlw41khhgp" path="res://scenes/UI/menu.gd" id="5"]
 [ext_resource type="Script" uid="uid://cplyjxscurihv" path="res://scenes/UI/godot_version.gd" id="5_fdyjp"]
-[ext_resource type="PackedScene" uid="uid://cs2fl7pw33da1" path="res://scenes/UI/misc/anim-button.tscn" id="8_aklih"]
+[ext_resource type="PackedScene" uid="uid://cs2fl7pw33da1" path="res://addons/my_ecosystem_template/buttons/anim-button.tscn" id="8_aklih"]
 [ext_resource type="PackedScene" uid="uid://dafuydxct5f01" path="res://scenes/components/background_static_particles.tscn" id="8_ofy2k"]
 [ext_resource type="AudioStream" uid="uid://bmiu5h0got4jq" path="res://assets/music/14._i_am_not_clumsy.mp3" id="10_wav1i"]
 [ext_resource type="Script" uid="uid://cneut3slaadkb" path="res://scenes/components/bgm.gd" id="11_3b8ea"]

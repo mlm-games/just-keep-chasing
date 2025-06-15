@@ -1,8 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://cs2fl7pw33da1"]
+[gd_scene load_steps=4 format=3 uid="uid://cs2fl7pw33da1"]
 
-[ext_resource type="Theme" uid="uid://bjirml4gi4wee" path="res://resources/theme-button-dark.tres" id="1_jhk12"]
-[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="1_s85m3"]
-[ext_resource type="AudioStream" uid="uid://qx8gmaebtcyn" path="res://assets/sfx/hover.ogg" id="3_5b6ss"]
+[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://addons/my_ecosystem_template/buttons/anim_button.gd" id="1_s85m3"]
 
 [sub_resource type="Gradient" id="Gradient_s85m3"]
 
@@ -43,10 +41,7 @@ material = SubResource("ShaderMaterial_5b6ss")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 29.0
-theme = ExtResource("1_jhk12")
 text = "hihi"
 
 [node name="HoverSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_5b6ss")
-volume_db = -20.0
-bus = &"Sfx"
+volume_db = -13.37

@@ -3,14 +3,6 @@ class_name BaseProjectile extends Area2D
 const BaseScene = preload("uid://b5x54mjk1mls0")
 const SpawnParticles = preload("uid://rhergnlmde1y")
 
-@export var speed : float
-@export var projectile_range := 1000
-@export var damage : float
-@export var spread : float
-@export var dot : float = NAN
-@export var dot_type : GameState.StatusEffectType
-@export var dot_duration : float = NAN
-
 var projectile_data: ProjectileData
 
 var attack := Attack.new()
@@ -48,9 +40,9 @@ func _on_area_entered(body: Node2D) -> void:
 		attack.attack_damage = projectile_data.projectile_damage
 		
 		body.apply_knockback(direction, 10, 0.2)
-		if not is_nan(dot):
-			attack.dot_type = dot_type
-			attack.dot_duration = dot_duration
-			attack.damage_over_time = dot
+		if not is_zero_approx(projectile_data.projectile_dot):
+			attack.dot_type = projectile_data.projectile_dot_type
+			attack.dot_duration = projectile_data.projectile_dot_duration
+			attack.damage_over_time = projectile_data.projectile_dot
 		body.damage(attack)
 	queue_free()

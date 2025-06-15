@@ -71,7 +71,7 @@ func spawn_bullet() -> void:
 			var bullet_instance : BaseProjectile = BaseProjectile.new_instance(bullet_data)
 			bullet_instance.global_position = bullet_spawn_point.global_position
 			bullet_instance.global_rotation_degrees = bullet_spawn_point.global_rotation_degrees + randf_range(-gun_data.bullet_spread, gun_data.bullet_spread)
-			get_tree().current_scene.add_child(bullet_instance)
+			get_tree().get_first_node_in_group("ProjectilesNode").add_child(bullet_instance)
 		ammo -= 1
 
 func reload() -> void:
@@ -86,9 +86,22 @@ func _onreload_timer_timeout() -> void:
 	ammo = gun_data.max_ammo
 
 func auto_aim_at_target() -> void:
-	if not _target_in_range.is_empty():
-		var target : Area2D = _target_in_range[0]
-		var direction : Vector2 = (target.global_position - global_position).normalized()
+	_target_in_range = _target_in_range.filter(func(t): return is_instance_valid(t))
+
+	if _target_in_range.is_empty(): return
+	
+	var closest_target: Node2D = null
+	var closest_dist_sq = INF # Use squared distance to avoid costly sqrt()
+	
+	for target in _target_in_range:
+		var dist_sq = global_position.distance_squared_to(target.global_position)
+		if dist_sq < closest_dist_sq:
+			closest_dist_sq = dist_sq
+			closest_target = target
+	
+	if closest_target:
+		var direction = (closest_target.global_position - global_position).normalized()
+
 		rotation = lerp_angle(rotation, direction.angle(), CharacterStats.get_stat(CharacterStats.Stats.GUN_TARGETTING_SPEED))
 		rotation = wrapf(rotation, -PI/2, 3*PI/2)
 

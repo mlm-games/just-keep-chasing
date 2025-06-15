@@ -36,9 +36,9 @@ DebugShortcuts="*res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.tscn
 GameState="*res://autoloads/game_state.gd"
 CharacterStats="*res://autoloads/character_stats.gd"
 CountStats="*res://autoloads/count_stats.gd"
-SettingsData="*res://addons/basic_settings_menu/settings_data.gd"
 TooltipManager="*res://resources/misc/tooltip_manager.gd"
-A="*res://addons/my_game_template/autoload.gd"
+SettingsData="*res://addons/basic_settings_menu/settings_data.gd"
+UiAudioM="*res://addons/my_ecosystem_template/autoloads/ui_audio_manager.gd"
 BasicAchievements="*res://addons/achievements/achievements.tscn"
 
 [basic_achievements]
@@ -66,6 +66,10 @@ enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/
 
 import/fbx2gltf/enabled=false
 import/blender/enabled=false
+
+[global_group]
+
+ProjectilesNode="Contains the node which contains all projectiles"
 
 [godot_resource_groups]
 

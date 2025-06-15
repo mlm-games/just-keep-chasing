@@ -216,7 +216,7 @@ func activate_slow_motion() -> void:
 		
 		# Play visual effects
 		animation_player.play("slow_motion_start")
-		vignette.visible = true
+		#vignette.visible = true
 		player.base_gun.set_ignore_time_scale()
 		
 		#Fixme: Play sound effect
@@ -235,6 +235,6 @@ func deactivate_slow_motion() -> void:
 			
 		player.base_gun.unset_ignore_time_scale()
 	animation_player.play("slow_motion_end")
-	vignette.visible = false
+	#vignette.visible = false
 	
 	#FIXME: play_normal_time_sound where it plays right before the timer is about to end (like star powerups in super mario)

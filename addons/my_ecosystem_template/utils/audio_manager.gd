@@ -55,7 +55,7 @@ static func play_random_sound(sounds: Array[AudioStream], volume_db: float = 0.0
 ##[br]
 ## [param duration]: The duration of the crossfade in seconds.
 static func crossfade_music(from_player: AudioStreamPlayer, to_player: AudioStreamPlayer, duration: float = 1.0) -> void:
-	if not from_player or not to_player: printerr("Click here"); return
+	if not from_player or not to_player: return
 
 	to_player.volume_db = -80.0 # Effectively silent
 	to_player.play()
@@ -65,39 +65,3 @@ static func crossfade_music(from_player: AudioStreamPlayer, to_player: AudioStre
 	tween.tween_property(from_player, "volume_db", -80.0, duration)
 	tween.tween_property(to_player, "volume_db", 0.0, duration)
 	tween.finished.connect(from_player.stop)
-
-#TODO: document these too
-
-## gives the bus index by name
-enum NamedBus {
-	MASTER,
-	SFX,
-	MUSIC
-}
-
-static var music_player = AudioStreamPlayer
-
-static var sfx_audio_players : Array[AudioStreamPlayer2D]
-
-## Can get values dynamically by:
-	#get: 
-		#if bus_names == []:
-			#for i in AudioServer.bus_count:
-				#bus_names.append(AudioServer.get_bus_name(i))
-		#return bus_names
-
-static func play_sfx_at_pos(sound: AudioStream, global_pos: Vector2i) -> void:
-	var a_player := _create_audio_player_with_bus(NamedBus.SFX)
-	a_player.stream = sound
-	a_player.global_position = global_pos
-	a_player.play()
-	
-	await a_player.finished
-	a_player.queue_free()
-
-static func _create_audio_player_with_bus(bus: NamedBus) -> AudioStreamPlayer2D:
-	var sfx_player := AudioStreamPlayer2D.new()
-	sfx_player.bus = AudioServer.get_bus_name(bus)
-	Engine.get_main_loop().current_scene.add_child(sfx_player)
-	return sfx_player
-	

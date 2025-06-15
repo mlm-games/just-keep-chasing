@@ -11,9 +11,6 @@ top_level = true
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_unj85")
-speed = 750.0
-dot = nan
-dot_duration = nan
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 0, 1)

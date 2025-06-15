@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://oqyl6r1j4383"]
 
 [ext_resource type="Script" uid="uid://b60etg3scw30w" path="res://scenes/UI/game_over_screen.gd" id="1_vfank"]
-[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://scenes/UI/misc/anim_button.gd" id="2_k3wv6"]
+[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://addons/my_ecosystem_template/buttons/anim_button.gd" id="2_k3wv6"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_rkvi0"]
 
