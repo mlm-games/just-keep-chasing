@@ -39,9 +39,11 @@ CountStats="*res://autoloads/count_stats.gd"
 SettingsData="*res://addons/basic_settings_menu/settings_data.gd"
 TooltipManager="*res://resources/misc/tooltip_manager.gd"
 A="*res://addons/my_game_template/autoload.gd"
+BasicAchievements="*res://addons/achievements/achievements.tscn"
 
 [basic_achievements]
 
+achievements/local_source="res://resources/achievements"
 achievements/save_directory="user://achievements"
 
 [category]

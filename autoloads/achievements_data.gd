@@ -1,4 +1,4 @@
-class_name Achievement extends Resource
+#class_name Achievement extends Resource
 
 static var achievements := {
 	"damage_dealer": {

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://c0c3rnhn25t4x"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_ge1l8"]
+
+[resource]
+script = ExtResource("1_ge1l8")
+title = "Survivor"
+description = "Win 10 games"
+reward = "Unlocks new character skin"
+count_goal = 10.0
+stat_key = "games_won"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"

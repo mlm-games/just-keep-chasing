@@ -12,3 +12,5 @@ func fade_in_bgm() -> void:
 	volume_db = -80
 	tween.tween_property(self, "volume_db", initial_vol, 1.0)
 	play()
+
+#TODO: A sound for reloading weapons

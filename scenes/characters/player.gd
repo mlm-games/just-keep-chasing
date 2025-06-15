@@ -10,7 +10,7 @@ class_name Player extends BaseCharacter
 
 var taking_damage := false
 var base_gun: BaseGun
-
+#TODO: A sound for reloading weapons
 
 func _ready() -> void:
 	input_component.direction_changed.connect(_on_input_direction_changed)

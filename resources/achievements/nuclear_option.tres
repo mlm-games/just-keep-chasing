@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://cvlarwqili3qx"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_t3jr3"]
+
+[resource]
+script = ExtResource("1_t3jr3")
+title = "Nuclear Option"
+description = "Use screen blast 25 times"
+reward = "Increases screen blast radius by 20%"
+count_goal = 25.0
+stat_key = "uid://ff18iggvak6h"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"

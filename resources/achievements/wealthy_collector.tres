@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://d3hob67tqd5sy"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_bu1q2"]
+
+[resource]
+script = ExtResource("1_bu1q2")
+title = "Wealthy Collector"
+description = "Collect 10000 currency"
+reward = "Increases currency pickup range by 50%"
+count_goal = 10000.0
+stat_key = "currency_collected"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"

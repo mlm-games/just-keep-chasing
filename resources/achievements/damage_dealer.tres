@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://dc0k7s0gp7lsb"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_eyvv6"]
+
+[resource]
+script = ExtResource("1_eyvv6")
+title = "Damage Dealer"
+description = "Deal 10000 total damage"
+reward = "Unlocks weapon: Sawed off shotgun"
+count_goal = 10000.0
+stat_key = "damage_dealt"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"

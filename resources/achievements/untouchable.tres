@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://bm1kq8q58k8l8"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_1mdyx"]
+
+[resource]
+script = ExtResource("1_1mdyx")
+title = "Untouchable"
+description = "Use invincibility powerup 20 times"
+reward = "Increases invincibility duration by 2 seconds"
+count_goal = 20.0
+stat_key = "uid://cw5xlfwubk72c"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"

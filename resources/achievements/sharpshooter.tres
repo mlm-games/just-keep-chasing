@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://c67ty1ul32pdl"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_k4epk"]
+
+[resource]
+script = ExtResource("1_k4epk")
+title = "Sharpshooter"
+description = "Achieve 90% targeting accuracy"
+reward = "Increases targeting range by 25%"
+count_goal = 90.0
+stat_key = "targeting_accuracy"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"

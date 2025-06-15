@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://c7jashbmnoxdx"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_hj4k7"]
+
+[resource]
+script = ExtResource("1_hj4k7")
+title = "Speed Demon"
+description = "Use slow time ability 50 times"
+reward = "Increases player speed by 10%"
+count_goal = 50.0
+stat_key = "uid://co1l4ykdh5yer"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
