@@ -2,71 +2,9 @@
 
 [ext_resource type="Script" uid="uid://c5dyub3hyvbo5" path="res://scenes/UI/win_screen.gd" id="1_8e61f"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="2_dfho5"]
+[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://addons/my_ecosystem_template/buttons/anim_button.gd" id="3_c1oj8"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_rkvi0"]
-
-[sub_resource type="GDScript" id="GDScript_3fk36"]
-script/source = "@tool
-class_name AnimButton extends Button
-
-#NOTE: the hover and click audio is configured from UiAudioM
-
-var tween: Tween
-
-func _ready() -> void:
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
-	button_down.connect(_on_button_down)
-	button_up.connect(_on_button_up)
-	pressed.connect(_on_pressed)
-	
-	set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	
-	pivot_offset = size/2
-	resized.connect(func(): pivot_offset = size/2)
-	
-	# get_tree().get_root().add_child.call_deferred(click_stream_player)
-	
-
-func _on_mouse_entered() -> void:
-	reset_tween()
-	tween.tween_property(self, \"scale\", Vector2(1.075, 1.075), 0.15).set_trans(Tween.TRANS_CUBIC)
-	if !Engine.is_editor_hint():
-		UiAudioM.play_hover_sound()
-
-func _on_mouse_exited() -> void:
-	reset_tween()
-	tween.tween_property(self, \"scale\", Vector2(1.0, 1.0), 0.15).set_trans(Tween.TRANS_CUBIC)
-
-func _on_button_down() -> void:
-	reset_tween()
-	tween.tween_property(self, \"scale\", Vector2(0.95, 0.95), 0.1).set_trans(Tween.TRANS_CUBIC)
-
-func _on_button_up() -> void:
-	reset_tween()
-	tween.tween_property(self, \"scale\", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_CUBIC)
-
-
-func _on_pressed() -> void:
-	if !Engine.is_editor_hint():
-		UiAudioM.play_click_sound()
-
-
-#FIXME: Doesnt work due to the timers not being syncronised properly, hence looking bad.
-	#await get_tree().create_timer(0.15).timeout
-	#_on_mouse_entered()
-
-# func _exit_tree() -> void:
-	#await click_stream_player.finished
-	#click_stream_player.volume_db = -1000
-	# click_stream_player.queue_free()
-
-func reset_tween() -> void:
-	if tween:
-		tween.kill()
-	tween = create_tween()
-"
 
 [sub_resource type="LabelSettings" id="LabelSettings_6kc6h"]
 font_size = 48
@@ -116,7 +54,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("2_dfho5")
 text = "Continue?"
-script = SubResource("GDScript_3fk36")
+script = ExtResource("3_c1oj8")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="MenuButton" type="Button" parent="MarginContainer/VBoxContainer"]
@@ -126,7 +64,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/outline_size = 5
 text = "Quit to menu?"
-script = SubResource("GDScript_3fk36")
+script = ExtResource("3_c1oj8")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
 [node name="GameOverLabel" type="Label" parent="MarginContainer"]

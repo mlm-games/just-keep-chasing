@@ -21,7 +21,7 @@ func collect() -> void:
 	GameState.powerup_collected(powerup_data.powerup_type)
 	RunData.world.use_powerup(powerup_data.powerup_type)
 	
-	CountStats.powerup_collection_stats[powerup_data] += 1
+	CountStats.powerup_collection_stats[CountStats.get_stat_key(powerup_data)] += 1
 	
 	queue_free()
 	#Hack: Use the non button implementation, then make the powerup buttons unlockable by achievements.. 

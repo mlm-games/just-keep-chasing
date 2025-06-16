@@ -39,8 +39,9 @@ CountStats="*res://autoloads/count_stats.gd"
 TooltipManager="*res://resources/misc/tooltip_manager.gd"
 SettingsData="*res://addons/basic_settings_menu/settings_data.gd"
 UiAudioM="*res://addons/my_ecosystem_template/autoloads/ui_audio_manager.gd"
-BasicAchievements="*res://addons/achievements/achievements.tscn"
 RunData="*res://autoloads/run_data.gd"
+CollectionManager="*res://autoloads/collection_manager.gd"
+BasicAchievements="*res://addons/achievements/achievements.tscn"
 
 [basic_achievements]
 

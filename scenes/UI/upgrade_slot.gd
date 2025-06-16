@@ -2,7 +2,7 @@ class_name SlotContainer extends MarginContainer
 
 signal slot_clicked
 #FIXME: Pick based on spawn chance
-@export var augment : Augments
+@export var augment : AugmentsData
 
 var panel_entered : bool = false
 var original_scale : Vector2
@@ -21,8 +21,8 @@ func _ready() -> void:
 	setup_slot()
 	pivot_offset = size / 2
 
-func pick_augment_by_rarity() -> Augments:
-	var temp_augment : Augments = GameState.collection_res.augments.values().pick_random()
+func pick_augment_by_rarity() -> AugmentsData:
+	var temp_augment : AugmentsData = CollectionManager.collection_res.augments.values().pick_random()
 	var is_buyable : bool = temp_augment.augment_price * GameState.price_multiplier < RunData.research_points - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD)
 	if temp_augment.rarity > randf() and !is_buyable:
 		temp_augment = pick_augment_by_rarity()
@@ -82,7 +82,7 @@ func buy_if_rich_enough() -> void:
 		GameState.price_multiplier *= (1 + GameState.price_increase_rate)
 		RunData.research_points -= final_price
 		
-		CountStats.augment_items_collection_stats[augment] += 1
+		CountStats.augment_items_collection_stats[augment.get_class() + " " + augment.resource_name] += 1
 		
 		queue_free()
 

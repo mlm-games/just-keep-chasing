@@ -34,7 +34,7 @@ func _ready() -> void:
 	
 	fire_rate_timer.wait_time = gun_data.fire_rate
 	fire_rate_timer.one_shot = true
-	fire_rate_timer.connect("timeout", _onfire_rate_timer_timeout)
+	fire_rate_timer.connect("timeout", _on_fire_rate_timer_timeout)
 	
 	
 
@@ -49,8 +49,8 @@ func _physics_process(_delta: float) -> void:
 
 func spawn_bullet() -> void:
 	if ammo > 0:
-		
-		CountStats.guns_fired_by_type_stats[gun_data] += 1
+		#var stat_key : StringName = CountStats.get_stat_key(gun_data) #FIXME: How is this an resource? Unfixable lol bug in engine?
+		#CountStats.guns_fired_by_type_stats[stat_key] += 1
 		%ShootAudioPlayer.play()
 		
 		%Sprite2D.rotation_degrees = 0
@@ -117,7 +117,7 @@ func _on_base_weapon_area_exited(area: Area2D) -> void:
 #	if area.get_parent().is_in_group("Enemies"):
 		_target_in_range.erase(area)
 
-func _onfire_rate_timer_timeout() -> void:
+func _on_fire_rate_timer_timeout() -> void:
 	if not _target_in_range.is_empty():
 		play_fire_animation()
 		spawn_bullet()

@@ -25,7 +25,7 @@ func _ready() -> void:
 	health_component.initialize(initial_max_health)
 
 
-	var initial_gun_data: GunData = GameState.collection_res.guns["pistol"]
+	var initial_gun_data: GunData = CollectionManager.all_guns["pistol"]
 	base_gun = initial_gun_data.weapon_scene.instantiate()
 	base_gun.gun_data = initial_gun_data
 	add_child(base_gun)

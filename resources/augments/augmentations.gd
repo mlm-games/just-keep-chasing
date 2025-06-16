@@ -1,4 +1,4 @@
-class_name Augments extends BaseData
+class_name AugmentsData extends BaseData
 
 @export_group("Display", "augment_")
 @export var augment_icon : Texture2D # = Redacted texture like dungeons and gamblers?

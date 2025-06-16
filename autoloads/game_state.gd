@@ -4,15 +4,8 @@ const MenuScene = "uid://c2gocuhw2o7py"
 const SettingsScene = "uid://dp42fom7cc3n0"
 const LoadedCurrencyScene = preload("uid://do1wux8nsle53")
 
-const AUGMENTS_DIR : String = "res://resources/augments/"
-const POWERUPS_DIR : String = "res://resources/powerups/"
-const ENEMY_DATA_DIR : String = "res://resources/enemies/"
-const GUN_DATA_DIR : String = "res://resources/guns/"
 const SETTINGS_RES_PATH: String = "user://settings.tres"
 const RESEARCH_TEXTURE = "assets/sprites/currency.png"
-
-static var collection_res : CollectionResource = CollectionResource.new()
-
 
 #region global_game_specific_variables
 
@@ -81,34 +74,6 @@ var upgrade_shop_spawn_divisor : float = 5
 
 #endregion
 
-
-
-func  _ready() -> void:
-	if OS.has_feature("editor"):
-		collection_res.augments = get_resource_paths_in_directory(AUGMENTS_DIR)
-		collection_res.powerups = get_resource_paths_in_directory(POWERUPS_DIR)
-		collection_res.enemies = get_resource_paths_in_directory(ENEMY_DATA_DIR)
-		collection_res.guns = get_resource_paths_in_directory(GUN_DATA_DIR)
-		print("Collection res save output:" + str(ResourceSaver.save(collection_res, "res://resources/collection_resource.tres")))
-	if collection_res.augments.is_empty():
-		collection_res = load("res://resources/collection_resource.tres")
-
-
-func get_resource_paths_in_directory(resources_dir: String, load_resource_paths: bool = false) -> Dictionary[StringName, Variant]:
-	var dir : DirAccess = DirAccess.open(resources_dir)
-	var res_list : Dictionary[StringName, Variant] = {}
-	if load_resource_paths:
-		for res:String in dir.get_files():
-			if res.ends_with(".tres"):
-				res_list.get_or_add(res.trim_suffix(".tres"),resources_dir + res)
-	else:
-		for res:String in dir.get_files():
-			if res.ends_with(".tres"):
-				var loaded_res : Resource = load(resources_dir + res)
-				loaded_res.id = res.trim_suffix(".tres")
-				res_list.get_or_add(res.trim_suffix(".tres"), loaded_res)
-	return res_list
-
 func powerup_collected(powerup_type: int) -> void:
 	powerups[powerup_type] += 1
 	#world.hud.update_hud_buttons()
@@ -117,7 +82,7 @@ func get_currency_bbcode() -> String:
 	return "[img=40px]%s[/img]" % RESEARCH_TEXTURE
 
 
-func apply_augment(augment: Augments) -> void:
+func apply_augment(augment: AugmentsData) -> void:
 	for stat:StatModifier in augment.stats_to_modify:
 		CharacterStats.modify_stat(stat.key, stat.operation, stat.value)
 

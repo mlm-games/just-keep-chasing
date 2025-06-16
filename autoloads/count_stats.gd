@@ -15,10 +15,10 @@ var total_count_stats : Dictionary[StringName, int] = {
 	"bullets_fired": 0
 }
 
-var powerup_collection_stats : Dictionary[PowerupData, int] = {}
-var enemies_type_killed_stats : Dictionary[EnemyData, int] = {}
-var guns_fired_by_type_stats : Dictionary[GunData, int] = {}
-var augment_items_collection_stats : Dictionary[Augments, int] = {}
+var powerup_collection_stats : Dictionary[StringName, int] = {}
+var enemies_type_killed_stats : Dictionary[StringName, int] = {}
+var guns_fired_by_type_stats : Dictionary[StringName, int] = {}
+var augment_items_collection_stats : Dictionary[StringName, int] = {}
 
 
 func _ready() -> void:
@@ -27,17 +27,17 @@ func _ready() -> void:
 
 ## Auto adds the keys instead of manually having to change them everytime
 func _init_dicts() -> void:
-	for enemy_type:EnemyData in GameState.collection_res.enemies.values():
-		enemies_type_killed_stats.get_or_add(enemy_type, 0)
+	for enemy_type:EnemyData in CollectionManager.all_enemies.values():
+		enemies_type_killed_stats.get_or_add( CountStats.get_stat_key(enemy_type), 0)
 	
-	for gun_type:GunData in GameState.collection_res.guns.values():
-		guns_fired_by_type_stats.get_or_add(gun_type, 0)
+	for gun_type:GunData in CollectionManager.all_guns.values():
+		guns_fired_by_type_stats.get_or_add( CountStats.get_stat_key(gun_type), 0)
 	
-	for augment:Augments in GameState.collection_res.augments.values():
-		augment_items_collection_stats.get_or_add(augment, 0)
+	for augment_type:AugmentsData in CollectionManager.all_augments.values():
+		augment_items_collection_stats.get_or_add( CountStats.get_stat_key(augment_type), 0)
 	
-	for powerup_type:PowerupData in GameState.collection_res.powerups.values():
-		powerup_collection_stats.get_or_add(powerup_type, 0)
+	for powerup_type:PowerupData in CollectionManager.all_powerups.values():
+		powerup_collection_stats.get_or_add( CountStats.get_stat_key(powerup_type), 0)
 
 func increment_stat(stat_key: Variant, amount: int = 1, stat_dict: Dictionary = total_count_stats) -> void:
 	if stat_dict.has(stat_key):
@@ -48,17 +48,18 @@ func increment_stat(stat_key: Variant, amount: int = 1, stat_dict: Dictionary = 
 
 signal stat_updated(stat_key: String, new_value: int)
 
-func get_stat(stat_key: Variant) -> int:
-	if stat_key is String:
-		return total_count_stats.get(stat_key, 0)
-	elif stat_key is PowerupData:
+func get_stat(stat_key: StringName) -> int:
+	#TODO: Doesnt work reliably, Change it later
+	if stat_key.contains("powerup") :
 		return powerup_collection_stats.get(stat_key, 0)
-	elif stat_key is Augments:
+	elif stat_key.contains("augment"):
 		return augment_items_collection_stats.get(stat_key, 0)
-	elif stat_key is GunData:
+	elif stat_key.contains("gun"):
 		return guns_fired_by_type_stats.get(stat_key, 0)
-	else:
+	elif stat_key.contains("enemy"):
 		return enemies_type_killed_stats.get(stat_key, 0)
+	else:
+		return total_count_stats.get(stat_key, 0)
 
 func save_stats() -> void:
 	var save_data := {
@@ -91,10 +92,10 @@ func load_stats() -> void:
 							total_count_stats[key] = loaded_stats[key]
 			
 			# Load resource-based stats
-			_deserialize_resource_dict(data.get("powerup_stats", {}), powerup_collection_stats, GameState.collection_res.powerups)
-			_deserialize_resource_dict(data.get("enemy_stats", {}), enemies_type_killed_stats, GameState.collection_res.enemies)
-			_deserialize_resource_dict(data.get("gun_stats", {}), guns_fired_by_type_stats, GameState.collection_res.guns)
-			_deserialize_resource_dict(data.get("augment_stats", {}), augment_items_collection_stats, GameState.collection_res.augments)
+			_deserialize_resource_dict(data.get("powerup_stats", {}), powerup_collection_stats, CollectionManager.collection_res.powerups)
+			_deserialize_resource_dict(data.get("enemy_stats", {}), enemies_type_killed_stats, CollectionManager.collection_res.enemies)
+			_deserialize_resource_dict(data.get("gun_stats", {}), guns_fired_by_type_stats, CollectionManager.collection_res.guns)
+			_deserialize_resource_dict(data.get("augment_stats", {}), augment_items_collection_stats, CollectionManager.collection_res.augments)
 	else:
 			push_error("Failed to load stats data: " + str(FileAccess.get_open_error()))
 
@@ -122,3 +123,7 @@ func update_longest_run_time(current_time: int) -> void:
 		total_count_stats["longest_run_time"] = current_time
 		stat_updated.emit("longest_run_time", current_time)
 		save_stats()
+
+
+static func get_stat_key(data: BaseData) -> StringName:
+	return (data.get_class() + " " + data.resource_name)

@@ -64,10 +64,10 @@ func _ready() -> void:
 	_on_autoscroll_timer_timeout()
 		# Only add unlocked guns to the available guns array
 	guns.clear()
-	for gun:GunData in GameState.collection_res.guns.values():
+	for gun:GunData in CollectionManager.collection_res.guns.values():
 		if gun.unlocked:
 			guns.append(gun)
-	EnemyData.spawnable_enemies = GameState.collection_res.get_enemy_dict_by_spawn_order()
+	EnemySpawner.spawnable_enemies = CollectionManager.get_enemy_dict_by_spawn_order()
 
 func _on_autoscroll_timer_timeout() -> void:
 	random_autoscroll_speed = Vector2(randf_range(-20, 20), randf_range(-20, 20))
@@ -81,16 +81,16 @@ func _on_enemy_spawn_timer_timeout() -> void:
 func time_based_enemy_type_changer() -> void:
 	match RunData.elapsed_time:
 		15:
-			EnemyData.enemy_spawn_type_range.y = 2
+			EnemySpawner.enemy_spawn_type_range.y = 2
 			enemy_spawn_timer.wait_time = 3
 		45:
-			EnemyData.enemy_spawn_type_range.y = 3
+			EnemySpawner.enemy_spawn_type_range.y = 3
 			enemy_spawn_timer.wait_time = 4
 		75: 
-			EnemyData.enemy_spawn_type_range.y = 4
+			EnemySpawner.enemy_spawn_type_range.y = 4
 			enemy_spawn_timer.wait_time = 5
 		100:
-			EnemyData.enemy_spawn_type_range.y = 4
+			EnemySpawner.enemy_spawn_type_range.y = 4
 			enemy_spawn_timer.wait_time = 2.5
 		#_:
 			#enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
@@ -112,7 +112,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func spawn_enemy() -> void:
 	out_of_view_spawn_location.progress_ratio = randf()
 	
-	enemies_node.add_child(EnemyData.spawn_enemy(EnemyData.get_random_by_spawn_chance(), out_of_view_spawn_location.global_position))
+	enemies_node.add_child(EnemySpawner.spawn_enemy(EnemySpawner.get_random_by_spawn_chance(), out_of_view_spawn_location.global_position))
 
 func spawn_powerup() -> void:
 	out_of_view_spawn_location.progress_ratio = randf()
@@ -124,7 +124,7 @@ func spawn_powerup() -> void:
 
 func get_random_powerup() -> PowerupData:
 	#TODO: Replace randfs in the powertype scene or script (as a static fn?) itself or implement a better version
-	var powerup_data: PowerupData = GameState.collection_res.powerups.values().pick_random()
+	var powerup_data: PowerupData = CollectionManager.collection_res.powerups.values().pick_random()
 	if powerup_data.spawn_chance_percent / 100 < randf():
 		powerup_data = get_random_powerup()
 	return powerup_data

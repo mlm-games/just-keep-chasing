@@ -18,23 +18,3 @@ class_name EnemyData extends BaseCharacterData
 @export var sprite_color : Color = Color.WHITE
 
 @export var gun: GunData 
-
-
-
-static var spawnable_enemies: Dictionary[int, EnemyData] = {} #key: spawn_range, value: Enemydata
-static var enemy_spawn_type_range := Vector2i(1, 1)
-
-
-static func get_random_by_spawn_chance() -> EnemyData:
-	#TODO: Replace randfs in the powertype scene or script (as a static fn?) itself or implement a better version
-	var enemy_data: EnemyData = spawnable_enemies[randi_range(enemy_spawn_type_range.x, enemy_spawn_type_range.y)]
-	if enemy_data.enemy_spawn_chance < randf():
-		enemy_data = get_random_by_spawn_chance()
-	return enemy_data
-
-static func spawn_enemy(enemy_data: EnemyData, global_pos: Vector2) -> SlimeEnemy:
-	var enemy_instance: SlimeEnemy = enemy_data.base_enemy_scene.instantiate()
-	enemy_instance.enemy_data_resource = enemy_data.duplicate()
-	enemy_instance.get_node("HealthComponent").max_health *= CharacterStats.get_stat(CharacterStats.Stats.ENEMY_HEALTH_MULT)
-	enemy_instance.global_position = global_pos
-	return enemy_instance
