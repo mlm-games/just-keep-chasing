@@ -1,19 +1,19 @@
 class_name BaseProjectile extends Area2D
 
-const BaseScene = preload("uid://b5x54mjk1mls0")
-const SpawnParticles = preload("uid://rhergnlmde1y")
-
 var projectile_data: ProjectileData
 
 var attack := Attack.new()
 var travelled_distance := 0.0
 var direction : Vector2
 
+var _pierced_enemies: int = 0
+
+
 @onready var _rand_spread : float = deg_to_rad(randf_range(-projectile_data.projectile_spread, projectile_data.projectile_spread))
 @onready var lifespan_timer: Timer = %LifespanTimer
 
 static func new_instance(data: ProjectileData) -> BaseProjectile:
-	var instance : BaseProjectile = BaseScene.instantiate()
+	var instance : BaseProjectile = data.base_scene.instantiate()
 	instance.projectile_data = data
 	return instance
 
@@ -29,7 +29,7 @@ func _ready() -> void:
 	$Sprite2D.offset = projectile_data.sprite_offset
 	$Sprite2D.rotation_degrees = projectile_data.sprite_rotation
 	$CollisionShape2D.shape.radius = projectile_data.collision_shape_radius
-	add_child(SpawnParticles.instantiate())
+	RunData.projectile_root.add_child(projectile_data.spawn_particles.instantiate())
 	
 	lifespan_timer.wait_time = projectile_data.lifespan_time
 	lifespan_timer.timeout.connect(queue_free)
@@ -54,4 +54,7 @@ func _on_area_entered(body: Node2D) -> void:
 			attack.dot_duration = projectile_data.projectile_dot_duration
 			attack.damage_over_time = projectile_data.projectile_dot
 		body.damage(attack)
-	queue_free()
+		
+		_pierced_enemies += 1
+		if _pierced_enemies >= projectile_data.projectile_max_pierce_count:
+			queue_free()

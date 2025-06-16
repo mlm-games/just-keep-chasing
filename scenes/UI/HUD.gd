@@ -29,12 +29,12 @@ func update_progress_bar(val: int) -> void:
 	if progress_bar_tween: progress_bar_tween.kill()
 	
 	progress_bar_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-	progress_bar_tween.tween_property(next_upgrade_bar, "value", minf(val / GameState.upgrade_shop_spawn_divisor, 1), 0.35)
+	progress_bar_tween.tween_property(next_upgrade_bar, "value", minf(val / RunData.upgrade_shop_spawn_divisor, 1), 0.35)
 
 func update_timer_label() -> void:
 	@warning_ignore("integer_division")
-	var minutes : int = GameState.elapsed_time / 60
-	var seconds : int = GameState.elapsed_time % 60
+	var minutes : int = RunData.elapsed_time / 60
+	var seconds : int = RunData.elapsed_time % 60
 	timer_label.text = TIMER_FORMAT % [minutes, seconds]
 
 #func update_hud_buttons() -> void:
@@ -45,30 +45,30 @@ func update_timer_label() -> void:
 		#update_invincible_button()
 
 func update_currency_label() -> void:
-	currency_label.text = GameState.get_currency_bbcode() + str(GameState.research_points)
+	currency_label.text = GameState.get_currency_bbcode() + str(RunData.research_points)
 #Fixme: Use enums or There should be another way to remove these redundant functions below
 #func update_slow_time_button() -> void:
-	#slow_time_button.text = str(GameState.powerups[0])
+	#slow_time_button.text = str(RunData.powerups[0])
 #
 #func update_screen_blast_button() -> void:
-	#screen_blast_button.text = str(GameState.powerups[1])
+	#screen_blast_button.text = str(RunData.powerups[1])
 #
 #func update_heal_button() -> void:
-	#heal_button.text = str(GameState.powerups[2])
+	#heal_button.text = str(RunData.powerups[2])
 #
 #func update_invincible_button() -> void:
-	#invincible_button.text = str(GameState.powerups[3])
+	#invincible_button.text = str(RunData.powerups[3])
 
 func check_time_condition() -> void:
 	#FIXME: Temp Upgrade condition, fix it later
-	if GameState.research_points / GameState.upgrade_shop_spawn_divisor > 1.0 and GameState.research_points != 0 and !GameState.is_in_shop:
-		GameState.upgrade_shop_spawn_divisor += 10 + (10 * (GameState.elapsed_time * 0.001))
+	if RunData.research_points / RunData.upgrade_shop_spawn_divisor > 1.0 and RunData.research_points != 0 and !GameState.is_in_shop:
+		RunData.upgrade_shop_spawn_divisor += 10 + (10 * (RunData.elapsed_time * 0.001))
 		#Hack: also some kind of sound for sure (in layer only)
 		add_child(UpgradesLayer.new_upgrade_layer())
 	
 	
 	# Win condition
-	if GameState.elapsed_time == 300:
+	if RunData.elapsed_time == 300:
 		if !pop_up_on_screen:
 			pop_up_on_screen = true
 			ScreenEffects.transition("circleIn")
@@ -112,7 +112,7 @@ func _input(event: InputEvent) -> void:
 #region Signals
 
 func _on_timer_timeout() -> void:
-	GameState.elapsed_time += 1
+	RunData.elapsed_time += 1
 	update_timer_label()
 	check_time_condition()
 	pop_up_on_screen = false
@@ -137,5 +137,5 @@ func _on_invincible_button_pressed() -> void:
 	#update_invincible_button()
 
 func _on_guns_button_pressed() -> void:
-	GameState.world.switch_weapon()
+	RunData.world.switch_weapon()
 #endregion

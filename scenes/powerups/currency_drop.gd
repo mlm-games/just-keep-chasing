@@ -17,7 +17,7 @@ func _ready() -> void:
 func collect() -> void:
 	audio_stream_player.reparent(get_tree().get_root())
 	audio_stream_player.play()
-	GameState.research_points += currency_value
+	RunData.research_points += currency_value
 	
 	CountStats.total_count_stats["essence_collected"] += currency_value
 	

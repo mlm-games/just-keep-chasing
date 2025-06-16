@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bay7bqbawigc8"]
+
+[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_w53ga"]
+[ext_resource type="Script" uid="uid://bcfhyd5l0uofx" path="res://scenes/weapons-related/flak_canister.gd" id="2_w53ga"]
+
+[node name="FlakCanister" instance=ExtResource("1_w53ga")]
+script = ExtResource("2_w53ga")
+shrapnel_scene = null
+shrapnel_count = 8
+shrapnel_spread_degrees = 45.0
+detonation_distance = 400.0

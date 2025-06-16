@@ -47,7 +47,7 @@ func damage(attack: Attack) -> void:
 	#TODO: move this to slime or base_enemy
 	if parent_node is SlimeEnemy:
 		CountStats.increment_stat("damage_dealt", int(final_damage))
-		GameState.world.add_child(DamageNumbers.new_damage_text(final_damage, parent_node.global_position))
+		RunData.world.add_child(DamageNumbers.new_damage_text(final_damage, parent_node.global_position))
 	
 	taking_damage.emit()
 	health_changed.emit(current_health)
@@ -109,7 +109,7 @@ func disable_for_secs(secs: float) -> void:
 #func display_floating_dmg_numbers(dmg_val: float) -> void:
 	#var nos_instance := ScreenEffects.FLOATING_DAMAGE_TEXT.instantiate()
 	#nos_instance.global_position = parent.global_position
-	#GameState.world.add_child(nos_instance)
+	#RunData.world.add_child(nos_instance)
 	#nos_instance.display(dmg_val)
 
 func check_for_death() -> void:

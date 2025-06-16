@@ -21,5 +21,7 @@ class_name ProjectileData extends Resource
 @export var collision_shape_radius : float = 9.0
 @export var collision_shape_mask: int = 3
 
+@export var base_scene : PackedScene = preload("uid://b5x54mjk1mls0")
+@export var spawn_particles : PackedScene = preload("uid://rhergnlmde1y")
 
 @export var lifespan_time : float = 100

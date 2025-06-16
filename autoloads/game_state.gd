@@ -16,11 +16,6 @@ static var collection_res : CollectionResource = CollectionResource.new()
 
 #region global_game_specific_variables
 
-var elapsed_time : int = 0:
-	set(val):
-		elapsed_time = val
-		if world: world.time_based_enemy_type_changer()
-
 var price_multiplier: float = 0.5
 var price_increase_rate: float = 0.07
 
@@ -63,13 +58,7 @@ enum Effects {
 #var player_lives: int = 1
 
 # Game-related properties
-var research_points : int = 0:
-	set(val):
-		research_points = val
-		if world: 
-			
-			world.hud.update_currency_label()
-			world.hud.update_progress_bar(val)
+
 
 #var current_level: int = 1
 var is_game_paused: bool = false
@@ -92,9 +81,7 @@ var upgrade_shop_spawn_divisor : float = 5
 
 #endregion
 
-var world: World
-var player: Player
-var hud: HUD
+
 
 func  _ready() -> void:
 	if OS.has_feature("editor"):
@@ -106,10 +93,6 @@ func  _ready() -> void:
 	if collection_res.augments.is_empty():
 		collection_res = load("res://resources/collection_resource.tres")
 
-func on_new_game_start() -> void:
-	world = get_tree().get_first_node_in_group("World")
-	player = get_tree().get_first_node_in_group("Player")
-	hud = get_tree().get_first_node_in_group("HUD")
 
 func get_resource_paths_in_directory(resources_dir: String, load_resource_paths: bool = false) -> Dictionary[StringName, Variant]:
 	var dir : DirAccess = DirAccess.open(resources_dir)
@@ -146,8 +129,6 @@ func update_highest_game_time(time: float) -> void:
 
 # Methods for managing game state
 func reset_game() -> void:
-	research_points = 0
-	elapsed_time = 0
 	price_multiplier = 0
 	price_increase_rate = 0.07
 	
@@ -186,6 +167,6 @@ func emit_research_points(enemy_position: Vector2, research_point_drops: int) ->
 	for i in research_point_drops:
 		var drop: CurrencyDrop = LoadedCurrencyScene.instantiate()
 		drop.global_position = enemy_position
-		world.call_deferred("add_child", drop)
+		RunData.world.add_child.call_deferred(drop)
 
 #endregion

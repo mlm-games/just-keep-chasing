@@ -1,5 +1,7 @@
 extends Node
 
+signal stat_changed(stat_key: Stats, new_value: float)
+
 class StatDefinition extends Resource:
 	var base_value: float
 	var current_value: float
@@ -75,8 +77,6 @@ var _stats: Dictionary[Stats, StatDefinition] = {
 	Stats.DROP_VALUE_MULTIPLIER: StatDefinition.new(1, 0.1),
 }
 
-signal stat_changed(stat_key: String, old_value: float, new_value: float)
-
 func get_stat(stat_key: Stats) -> float:
 	return _stats[stat_key].current_value if _stats.has(stat_key) else 0.0
 
@@ -105,11 +105,7 @@ func modify_stat(stat_key: Stats, operation: Operation, value: float) -> void:
 									 stat.min_value,
 									 stat.max_value)
 	
-	if stat_key == Stats.PLAYER_HEALTH:
-		get_tree().get_nodes_in_group("Player")[0].health_component.heal_or_damage(value)
-	elif stat_key == Stats.PLAYER_MAX_HEALTH:
-		get_tree().get_first_node_in_group("Player").update_max_health(stat.current_value)
-	emit_signal("stat_changed", stat_key, old_value, stat.current_value)
+	stat_changed.emit(stat_key, stat.current_value)
 
 #func apply_stat_modifier(stat: StatModifier) -> void:
 	#if stat.key == Stats.PLAYER_HEALTH:

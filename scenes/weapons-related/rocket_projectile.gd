@@ -11,7 +11,7 @@ func explode():
 	# Spawn the visual effect
 	if projectile_data.projectile_aoe_data.explosion_vfx:
 		var vfx = projectile_data.projectile_aoe_data.explosion_vfx.instantiate()
-		get_parent().add_child(vfx)
+		RunData.projectile_root.add_child(vfx)
 		vfx.global_position = global_position
 
 	# Find all hitbox components within the explosion radius

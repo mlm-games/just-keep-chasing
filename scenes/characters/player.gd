@@ -18,6 +18,7 @@ func _ready() -> void:
 	health_component.entity_died.connect(_on_health_component_entity_died)
 	health_component.health_changed.connect(_on_health_component_health_changed)
 	health_component.taking_damage.connect(_on_health_component_taking_damage)
+	CharacterStats.stat_changed.connect(_on_character_stat_changed)
 
 	var initial_max_health := CharacterStats.get_stat(CharacterStats.Stats.PLAYER_MAX_HEALTH)
 	
@@ -58,12 +59,19 @@ func update_animation() -> void:
 # You no longer need `update_knock_timer` here. It's gone!
 
 
+func _on_character_stat_changed(stat_key: CharacterStats.Stats, new_value: float):
+	if stat_key == CharacterStats.Stats.PLAYER_MAX_HEALTH:
+		health_component.set_max_health(new_value)
+	elif stat_key == CharacterStats.Stats.PLAYER_SPEED:
+		velocity_component.speed = new_value
+
 func _on_health_component_entity_died() -> void:
 	hide()
 	input_component.set_physics_process(false)
 	velocity_component.set_physics_process(false)
 	process_mode = Node.PROCESS_MODE_DISABLED
 	
+	#TODO: Use an uimanager instead
 	await get_tree().create_timer(0.5).timeout
 	ScreenEffects.change_scene_with_transition("uid://oqyl6r1j4383", "circleIn")
 

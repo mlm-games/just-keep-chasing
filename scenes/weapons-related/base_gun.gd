@@ -71,7 +71,7 @@ func spawn_bullet() -> void:
 			var bullet_instance : BaseProjectile = BaseProjectile.new_instance(bullet_data)
 			bullet_instance.global_position = bullet_spawn_point.global_position
 			bullet_instance.global_rotation_degrees = bullet_spawn_point.global_rotation_degrees + randf_range(-gun_data.bullet_spread, gun_data.bullet_spread)
-			get_tree().get_first_node_in_group("ProjectilesNode").add_child(bullet_instance)
+			RunData.projectile_root.add_child(bullet_instance)
 		ammo -= 1
 
 func reload() -> void:

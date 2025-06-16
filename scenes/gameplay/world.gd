@@ -43,7 +43,6 @@ const TRANSITION_DURATION = 0.3
 @onready var time_scale_tween: Tween
 
 @onready var animation_player := %AnimationPlayer
-@onready var vignette := %Vignette
 #@onready var time_scale_tween: Tween
 
 
@@ -61,7 +60,7 @@ var guns: Array[GunData] = []
 var random_autoscroll_speed: Vector2 = Vector2(randf_range(-500, 500), randf_range(-500, 500))
 
 func _ready() -> void:
-	GameState.on_new_game_start()
+	RunData.reset()
 	_on_autoscroll_timer_timeout()
 		# Only add unlocked guns to the available guns array
 	guns.clear()
@@ -80,7 +79,7 @@ func _on_enemy_spawn_timer_timeout() -> void:
 	spawn_enemy()
 
 func time_based_enemy_type_changer() -> void:
-	match GameState.elapsed_time:
+	match RunData.elapsed_time:
 		15:
 			EnemyData.enemy_spawn_type_range.y = 2
 			enemy_spawn_timer.wait_time = 3
@@ -172,14 +171,14 @@ func pick_up_weapon() -> void:
 
 
 func use_powerup(powerup_type: int) -> void:
-	if GameState.powerups[powerup_type] > 0:
-		GameState.powerups[powerup_type] -= 1
+	if RunData.powerups[powerup_type] > 0:
+		RunData.powerups[powerup_type] -= 1
 		match powerup_type:
 			GameState.PowerupType.SLOW_TIME:
 				if Engine.time_scale == 1:
 					activate_slow_motion()
 				else:
-					GameState.powerups[powerup_type] += 1
+					RunData.powerups[powerup_type] += 1
 			GameState.PowerupType.SCREEN_BLAST:
 				ScreenEffects.transition("slightFlash")
 				get_tree().call_group("On Screen Enemies", "queue_free")
