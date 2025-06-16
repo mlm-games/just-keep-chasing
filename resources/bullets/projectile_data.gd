@@ -8,6 +8,7 @@ class_name ProjectileData extends Resource
 @export var projectile_dot : float = 0
 @export var projectile_dot_duration : float = 0
 @export var projectile_dot_type : GameState.StatusEffectType = 0
+@export var projectile_aoe_data : AreaOfEffectAttack
 
 @export_group("Sprite Properties", "sprite_")
 @export var sprite_scale : Vector2 = Vector2(0.06, 0.17)

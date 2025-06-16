@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="GunData" load_steps=5 format=3 uid="uid://bqdrridmtt4q1"]
+
+[ext_resource type="Resource" uid="uid://cnp06ev13f5af" path="res://resources/bullets/rocket.tres" id="1_l1tml"]
+[ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="3_ddkhx"]
+[ext_resource type="Texture2D" uid="uid://dtcwya5fb7uxw" path="res://assets/sprites/weapons/rocket_launcher.svg" id="3_p456a"]
+[ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="5_vjhkm"]
+
+[resource]
+script = ExtResource("3_ddkhx")
+unlocked = false
+weapon_scene = ExtResource("5_vjhkm")
+sprite = ExtResource("3_p456a")
+bullet = ExtResource("1_l1tml")
+reload_time = 1.5
+max_ammo = 1
+ammo = null
+targeting_range = 600.0
+fire_rate = 0.5
+sprite_scale = Vector2(0.08, 0.08)
+sprite_position = Vector2(45, 5)
+sprite_rotation_degrees = 0.0
+sprite_flip_h = true
+sprite_modulate = Color(1, 1, 1, 1)
+bullet_spawn_offset = Vector2(300, -111)
+fire_animation_skew = 0.055
+fire_animation_duration = 0.375
+bullets_per_shot = 1
+bullet_spread = 0.0
+screen_shake_frequency = 19.75
+screen_shake_amplitude = 0.38
+id = "pistol"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://cvb1dimncgicl"
