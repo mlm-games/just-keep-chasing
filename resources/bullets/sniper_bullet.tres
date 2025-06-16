@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=2 format=3 uid="uid://iu7mno7fgee1"]
+
+[ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_64tkw"]
+
+[resource]
+script = ExtResource("1_64tkw")
+projectile_speed = 750.0
+projectile_range = 1000
+projectile_damage = -1.0
+projectile_spread = 0.0
+projectile_dot = 0.0
+projectile_dot_duration = 0.0
+projectile_dot_type = 0
+projectile_max_pierce_count = 3
+sprite_scale = Vector2(0.06, 0.17)
+sprite_modulate = Color(1, 1, 1, 1)
+sprite_rotation = 0.0
+sprite_offset = Vector2(0, 0)
+collision_shape_radius = 9.0
+collision_shape_mask = 3
+metadata/_custom_type_script = "uid://cr3s7huv3l64s"

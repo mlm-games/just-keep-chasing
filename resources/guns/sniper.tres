@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="GunData" load_steps=5 format=3 uid="uid://p55oxm68od4p"]
+
+[ext_resource type="Resource" uid="uid://iu7mno7fgee1" path="res://resources/bullets/sniper_bullet.tres" id="1_fah2k"]
+[ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="2_l7xjp"]
+[ext_resource type="Texture2D" uid="uid://bi2cgn31beb4c" path="res://assets/sprites/weapons/sniper.svg" id="3_fah2k"]
+[ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="4_62vhr"]
+
+[resource]
+script = ExtResource("2_l7xjp")
+unlocked = false
+weapon_scene = ExtResource("4_62vhr")
+sprite = ExtResource("3_fah2k")
+bullet = ExtResource("1_fah2k")
+reload_time = 1.25
+max_ammo = 30
+ammo = null
+targeting_range = 750.0
+fire_rate = 0.755
+sprite_scale = Vector2(1, 1)
+sprite_position = Vector2(45, 5)
+sprite_rotation_degrees = 0.0
+sprite_flip_h = true
+sprite_modulate = Color(0.164706, 0.207843, 0.188235, 1)
+bullet_spawn_offset = Vector2(400, -111)
+fire_animation_skew = 0.055
+fire_animation_duration = 0.375
+bullets_per_shot = 1
+bullet_spread = 0.0
+screen_shake_frequency = 5.12
+screen_shake_amplitude = 0.59
+id = "sniper"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://cvb1dimncgicl"

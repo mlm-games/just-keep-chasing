@@ -10,6 +10,7 @@ var travelled_distance := 0.0
 var direction : Vector2
 
 @onready var _rand_spread : float = deg_to_rad(randf_range(-projectile_data.projectile_spread, projectile_data.projectile_spread))
+@onready var lifespan_timer: Timer = %LifespanTimer
 
 static func new_instance(data: ProjectileData) -> BaseProjectile:
 	var instance : BaseProjectile = BaseScene.instantiate()
@@ -18,6 +19,9 @@ static func new_instance(data: ProjectileData) -> BaseProjectile:
 
 
 func _ready() -> void:
+	
+	area_entered.connect(_on_area_entered.bind())
+	
 	set_collision_mask_value(projectile_data.collision_shape_mask, true)
 	$Sprite2D.texture = projectile_data.sprite_texture
 	$Sprite2D.modulate = projectile_data.sprite_modulate
@@ -26,6 +30,11 @@ func _ready() -> void:
 	$Sprite2D.rotation_degrees = projectile_data.sprite_rotation
 	$CollisionShape2D.shape.radius = projectile_data.collision_shape_radius
 	add_child(SpawnParticles.instantiate())
+	
+	lifespan_timer.wait_time = projectile_data.lifespan_time
+	lifespan_timer.timeout.connect(queue_free)
+	
+
 
 func _physics_process(delta: float) -> void:
 	direction = Vector2.RIGHT.rotated(rotation + _rand_spread)

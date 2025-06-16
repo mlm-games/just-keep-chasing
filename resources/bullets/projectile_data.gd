@@ -9,6 +9,7 @@ class_name ProjectileData extends Resource
 @export var projectile_dot_duration : float = 0
 @export var projectile_dot_type : GameState.StatusEffectType = 0
 @export var projectile_aoe_data : AreaOfEffectAttack
+@export var projectile_max_pierce_count: int = 1
 
 @export_group("Sprite Properties", "sprite_")
 @export var sprite_scale : Vector2 = Vector2(0.06, 0.17)
@@ -19,3 +20,6 @@ class_name ProjectileData extends Resource
 
 @export var collision_shape_radius : float = 9.0
 @export var collision_shape_mask: int = 3
+
+
+@export var lifespan_time : float = 100
