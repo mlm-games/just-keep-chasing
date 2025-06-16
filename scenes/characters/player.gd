@@ -3,10 +3,11 @@ class_name Player extends BaseCharacter
 @onready var velocity_component: VelocityComponent = $VelocityComponent
 @onready var input_component: PlayerInputComponent = $PlayerInputComponent
 @onready var health_component: HealthComponent = %HealthComponent
-@onready var animation_tree: AnimationTree = $AnimationTree
+@onready var animation_component : AnimationComponent = $AnimationComponent
 @onready var sprite: Sprite2D = %Sprite2D
 
 @onready var progress_bar: ProgressBar = %ProgressBar
+@onready var inventory_component: InventoryComponent = $InventoryComponent
 
 var taking_damage := false
 var base_gun: BaseGun
@@ -18,19 +19,21 @@ func _ready() -> void:
 	health_component.entity_died.connect(_on_health_component_entity_died)
 	health_component.health_changed.connect(_on_health_component_health_changed)
 	health_component.taking_damage.connect(_on_health_component_taking_damage)
+	health_component.knockback_requested.connect(velocity_component.apply_knockback)
+	inventory_component.gun_switched.connect(_on_gun_switched)
+
 	CharacterStats.stat_changed.connect(_on_character_stat_changed)
 
 	var initial_max_health := CharacterStats.get_stat(CharacterStats.Stats.PLAYER_MAX_HEALTH)
 	
 	health_component.initialize(initial_max_health)
 
+	
+	var initial_gun_data = inventory_component.get_active_gun()
+	if initial_gun_data:
+		_equip_gun(initial_gun_data)
 
-	var initial_gun_data: GunData = CollectionManager.all_guns["pistol"]
-	base_gun = initial_gun_data.weapon_scene.instantiate()
-	base_gun.gun_data = initial_gun_data
-	add_child(base_gun)
-		
-	animation_tree.active = true
+	
 
 func _on_input_direction_changed(direction: Vector2) -> void:
 	velocity_component.accelerate_in_direction(direction)
@@ -38,17 +41,7 @@ func _on_input_direction_changed(direction: Vector2) -> void:
 func _physics_process(_delta: float) -> void:
 	velocity_component.speed = CharacterStats.get_stat(CharacterStats.Stats.PLAYER_SPEED)
 	
-	update_animation()
-
-func update_animation() -> void:
-	var current_velocity := velocity_component.velocity
-	
-	if current_velocity.x > 0:
-		sprite.flip_h = true
-	elif current_velocity.x < 0:
-		sprite.flip_h = false
-	
-	animation_tree.set("parameters/blend_position", current_velocity)
+	animation_component.update_movement(velocity_component.velocity)
 
 
 # NOTE: Knockback is now handled by the VelocityComponent.
@@ -71,13 +64,15 @@ func _on_health_component_entity_died() -> void:
 	velocity_component.set_physics_process(false)
 	process_mode = Node.PROCESS_MODE_DISABLED
 	
-	#TODO: Use an uimanager instead
 	await get_tree().create_timer(0.5).timeout
-	ScreenEffects.change_scene_with_transition("uid://oqyl6r1j4383", "circleIn")
+	ScreenEffects.transition("circleIn")
+	await ScreenEffects.transition_player.animation_finished
+	UIManager.push_layer(preload("uid://oqyl6r1j4383"))
+	ScreenEffects.transition("circleOut")
 
 func _on_health_component_taking_damage() -> void:
 	taking_damage = true
-	#TODO: call velocity_component.apply_knockback() here.
+	#TODO: velocity_component.apply_knockback() here.
 	ScreenEffects.screen_shake(0.1, 0.5)
 	await get_tree().create_timer(0.1).timeout
 	taking_damage = false
@@ -91,3 +86,19 @@ func _on_health_component_health_changed(new_health: float) -> void:
 
 func update_max_health(new_max_health: float) -> void:
 		health_component.initialize(new_max_health)
+
+
+func _equip_gun(gun_data: GunData):
+	if is_instance_valid(base_gun):
+		base_gun.queue_free()
+
+	if gun_data is ShotgunData:
+		base_gun = preload("uid://rks5cvegm0tb").instantiate()
+	else:
+		base_gun = preload("uid://djr17spwfqlsu").instantiate()
+	
+	base_gun.gun_data = gun_data
+	add_child(base_gun)
+
+func _on_gun_switched(new_gun_data: GunData):
+	_equip_gun(new_gun_data)

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="2_ny0ke"]
 [ext_resource type="Texture2D" uid="uid://b5wy5qam2nw48" path="res://assets/sprites/background_rbc.svg" id="3_svcqa"]
 [ext_resource type="Script" uid="uid://hgvitycqq2iu" path="res://scenes/UI/game_version.gd" id="4_3hod2"]
-[ext_resource type="Shader" uid="uid://can28j4dr15ly" path="res://scenes/UI/cartoony_title.gdshader" id="4_ypw4e"]
+[ext_resource type="Shader" uid="uid://can28j4dr15ly" path="res://scenes/UI/misc/cartoony_title.gdshader" id="4_ypw4e"]
 [ext_resource type="Script" uid="uid://d3qxlw41khhgp" path="res://scenes/UI/menu.gd" id="5"]
 [ext_resource type="Script" uid="uid://cplyjxscurihv" path="res://scenes/UI/godot_version.gd" id="5_fdyjp"]
 [ext_resource type="PackedScene" uid="uid://cs2fl7pw33da1" path="res://addons/my_ecosystem_template/buttons/anim-button.tscn" id="8_aklih"]
@@ -221,7 +221,8 @@ text = "Developer 3"
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -239,32 +240,32 @@ size_flags_vertical = 8
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="ResumeButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
+[node name="ResumeButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
 visible = false
 layout_mode = 2
 text = "MENU_LABEL_CONTINUE"
 
-[node name="PlayButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
+[node name="PlayButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_NEW_GAME"
 
-[node name="SettingsButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
+[node name="SettingsButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_SETTINGS"
 
-[node name="AchievementsButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
+[node name="AchievementsButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_ACHIEVEMENTS"
 
-[node name="ExitButton" parent="MarginContainer/PanelContainer/HBoxContainer" instance=ExtResource("8_aklih")]
+[node name="ExitButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_EXIT"
 
-[node name="Control" type="Control" parent="MarginContainer/PanelContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/PanelContainer/ButtonsContainer"]
 layout_mode = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

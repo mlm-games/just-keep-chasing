@@ -30,6 +30,7 @@ func _ready() -> void:
 	visible_on_screen_notifier_2d.screen_entered.connect(_on_visible_on_screen_notifier_2d_screen_entered)
 	visible_on_screen_notifier_2d.screen_exited.connect(_on_visible_on_screen_notifier_2d_screen_exited)
 	
+	health_component.knockback_requested.connect(velocity_component.apply_knockback)
 	health_component.max_health = enemy_data_resource.base_health
 	health_component.current_health = health_component.max_health
 

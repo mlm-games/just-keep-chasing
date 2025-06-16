@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b3mf65fcnvmvu"]
+[gd_scene load_steps=19 format=3 uid="uid://b3mf65fcnvmvu"]
 
 [ext_resource type="Script" uid="uid://crf18oy3oc75j" path="res://scenes/characters/player.gd" id="1_cvyhv"]
 [ext_resource type="Texture2D" uid="uid://brk1vhy0k5ah2" path="res://assets/sprites/player.svg" id="2_atpat"]
@@ -8,74 +8,14 @@
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="6_bedk8"]
 [ext_resource type="Script" uid="uid://bvb2hxpdk5tde" path="res://scenes/components/player_input_component.gd" id="7_6eyoc"]
 [ext_resource type="Script" uid="uid://bh62la2plrk8u" path="res://scenes/components/velocity_component.gd" id="8_eojnx"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_d6keb"]
-radius = 38.0132
+[ext_resource type="Script" uid="uid://cph1hb68v0xjn" path="res://scenes/components/animation_component.gd" id="10_2l4js"]
+[ext_resource type="Script" uid="uid://dcm4p61vcyfim" path="res://scenes/weapons-related/inventory_component.gd" id="10_7vyk4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8iqyn"]
 radius = 38.0132
 
-[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_bs7f4"]
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gpndl"]
-animation = &"hurt_end"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bcboo"]
-animation = &"hurt_start"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2aamj"]
-advance_mode = 2
-advance_expression = "taking_damage"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0xhbv"]
-switch_mode = 2
-advance_mode = 2
-advance_expression = "!taking_damage"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tmbbt"]
-switch_mode = 2
-advance_mode = 2
-advance_expression = "taking_damage"
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_bl56h"]
-states/hurt_end/node = SubResource("AnimationNodeAnimation_gpndl")
-states/hurt_end/position = Vector2(639, 100)
-states/hurt_start/node = SubResource("AnimationNodeAnimation_bcboo")
-states/hurt_start/position = Vector2(364, 100)
-transitions = ["Start", "hurt_start", SubResource("AnimationNodeStateMachineTransition_2aamj"), "hurt_start", "hurt_end", SubResource("AnimationNodeStateMachineTransition_0xhbv"), "hurt_end", "hurt_start", SubResource("AnimationNodeStateMachineTransition_tmbbt")]
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6iak8"]
-animation = &"idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0bpor"]
-animation = &"moving"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qtdod"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bmtj2"]
-advance_mode = 2
-advance_expression = "velocity"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_142j5"]
-advance_mode = 2
-advance_expression = "!velocity"
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_l3wk2"]
-states/idle/node = SubResource("AnimationNodeAnimation_6iak8")
-states/idle/position = Vector2(406, 100)
-states/moving/node = SubResource("AnimationNodeAnimation_0bpor")
-states/moving/position = Vector2(630, 100)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_qtdod"), "idle", "moving", SubResource("AnimationNodeStateMachineTransition_bmtj2"), "moving", "idle", SubResource("AnimationNodeStateMachineTransition_142j5")]
-
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_k2410"]
-nodes/Add2/node = SubResource("AnimationNodeAdd2_bs7f4")
-nodes/Add2/position = Vector2(80, 140)
-nodes/Hurt/node = SubResource("AnimationNodeStateMachine_bl56h")
-nodes/Hurt/position = Vector2(-160, 260)
-nodes/Movement/node = SubResource("AnimationNodeStateMachine_l3wk2")
-nodes/Movement/position = Vector2(-160, 60)
-node_connections = [&"Add2", 0, &"Movement", &"Add2", 1, &"Hurt", &"output", 0, &"Add2"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_d6keb"]
+radius = 38.0132
 
 [sub_resource type="Animation" id="Animation_mfor4"]
 length = 0.001
@@ -173,6 +113,9 @@ platform_on_leave = 2
 platform_floor_layers = 4294967292
 script = ExtResource("1_cvyhv")
 
+[node name="HealthComponent" parent="." instance=ExtResource("6_bedk8")]
+unique_name_in_owner = true
+
 [node name="VelocityComponent" type="Node" parent="."]
 script = ExtResource("8_eojnx")
 metadata/_custom_type_script = "uid://bh62la2plrk8u"
@@ -181,15 +124,15 @@ metadata/_custom_type_script = "uid://bh62la2plrk8u"
 script = ExtResource("7_6eyoc")
 metadata/_custom_type_script = "uid://bvb2hxpdk5tde"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-unique_name_in_owner = true
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("2_atpat")
-flip_h = true
+[node name="AnimationComponent" type="Node" parent="." node_paths=PackedStringArray("anim_player", "sprite")]
+script = ExtResource("10_2l4js")
+anim_player = NodePath("../AnimationPlayer")
+sprite = NodePath("../Sprite2D")
+metadata/_custom_type_script = "uid://cph1hb68v0xjn"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-4, -15)
-shape = SubResource("CircleShape2D_d6keb")
+[node name="InventoryComponent" type="Node" parent="."]
+script = ExtResource("10_7vyk4")
+metadata/_custom_type_script = "uid://dcm4p61vcyfim"
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_pwyjt")]
 unique_name_in_owner = true
@@ -204,22 +147,20 @@ shape = SubResource("CircleShape2D_8iqyn")
 [node name="PickupsCheckerComponent" type="Node2D" parent="HitboxComponent"]
 script = ExtResource("4_kqtwu")
 
-[node name="HealthComponent" parent="." instance=ExtResource("6_bedk8")]
-unique_name_in_owner = true
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, -15)
+shape = SubResource("CircleShape2D_d6keb")
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource("AnimationNodeBlendTree_k2410")
-advance_expression_base_node = NodePath("..")
-anim_player = NodePath("AnimationPlayer")
-parameters/Add2/add_amount = 1.0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
-root_node = NodePath("../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_noojc")
 }
 
-[node name="PlayerAnimation" type="Node2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_atpat")
+flip_h = true
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 unique_name_in_owner = true

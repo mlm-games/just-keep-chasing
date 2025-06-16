@@ -4,12 +4,38 @@
 [ext_resource type="Script" uid="uid://bfilgedqemjt2" path="res://scenes/UI/joystick.gd" id="2_h6vpp"]
 [ext_resource type="Texture2D" uid="uid://ijml5dwadxnf" path="res://assets/sprites/joystick_inner.svg" id="3_bggmi"]
 
-[node name="JoystickSprite2D" type="Sprite2D"]
-modulate = Color(1, 1, 1, 0.611765)
-texture = ExtResource("1_qodp1")
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("2_h6vpp")
 
-[node name="Stick" type="Sprite2D" parent="."]
+[node name="Outer" type="TextureRect" parent="."]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.611765)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 756.0
+offset_bottom = 756.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_qodp1")
+
+[node name="Inner" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 756.0
+offset_bottom = 756.0
+grow_horizontal = 2
+grow_vertical = 2
 scale = Vector2(0.645, 0.645)
+pivot_offset = Vector2(378, 378)
 texture = ExtResource("3_bggmi")

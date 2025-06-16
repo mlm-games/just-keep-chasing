@@ -8,7 +8,7 @@ const UPGRADES_LAYER = "uid://24v2w4t8hgkl"
 func _ready() -> void:
 	##Due to: When shop opens up, the gun fires too fast
 	GameState.player.base_gun.unset_ignore_time_scale()
-	GameState.is_in_shop = true
+	RunData.is_in_shop = true
 
 	
 	var tween : Tween = get_tree().create_tween().set_parallel(true)
@@ -36,7 +36,7 @@ func _on_close_button_pressed() -> void:
 	tween.tween_property($Control, "modulate", Color.TRANSPARENT, 0.1)
 	await tween.finished
 	hide()
-	GameState.is_in_shop = false
+	RunData.is_in_shop = false
 
 static func new_upgrade_layer() -> UpgradesLayer:
 	return load(UPGRADES_LAYER).instantiate()

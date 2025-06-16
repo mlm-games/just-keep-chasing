@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes/characters/player.tscn" id="3_vhnxw"]
 [ext_resource type="PackedScene" uid="uid://byks0f5xqnv20" path="res://scenes/gameplay/blockade.tscn" id="4_l562g"]
 [ext_resource type="Script" uid="uid://cso3agrkbovv8" path="res://scenes/saves/saver_loader.gd" id="5_m8xuy"]
-[ext_resource type="Shader" uid="uid://hinhyhe3jn5u" path="res://scenes/gameplay/blood_bg.gdshader" id="5_q3s4t"]
+[ext_resource type="Shader" uid="uid://hinhyhe3jn5u" path="res://resources/shaders/blood_bg.gdshader" id="5_q3s4t"]
 [ext_resource type="PackedScene" uid="uid://p3ijv0nq3035" path="res://scenes/UI/hud.tscn" id="6_vltvt"]
 [ext_resource type="PackedScene" uid="uid://x2gb17exe2xq" path="res://scenes/powerups/powerup.tscn" id="8_k1kj5"]
 [ext_resource type="Resource" uid="uid://co1l4ykdh5yer" path="res://resources/powerups/slow_time_powerup.tres" id="9_xyviv"]

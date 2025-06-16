@@ -13,4 +13,3 @@ func _on_retry_button_pressed() -> void:
 	print(CountStats.guns_fired_by_type_stats)
 	print(CountStats.powerup_collection_stats)
 	
-	GameState.reset_game()

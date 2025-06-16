@@ -29,7 +29,8 @@ func _ready() -> void:
 	$Sprite2D.offset = projectile_data.sprite_offset
 	$Sprite2D.rotation_degrees = projectile_data.sprite_rotation
 	$CollisionShape2D.shape.radius = projectile_data.collision_shape_radius
-	RunData.projectile_root.add_child(projectile_data.spawn_particles.instantiate())
+	
+	VFXSpawner.spawn_particles(projectile_data.spawn_particles, global_position, RunData.projectile_root)
 	
 	lifespan_timer.wait_time = projectile_data.lifespan_time
 	lifespan_timer.timeout.connect(queue_free)

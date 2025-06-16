@@ -42,13 +42,14 @@ func _unhandled_input(event) -> void:
 
 
 func resume() -> void:
-	get_tree().paused = false
 	pause_hide()
+	UIManager.pop_layer()
+
 
 
 func pause_game() -> void:
 	resume_option.grab_focus()
-	get_tree().paused = true
+	UIManager.push_layer(preload("uid://barl4q1kugrmm"))
 	pause_show()
 
 

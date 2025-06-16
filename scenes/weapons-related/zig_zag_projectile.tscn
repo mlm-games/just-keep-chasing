@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cd8wvfqo5c0xx"]
+
+[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_250il"]
+[ext_resource type="Script" uid="uid://jxy2bd26k36a" path="res://scenes/weapons-related/zig_zag_projectile.gd" id="2_250il"]
+
+[node name="ZigZagProjectile" instance=ExtResource("1_250il")]
+script = ExtResource("2_250il")
+wave_frequency = 10.0
+wave_amplitude = 50.0

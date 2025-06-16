@@ -24,9 +24,13 @@ platform_on_leave = 2
 platform_floor_layers = 4294967292
 script = ExtResource("1_spd34")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.06, 0.057)
-texture = ExtResource("2_d2gw2")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": ExtResource("5_2rcg4")
+}
+autoplay = "default"
+speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mgdpr")
@@ -42,14 +46,6 @@ parent = NodePath("..")
 shape = SubResource("RectangleShape2D_8pnp1")
 
 [node name="HealthComponent" parent="." instance=ExtResource("4_oqv1l")]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-unique_name_in_owner = true
-libraries = {
-&"": ExtResource("5_2rcg4")
-}
-autoplay = "default"
-speed_scale = 2.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
@@ -79,5 +75,9 @@ metadata/_custom_type_script = "uid://bh62la2plrk8u"
 [node name="FollowTargetComponent" type="Node" parent="."]
 script = ExtResource("11_eqqb8")
 metadata/_custom_type_script = "uid://cjholoncokybo"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.06, 0.057)
+texture = ExtResource("2_d2gw2")
 
 [connection signal="taking_damage" from="HealthComponent" to="." method="_on_health_component_taking_damage"]

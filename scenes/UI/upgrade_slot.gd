@@ -1,32 +1,122 @@
 class_name SlotContainer extends MarginContainer
 
 signal slot_clicked
-#FIXME: Pick based on spawn chance
-@export var augment : AugmentsData
 
-var panel_entered : bool = false
-var original_scale : Vector2
-var hover_scale : Vector2 = Vector2(1.1, 1.1)
-var hover_tween : Tween
-var tooltip_content: String = "Temp text"
+@export var augment: AugmentsData
 
+# Rarity colors
+const RARITY_COLORS: Dictionary = {
+	0: Color.WHITE, # Common
+	1: Color.GREEN, # Uncommon
+	2: Color.BLUE,  # Rare
+	3: Color.PURPLE, # Epic
+	4: Color.ORANGE # Legendary
+}
 
-@warning_ignore("narrowing_conversion")
 var final_price: int
+var panel_entered : bool = false
+var hover_tween: Tween
+var hover_scale := Vector2(1.1, 1.1)
+var original_scale := scale
 
-func _ready() -> void:
+@onready var texture_rect: TextureRect = %TextureRect
+@onready var upgrade_label: Label = %UpgradeLabel
+@onready var price_container: RichTextLabel = %PriceContainer
+@onready var panel: PanelContainer = %Panel
+
+func _ready():
 	augment = pick_augment_by_rarity()
-	#TODO: Change the text shadow background color based on its rarity (even the ninepatchrect or panel's color?)
-	original_scale = scale
-	setup_slot()
-	pivot_offset = size / 2
+	
+	if augment:
+		_setup_slot()
+	else:
+		# Handle case where no augment could be picked
+		queue_free()
+	
+	panel.mouse_entered.connect(_on_panel_mouse_entered)
+	panel.mouse_exited.connect(_on_panel_mouse_exited)
+
+func _setup_slot():
+	final_price = int(augment.augment_price * RunData.price_multiplier)
+	
+	texture_rect.texture = augment.augment_icon
+	upgrade_label.text = tr(augment.id.capitalize())
+	price_container.text = GameState.get_currency_bbcode() + str(final_price)
+	
+	_set_visuals_from_rarity()
+	_update_buyable_state()
+
+func _set_visuals_from_rarity():
+	# Assume rarity is an int from 0 to 4
+	var rarity_color = RARITY_COLORS.get(augment.rarity, Color.WHITE)
+	
+	# Apply a shader-based glow
+	var mat = ShaderMaterial.new()
+	mat.shader = preload("res://resources/shaders/rarity_glow.gdshader")
+	mat.set_shader_parameter("glow_color", rarity_color)
+	texture_rect.material = mat
+	
+	# You could also change the panel stylebox here based on rarity
+	# panel.add_theme_stylebox_override("panel", load("res://.../rare_panel_style.tres"))
+	
+func _update_buyable_state():
+	var can_afford = RunData.research_points >= final_price
+	set_process_input(can_afford) # Only allow input if it can be bought
+	
+	if can_afford:
+		modulate = Color.WHITE
+		price_container.modulate = Color.WHITE
+	else:
+		modulate = Color(0.6, 0.6, 0.6) # Dim the whole slot
+		price_container.modulate = Color(1.0, 0.3, 0.3)
+
+func _gui_input(event: InputEvent):
+	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
+		buy_augment()
+		accept_event() # Consume the input
+
+func buy_augment():
+	if RunData.research_points < final_price: return
+
+	RunData.research_points -= final_price
+	GameState.apply_augment(augment)
+	CountStats.increment_stat(augment, 1, CountStats.augment_items_collection_stats)
+
+	# Play a satisfying purchase animation and sound
+	_play_purchase_animation()
+
+func _play_purchase_animation():
+	set_process_input(false) # Prevent further clicks
+	var tween = create_tween().set_parallel().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(self, "scale", Vector2.ZERO, 0.3)
+	tween.tween_property(self, "modulate:a", 0.0, 0.3)
+	
+	# UIAudioManager.play_purchase_sound() # Example
+	
+	await tween.finished
+	queue_free()
+
+func _on_mouse_entered():
+	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.15)
+	# UIAudioManager.play_hover_sound()
+
+func _on_mouse_exited():
+	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.15)
+
 
 func pick_augment_by_rarity() -> AugmentsData:
-	var temp_augment : AugmentsData = CollectionManager.collection_res.augments.values().pick_random()
-	var is_buyable : bool = temp_augment.augment_price * GameState.price_multiplier < RunData.research_points - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD)
-	if temp_augment.rarity > randf() and !is_buyable:
-		temp_augment = pick_augment_by_rarity()
-	return temp_augment
+	var all_augments = CollectionManager.augments.values()
+	var valid_augments = all_augments.filter(func(aug): return aug.augment_price * GameState.price_multiplier < GameState.research_points)
+	
+	if valid_augments.is_empty():
+		# No buyable augments
+		return all_augments.pick_random() # Fallback
+	
+	# Now, pick from the list of augments the player can actually afford
+	return valid_augments.pick_random()
+
 
 func setup_slot() -> void:
 	if augment != null:
@@ -64,6 +154,7 @@ func _on_panel_mouse_entered() -> void:
 
 func _on_panel_mouse_exited() -> void:
 	panel_entered = false
+	
 	
 	# Cancel any existing tween
 	if hover_tween:

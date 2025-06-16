@@ -91,11 +91,7 @@ func load_stats() -> void:
 					if total_count_stats.has(key):
 							total_count_stats[key] = loaded_stats[key]
 			
-			# Load resource-based stats
-			_deserialize_resource_dict(data.get("powerup_stats", {}), powerup_collection_stats, CollectionManager.collection_res.powerups)
-			_deserialize_resource_dict(data.get("enemy_stats", {}), enemies_type_killed_stats, CollectionManager.collection_res.enemies)
-			_deserialize_resource_dict(data.get("gun_stats", {}), guns_fired_by_type_stats, CollectionManager.collection_res.guns)
-			_deserialize_resource_dict(data.get("augment_stats", {}), augment_items_collection_stats, CollectionManager.collection_res.augments)
+			#TODO: Load resource-based stats
 	else:
 			push_error("Failed to load stats data: " + str(FileAccess.get_open_error()))
 

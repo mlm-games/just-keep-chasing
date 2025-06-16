@@ -4,9 +4,11 @@ const WorldScene = "uid://4fyoq8npekf0"
 const SettingsScene = "uid://dp42fom7cc3n0"
 const AchievementsScene = "uid://ckqthyukac8wf"
 
+@onready var buttons_container: VBoxContainer = %ButtonsContainer
+
 #Hack: hold r to restart, press r to reload
 var tween: Tween
-#TODO: The upgrade screen should only have stuff that is buyable (atleast once) with the money available. Also reduce the first buy to 0.5 and increase from there? or maybe reduce the prices and increase the multiplier?
+
 func _ready() -> void:
 	get_tree().paused = false
 	# needed for gamepads to work
@@ -15,7 +17,7 @@ func _ready() -> void:
 		#%ExitButton.queue_free() # exit button dosn't make sense on HTML5
 	GameState.reset_game()
 	run_title_anim()
-	#run_buttons_anim()
+	run_buttons_anim()
 	
 	%PlayButton.pressed.connect(_on_PlayButton_pressed)
 	%SettingsButton.pressed.connect(_on_settings_button_pressed)
@@ -51,3 +53,8 @@ func run_title_anim() -> void:
 	tween = tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE).set_parallel(false)
 	tween.tween_property(%Title.material, "shader_parameter/bounce_height", 0, 1)
 	tween.tween_property(%Title, "position:x", get_viewport_rect().size.x/2 - 325, 1.25).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC).set_delay(5) # Need to find a better way
+
+
+func run_buttons_anim() -> void:
+	tween = get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE).set_parallel(false)
+	tween.tween_property(%ButtonsContainer, "position:y", 248 , 1.25).from(800)

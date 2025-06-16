@@ -1,4 +1,4 @@
-class_name VirusEradicationGoalsEntry
+class_name AchievementsScreen
 extends Control
 
 signal unlocked()
@@ -8,22 +8,11 @@ signal unlocked()
 
 
 func _ready() -> void:
-	setup_achievements()
-	#_setup_styles()
+	# Get all achievement data
+	var all_achievements = BasicAchievements.get_all_achievements()
+	# Tell the list view to populate itself
+	%AchievementsListView.populate(all_achievements) 
 	%BackButton.grab_focus()
-
-func setup_achievements() -> void:
-
-	# Add achievement entries
-	for achievement_id:StringName in BasicAchievements.achievements:
-		var achievement : Achievement = BasicAchievements.achievements[achievement_id]
-		
-		BasicAchievements.update_achievement(achievement_id, CountStats.get_stat(BasicAchievements.achievements[achievement_id].stat_key))
-		
-		var entry : AchievementEntry = achievement_label_template.instantiate()
-		entry.achievement = achievement
-		achievements_container.add_child(entry)
-		entry.update_achievement_progress()
 
 
 func _on_back_button_pressed() -> void:

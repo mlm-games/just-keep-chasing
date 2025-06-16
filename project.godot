@@ -41,6 +41,7 @@ SettingsData="*res://addons/basic_settings_menu/settings_data.gd"
 UiAudioM="*res://addons/my_ecosystem_template/autoloads/ui_audio_manager.gd"
 RunData="*res://autoloads/run_data.gd"
 CollectionManager="*res://autoloads/collection_manager.gd"
+UIManager="*res://autoloads/ui_manager.gd"
 BasicAchievements="*res://addons/achievements/achievements.tscn"
 
 [basic_achievements]
@@ -64,6 +65,17 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/achievements/plugin.cfg", "res://addons/basic_settings_menu/plugin.cfg", "res://addons/godot_resource_groups/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://addons/": "orange",
+"res://assets/": "blue",
+"res://autoloads/": "green",
+"res://resources/": "purple",
+"res://scenes/": "red",
+"res://scripts/": "teal"
+}
+
 [filesystem]
 
 import/fbx2gltf/enabled=false
@@ -72,6 +84,8 @@ import/blender/enabled=false
 [global_group]
 
 ProjectilesNode="Contains the node which contains all projectiles"
+MovementJoystick=""
+ShootingJoystick=""
 
 [godot_resource_groups]
 
@@ -160,6 +174,10 @@ debug_add_all_guns={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"key_label":0,"unicode":65,"location":0,"echo":false,"script":null)
 ]
 }
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [internationalization]
 

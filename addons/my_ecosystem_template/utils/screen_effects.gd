@@ -4,7 +4,7 @@
 ## shader pulses, and impact flashes. All functions are static and can be
 ## called directly from the [code]ScreenEffects[/code] class without needing
 ## to instantiate it.
-#class_name ScreenEffects
+class_name StaticScreenEffects
 extends RefCounted
 
 

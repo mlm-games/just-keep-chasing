@@ -153,11 +153,20 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="GunsButton" type="TextureButton" parent="Control"]
+[node name="MovementJoystickSprite2D" parent="." groups=["MovementJoystick"] instance=ExtResource("9_7wvwv")]
+unique_name_in_owner = true
+visible = false
+scale = Vector2(0.26, 0.26)
+
+[node name="ShootingJoystickSprite2D" parent="." groups=["ShootingJoystick"] instance=ExtResource("9_7wvwv")]
+unique_name_in_owner = true
+visible = false
+scale = Vector2(0.26, 0.26)
+
+[node name="GunsButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
 custom_minimum_size = Vector2(125, 125)
-layout_mode = 0
 offset_left = 1027.0
 offset_right = 1152.0
 offset_bottom = 125.0
@@ -167,16 +176,6 @@ texture_normal = ExtResource("8_7wvwv")
 ignore_texture_size = true
 stretch_mode = 4
 flip_v = true
-
-[node name="MovementJoystickSprite2D" parent="." instance=ExtResource("9_7wvwv")]
-unique_name_in_owner = true
-visible = false
-scale = Vector2(0.26, 0.26)
-
-[node name="ShootingJoystickSprite2D" parent="." instance=ExtResource("9_7wvwv")]
-unique_name_in_owner = true
-visible = false
-scale = Vector2(0.26, 0.26)
 
 [node name="NextUpgradeBar" type="ProgressBar" parent="."]
 unique_name_in_owner = true
@@ -196,4 +195,4 @@ show_percentage = false
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/HealButton" to="." method="_on_heal_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/ScreenBlastButton" to="." method="_on_screen_blast_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/SlowTimeButton" to="." method="_on_slow_time_button_pressed"]
-[connection signal="pressed" from="Control/GunsButton" to="." method="_on_guns_button_pressed"]
+[connection signal="pressed" from="GunsButton" to="." method="_on_guns_button_pressed"]

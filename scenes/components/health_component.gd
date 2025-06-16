@@ -4,6 +4,7 @@ signal entity_died
 signal taking_damage
 signal health_changed(new_health: float)
 signal max_health_changed(new_max_health: float)
+signal knockback_requested(force: Vector2, duration: float)
 
 const INVINCIBLE_SHADER = preload("uid://bdl51to7btcu8")
 
@@ -50,6 +51,7 @@ func damage(attack: Attack) -> void:
 		RunData.world.add_child(DamageNumbers.new_damage_text(final_damage, parent_node.global_position))
 	
 	taking_damage.emit()
+	knockback_requested.emit(attack.knockback_force, attack.knockback_duration)
 	health_changed.emit(current_health)
 	
 	if current_health <= 0:

@@ -12,7 +12,7 @@ static var collection_res : CollectionResource = CollectionResource.new()
 
 var all_enemies: Dictionary = {}
 var all_augments: Dictionary = {}
-var all_powerups: Dictionary = {}
+var all_powerups: Dictionary[StringName, PowerupData] = {}
 var all_guns: Dictionary = {}
 
 func _ready():
@@ -59,3 +59,9 @@ func get_enemy_dict_by_spawn_order() -> Dictionary[int, EnemyData]:
 	for enemy:EnemyData in all_enemies.values():
 		dict.get_or_add(enemy.enemy_spawn_order, enemy)
 	return dict
+
+static func get_resource_name(res: Resource):
+	if res.resource_name != "":
+		return res.resource_name
+	
+	return res.resource_path.trim_suffix(".tres").split("/")[-1].trim_prefix("*/")

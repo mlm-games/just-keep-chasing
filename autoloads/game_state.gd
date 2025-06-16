@@ -19,25 +19,11 @@ var movement_joystick_direction : Vector2 = Vector2.ZERO
 
 var shooting_joystick_direction : Vector2 = Vector2.ZERO
 
-enum PowerupType {
-	SLOW_TIME,
-	SCREEN_BLAST,
-	HEAL,
-	INVINCIBLE,
-}
-
 enum StatusEffectType {
 	FIRE,
 	POISON,
 	BLIGHT,
 	LEECH,
-}
-
-var powerups := {
-	PowerupType.SLOW_TIME: 0,
-	PowerupType.SCREEN_BLAST: 0,
-	PowerupType.HEAL: 0,
-	PowerupType.INVINCIBLE: 0,
 }
 
 # Making the firespeed go very fast when health goes below 20%
@@ -74,10 +60,6 @@ var upgrade_shop_spawn_divisor : float = 5
 
 #endregion
 
-func powerup_collected(powerup_type: int) -> void:
-	powerups[powerup_type] += 1
-	#world.hud.update_hud_buttons()
-	
 func get_currency_bbcode() -> String:
 	return "[img=40px]%s[/img]" % RESEARCH_TEXTURE
 

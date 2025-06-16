@@ -1,7 +1,5 @@
 class_name BaseEnemy extends BaseCharacter
 
-#@onready var target = get_tree().get_first_node_in_group("Player")
-
 var research_point_value : int
 
 var health_mult: float = 1.0

@@ -3,6 +3,13 @@ extends Node
 
 signal time_updated(seconds: int)
 signal research_points_updated(amount: int)
+signal in_shop_changed(is_in_shop: bool)
+
+var is_in_shop : bool = false:
+	set(val):
+		is_in_shop = val
+		in_shop_changed.emit(is_in_shop)
+
 
 var projectile_root : Node2D
 var world: World #TODO: remove these
@@ -22,7 +29,7 @@ var research_points: int = 0:
 		#world.hud.update_currency_label()
 		#world.hud.update_progress_bar(val)
 		
-var powerups: Dictionary = {}
+var powerups: Dictionary[StringName, int] = {}
 var upgrade_shop_spawn_divisor: float = 5.0
 
 func reset():
@@ -33,10 +40,13 @@ func reset():
 	world = get_tree().get_first_node_in_group("World")
 	player = get_tree().get_first_node_in_group("Player")
 	hud = get_tree().get_first_node_in_group("HUD")
-	powerups = {
-		GameState.PowerupType.SLOW_TIME: 0,
-		GameState.PowerupType.SCREEN_BLAST: 0,
-		GameState.PowerupType.HEAL: 0,
-		GameState.PowerupType.INVINCIBLE: 0,
-	}
+	for key:StringName in CollectionManager.all_powerups:
+		powerups[key] = 0
 	print("RunState has been reset.")
+
+
+
+
+func powerup_collected(powerup_type: StringName) -> void:
+	powerups[powerup_type] += 1
+	#world.hud.update_hud_buttons()

@@ -62,12 +62,30 @@ var random_autoscroll_speed: Vector2 = Vector2(randf_range(-500, 500), randf_ran
 func _ready() -> void:
 	RunData.reset()
 	_on_autoscroll_timer_timeout()
-		# Only add unlocked guns to the available guns array
-	guns.clear()
-	for gun:GunData in CollectionManager.collection_res.guns.values():
-		if gun.unlocked:
-			guns.append(gun)
+	RunData.time_updated.connect(_on_elapsed_time_updated)
+	RunData.research_points_updated.connect(_on_research_points_changed)
+	
 	EnemySpawner.spawnable_enemies = CollectionManager.get_enemy_dict_by_spawn_order()
+
+
+func _on_research_points_changed(new_amount: int):
+	# Check if it's time to show the upgrade shop
+	if new_amount >= RunData.upgrade_shop_spawn_divisor and not RunData.is_in_shop:
+		RunData.upgrade_shop_spawn_divisor += 10 + (10 * (RunData.elapsed_time * 0.001))
+		UIManager.push_layer(load("uid://24v2w4t8hgkl")) # Push UpgradesLayer scene
+
+func _on_elapsed_time_updated(new_time: int):
+	# Win condition (temp)
+	if new_time == 300: #NOTE: Using >= causes it to show up every frame when continuing
+		ScreenEffects.transition("circleIn")
+		await ScreenEffects.transition_player.animation_finished
+		UIManager.push_layer(load("uid://degok78oygxw3"))
+		ScreenEffects.transition("circleOut")
+		
+		## Stop timers so this only happens once
+		#%EnemySpawnTimer.stop()
+		#%PowerupSpawnTimer.stop()
+
 
 func _on_autoscroll_timer_timeout() -> void:
 	random_autoscroll_speed = Vector2(randf_range(-20, 20), randf_range(-20, 20))
@@ -124,7 +142,7 @@ func spawn_powerup() -> void:
 
 func get_random_powerup() -> PowerupData:
 	#TODO: Replace randfs in the powertype scene or script (as a static fn?) itself or implement a better version
-	var powerup_data: PowerupData = CollectionManager.collection_res.powerups.values().pick_random()
+	var powerup_data: PowerupData = CollectionManager.all_powerups.values().pick_random()
 	if powerup_data.spawn_chance_percent / 100 < randf():
 		powerup_data = get_random_powerup()
 	return powerup_data
@@ -170,22 +188,22 @@ func pick_up_weapon() -> void:
 		switch_weapon()
 
 
-func use_powerup(powerup_type: int) -> void:
+func use_powerup(powerup_type: StringName) -> void:
 	if RunData.powerups[powerup_type] > 0:
 		RunData.powerups[powerup_type] -= 1
 		match powerup_type:
-			GameState.PowerupType.SLOW_TIME:
+			&"slow_time_powerup":
 				if Engine.time_scale == 1:
 					activate_slow_motion()
 				else:
 					RunData.powerups[powerup_type] += 1
-			GameState.PowerupType.SCREEN_BLAST:
+			&"screen_blast_powerup":
 				ScreenEffects.transition("slightFlash")
 				get_tree().call_group("On Screen Enemies", "queue_free")
 				ScreenEffects.screen_shake(1, 2.5)
-			GameState.PowerupType.HEAL:
+			&"heal_powerup":
 				player.health_component.heal_or_damage(20)
-			GameState.PowerupType.INVINCIBLE:
+			&"temp_invincible_powerup":
 				player.health_component.disable_for_secs(20)
 		#hud.update_hud_buttons()
 

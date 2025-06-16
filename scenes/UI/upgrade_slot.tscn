@@ -17,6 +17,7 @@ script = ExtResource("1_dya2o")
 layout_mode = 2
 
 [node name="Panel" type="PanelContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 
@@ -69,6 +70,3 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "5"
 horizontal_alignment = 1
-
-[connection signal="mouse_entered" from="VBoxContainer/Panel" to="." method="_on_panel_mouse_entered"]
-[connection signal="mouse_exited" from="VBoxContainer/Panel" to="." method="_on_panel_mouse_exited"]

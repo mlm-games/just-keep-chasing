@@ -1,12 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://dva0ud3l80mos"]
+[gd_scene load_steps=5 format=3 uid="uid://dva0ud3l80mos"]
 
 [ext_resource type="Script" uid="uid://cp1u1qlxvaksq" path="res://scenes/gameplay/research_points.gd" id="1_thgig"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_faq61"]
 
-[node name="ResearchPoints" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_641rt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f7hnp"]
+radius = 23.0
+
+[node name="ResearchPoints" type="RigidBody2D"]
 script = ExtResource("1_thgig")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.2, 0.160784, 1)
 texture = SubResource("PlaceholderTexture2D_faq61")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_641rt")
+
+[node name="LifetimeTimer" type="Timer" parent="."]
+
+[node name="PickupArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_f7hnp")
