@@ -36,7 +36,7 @@ func _ready() -> void:
 	
 
 func _on_input_direction_changed(direction: Vector2) -> void:
-	velocity_component.accelerate_in_direction(direction)
+	velocity_component.accelerate_to(direction)
 
 func _physics_process(_delta: float) -> void:
 	velocity_component.speed = CharacterStats.get_stat(CharacterStats.Stats.PLAYER_SPEED)

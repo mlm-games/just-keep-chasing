@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CollectionResource" load_steps=27 format=3]
+[gd_resource type="Resource" script_class="CollectionResource" load_steps=30 format=3]
 
 [ext_resource type="Resource" path="res://resources/augments/basic_repair.tres" id="1_51ty7"]
 [ext_resource type="Resource" path="res://resources/augments/bullet_buffer.tres" id="2_21i0v"]
@@ -11,10 +11,13 @@
 [ext_resource type="Resource" path="res://resources/enemies/basic_slime.tres" id="9_131m2"]
 [ext_resource type="Resource" path="res://resources/enemies/evolved_slime.tres" id="10_52q21"]
 [ext_resource type="Resource" path="res://resources/enemies/gunner_slime.tres" id="11_uwrhl"]
+[ext_resource type="Resource" path="res://resources/enemies/phase_enemy.tres" id="12_18ovc"]
 [ext_resource type="Resource" path="res://resources/enemies/small_slime.tres" id="12_u2rfg"]
-[ext_resource type="Resource" path="res://resources/enemies/temp_slime.tres" id="13_o1j6m"]
+[ext_resource type="Resource" path="res://resources/enemies/spore_enemy.tres" id="14_ega57"]
 [ext_resource type="Resource" path="res://resources/guns/birdshot_shotgun.tres" id="14_g5768"]
+[ext_resource type="Resource" path="res://resources/enemies/tumor_cell.tres" id="15_ega57"]
 [ext_resource type="Resource" path="res://resources/guns/buckshot_shotgun.tres" id="15_j07jx"]
+[ext_resource type="Resource" path="res://resources/enemies/virus.tres" id="16_f63db"]
 [ext_resource type="Resource" path="res://resources/guns/double_barrel_shotgun.tres" id="16_ix4pa"]
 [ext_resource type="Resource" path="res://resources/guns/machine_gun.tres" id="17_m02nr"]
 [ext_resource type="Resource" path="res://resources/guns/pistol.tres" id="18_7l2tv"]
@@ -33,8 +36,11 @@ enemies = Dictionary[StringName, Variant]({
 &"basic_slime": ExtResource("9_131m2"),
 &"evolved_slime": ExtResource("10_52q21"),
 &"gunner_slime": ExtResource("11_uwrhl"),
+&"phase_enemy": ExtResource("12_18ovc"),
 &"small_slime": ExtResource("12_u2rfg"),
-&"temp_slime": ExtResource("13_o1j6m")
+&"spore_enemy": ExtResource("14_ega57"),
+&"tumor_cell": ExtResource("15_ega57"),
+&"virus": ExtResource("16_f63db")
 })
 augments = Dictionary[StringName, Variant]({
 &"basic_repair": ExtResource("1_51ty7"),

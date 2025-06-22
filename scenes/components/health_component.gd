@@ -118,3 +118,6 @@ func check_for_death() -> void:
 	if current_health <= 0 and not dying:
 		dying = true
 		entity_died.emit()
+
+func is_dead() -> bool:
+	return dying

@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://cnixhyyt6anqs"]
+
+[ext_resource type="PackedScene" uid="uid://cyaeykwntx0u0" path="res://scenes/characters/base_melee_enemy.tscn" id="1_ymw04"]
+[ext_resource type="Script" uid="uid://ceq5w6sdlln73" path="res://scenes/characters/enemies/leech_enemy.gd" id="2_c6him"]
+[ext_resource type="Shader" uid="uid://can28j4dr15ly" path="res://scenes/UI/misc/cartoony_title.gdshader" id="2_eiu11"]
+[ext_resource type="Script" uid="uid://dntbebw70xeap" path="res://scenes/components/lifesteal_ai_component.gd" id="2_tpt5d"]
+[ext_resource type="Script" uid="uid://c8ff8j0tad7ib" path="res://addons/godot_state_charts/compound_state.gd" id="5_mouyv"]
+[ext_resource type="Script" uid="uid://bxipn0uqdba0a" path="res://addons/godot_state_charts/atomic_state.gd" id="6_t2yn2"]
+[ext_resource type="Script" uid="uid://bwwobtdaprobr" path="res://addons/godot_state_charts/transition.gd" id="7_gd7im"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_awho7"]
+shader = ExtResource("2_eiu11")
+shader_parameter/bounce_height = 0.0
+shader_parameter/squash = 0.866
+shader_parameter/rotation = -0.11
+
+[node name="LeechEnemy" instance=ExtResource("1_ymw04")]
+script = ExtResource("2_c6him")
+
+[node name="Sprite2D" parent="." index="7"]
+material = SubResource("ShaderMaterial_awho7")
+
+[node name="LifestealAiComponent" type="Node" parent="." index="8"]
+script = ExtResource("2_tpt5d")
+metadata/_custom_type_script = "uid://dntbebw70xeap"
+
+[node name="CompoundState" type="Node" parent="StateChart" index="0"]
+script = ExtResource("5_mouyv")
+initial_state = NodePath("Alive")
+
+[node name="Alive" type="Node" parent="StateChart/CompoundState" index="0"]
+script = ExtResource("5_mouyv")
+initial_state = NodePath("Chase")
+
+[node name="Chase" type="Node" parent="StateChart/CompoundState/Alive" index="0"]
+script = ExtResource("6_t2yn2")
+
+[node name="Transition" type="Node" parent="StateChart/CompoundState/Alive/Chase" index="0"]
+script = ExtResource("7_gd7im")
+to = NodePath("../../Attached")
+event = &"on_attached"
+delay_in_seconds = "0.0"
+
+[node name="Attached" type="Node" parent="StateChart/CompoundState/Alive" index="1"]
+script = ExtResource("6_t2yn2")
+
+[node name="Transition" type="Node" parent="StateChart/CompoundState/Alive/Attached" index="0"]
+script = ExtResource("7_gd7im")
+to = NodePath("../../Chase")
+event = &"on_detached"
+delay_in_seconds = "0.0"
+
+[node name="Dying" type="Node" parent="StateChart/CompoundState" index="1"]
+script = ExtResource("6_t2yn2")

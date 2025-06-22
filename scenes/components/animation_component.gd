@@ -27,6 +27,9 @@ func update_movement(current_velocity: Vector2):
 				sprite.flip_h = true
 			elif current_velocity.x < -0.1:
 				sprite.flip_h = false
+			
+		var target_skew = clamp(current_velocity.x * 0.00025, -0.1, 0.1)
+		sprite.skew = lerp(sprite.skew, target_skew, 0.1)
 	else:
 		# Play idle animation if not already playing
 		if anim_player.current_animation != "idle":

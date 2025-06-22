@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdjopw1nw1odb"]
+
+[ext_resource type="PackedScene" uid="uid://gj4jr1kbpr1k" path="res://scenes/characters/enemies/chaser_enemy.tscn" id="1_e3jeo"]
+[ext_resource type="Script" uid="uid://cdtwm0hegbhe3" path="res://scenes/characters/enemies/prion.gd" id="2_vycx7"]
+
+[node name="Prion" instance=ExtResource("1_e3jeo")]
+script = ExtResource("2_vycx7")
+projectile_scene = null
+min_distance = 500.0
+max_distance = 700.0
+fire_cooldown = 2.5
+aim_duration = 0.7
+
+[node name="AnimationPlayer" parent="." index="4"]
+libraries = {}
+
+[node name="Sprite2D" parent="." index="8"]
+scale = Vector2(0.06, 0.057)

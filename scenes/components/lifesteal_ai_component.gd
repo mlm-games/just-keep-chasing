@@ -14,26 +14,26 @@ func _ready():
 	hitbox.area_entered.connect(_on_area_entered)
 	hitbox.area_exited.connect(_on_area_exited)
 
-func _physics_process(delta: float):
-	if _is_attached and is_instance_valid(_player_health):
-		var damage_to_deal = damage_per_second * delta
-		_player_health.damage(damage_to_deal) # Deal damage to player
-		_own_health.heal(damage_to_deal) # Heal self
-		
-		# Stick to the player
-		owner.global_position = target.global_position
+## This is the function the "Attached" state will call.
+func drain_and_stick(delta: float, velocity_component: VelocityComponent):
+	if not _is_attached or not is_instance_valid(_player_health): return
 
+	var damage_to_deal = damage_per_second * delta
+	_player_health.damage(damage_to_deal)
+	_own_health.heal(damage_to_deal)
+	
+	# Instead of setting position, we tell the velocity component to match the target.
+	# This avoids direct position manipulation which fights the physics engine.
+	velocity_component.move_towards_target(target.global_position)
+
+# These functions now only manage the internal state flags.
 func _on_area_entered(area: Area2D):
 	if area.owner.is_in_group("Player"):
 		_is_attached = true
-		target = area.owner # The target is the Player node
+		target = area.owner
 		_player_health = target.get_node("HealthComponent")
-		# Disable standard movement when attached
-		owner.get_node("VelocityComponent").speed = 0
 
 func _on_area_exited(area: Area2D):
 	if area.owner == target:
 		_is_attached = false
 		_player_health = null
-		# Resume standard movement
-		owner.get_node("VelocityComponent").speed = owner.enemy_data_resource.base_speed

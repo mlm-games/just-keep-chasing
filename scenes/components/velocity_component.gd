@@ -3,9 +3,6 @@ class_name VelocityComponent extends Node
 ## Manages velocity, speed, and knockback for a CharacterBody2D parent.
 ## This component handles the actual movement call (move_and_slide).
 
-## The maximum speed of the character.
-@export var speed: float = 100.0
-
 ## The current velocity of the character. Read-only for other nodes.
 var velocity: Vector2
 
@@ -13,6 +10,8 @@ var velocity: Vector2
 var _knockback_vector := Vector2.ZERO
 var _knockback_timer := 0.0
 var _is_knocked_back := false
+
+@export var speed : float
 
 
 func _physics_process(delta: float) -> void:
@@ -44,7 +43,7 @@ func _physics_process(delta: float) -> void:
 
 
 ## Sets the velocity based on a direction vector and the component's speed.
-func accelerate_in_direction(direction: Vector2) -> void:
+func accelerate_to(direction: Vector2, local_speed: float = 0) -> void:
 	# Don't accept movement input during knockback
 	if _is_knocked_back:
 		return
@@ -53,6 +52,8 @@ func accelerate_in_direction(direction: Vector2) -> void:
 	## frame independent lerping for smoothness, low smoothing due to being present in liquid
 	velocity = velocity.lerp(direction.normalized() * speed, 1 - exp(-3 * get_physics_process_delta_time()))
 
+func stop() -> void:
+	velocity = velocity.lerp(Vector2.ZERO, 1 - exp(-35 * get_physics_process_delta_time()))
 
 ## Applies an instant force, pushing the character back.
 func apply_knockback(force: Vector2, duration: float = 0.2) -> void:

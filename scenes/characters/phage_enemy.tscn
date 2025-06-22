@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5sjgq60klnu6"]
-
-[ext_resource type="PackedScene" uid="uid://cyaeykwntx0u0" path="res://scenes/characters/base_melee_enemy.tscn" id="1_rts86"]
-
-[node name="PhageEnemy" instance=ExtResource("1_rts86")]

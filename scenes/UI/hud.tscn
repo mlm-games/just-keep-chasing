@@ -42,7 +42,8 @@ script = ExtResource("1_ldp5k")
 
 [node name="PauseLayer" parent="." instance=ExtResource("7_avxcw")]
 
-[node name="Timer" type="Timer" parent="."]
+[node name="GameTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 process_mode = 1
 autostart = true
 
@@ -190,7 +191,6 @@ grow_vertical = 0
 max_value = 1.0
 show_percentage = false
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/InvincibleButton" to="." method="_on_invincible_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/HealButton" to="." method="_on_heal_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/ScreenBlastButton" to="." method="_on_screen_blast_button_pressed"]

@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://blvwxhra50sbs"]
+
+[ext_resource type="PackedScene" uid="uid://cyaeykwntx0u0" path="res://scenes/characters/base_melee_enemy.tscn" id="1_osxib"]
+[ext_resource type="Script" uid="uid://di53um5f8x0jl" path="res://scenes/components/spore_death_component.gd" id="2_23e3q"]
+[ext_resource type="PackedScene" uid="uid://cg2df7bcomrg" path="res://scenes/weapons-related/rocket_projectile.tscn" id="3_43wfe"]
+
+[node name="SporeEnemy" instance=ExtResource("1_osxib")]
+
+[node name="SporeDeathComponent" type="Node" parent="." index="3"]
+script = ExtResource("2_23e3q")
+burst_projectile_scene = ExtResource("3_43wfe")
+metadata/_custom_type_script = "uid://di53um5f8x0jl"

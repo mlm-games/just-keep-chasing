@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=4 format=3 uid="uid://c3jq1snnait57"]
+
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="1_b1l8f"]
+[ext_resource type="PackedScene" uid="uid://b0h7lo7im5s1h" path="res://scenes/characters/enemies/tumor_cell.tscn" id="1_ysdfg"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="2_ysdfg"]
+
+[resource]
+script = ExtResource("2_ysdfg")
+base_enemy_scene = ExtResource("1_ysdfg")
+base_contact_damage = 10.0
+research_point_value = 20
+enemy_spawn_chance = 1.0
+enemy_spawn_order = 3
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1, 1)
+sprite_scale = Vector2(0.06, 0.057)
+sprite_color = Color(1, 1, 1, 1)
+base_health = 100.0
+base_speed = 40.0
+modifiers = Array[ExtResource("1_b1l8f")]([])
+id = ""
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://bwk8dueikqaq0"

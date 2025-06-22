@@ -1,0 +1,3388 @@
+Directory structure:
+└── resources/
+    ├── base_character_data.gd
+    ├── base_character_data.gd.uid
+    ├── button_ripple.gdshader
+    ├── button_ripple.gdshader.uid
+    ├── collection_resource.gd
+    ├── collection_resource.gd.uid
+    ├── collection_resource.tres
+    ├── data_resource.gd
+    ├── data_resource.gd.uid
+    ├── menu-test_theme.tres
+    ├── stats_modifier_base.gd
+    ├── stats_modifier_base.gd.uid
+    ├── test_theme.tres
+    ├── theme-button-dark.tres
+    ├── achievements/
+    │   ├── battle_hardened.tres
+    │   ├── damage_dealer.tres
+    │   ├── mass_destroyer.tres
+    │   ├── master_gunner.tres
+    │   ├── medic.tres
+    │   ├── nuclear_option.tres
+    │   ├── power_user.tres
+    │   ├── sharpshooter.tres
+    │   ├── speed_demon.tres
+    │   ├── survivor.tres
+    │   ├── tank_buster.tres
+    │   ├── untouchable.tres
+    │   └── wealthy_collector.tres
+    ├── animations/
+    │   └── title_slight_scaling.tres
+    ├── augments/
+    │   ├── augmentations.gd
+    │   ├── augmentations.gd.uid
+    │   ├── basic_repair.tres
+    │   ├── bullet_buffer.tres
+    │   ├── immuno_boosters.tres
+    │   ├── material_lender.tres
+    │   ├── range_enhancer.tres
+    │   ├── spreadlock.tres
+    │   ├── texo_card.tres
+    │   └── ultra_texo_card.tres
+    ├── bullets/
+    │   ├── birdshot.tres
+    │   ├── buckshot.tres
+    │   ├── bullet.tres
+    │   ├── fire_bullet.tres
+    │   ├── flak_canister.tres
+    │   ├── pellet.tres
+    │   ├── prion_projectile.tres
+    │   ├── projectile_data.gd
+    │   ├── projectile_data.gd.uid
+    │   ├── rocket.tres
+    │   ├── sniper_bullet.tres
+    │   ├── status_effect_projectile_data.gd
+    │   └── status_effect_projectile_data.gd.uid
+    ├── enemies/
+    │   ├── basic_slime.tres
+    │   ├── enemy_data.gd
+    │   ├── enemy_data.gd.uid
+    │   ├── evolved_slime.tres
+    │   ├── gunner_slime.tres
+    │   ├── phase_enemy.tres
+    │   ├── small_slime.tres
+    │   ├── spore_enemy.tres
+    │   ├── tumor_cell.tres
+    │   └── virus.tres
+    ├── guns/
+    │   ├── birdshot_shotgun.tres
+    │   ├── buckshot_shotgun.tres
+    │   ├── double_barrel_shotgun.tres
+    │   ├── gun_data.gd
+    │   ├── gun_data.gd.uid
+    │   ├── machine_gun.tres
+    │   ├── pistol.tres
+    │   ├── pump_action_shotgun.tres
+    │   ├── rocket_launcher.tres
+    │   ├── shotgun_data.gd
+    │   ├── shotgun_data.gd.uid
+    │   └── sniper.tres
+    ├── misc/
+    │   ├── achievements_theme.tres
+    │   ├── enemies_group.tres
+    │   ├── instant_tooltip_control.gd
+    │   ├── instant_tooltip_control.gd.uid
+    │   ├── particles_gradient.tres
+    │   ├── temp.tscn
+    │   ├── tooltip_content.gd
+    │   ├── tooltip_content.gd.uid
+    │   ├── tooltip_display.gd
+    │   ├── tooltip_display.gd.uid
+    │   ├── tooltip_display.tscn
+    │   ├── tooltip_manager.gd
+    │   └── tooltip_manager.gd.uid
+    ├── powerups/
+    │   ├── heal_powerup.tres
+    │   ├── powerup_data.gd
+    │   ├── powerup_data.gd.uid
+    │   ├── screen_blast_powerup.tres
+    │   ├── slow_time_powerup.tres
+    │   └── temp_invincible_powerup.tres
+    ├── shaders/
+    │   ├── blood_bg.gdshader
+    │   ├── blood_bg.gdshader.uid
+    │   ├── bloom.gdshader
+    │   ├── bloom.gdshader.uid
+    │   ├── blurbg.gdshader
+    │   ├── blurbg.gdshader.uid
+    │   ├── button_shine.gdshader
+    │   ├── button_shine.gdshader.uid
+    │   ├── circletransition.gdshader
+    │   ├── circletransition.gdshader.uid
+    │   ├── rarity_glow.gdshader
+    │   ├── rarity_glow.gdshader.uid
+    │   ├── slow_motion.gdshader
+    │   ├── slow_motion.gdshader.uid
+    │   ├── star_effect.gdshader
+    │   ├── star_effect.gdshader.uid
+    │   ├── wavy_effect.gdshader
+    │   └── wavy_effect.gdshader.uid
+    └── theme/
+        ├── currency_label_settings.tres
+        ├── item_name_label_settings.tres
+        ├── label-settings-default.tres
+        └── theme-main.tres
+
+================================================
+File: base_character_data.gd
+================================================
+class_name BaseCharacterData extends BaseData
+
+@export_group("Stats", "base_")
+@export var base_health : float = 0
+@export var base_speed : float = 0
+
+
+@export var modifiers: Array[StatModifier] = []
+
+
+# Current values calculated from base + modifiers
+var current_health: float
+var current_speed: float
+
+
+func apply_modifier(modifier: StatModifier) -> void:
+	modifiers.append(modifier)
+	recalculate_stats()
+
+func recalculate_stats() -> void:
+	# Reset to base values
+	current_health = base_health
+	current_speed = base_speed
+	
+	# Apply all modifiers
+	for mod in modifiers:
+		GameState.apply_stat_modifier(mod)
+
+
+
+================================================
+File: base_character_data.gd.uid
+================================================
+uid://6xi0d76bro06
+
+
+
+================================================
+File: button_ripple.gdshader
+================================================
+shader_type canvas_item;
+
+uniform float progress : hint_range(0.0, 1.0);
+
+void fragment() {
+    float dist = distance(UV, vec2(0.5));
+    float circle = smoothstep(progress, progress - 0.1, dist);
+    circle *= smoothstep(progress - 0.5, progress - 0.1, dist);
+    COLOR = vec4(1.0, 1.0, 1.0, circle * 0.3 * (1.0 - progress));
+}
+
+
+================================================
+File: button_ripple.gdshader.uid
+================================================
+uid://bc2jjkf388bi5
+
+
+
+================================================
+File: collection_resource.gd
+================================================
+class_name CollectionResource extends Resource
+
+@export var enemies: Dictionary[StringName, EnemyData]
+@export var augments: Dictionary[StringName, AugmentsData]
+@export var powerups: Dictionary[StringName, PowerupData]
+@export var guns: Dictionary[StringName, GunData]
+
+
+
+================================================
+File: collection_resource.gd.uid
+================================================
+uid://xa18m4l2sbl0
+
+
+
+================================================
+File: collection_resource.tres
+================================================
+[gd_resource type="Resource" script_class="CollectionResource" load_steps=30 format=3]
+
+[ext_resource type="Resource" path="res://resources/augments/basic_repair.tres" id="1_51ty7"]
+[ext_resource type="Resource" path="res://resources/augments/bullet_buffer.tres" id="2_21i0v"]
+[ext_resource type="Resource" path="res://resources/augments/immuno_boosters.tres" id="3_18ovc"]
+[ext_resource type="Resource" path="res://resources/augments/material_lender.tres" id="4_ega57"]
+[ext_resource type="Resource" path="res://resources/augments/range_enhancer.tres" id="5_f63db"]
+[ext_resource type="Resource" path="res://resources/augments/spreadlock.tres" id="6_5d78j"]
+[ext_resource type="Resource" path="res://resources/augments/texo_card.tres" id="7_hecn4"]
+[ext_resource type="Resource" path="res://resources/augments/ultra_texo_card.tres" id="8_ohxkr"]
+[ext_resource type="Resource" path="res://resources/enemies/basic_slime.tres" id="9_131m2"]
+[ext_resource type="Resource" path="res://resources/enemies/evolved_slime.tres" id="10_52q21"]
+[ext_resource type="Resource" path="res://resources/enemies/gunner_slime.tres" id="11_uwrhl"]
+[ext_resource type="Resource" path="res://resources/enemies/phase_enemy.tres" id="12_18ovc"]
+[ext_resource type="Resource" path="res://resources/enemies/small_slime.tres" id="12_u2rfg"]
+[ext_resource type="Resource" path="res://resources/enemies/spore_enemy.tres" id="14_ega57"]
+[ext_resource type="Resource" path="res://resources/guns/birdshot_shotgun.tres" id="14_g5768"]
+[ext_resource type="Resource" path="res://resources/enemies/tumor_cell.tres" id="15_ega57"]
+[ext_resource type="Resource" path="res://resources/guns/buckshot_shotgun.tres" id="15_j07jx"]
+[ext_resource type="Resource" path="res://resources/enemies/virus.tres" id="16_f63db"]
+[ext_resource type="Resource" path="res://resources/guns/double_barrel_shotgun.tres" id="16_ix4pa"]
+[ext_resource type="Resource" path="res://resources/guns/machine_gun.tres" id="17_m02nr"]
+[ext_resource type="Resource" path="res://resources/guns/pistol.tres" id="18_7l2tv"]
+[ext_resource type="Resource" path="res://resources/guns/pump_action_shotgun.tres" id="19_w56ut"]
+[ext_resource type="Resource" path="res://resources/guns/rocket_launcher.tres" id="20_lo8vq"]
+[ext_resource type="Resource" path="res://resources/guns/sniper.tres" id="21_lwfym"]
+[ext_resource type="Resource" path="res://resources/powerups/heal_powerup.tres" id="22_twkyw"]
+[ext_resource type="Resource" path="res://resources/powerups/screen_blast_powerup.tres" id="23_3p302"]
+[ext_resource type="Resource" path="res://resources/powerups/slow_time_powerup.tres" id="24_hnllu"]
+[ext_resource type="Resource" path="res://resources/powerups/temp_invincible_powerup.tres" id="25_emn5t"]
+[ext_resource type="Script" path="res://resources/collection_resource.gd" id="26_4kn0p"]
+
+[resource]
+script = ExtResource("26_4kn0p")
+enemies = Dictionary[StringName, Variant]({
+&"basic_slime": ExtResource("9_131m2"),
+&"evolved_slime": ExtResource("10_52q21"),
+&"gunner_slime": ExtResource("11_uwrhl"),
+&"phase_enemy": ExtResource("12_18ovc"),
+&"small_slime": ExtResource("12_u2rfg"),
+&"spore_enemy": ExtResource("14_ega57"),
+&"tumor_cell": ExtResource("15_ega57"),
+&"virus": ExtResource("16_f63db")
+})
+augments = Dictionary[StringName, Variant]({
+&"basic_repair": ExtResource("1_51ty7"),
+&"bullet_buffer": ExtResource("2_21i0v"),
+&"immuno_boosters": ExtResource("3_18ovc"),
+&"material_lender": ExtResource("4_ega57"),
+&"range_enhancer": ExtResource("5_f63db"),
+&"spreadlock": ExtResource("6_5d78j"),
+&"texo_card": ExtResource("7_hecn4"),
+&"ultra_texo_card": ExtResource("8_ohxkr")
+})
+powerups = Dictionary[StringName, Variant]({
+&"heal_powerup": ExtResource("22_twkyw"),
+&"screen_blast_powerup": ExtResource("23_3p302"),
+&"slow_time_powerup": ExtResource("24_hnllu"),
+&"temp_invincible_powerup": ExtResource("25_emn5t")
+})
+guns = Dictionary[StringName, Variant]({
+&"birdshot_shotgun": ExtResource("14_g5768"),
+&"buckshot_shotgun": ExtResource("15_j07jx"),
+&"double_barrel_shotgun": ExtResource("16_ix4pa"),
+&"machine_gun": ExtResource("17_m02nr"),
+&"pistol": ExtResource("18_7l2tv"),
+&"pump_action_shotgun": ExtResource("19_w56ut"),
+&"rocket_launcher": ExtResource("20_lo8vq"),
+&"sniper": ExtResource("21_lwfym")
+})
+
+
+
+================================================
+File: data_resource.gd
+================================================
+class_name BaseData extends Resource
+
+@export var id: String:
+	get: return resource_path.get_slice("/", 1).trim_suffix(".tres")
+@export var local_to_scene : bool = false # Do not share stat upgrades
+@export var enabled := true
+
+
+#func _init() -> void:
+	#id = 
+
+
+
+================================================
+File: data_resource.gd.uid
+================================================
+uid://cuploqa1cik1p
+
+
+
+================================================
+File: menu-test_theme.tres
+================================================
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://d2j8plpna1rmh"]
+
+[ext_resource type="FontFile" uid="uid://deua0cnkdxve8" path="res://assets/fonts/Exo_2/static/Exo2-SemiBold.ttf" id="1_a0vk2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uu6bd"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.843184, 0.843184, 0.843184, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 5
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
+bg_color = Color(0.109804, 0.584314, 0.576471, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.180392, 0.8, 0.792157, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.133333, 0.694118, 0.686275, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.180392, 0.8, 0.792157, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[resource]
+default_font = ExtResource("1_a0vk2")
+default_font_size = 24
+Button/colors/font_color = Color(0.0627451, 0.0901961, 0.12549, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/styles/focus = SubResource("StyleBoxFlat_uu6bd")
+Button/styles/hover = SubResource("StyleBoxFlat_2")
+Button/styles/normal = SubResource("StyleBoxFlat_1")
+Button/styles/pressed = SubResource("StyleBoxFlat_2")
+Label/colors/font_color = Color(0.9, 0.9, 0.9, 1)
+Label/colors/font_outline_color = Color(0.12, 0.12, 0.12, 1)
+Label/constants/outline_size = 2
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
+Panel/styles/panel = SubResource("StyleBoxFlat_1")
+
+
+
+================================================
+File: stats_modifier_base.gd
+================================================
+class_name StatModifier extends Resource
+
+@export var value : float = 0
+@export var key: CharacterStats.Stats
+@export var operation: CharacterStats.Operation
+@export var duration: float = 0.0  # 0 means permanent
+#@export_enum("ADD","MULTIPLY","REPLACE","EXPONENTIAL") var operation : int
+
+
+
+================================================
+File: stats_modifier_base.gd.uid
+================================================
+uid://d2sqcjy2gnmwg
+
+
+
+================================================
+File: test_theme.tres
+================================================
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://d26u4ffjbtvf8"]
+
+[ext_resource type="FontFile" uid="uid://deua0cnkdxve8" path="res://assets/fonts/Exo_2/static/Exo2-SemiBold.ttf" id="1_uu6bd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uu6bd"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.843184, 0.843184, 0.843184, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+corner_detail = 5
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
+bg_color = Color(0.109804, 0.584314, 0.576471, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.180392, 0.8, 0.792157, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.133333, 0.694118, 0.686275, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.180392, 0.8, 0.792157, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sd3rj"]
+bg_color = Color(0.109804, 0.584314, 0.576471, 1)
+border_color = Color(0.180392, 0.8, 0.792157, 1)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rb6tg"]
+bg_color = Color(0.133333, 0.694118, 0.686275, 0.8)
+border_color = Color(0.180392, 0.8, 0.792157, 1)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpjcf"]
+bg_color = Color(0.109804, 0.584314, 0.576471, 1)
+border_color = Color(0.180392, 0.8, 0.792157, 0.741176)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[resource]
+default_font = ExtResource("1_uu6bd")
+default_font_size = 24
+Button/colors/font_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/styles/focus = SubResource("StyleBoxFlat_uu6bd")
+Button/styles/hover = SubResource("StyleBoxFlat_2")
+Button/styles/normal = SubResource("StyleBoxFlat_1")
+Button/styles/pressed = SubResource("StyleBoxFlat_2")
+HBoxContainer/constants/separation = 16
+Label/colors/font_color = Color(0.9, 0.9, 0.9, 1)
+Label/colors/font_outline_color = Color(0.12, 0.12, 0.12, 1)
+Label/constants/outline_size = 2
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
+Panel/styles/panel = SubResource("StyleBoxFlat_1")
+PowerupButton/base_type = &"Button"
+PowerupButton/styles/hover = SubResource("StyleBoxFlat_sd3rj")
+PowerupButton/styles/normal = SubResource("StyleBoxFlat_rb6tg")
+PowerupButton/styles/pressed = SubResource("StyleBoxFlat_vpjcf")
+
+
+
+================================================
+File: theme-button-dark.tres
+================================================
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bjirml4gi4wee"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1i8qw"]
+bg_color = Color(0.101961, 0.101961, 0.117647, 0.6)
+skew = Vector2(-0.185, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.227451, 0.227451, 0.247059, 0.4)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8k4il"]
+bg_color = Color(0.227451, 0.227451, 0.247059, 1)
+skew = Vector2(-0.185, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.352941, 0.352941, 0.372549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.533333)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v8ku3"]
+bg_color = Color(0.164706, 0.164706, 0.180392, 1)
+skew = Vector2(-0.185, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.290196, 0.290196, 0.309804, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+anti_aliasing_size = 0.8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_242kb"]
+bg_color = Color(0.101961, 0.101961, 0.117647, 1)
+skew = Vector2(-0.185, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.227451, 0.227451, 0.247059, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.266667)
+shadow_size = 2
+shadow_offset = Vector2(0, 1)
+
+[resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(1, 1, 1, 0.4)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 0.933333)
+Button/constants/h_separation = 16
+Button/font_sizes/font_size = 20
+Button/styles/disabled = SubResource("StyleBoxFlat_1i8qw")
+Button/styles/hover = SubResource("StyleBoxFlat_8k4il")
+Button/styles/normal = SubResource("StyleBoxFlat_v8ku3")
+Button/styles/pressed = SubResource("StyleBoxFlat_242kb")
+
+
+
+================================================
+File: achievements/battle_hardened.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://b7nnjxwc4erur"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_ay8iv"]
+
+[resource]
+script = ExtResource("1_ay8iv")
+title = "Battle Hardened"
+description = "Play 50 games"
+reward = "Increases max health by 10%"
+count_goal = 50.0
+stat_key = "games_played"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/damage_dealer.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://dc0k7s0gp7lsb"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_eyvv6"]
+
+[resource]
+script = ExtResource("1_eyvv6")
+title = "Damage Dealer"
+description = "Deal 10000 total damage"
+reward = "Unlocks weapon: Sawed off shotgun"
+count_goal = 10000.0
+stat_key = "damage_dealt"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/mass_destroyer.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://b2l51aclyb45j"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_rhq8h"]
+
+[resource]
+script = ExtResource("1_rhq8h")
+title = "Mass Destroyer"
+description = "Kill 1000 enemies"
+reward = "Unlocks enemy: Straight liner"
+count_goal = 1000.0
+stat_key = "enemies_killed"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/master_gunner.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://bfn3wqw5xvlnx"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_vyrq4"]
+
+[resource]
+script = ExtResource("1_vyrq4")
+title = "Master Gunner"
+description = "Fire 5000 bullets"
+reward = "Reduces reload speed by 20%"
+count_goal = 5000.0
+stat_key = "bullets_fired"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/medic.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://c7tthrh0ocfyr"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_js1h6"]
+
+[resource]
+script = ExtResource("1_js1h6")
+title = "Medic"
+description = "Use healing powerup 30 times"
+reward = "Increases healing multiplier by 15%"
+count_goal = 30.0
+stat_key = "heal_used"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/nuclear_option.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://cvlarwqili3qx"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_t3jr3"]
+
+[resource]
+script = ExtResource("1_t3jr3")
+title = "Nuclear Option"
+description = "Use screen blast 25 times"
+reward = "Increases screen blast radius by 20%"
+count_goal = 25.0
+stat_key = "uid://ff18iggvak6h"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/power_user.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://bgxyvqp1t6qer"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_topvn"]
+
+[resource]
+script = ExtResource("1_topvn")
+title = "Power User"
+description = "Use 100 powerups"
+reward = "Highly increase star powerup drop chance"
+count_goal = 100.0
+stat_key = "powerups_used"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/sharpshooter.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://c67ty1ul32pdl"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_k4epk"]
+
+[resource]
+script = ExtResource("1_k4epk")
+title = "Sharpshooter"
+description = "Achieve 90% targeting accuracy"
+reward = "Increases targeting range by 25%"
+count_goal = 90.0
+stat_key = "targeting_accuracy"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/speed_demon.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://c7jashbmnoxdx"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_hj4k7"]
+
+[resource]
+script = ExtResource("1_hj4k7")
+title = "Speed Demon"
+description = "Use slow time ability 50 times"
+reward = "Increases player speed by 10%"
+count_goal = 50.0
+stat_key = "uid://co1l4ykdh5yer"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/survivor.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://c0c3rnhn25t4x"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_ge1l8"]
+
+[resource]
+script = ExtResource("1_ge1l8")
+title = "Survivor"
+description = "Win 10 games"
+reward = "Unlocks new character skin"
+count_goal = 10.0
+stat_key = "games_won"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/tank_buster.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://bono0idghnhvh"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_ebgvw"]
+
+[resource]
+script = ExtResource("1_ebgvw")
+title = "Tank Buster"
+description = "Deal 5000 damage to armored enemies"
+reward = "Increases raw damage modifier by 10"
+count_goal = 5000.0
+stat_key = "armored_damage_dealt"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/untouchable.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://bm1kq8q58k8l8"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_1mdyx"]
+
+[resource]
+script = ExtResource("1_1mdyx")
+title = "Untouchable"
+description = "Use invincibility powerup 20 times"
+reward = "Increases invincibility duration by 2 seconds"
+count_goal = 20.0
+stat_key = "uid://cw5xlfwubk72c"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: achievements/wealthy_collector.tres
+================================================
+[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://d3hob67tqd5sy"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_bu1q2"]
+
+[resource]
+script = ExtResource("1_bu1q2")
+title = "Wealthy Collector"
+description = "Collect 10000 currency"
+reward = "Increases currency pickup range by 50%"
+count_goal = 10000.0
+stat_key = "currency_collected"
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"
+
+
+
+================================================
+File: animations/title_slight_scaling.tres
+================================================
+[gd_resource type="AnimationLibrary" load_steps=3 format=3 uid="uid://b3hh8gscrg60e"]
+
+[sub_resource type="Animation" id="Animation_uuf07"]
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.466667, 1.03333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_q1a3v"]
+resource_name = "ScaleSlightly"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.95, 0.98), Vector2(1, 1)]
+}
+
+[resource]
+_data = {
+&"RESET": SubResource("Animation_uuf07"),
+&"ScaleSlightly": SubResource("Animation_q1a3v")
+}
+
+
+
+================================================
+File: augments/augmentations.gd
+================================================
+class_name AugmentsData extends BaseData
+
+@export_group("Display", "augment_")
+@export var augment_icon : Texture2D # = Redacted texture like dungeons and gamblers?
+@export var augment_price : int = 9999
+
+@export_group("Data")
+@export var stats_to_modify : Array[StatModifier]
+@export var rarity : float = 1:
+	set(val):
+		rarity = clampf(val, 0, 1)
+
+
+
+================================================
+File: augments/augmentations.gd.uid
+================================================
+uid://clxsmndukf026
+
+
+
+================================================
+File: augments/basic_repair.tres
+================================================
+[gd_resource type="Resource" script_class="Augments" load_steps=6 format=3 uid="uid://dwyjyfw01chxg"]
+
+[ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/sprites/heal_powerup.png" id="1_m5far"]
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="2_53ewh"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="3_itdj1"]
+
+[sub_resource type="Resource" id="Resource_hmhfi"]
+script = ExtResource("3_itdj1")
+value = 5.0
+key = 0
+operation = 0
+duration = 0.0
+
+[sub_resource type="Resource" id="Resource_aveke"]
+script = ExtResource("3_itdj1")
+value = 20.0
+key = 1
+operation = 0
+duration = 0.0
+
+[resource]
+script = ExtResource("2_53ewh")
+augment_icon = ExtResource("1_m5far")
+augment_price = 10
+stats_to_modify = Array[ExtResource("3_itdj1")]([SubResource("Resource_hmhfi"), SubResource("Resource_aveke")])
+id = null
+local_to_scene = false
+enabled = true
+
+
+
+================================================
+File: augments/bullet_buffer.tres
+================================================
+[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://wp2hnmx1t1ox"]
+
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_ahxqw"]
+[ext_resource type="Texture2D" uid="uid://qxnxnrjoe7x3" path="res://assets/sprites/trigger_eyepod.svg" id="1_cm1vo"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_cm1vo"]
+
+[sub_resource type="Resource" id="Resource_2ns1m"]
+script = ExtResource("2_cm1vo")
+value = 0.0
+key = 5
+operation = 0
+duration = 0.0
+metadata/_custom_type_script = ExtResource("2_cm1vo")
+
+[resource]
+script = ExtResource("1_ahxqw")
+augment_icon = ExtResource("1_cm1vo")
+augment_price = 25
+stats_to_modify = Array[ExtResource("2_cm1vo")]([SubResource("Resource_2ns1m")])
+rarity = 1.0
+id = "bullet_buffer"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://clxsmndukf026"
+
+
+
+================================================
+File: augments/immuno_boosters.tres
+================================================
+[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://dbhqk1tq5grf8"]
+
+[ext_resource type="Texture2D" uid="uid://bwn1fetdqmm3c" path="res://assets/sprites/immuno-booster.svg" id="1_e4qs5"]
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="2_1auth"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="3_aaedq"]
+
+[sub_resource type="Resource" id="Resource_3ju77"]
+script = ExtResource("3_aaedq")
+value = 10.0
+key = 2
+operation = 0
+duration = 0.0
+
+[resource]
+script = ExtResource("2_1auth")
+augment_icon = ExtResource("1_e4qs5")
+augment_price = 15
+stats_to_modify = Array[ExtResource("3_aaedq")]([SubResource("Resource_3ju77")])
+rarity = 1.0
+id = null
+local_to_scene = false
+enabled = true
+
+
+
+================================================
+File: augments/material_lender.tres
+================================================
+[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://h6641yt2noof"]
+
+[ext_resource type="Texture2D" uid="uid://1r3wv2gwfpw6" path="res://assets/sprites/change_gun.png" id="1_34msf"]
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_xf436"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_34msf"]
+
+[sub_resource type="Resource" id="Resource_34msf"]
+script = ExtResource("2_34msf")
+value = -5.0
+key = 14
+operation = 0
+duration = 0.0
+metadata/_custom_type_script = ExtResource("2_34msf")
+
+[resource]
+script = ExtResource("1_xf436")
+augment_icon = ExtResource("1_34msf")
+augment_price = 5
+stats_to_modify = Array[ExtResource("2_34msf")]([SubResource("Resource_34msf")])
+rarity = 1.0
+id = ""
+local_to_scene = false
+enabled = true
+
+
+
+================================================
+File: augments/range_enhancer.tres
+================================================
+[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://vkrfjwuxjcky"]
+
+[ext_resource type="Texture2D" uid="uid://byg2ihb05tf4" path="res://assets/sprites/og_background_pic.png" id="1_33m5x"]
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_xk0ku"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_33m5x"]
+
+[sub_resource type="Resource" id="Resource_xk0ku"]
+script = ExtResource("2_33m5x")
+value = 1.1
+key = 7
+operation = 1
+duration = 0.0
+metadata/_custom_type_script = ExtResource("2_33m5x")
+
+[resource]
+script = ExtResource("1_xk0ku")
+augment_icon = ExtResource("1_33m5x")
+augment_price = 24
+stats_to_modify = Array[ExtResource("2_33m5x")]([SubResource("Resource_xk0ku")])
+rarity = 1.0
+id = ""
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://clxsmndukf026"
+
+
+
+================================================
+File: augments/spreadlock.tres
+================================================
+[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://cpoybg7bupnm3"]
+
+[ext_resource type="Texture2D" uid="uid://qxnxnrjoe7x3" path="res://assets/sprites/trigger_eyepod.svg" id="1_7wbi6"]
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_dj52t"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_7wbi6"]
+
+[sub_resource type="Resource" id="Resource_3epvh"]
+script = ExtResource("2_7wbi6")
+value = 0.9
+key = 7
+operation = 1
+duration = 0.0
+metadata/_custom_type_script = "uid://d2sqcjy2gnmwg"
+
+[resource]
+script = ExtResource("1_dj52t")
+augment_icon = ExtResource("1_7wbi6")
+augment_price = 50
+stats_to_modify = Array[ExtResource("2_7wbi6")]([SubResource("Resource_3epvh")])
+rarity = 1.0
+id = ""
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://clxsmndukf026"
+
+
+
+================================================
+File: augments/texo_card.tres
+================================================
+[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://dmqj0880bqma2"]
+
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_cd0ui"]
+[ext_resource type="Texture2D" uid="uid://qxnxnrjoe7x3" path="res://assets/sprites/trigger_eyepod.svg" id="1_pef1a"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_pef1a"]
+
+[sub_resource type="Resource" id="Resource_cd0ui"]
+script = ExtResource("2_pef1a")
+value = 0.98
+key = 8
+operation = 1
+duration = 0.0
+metadata/_custom_type_script = ExtResource("2_pef1a")
+
+[resource]
+script = ExtResource("1_cd0ui")
+augment_icon = ExtResource("1_pef1a")
+augment_price = 20
+stats_to_modify = Array[ExtResource("2_pef1a")]([SubResource("Resource_cd0ui")])
+rarity = 0.15
+id = ""
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://clxsmndukf026"
+
+
+
+================================================
+File: augments/ultra_texo_card.tres
+================================================
+[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://dfa7mnmd8k67j"]
+
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_nfj5v"]
+[ext_resource type="Texture2D" uid="uid://qxnxnrjoe7x3" path="res://assets/sprites/trigger_eyepod.svg" id="1_ygoqw"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_ygoqw"]
+
+[sub_resource type="Resource" id="Resource_1sb3c"]
+script = ExtResource("2_ygoqw")
+value = 0.75
+key = 8
+operation = 1
+duration = 0.0
+metadata/_custom_type_script = ExtResource("2_ygoqw")
+
+[resource]
+script = ExtResource("1_nfj5v")
+augment_icon = ExtResource("1_ygoqw")
+augment_price = 100
+stats_to_modify = Array[ExtResource("2_ygoqw")]([SubResource("Resource_1sb3c")])
+rarity = 0.1
+id = ""
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://clxsmndukf026"
+
+
+
+================================================
+File: bullets/birdshot.tres
+================================================
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=3 format=3 uid="uid://cvll3ruomryrf"]
+
+[ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_1pj4w"]
+[ext_resource type="Texture2D" uid="uid://bogbptl8oh8pv" path="res://assets/sprites/shotgun-shell.png" id="2_s65ww"]
+
+[resource]
+script = ExtResource("1_1pj4w")
+projectile_speed = 500.0
+projectile_range = 1000
+projectile_damage = 0.5
+projectile_spread = 0.0
+projectile_dot = 0.0
+projectile_dot_duration = 0.0
+projectile_dot_type = 0
+projectile_max_pierce_count = 1
+sprite_scale = Vector2(0.052, 0.157)
+sprite_modulate = Color(1, 1, 1, 1)
+sprite_texture = ExtResource("2_s65ww")
+sprite_rotation = 0.0
+sprite_offset = Vector2(0, 0)
+collision_shape_radius = 9.85
+collision_shape_mask = 3
+lifespan_time = 100.0
+metadata/_custom_type_script = ExtResource("1_1pj4w")
+
+
+
+================================================
+File: bullets/buckshot.tres
+================================================
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=3 format=3 uid="uid://bljhro5a2wk67"]
+
+[ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_k47vs"]
+[ext_resource type="Texture2D" uid="uid://bogbptl8oh8pv" path="res://assets/sprites/shotgun-shell.png" id="2_ltcgv"]
+
+[resource]
+script = ExtResource("1_k47vs")
+projectile_speed = 500.0
+projectile_range = 1000
+projectile_damage = 5.0
+projectile_spread = 0.0
+projectile_dot = 0.0
+projectile_dot_duration = 0.0
+projectile_dot_type = 0
+projectile_max_pierce_count = 1
+sprite_scale = Vector2(0.065, 0.186)
+sprite_modulate = Color(0.65098, 0.65098, 0.65098, 1)
+sprite_texture = ExtResource("2_ltcgv")
+sprite_rotation = 0.0
+sprite_offset = Vector2(0, 0)
+collision_shape_radius = 9.85
+collision_shape_mask = 3
+lifespan_time = 100.0
+metadata/_custom_type_script = ExtResource("1_k47vs")
+
+
+
+================================================
+File: bullets/bullet.tres
+================================================
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=6 format=3 uid="uid://peywrjmws6bp"]
+
+[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_0t2kq"]
+[ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_yiikd"]
+[ext_resource type="Texture2D" uid="uid://dpyum42uiw68i" path="res://assets/sprites/long_bullet.png" id="2_xxnb8"]
+[ext_resource type="PackedScene" uid="uid://rhergnlmde1y" path="res://scenes/components/bullet_spawn_particles.tscn" id="3_qcp3t"]
+
+[sub_resource type="Resource" id="Resource_uq3rq"]
+metadata/__load_path__ = "res://resources/bullets/bullet_data.gd"
+
+[resource]
+script = ExtResource("1_yiikd")
+projectile_speed = 750.0
+projectile_range = 1000
+projectile_damage = 2.0
+projectile_spread = 0.0
+projectile_dot = 0.0
+projectile_dot_duration = 0.0
+projectile_dot_type = 0
+projectile_max_pierce_count = 1
+sprite_scale = Vector2(0.12, 0.04)
+sprite_modulate = Color(1, 1, 0, 1)
+sprite_texture = ExtResource("2_xxnb8")
+sprite_rotation = 90.0
+sprite_offset = Vector2(-25, 0)
+collision_shape_radius = 9.0
+collision_shape_mask = 3
+base_scene = ExtResource("1_0t2kq")
+spawn_particles = ExtResource("3_qcp3t")
+lifespan_time = 100.0
+metadata/_custom_type_script = SubResource("Resource_uq3rq")
+
+
+
+================================================
+File: bullets/fire_bullet.tres
+================================================
+[gd_resource type="Resource" script_class="StatusEffectProjectileData" load_steps=5 format=3 uid="uid://dotimlcgjdj12"]
+
+[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_oyccs"]
+[ext_resource type="Script" uid="uid://b0mj2l6e8ds5k" path="res://resources/bullets/status_effect_projectile_data.gd" id="1_yekd3"]
+[ext_resource type="Texture2D" uid="uid://cdyq3ys4xr2vb" path="res://assets/sprites/fire-bullet.png" id="2_x8u6l"]
+[ext_resource type="PackedScene" uid="uid://rhergnlmde1y" path="res://scenes/components/bullet_spawn_particles.tscn" id="3_s4fa0"]
+
+[resource]
+script = ExtResource("1_yekd3")
+damage_per_sec_type = 0
+damage_per_sec_tick_damage = 0.5
+damage_per_sec_duration = 3.0
+projectile_speed = 475.0
+projectile_range = 1000
+projectile_damage = 1.0
+projectile_spread = 0.0
+projectile_dot = 0.0
+projectile_dot_duration = 0.0
+projectile_dot_type = 0
+projectile_max_pierce_count = 1
+sprite_scale = Vector2(0.06, 0.17)
+sprite_modulate = Color(1, 1, 1, 1)
+sprite_texture = ExtResource("2_x8u6l")
+sprite_rotation = 90.0
+sprite_offset = Vector2(0, 0)
+collision_shape_radius = 9.85
+collision_shape_mask = 3
+base_scene = ExtResource("1_oyccs")
+spawn_particles = ExtResource("3_s4fa0")
+lifespan_time = 100.0
+metadata/_custom_type_script = "uid://b0mj2l6e8ds5k"
+
+
+
+================================================
+File: bullets/flak_canister.tres
+================================================
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=5 format=3 uid="uid://bmtj0qforxxsc"]
+
+[ext_resource type="Script" uid="uid://b6nld5qtnrfes" path="res://scenes/weapons-related/area_of_effect_attack.gd" id="1_f2qoe"]
+[ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="2_sqww4"]
+[ext_resource type="Texture2D" uid="uid://bs4majlyqdhvb" path="res://assets/sprites/projectiles/rocket.svg" id="3_rme84"]
+
+[sub_resource type="Resource" id="Resource_sgvwu"]
+script = ExtResource("1_f2qoe")
+damage = 25.0
+radius = 150.0
+knockback_force = 500.0
+metadata/_custom_type_script = "uid://b6nld5qtnrfes"
+
+[resource]
+script = ExtResource("2_sqww4")
+projectile_speed = 350.0
+projectile_range = 3000
+projectile_damage = 10.0
+projectile_spread = 0.18
+projectile_dot = 0.0
+projectile_dot_duration = 0.0
+projectile_dot_type = 0
+projectile_aoe_data = SubResource("Resource_sgvwu")
+projectile_max_pierce_count = 1
+sprite_scale = Vector2(0.06, 0.17)
+sprite_modulate = Color(1, 1, 1, 1)
+sprite_texture = ExtResource("3_rme84")
+sprite_rotation = 0.0
+sprite_offset = Vector2(0, 0)
+collision_shape_radius = 9.0
+collision_shape_mask = 3
+lifespan_time = 100.0
+metadata/_custom_type_script = "uid://cr3s7huv3l64s"
+
+
+
+================================================
+File: bullets/pellet.tres
+================================================
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=4 format=3 uid="uid://ccjjel7gxlyjx"]
+
+[ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_3i10t"]
+[ext_resource type="Texture2D" uid="uid://bogbptl8oh8pv" path="res://assets/sprites/shotgun-shell.png" id="2_ahgb7"]
+
+[sub_resource type="Resource" id="Resource_qpgk3"]
+metadata/__load_path__ = "res://resources/bullets/bullet_data.gd"
+
+[resource]
+script = ExtResource("1_3i10t")
+projectile_speed = 500.0
+projectile_range = 500
+projectile_damage = 2.0
+projectile_spread = 0.0
+projectile_dot = 0.0
+projectile_dot_duration = 0.0
+projectile_dot_type = 0
+projectile_max_pierce_count = 1
+sprite_scale = Vector2(0.07, 0.18)
+sprite_modulate = Color(0.839216, 0.839216, 0.839216, 1)
+sprite_texture = ExtResource("2_ahgb7")
+sprite_rotation = 0.0
+sprite_offset = Vector2(0, 0)
+collision_shape_radius = 9.0
+collision_shape_mask = 3
+lifespan_time = 100.0
+metadata/_custom_type_script = SubResource("Resource_qpgk3")
+
+
+
+================================================
+File: bullets/prion_projectile.tres
+================================================
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=6 format=3 uid="uid://dgwjbjop78tfc"]
+
+[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_y4dvk"]
+[ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="2_iloeo"]
+[ext_resource type="PackedScene" uid="uid://rhergnlmde1y" path="res://scenes/components/bullet_spawn_particles.tscn" id="3_cirk1"]
+
+[sub_resource type="Gradient" id="Gradient_y4dvk"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_iloeo"]
+gradient = SubResource("Gradient_y4dvk")
+width = 10
+height = 10
+
+[resource]
+script = ExtResource("2_iloeo")
+projectile_speed = 750.0
+projectile_range = 1000
+projectile_damage = -1.0
+projectile_spread = 0.0
+projectile_dot = 0.0
+projectile_dot_duration = 0.0
+projectile_dot_type = 0
+projectile_max_pierce_count = 1
+sprite_scale = Vector2(0.06, 0.17)
+sprite_modulate = Color(1, 1, 1, 1)
+sprite_texture = SubResource("GradientTexture2D_iloeo")
+sprite_rotation = 0.0
+sprite_offset = Vector2(0, 0)
+collision_shape_radius = 9.0
+collision_shape_mask = 3
+base_scene = ExtResource("1_y4dvk")
+spawn_particles = ExtResource("3_cirk1")
+lifespan_time = 100.0
+metadata/_custom_type_script = "uid://cr3s7huv3l64s"
+
+
+
+================================================
+File: bullets/projectile_data.gd
+================================================
+class_name ProjectileData extends Resource
+
+@export_group("Stats", "projectile_")
+@export var projectile_speed : float = 750
+@export var projectile_range : int = 1000
+@export var projectile_damage : float = -1
+@export var projectile_spread : float = 0
+@export var projectile_dot : float = 0
+@export var projectile_dot_duration : float = 0
+@export var projectile_dot_type : GameState.StatusEffectType = 0
+@export var projectile_aoe_data : AreaOfEffectAttack
+@export var projectile_max_pierce_count: int = 1
+
+@export_group("Sprite Properties", "sprite_")
+@export var sprite_scale : Vector2 = Vector2(0.06, 0.17)
+@export var sprite_modulate : Color = Color.WHITE
+@export var sprite_texture : Texture2D
+@export var sprite_rotation : float = 0
+@export var sprite_offset : Vector2 = Vector2.ZERO
+
+@export var collision_shape_radius : float = 9.0
+@export var collision_shape_mask: int = 3
+
+@export var base_scene : PackedScene = preload("uid://b5x54mjk1mls0")
+@export var spawn_particles : PackedScene = preload("uid://rhergnlmde1y")
+
+@export var lifespan_time : float = 100
+
+
+
+================================================
+File: bullets/projectile_data.gd.uid
+================================================
+uid://cr3s7huv3l64s
+
+
+
+================================================
+File: bullets/rocket.tres
+================================================
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=5 format=3 uid="uid://cnp06ev13f5af"]
+
+[ext_resource type="Script" uid="uid://b6nld5qtnrfes" path="res://scenes/weapons-related/area_of_effect_attack.gd" id="1_7mxyb"]
+[ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_wlp51"]
+[ext_resource type="Texture2D" uid="uid://bs4majlyqdhvb" path="res://assets/sprites/projectiles/rocket.svg" id="3_lroq3"]
+
+[sub_resource type="Resource" id="Resource_sgvwu"]
+script = ExtResource("1_7mxyb")
+damage = 25.0
+radius = 150.0
+knockback_force = 500.0
+metadata/_custom_type_script = "uid://b6nld5qtnrfes"
+
+[resource]
+script = ExtResource("1_wlp51")
+projectile_speed = 350.0
+projectile_range = 3000
+projectile_damage = 10.0
+projectile_spread = 0.18
+projectile_dot = 0.0
+projectile_dot_duration = 0.0
+projectile_dot_type = 0
+projectile_aoe_data = SubResource("Resource_sgvwu")
+sprite_scale = Vector2(0.06, 0.17)
+sprite_modulate = Color(1, 1, 1, 1)
+sprite_texture = ExtResource("3_lroq3")
+sprite_rotation = 0.0
+sprite_offset = Vector2(0, 0)
+collision_shape_radius = 9.0
+collision_shape_mask = 3
+metadata/_custom_type_script = "uid://cr3s7huv3l64s"
+
+
+
+================================================
+File: bullets/sniper_bullet.tres
+================================================
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=2 format=3 uid="uid://iu7mno7fgee1"]
+
+[ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_64tkw"]
+
+[resource]
+script = ExtResource("1_64tkw")
+projectile_speed = 750.0
+projectile_range = 1000
+projectile_damage = -1.0
+projectile_spread = 0.0
+projectile_dot = 0.0
+projectile_dot_duration = 0.0
+projectile_dot_type = 0
+projectile_max_pierce_count = 3
+sprite_scale = Vector2(0.06, 0.17)
+sprite_modulate = Color(1, 1, 1, 1)
+sprite_rotation = 0.0
+sprite_offset = Vector2(0, 0)
+collision_shape_radius = 9.0
+collision_shape_mask = 3
+metadata/_custom_type_script = "uid://cr3s7huv3l64s"
+
+
+
+================================================
+File: bullets/status_effect_projectile_data.gd
+================================================
+class_name StatusEffectProjectileData extends ProjectileData
+
+@export_group("dot", "damage_per_sec_")
+@export var damage_per_sec_type : GameState.StatusEffectType
+@export var damage_per_sec_tick_damage : float
+@export var damage_per_sec_duration : float
+
+
+
+================================================
+File: bullets/status_effect_projectile_data.gd.uid
+================================================
+uid://b0mj2l6e8ds5k
+
+
+
+================================================
+File: enemies/basic_slime.tres
+================================================
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://c66ie0f07a5c6"]
+
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="1_22qtp"]
+[ext_resource type="PackedScene" uid="uid://bt1shbbmu6uqi" path="res://scenes/characters/enemies/slime_enemy.tscn" id="1_w6r45"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_w6r45"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="3_2otlg"]
+
+[resource]
+script = ExtResource("1_22qtp")
+base_enemy_scene = ExtResource("1_w6r45")
+base_contact_damage = 10.0
+research_point_value = 3
+enemy_spawn_chance = 1.0
+enemy_spawn_order = 2
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1.6, 1.6)
+sprite_texture = ExtResource("2_w6r45")
+sprite_scale = Vector2(0.06, 0.057)
+sprite_color = Color(0.309804, 0.545098, 0.25098, 1)
+base_health = 25.0
+base_speed = 75.0
+modifiers = Array[ExtResource("3_2otlg")]([])
+id = "basic_slime"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://bwk8dueikqaq0"
+
+
+
+================================================
+File: enemies/enemy_data.gd
+================================================
+class_name EnemyData extends BaseCharacterData
+
+@export var base_enemy_scene : PackedScene
+
+@export var base_contact_damage : float = 0
+@export var research_point_value : int = int(NAN)
+@export var enemy_spawn_chance : float = 1
+@export var enemy_spawn_order : int = 1
+
+@export_group("Character Properties", "character_")
+@export var character_hitbox_shape_type : Shape2D = RectangleShape2D.new()
+@export var character_hitbox_shape_value : Vector2 = Vector2(44, 40)
+@export var character_scale : Vector2 = Vector2.ONE
+
+@export_group("Sprite Properies", "sprite_")
+@export var sprite_texture : Texture2D
+@export var sprite_scale : Vector2 = Vector2(0.06, 0.057)
+@export var sprite_color : Color = Color.WHITE
+
+@export var gun: GunData 
+
+
+
+================================================
+File: enemies/enemy_data.gd.uid
+================================================
+uid://bwk8dueikqaq0
+
+
+
+================================================
+File: enemies/evolved_slime.tres
+================================================
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://c41lhhdbpe2ut"]
+
+[ext_resource type="PackedScene" uid="uid://bt1shbbmu6uqi" path="res://scenes/characters/enemies/slime_enemy.tscn" id="1_3gtkh"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="1_pgwt5"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_3gtkh"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="3_2ra1y"]
+
+[resource]
+script = ExtResource("1_pgwt5")
+base_enemy_scene = ExtResource("1_3gtkh")
+base_contact_damage = 10.0
+research_point_value = 5
+enemy_spawn_chance = 0.75
+enemy_spawn_order = 3
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1.5, 1.5)
+sprite_texture = ExtResource("2_3gtkh")
+sprite_scale = Vector2(0.06, 0.057)
+sprite_color = Color(1, 0.612, 1, 1)
+base_health = 50.0
+base_speed = 100.0
+modifiers = Array[ExtResource("3_2ra1y")]([])
+id = "evolved_slime"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://bwk8dueikqaq0"
+
+
+
+================================================
+File: enemies/gunner_slime.tres
+================================================
+[gd_resource type="Resource" script_class="EnemyData" load_steps=6 format=3 uid="uid://l8x8gtjxk7r6"]
+
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="1_ijfsl"]
+[ext_resource type="PackedScene" uid="uid://bt1shbbmu6uqi" path="res://scenes/characters/enemies/slime_enemy.tscn" id="1_ns0f3"]
+[ext_resource type="Resource" uid="uid://doth1xd85xeyo" path="res://resources/guns/pistol.tres" id="2_l8ocm"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="4_l8ocm"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="4_o267r"]
+
+[resource]
+script = ExtResource("1_ijfsl")
+base_enemy_scene = ExtResource("1_ns0f3")
+base_contact_damage = 0.0
+research_point_value = 10
+enemy_spawn_chance = 0.25
+enemy_spawn_order = 4
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1, 1)
+sprite_texture = ExtResource("4_l8ocm")
+sprite_scale = Vector2(0.06, 0.057)
+sprite_color = Color(0.556953, 0.556953, 0.556953, 1)
+gun = ExtResource("2_l8ocm")
+base_health = 30.0
+base_speed = 20.0
+modifiers = Array[ExtResource("4_o267r")]([])
+id = "gunner_slime"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://bwk8dueikqaq0"
+
+
+
+================================================
+File: enemies/phase_enemy.tres
+================================================
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://5oulfv8ctux8"]
+
+[ext_resource type="PackedScene" uid="uid://c5sjgq60klnu6" path="res://scenes/characters/enemies/phage_enemy.tscn" id="1_ywe2e"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_un5l1"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="3_ams2n"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="4_8f4yi"]
+
+[resource]
+script = ExtResource("3_ams2n")
+base_enemy_scene = ExtResource("1_ywe2e")
+base_contact_damage = 20.0
+research_point_value = 5
+enemy_spawn_chance = 0.3
+enemy_spawn_order = 3
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1, 1)
+sprite_texture = ExtResource("4_8f4yi")
+sprite_scale = Vector2(0.06, 0.057)
+sprite_color = Color(1, 0.529412, 0.164706, 1)
+base_health = 30.0
+base_speed = 50.0
+modifiers = Array[ExtResource("2_un5l1")]([])
+id = ""
+local_to_scene = false
+enabled = true
+
+
+
+================================================
+File: enemies/small_slime.tres
+================================================
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://cvi416jal72s4"]
+
+[ext_resource type="PackedScene" uid="uid://bt1shbbmu6uqi" path="res://scenes/characters/enemies/slime_enemy.tscn" id="1_c1m5j"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="1_e4fic"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_3ntqp"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="3_r14q4"]
+
+[resource]
+script = ExtResource("1_e4fic")
+base_enemy_scene = ExtResource("1_c1m5j")
+base_contact_damage = 10.0
+research_point_value = 1
+enemy_spawn_chance = 1.0
+enemy_spawn_order = 1
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1, 1)
+sprite_texture = ExtResource("2_3ntqp")
+sprite_scale = Vector2(0.06, 0.057)
+sprite_color = Color(1, 1, 1, 1)
+base_health = 10.0
+base_speed = 125.0
+modifiers = Array[ExtResource("3_r14q4")]([])
+id = "small_slime"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://bwk8dueikqaq0"
+
+
+
+================================================
+File: enemies/spore_enemy.tres
+================================================
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://rd770hmtsvti"]
+
+[ext_resource type="PackedScene" uid="uid://c5sjgq60klnu6" path="res://scenes/characters/enemies/phage_enemy.tscn" id="1_uurf7"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_8esdn"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="3_0sgli"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="4_p7c3k"]
+
+[resource]
+script = ExtResource("3_0sgli")
+base_enemy_scene = ExtResource("1_uurf7")
+base_contact_damage = 20.0
+research_point_value = 5
+enemy_spawn_chance = 0.3
+enemy_spawn_order = 3
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1, 1)
+sprite_texture = ExtResource("4_p7c3k")
+sprite_scale = Vector2(0.06, 0.057)
+sprite_color = Color(1, 0.529412, 0.164706, 1)
+base_health = 30.0
+base_speed = 50.0
+modifiers = Array[ExtResource("2_8esdn")]([])
+id = ""
+local_to_scene = false
+enabled = true
+
+
+
+================================================
+File: enemies/tumor_cell.tres
+================================================
+[gd_resource type="Resource" script_class="EnemyData" load_steps=4 format=3 uid="uid://c3jq1snnait57"]
+
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="1_b1l8f"]
+[ext_resource type="PackedScene" uid="uid://b0h7lo7im5s1h" path="res://scenes/characters/enemies/tumor_cell.tscn" id="1_ysdfg"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="2_ysdfg"]
+
+[resource]
+script = ExtResource("2_ysdfg")
+base_enemy_scene = ExtResource("1_ysdfg")
+base_contact_damage = 10.0
+research_point_value = 20
+enemy_spawn_chance = 1.0
+enemy_spawn_order = 3
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1, 1)
+sprite_scale = Vector2(0.06, 0.057)
+sprite_color = Color(1, 1, 1, 1)
+base_health = 100.0
+base_speed = 40.0
+modifiers = Array[ExtResource("1_b1l8f")]([])
+id = ""
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://bwk8dueikqaq0"
+
+
+
+================================================
+File: enemies/virus.tres
+================================================
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://caqgv7fmnrltj"]
+
+[ext_resource type="PackedScene" uid="uid://du2l151jbq78f" path="res://scenes/characters/enemies/virus.tscn" id="1_qnoou"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_ey1an"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="3_xqyaw"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="4_hm53l"]
+
+[resource]
+script = ExtResource("3_xqyaw")
+base_enemy_scene = ExtResource("1_qnoou")
+base_contact_damage = 5.0
+research_point_value = 1
+enemy_spawn_chance = 0.67
+enemy_spawn_order = 3
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1, 1)
+sprite_texture = ExtResource("4_hm53l")
+sprite_scale = Vector2(0.06, 0.057)
+sprite_color = Color(0, 0.168627, 0, 1)
+base_health = 20.0
+base_speed = 250.0
+modifiers = Array[ExtResource("2_ey1an")]([])
+id = "virus"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://bwk8dueikqaq0"
+
+
+
+================================================
+File: guns/birdshot_shotgun.tres
+================================================
+[gd_resource type="Resource" script_class="ShotgunData" load_steps=6 format=3 uid="uid://ogus15l853w3"]
+
+[ext_resource type="Resource" uid="uid://cvll3ruomryrf" path="res://resources/bullets/birdshot.tres" id="1_3jueo"]
+[ext_resource type="Script" uid="uid://d0a57wqy65ei8" path="res://resources/guns/shotgun_data.gd" id="1_t0yg6"]
+[ext_resource type="AudioStream" uid="uid://7bj6814gfh03" path="res://assets/music/GUI_Sound_Effects_by_Lokif/misc_sound.wav" id="2_2gt81"]
+[ext_resource type="Texture2D" uid="uid://c36ulwt7082av" path="res://assets/sprites/birdshot_shotgun.png" id="3_62yvp"]
+[ext_resource type="PackedScene" uid="uid://rks5cvegm0tb" path="res://scenes/weapons-related/base_shotgun.tscn" id="4_62yvp"]
+
+[resource]
+script = ExtResource("1_t0yg6")
+unlocked = false
+weapon_scene = ExtResource("4_62yvp")
+sprite = ExtResource("3_62yvp")
+bullet = ExtResource("1_3jueo")
+reload_time = 0.5
+max_ammo = 1
+ammo = null
+targeting_range = 600.0
+fire_rate = 0.1
+fire_audio = ExtResource("2_2gt81")
+sprite_scale = Vector2(50.8, 15.11)
+sprite_position = Vector2(0.111, 0.158)
+sprite_rotation_degrees = 0.0
+sprite_flip_h = false
+sprite_modulate = Color(1, 1, 1, 1)
+bullet_spawn_offset = Vector2(388.5, -19.661)
+fire_animation_skew = 5.0
+fire_animation_duration = null
+bullets_per_shot = 15
+bullet_spread = 45.0
+screen_shake_frequency = 100.0
+screen_shake_amplitude = 0.25
+id = "birdshot_shotgun"
+local_to_scene = false
+metadata/_custom_type_script = "uid://d0a57wqy65ei8"
+
+
+
+================================================
+File: guns/buckshot_shotgun.tres
+================================================
+[gd_resource type="Resource" script_class="ShotgunData" load_steps=6 format=3 uid="uid://ceex6yhxwxp8f"]
+
+[ext_resource type="Resource" uid="uid://bljhro5a2wk67" path="res://resources/bullets/buckshot.tres" id="1_adtgj"]
+[ext_resource type="Script" uid="uid://d0a57wqy65ei8" path="res://resources/guns/shotgun_data.gd" id="1_ebba0"]
+[ext_resource type="AudioStream" uid="uid://c5uvopnlu5ibd" path="res://addons/basic_settings_menu/settings-test-sound.wav" id="2_jpars"]
+[ext_resource type="Texture2D" uid="uid://bjpnnh3ql7pt5" path="res://assets/sprites/mini-buck-shotgun.png" id="3_qd7hi"]
+[ext_resource type="PackedScene" uid="uid://rks5cvegm0tb" path="res://scenes/weapons-related/base_shotgun.tscn" id="4_qd7hi"]
+
+[resource]
+script = ExtResource("1_ebba0")
+unlocked = false
+weapon_scene = ExtResource("4_qd7hi")
+sprite = ExtResource("3_qd7hi")
+bullet = ExtResource("1_adtgj")
+reload_time = 2.0
+max_ammo = 1
+ammo = null
+targeting_range = 1000.0
+fire_rate = 0.5
+fire_audio = ExtResource("2_jpars")
+sprite_scale = Vector2(0.1, 0.1)
+sprite_position = Vector2(73.3, 15.12)
+sprite_rotation_degrees = 0.0
+sprite_flip_h = false
+sprite_modulate = Color(1, 1, 1, 1)
+bullet_spawn_offset = Vector2(407.188, -61.189)
+fire_animation_skew = 4.94764
+fire_animation_duration = null
+bullets_per_shot = 13
+bullet_spread = 45.0
+screen_shake_frequency = 20.0
+screen_shake_amplitude = 0.75
+id = "buckshot_shotgun"
+local_to_scene = false
+metadata/_custom_type_script = "uid://d0a57wqy65ei8"
+
+
+
+================================================
+File: guns/double_barrel_shotgun.tres
+================================================
+[gd_resource type="Resource" script_class="ShotgunData" load_steps=6 format=3 uid="uid://bbkqomwace01i"]
+
+[ext_resource type="Script" uid="uid://d0a57wqy65ei8" path="res://resources/guns/shotgun_data.gd" id="1_61nn0"]
+[ext_resource type="Resource" uid="uid://ccjjel7gxlyjx" path="res://resources/bullets/pellet.tres" id="1_rodho"]
+[ext_resource type="AudioStream" uid="uid://c5uvopnlu5ibd" path="res://addons/basic_settings_menu/settings-test-sound.wav" id="2_ci32l"]
+[ext_resource type="Texture2D" uid="uid://12vyrpw3wdmj" path="res://assets/sprites/shotgun.png" id="3_84eyl"]
+[ext_resource type="PackedScene" uid="uid://rks5cvegm0tb" path="res://scenes/weapons-related/base_shotgun.tscn" id="4_84eyl"]
+
+[resource]
+script = ExtResource("1_61nn0")
+unlocked = true
+weapon_scene = ExtResource("4_84eyl")
+sprite = ExtResource("3_84eyl")
+bullet = ExtResource("1_rodho")
+reload_time = 0.75
+max_ammo = 2
+ammo = null
+targeting_range = 1000.0
+fire_rate = 0.5
+fire_audio = ExtResource("2_ci32l")
+sprite_scale = Vector2(0.105, 0.105)
+sprite_position = Vector2(46.8, 15.117)
+sprite_rotation_degrees = 0.0
+sprite_flip_h = false
+sprite_modulate = Color(1, 1, 1, 1)
+bullet_spawn_offset = Vector2(525.513, -41.18)
+fire_animation_skew = 4.94764
+fire_animation_duration = null
+bullets_per_shot = 7
+bullet_spread = 20.0
+screen_shake_frequency = 10.0
+screen_shake_amplitude = 0.5
+id = "double_barrel_shotgun"
+local_to_scene = false
+metadata/_custom_type_script = "uid://d0a57wqy65ei8"
+
+
+
+================================================
+File: guns/gun_data.gd
+================================================
+class_name GunData extends BaseData
+
+@export var unlocked: bool = false
+
+@export var weapon_scene: PackedScene
+@export var sprite: Texture2D
+@export var bullet: ProjectileData
+@export var reload_time: float
+@export var max_ammo: int
+@export var ammo: int = max_ammo
+@export var targeting_range: float
+@export var fire_rate: float
+@export var fire_audio: AudioStreamWAV
+@export var damage_dropoff_curve: Curve
+@export var speed_dropoff_curve: Curve
+
+# Sprite properties
+@export var sprite_scale: Vector2 = Vector2(0.08, 0.08)
+@export var sprite_position: Vector2
+@export var sprite_rotation_degrees: float
+@export var sprite_flip_h: bool
+@export var sprite_modulate: Color = Color.WHITE
+
+# Bullet spawn point properties
+@export var bullet_spawn_offset: Vector2
+
+# Animation properties
+@export var fire_animation_skew: float = (-0.0523599 + 5) # Default skew value from machine gun, doesnt work for pistol for some reason				
+@export var fire_animation_duration: float = fire_rate
+
+@export var bullets_per_shot: int = 1
+@export var bullet_spread: float = 0.0
+@export var screen_shake_frequency : float = 10
+@export var screen_shake_amplitude : float = 0.5
+
+
+
+================================================
+File: guns/gun_data.gd.uid
+================================================
+uid://cvb1dimncgicl
+
+
+
+================================================
+File: guns/machine_gun.tres
+================================================
+[gd_resource type="Resource" script_class="GunData" load_steps=6 format=3 uid="uid://bqca7rart0qda"]
+
+[ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="1_0yvqv"]
+[ext_resource type="Resource" uid="uid://peywrjmws6bp" path="res://resources/bullets/bullet.tres" id="1_ir5rt"]
+[ext_resource type="AudioStream" uid="uid://dlaoqea0g1d5i" path="res://assets/music/GUI_Sound_Effects_by_Lokif/click_2.wav" id="2_2md8s"]
+[ext_resource type="Texture2D" uid="uid://cqnmxanph02hs" path="res://assets/sprites/mini-smg.png" id="3_jkhum"]
+[ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="4_jkhum"]
+
+[resource]
+script = ExtResource("1_0yvqv")
+unlocked = true
+weapon_scene = ExtResource("4_jkhum")
+sprite = ExtResource("3_jkhum")
+bullet = ExtResource("1_ir5rt")
+reload_time = 3.0
+max_ammo = 30
+ammo = null
+targeting_range = 600.0
+fire_rate = 0.15
+fire_audio = ExtResource("2_2md8s")
+sprite_scale = Vector2(0.09, 0.09)
+sprite_position = Vector2(44, 10)
+sprite_rotation_degrees = 0.0
+sprite_flip_h = false
+sprite_modulate = Color(1, 1, 1, 1)
+bullet_spawn_offset = Vector2(322.219, -111.12)
+fire_animation_skew = 4.94764
+fire_animation_duration = 0.1
+bullets_per_shot = 1
+bullet_spread = 0.0
+screen_shake_frequency = 10.0
+screen_shake_amplitude = 0.5
+id = "machine_gun"
+local_to_scene = false
+metadata/_custom_type_script = "uid://cvb1dimncgicl"
+
+
+
+================================================
+File: guns/pistol.tres
+================================================
+[gd_resource type="Resource" script_class="GunData" load_steps=6 format=3 uid="uid://doth1xd85xeyo"]
+
+[ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="1_6ux22"]
+[ext_resource type="Resource" uid="uid://peywrjmws6bp" path="res://resources/bullets/bullet.tres" id="1_h5tx8"]
+[ext_resource type="AudioStream" uid="uid://c0r5jbphbrp6y" path="res://assets/music/GUI_Sound_Effects_by_Lokif/negative.wav" id="2_i7n5r"]
+[ext_resource type="Texture2D" uid="uid://dyus754xmr41s" path="res://assets/sprites/pistol.png" id="3_a0tsk"]
+[ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="4_a0tsk"]
+
+[resource]
+script = ExtResource("1_6ux22")
+unlocked = false
+weapon_scene = ExtResource("4_a0tsk")
+sprite = ExtResource("3_a0tsk")
+bullet = ExtResource("1_h5tx8")
+reload_time = 1.5
+max_ammo = 6
+ammo = null
+targeting_range = 600.0
+fire_rate = 0.25
+fire_audio = ExtResource("2_i7n5r")
+sprite_scale = Vector2(0.08, 0.08)
+sprite_position = Vector2(45, 5)
+sprite_rotation_degrees = 0.0
+sprite_flip_h = true
+sprite_modulate = Color(1, 1, 1, 1)
+bullet_spawn_offset = Vector2(300, -111)
+fire_animation_skew = 0.0
+fire_animation_duration = 0.15
+bullets_per_shot = 1
+bullet_spread = 0.0
+screen_shake_frequency = 10.0
+screen_shake_amplitude = 0.5
+id = "pistol"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://cvb1dimncgicl"
+
+
+
+================================================
+File: guns/pump_action_shotgun.tres
+================================================
+[gd_resource type="Resource" script_class="ShotgunData" load_steps=6 format=3 uid="uid://5lw04hrqi2kv"]
+
+[ext_resource type="Script" uid="uid://d0a57wqy65ei8" path="res://resources/guns/shotgun_data.gd" id="1_bq3ia"]
+[ext_resource type="Resource" uid="uid://bljhro5a2wk67" path="res://resources/bullets/buckshot.tres" id="1_lktsu"]
+[ext_resource type="AudioStream" uid="uid://biich4lcrpmcr" path="res://assets/music/GUI_Sound_Effects_by_Lokif/positive.wav" id="2_jrn6h"]
+[ext_resource type="Texture2D" uid="uid://cuhe3wefntcuq" path="res://assets/sprites/pump_shotgun.png" id="3_lldrk"]
+[ext_resource type="PackedScene" uid="uid://rks5cvegm0tb" path="res://scenes/weapons-related/base_shotgun.tscn" id="4_lldrk"]
+
+[resource]
+script = ExtResource("1_bq3ia")
+unlocked = true
+weapon_scene = ExtResource("4_lldrk")
+sprite = ExtResource("3_lldrk")
+bullet = ExtResource("1_lktsu")
+reload_time = 2.5
+max_ammo = 5
+ammo = null
+targeting_range = 1000.0
+fire_rate = 1.25
+fire_audio = ExtResource("2_jrn6h")
+sprite_scale = Vector2(0.102, 0.139)
+sprite_position = Vector2(61.8, 15.11)
+sprite_rotation_degrees = 0.0
+sprite_flip_h = false
+sprite_modulate = Color(0, 1, 1, 1)
+bullet_spawn_offset = Vector2(406.187, 20.724)
+fire_animation_skew = 4.94764
+fire_animation_duration = null
+bullets_per_shot = 4
+bullet_spread = 10.0
+screen_shake_frequency = 10.0
+screen_shake_amplitude = 1.0
+id = "pump_action_shotgun"
+local_to_scene = false
+metadata/_custom_type_script = "uid://d0a57wqy65ei8"
+
+
+
+================================================
+File: guns/rocket_launcher.tres
+================================================
+[gd_resource type="Resource" script_class="GunData" load_steps=5 format=3 uid="uid://bqdrridmtt4q1"]
+
+[ext_resource type="Resource" uid="uid://cnp06ev13f5af" path="res://resources/bullets/rocket.tres" id="1_l1tml"]
+[ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="3_ddkhx"]
+[ext_resource type="Texture2D" uid="uid://dtcwya5fb7uxw" path="res://assets/sprites/weapons/rocket_launcher.svg" id="3_p456a"]
+[ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="5_vjhkm"]
+
+[resource]
+script = ExtResource("3_ddkhx")
+unlocked = false
+weapon_scene = ExtResource("5_vjhkm")
+sprite = ExtResource("3_p456a")
+bullet = ExtResource("1_l1tml")
+reload_time = 1.5
+max_ammo = 1
+ammo = null
+targeting_range = 600.0
+fire_rate = 0.5
+sprite_scale = Vector2(1, 1)
+sprite_position = Vector2(45, 5)
+sprite_rotation_degrees = 0.0
+sprite_flip_h = true
+sprite_modulate = Color(1, 1, 1, 1)
+bullet_spawn_offset = Vector2(300, -111)
+fire_animation_skew = 0.055
+fire_animation_duration = 0.375
+bullets_per_shot = 1
+bullet_spread = 0.0
+screen_shake_frequency = 19.75
+screen_shake_amplitude = 0.38
+id = "rocket_launcher"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://cvb1dimncgicl"
+
+
+
+================================================
+File: guns/shotgun_data.gd
+================================================
+class_name ShotgunData extends GunData
+
+
+
+================================================
+File: guns/shotgun_data.gd.uid
+================================================
+uid://d0a57wqy65ei8
+
+
+
+================================================
+File: guns/sniper.tres
+================================================
+[gd_resource type="Resource" script_class="GunData" load_steps=5 format=3 uid="uid://p55oxm68od4p"]
+
+[ext_resource type="Resource" uid="uid://iu7mno7fgee1" path="res://resources/bullets/sniper_bullet.tres" id="1_fah2k"]
+[ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="2_l7xjp"]
+[ext_resource type="Texture2D" uid="uid://bi2cgn31beb4c" path="res://assets/sprites/weapons/sniper.svg" id="3_fah2k"]
+[ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="4_62vhr"]
+
+[resource]
+script = ExtResource("2_l7xjp")
+unlocked = false
+weapon_scene = ExtResource("4_62vhr")
+sprite = ExtResource("3_fah2k")
+bullet = ExtResource("1_fah2k")
+reload_time = 1.25
+max_ammo = 30
+ammo = null
+targeting_range = 750.0
+fire_rate = 0.755
+sprite_scale = Vector2(1, 1)
+sprite_position = Vector2(45, 5)
+sprite_rotation_degrees = 0.0
+sprite_flip_h = true
+sprite_modulate = Color(0.164706, 0.207843, 0.188235, 1)
+bullet_spawn_offset = Vector2(400, -111)
+fire_animation_skew = 0.055
+fire_animation_duration = 0.375
+bullets_per_shot = 1
+bullet_spread = 0.0
+screen_shake_frequency = 5.12
+screen_shake_amplitude = 0.59
+id = "sniper"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://cvb1dimncgicl"
+
+
+
+================================================
+File: misc/achievements_theme.tres
+================================================
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cwfld1anvs7yb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cqxpq"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.105882, 0.298039, 0.298039, 0.298039)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.341176, 0.713726, 0.713726, 0)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0.341176, 0.713726, 0.713726, 0.298039)
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7rn4"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.0901961)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ntv37"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.266667, 0.2, 0.439216, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.341176, 0.713726, 0.713726, 0.6)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0.341176, 0.713726, 0.713726, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4a8r8"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.266016, 0.200932, 0.440097, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.341176, 0.713726, 0.713726, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0.341176, 0.713726, 0.713726, 1)
+shadow_size = 1
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5e44u"]
+bg_color = Color(0.1, 0.2, 0.1, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.5, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 4
+
+[resource]
+Button/styles/disabled = SubResource("StyleBoxFlat_cqxpq")
+Button/styles/focus = SubResource("StyleBoxFlat_t7rn4")
+Button/styles/hover = SubResource("StyleBoxFlat_ntv37")
+Button/styles/normal = SubResource("StyleBoxFlat_4a8r8")
+Panel/styles/panel = SubResource("StyleBoxFlat_5e44u")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_5e44u")
+
+
+
+================================================
+File: misc/enemies_group.tres
+================================================
+[gd_resource type="Resource" script_class="ResourceGroup" load_steps=2 format=3 uid="uid://ic3pusbhxy60"]
+
+[ext_resource type="Script" uid="uid://cq5ape4ypic4e" path="res://addons/godot_resource_groups/resource_group.gd" id="1_1nfog"]
+
+[resource]
+script = ExtResource("1_1nfog")
+base_folder = "res://resources/enemies"
+includes = Array[String](["*.tres"])
+excludes = Array[String]([])
+paths = Array[String](["res://resources/enemies/basic_slime.tres", "res://resources/enemies/evolved_slime.tres", "res://resources/enemies/gunner_slime.tres", "res://resources/enemies/phase_enemy.tres", "res://resources/enemies/small_slime.tres", "res://resources/enemies/spore_enemy.tres", "res://resources/enemies/tumor_cell.tres", "res://resources/enemies/virus.tres"])
+metadata/_custom_type_script = "uid://cq5ape4ypic4e"
+
+
+
+================================================
+File: misc/instant_tooltip_control.gd
+================================================
+#class_name VectorTooltipControl
+extends Control
+##USe this for panel stats ig
+var attached_to: Control = null
+var attach_offset: Vector2
+
+# Modern HD resolution
+const SCREEN_SIZE: Vector2i = Vector2i(1920, 1080)
+const PADDING: float = 16.0
+
+# Smooth animation
+var target_pos: Vector2
+var current_pos: Vector2
+const SMOOTHING: float = 0.2
+
+# Modern color scheme
+const COLORS = {
+		"background": Color(0.12, 0.14, 0.18, 0.95), # Dark blue-grey
+		"border": Color(0.8, 0.8, 0.8, 0.1),
+		"text": Color(0.9, 0.9, 0.9),
+		"highlight": Color(0.2, 0.6, 1.0),
+		"positive": Color(0.2, 0.8, 0.4),
+		"negative": Color(0.8, 0.2, 0.3),
+		"warning": Color(1.0, 0.7, 0.2)
+}
+
+func _ready() -> void:
+		process_mode = Node.PROCESS_MODE_ALWAYS
+		#add_theme_stylebox_override("panel", create_tooltip_style())
+		
+		# Add drop shadow
+		#var shadow = RectangleShape2D.new()
+		#shadow.size = Vector2(4, 4)
+		#shadow.color = Color(0, 0, 0, 0.2)
+		#shadow.offset = Vector2(2, 2)
+
+#func create_tooltip_style() -> StyleBoxFlat:
+		#var style = StyleBoxFlat.new()
+		#style.bg_color = COLORS.background
+		#style.border_color = COLORS.border
+		#style.border_width_left = 2
+		#style.border_width_right = 2
+		#style.border_width_top = 2
+		#style.border_width_bottom = 2
+		#style.corner_radius_top_left = 8
+		#style.corner_radius_top_right = 8
+		#style.corner_radius_bottom_left = 8
+		#style.corner_radius_bottom_right = 8
+		#style.shadow_color = Color(0, 0, 0, 0.3)
+		#style.shadow_size = 4
+		#style.content_margin_left = 16
+		#style.content_margin_right = 16
+		#style.content_margin_top = 12
+		#style.content_margin_bottom = 12
+		#return style
+
+# Show stat info with smooth bars
+func show_stat_info(title: String, stats: Dictionary, max_value: float = 100.0) -> void:
+		var text = "[center][b]%s[/b][/center]\n\n" % title
+		
+		for stat_key in stats:
+				var value = stats[stat_key]
+				var percentage = (value / max_value) * 100
+				var bar = create_stat_bar(percentage)
+				text += "[center]%s: %s %d[/center]\n" % [stat_key, bar, value]
+		
+		if has_node("TooltipText"):
+				get_node("TooltipText").text = text
+
+# Create visual stat bar
+func create_stat_bar(percentage: float) -> String:
+		var bar_length = 10
+		var filled = int((percentage / 100.0) * bar_length)
+		var empty = bar_length - filled
+		
+		var color = COLORS.positive if percentage > 66 \
+				else COLORS.warning if percentage > 33 \
+				else COLORS.negative
+		
+		return "[color=%s]%s[/color]%s" % [
+				color.to_html(),
+				"■".repeat(filled),
+				"□".repeat(empty)
+		]
+
+# Show ability info with cooldown
+func show_ability_info(ability: Dictionary) -> void:
+		var text = "[center][color=%s][b]%s[/b][/color][/center]\n" % [
+				COLORS.highlight.to_html(),
+				ability.name
+		]
+		
+		text += "\n%s\n" % ability.description
+		
+		if ability.has("cooldown"):
+				var cooldown_text = "[color=%s]Cooldown: %ds[/color]" % [COLORS.negative.to_html(), ability.cooldown] if ability.cooldown > 0 else "[color=%s]Ready![/color]" % COLORS.positive.to_html()
+				text += "\n%s" % cooldown_text
+		
+		if ability.has("cost"):
+				text += "\nCost: %d" % ability.cost
+		
+		if has_node("TooltipText"):
+				get_node("TooltipText").text = text
+
+# Show progress info
+func show_progress_info(current: float, max_value: float, label: String = "") -> void:
+		var percentage = (current / max_value) * 100
+		var bar = create_progress_bar(percentage)
+		
+		var text = ""
+		if label:
+				text += "[b]%s[/b]\n" % label
+		text += bar
+		text += "\n%.1f%%" % percentage
+		
+		if has_node("TooltipText"):
+				get_node("TooltipText").text = text
+
+func create_progress_bar(percentage: float) -> String:
+		var bar_length = 20
+		var filled = int((percentage / 100.0) * bar_length)
+		var empty = bar_length - filled
+		
+		return "[color=%s]%s[/color][color=%s]%s[/color]" % [
+				COLORS.highlight.to_html(),
+				"━".repeat(filled),
+				COLORS.border.to_html(),
+				"━".repeat(empty)
+		]
+
+func force_size_update() -> void:
+		global_position = Vector2.ZERO
+		size = Vector2.ZERO
+
+func set_pos(pos: Vector2) -> void:
+		force_size_update()
+		target_pos = Vector2(
+				clamp(pos.x, PADDING, SCREEN_SIZE.x - size.x - PADDING),
+				clamp(pos.y, PADDING, SCREEN_SIZE.y - size.y - PADDING)
+		)
+
+func _process(delta: float) -> void:
+		if attached_to != null and is_instance_valid(attached_to):
+				if not attached_to.is_inside_tree():
+						detach()
+				else:
+						set_pos(attached_to.get_global_transform_with_canvas().origin + attach_offset)
+		
+		# Smooth position updating
+		current_pos = current_pos.lerp(target_pos, SMOOTHING)
+		global_position = round(current_pos)
+
+func attach(control: Control) -> void:
+		attach_offset = get_global_transform_with_canvas().origin - \
+						control.get_global_transform_with_canvas().origin
+		attached_to = control
+
+func detach() -> void:
+		attached_to = null
+
+
+
+================================================
+File: misc/instant_tooltip_control.gd.uid
+================================================
+uid://bbfbroyew60ff
+
+
+
+================================================
+File: misc/particles_gradient.tres
+================================================
+[gd_resource type="Gradient" format=3 uid="uid://dgyusnwibryq8"]
+
+[resource]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.1, 1, 1, 1, 0)
+
+
+
+================================================
+File: misc/temp.tscn
+================================================
+[gd_scene load_steps=7 format=3 uid="uid://b25jc43b1rvi5"]
+
+[ext_resource type="Script" uid="uid://bqnokttfjhv30" path="res://scenes/UI/temp.gd" id="1_3c8th"]
+[ext_resource type="Shader" uid="uid://08dhjnpcan4i" path="res://resources/shaders/button_shine.gdshader" id="1_7ejqv"]
+[ext_resource type="Texture2D" uid="uid://b7b32402tako6" path="res://assets/sprites/star_powerup.svg" id="2_60qiw"]
+[ext_resource type="Script" uid="uid://bbfbroyew60ff" path="res://resources/misc/instant_tooltip_control.gd" id="3_7ejqv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ejqv"]
+shader = ExtResource("1_7ejqv")
+shader_parameter/shine_gradient = ExtResource("2_60qiw")
+shader_parameter/shine_speed = 0.97
+
+[sub_resource type="Theme" id="Theme_b2ss7"]
+
+[node name="Node2D" type="Button"]
+material = SubResource("ShaderMaterial_7ejqv")
+offset_left = 46.0
+offset_top = 63.0
+offset_right = 604.0
+offset_bottom = 242.0
+theme = SubResource("Theme_b2ss7")
+text = "hiujuuh"
+script = ExtResource("1_3c8th")
+
+[node name="VectorTooltipControl" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 557.0
+offset_bottom = 179.0
+script = ExtResource("3_7ejqv")
+metadata/_custom_type_script = ExtResource("3_7ejqv")
+
+[node name="TooltipText" type="RichTextLabel" parent="VectorTooltipControl"]
+layout_mode = 0
+offset_top = 180.0
+offset_right = 561.0
+offset_bottom = 315.0
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+
+
+
+================================================
+File: misc/tooltip_content.gd
+================================================
+class_name TooltipContent
+extends Resource
+
+
+@export var text: String = ""
+## Optional icon to display alongside text
+@export var icon: Texture2D = null
+## Optional custom styling for this tooltip
+@export var style_override: StyleBox = null
+
+
+
+================================================
+File: misc/tooltip_content.gd.uid
+================================================
+uid://bs8aofnic6goc
+
+
+
+================================================
+File: misc/tooltip_display.gd
+================================================
+## The actual visual tooltip that appears on screen
+class_name TooltipDisplay
+extends ScreenPositionerControl
+
+@onready var label: RichTextLabel = %TooltipLabel
+@onready var icon_texture: TextureRect = %IconTexture
+@onready var panel: PanelContainer = %Panel
+
+const MAX_WIDTH: float = 300.0
+const MARGIN: float = 10.0
+
+func _ready() -> void:
+		super._ready()
+		# Set layer to ensure tooltip is on top
+		top_level = true
+		
+		# for animations
+		pivot_offset = size / 2
+
+func set_content(content: TooltipContent) -> void:
+		label.text = content.text
+		
+		if content.icon:
+				icon_texture.texture = content.icon
+				icon_texture.show()
+		else:
+				icon_texture.hide()
+		
+		if content.style_override:
+				panel.add_theme_stylebox_override("panel", content.style_override)
+		
+		label.custom_minimum_size.x = 0
+		label.autowrap_mode = TextServer.AUTOWRAP_OFF
+		
+		await get_tree().process_frame
+		
+		if size.x > MAX_WIDTH:
+				label.custom_minimum_size.x = MAX_WIDTH
+				label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+				
+				await get_tree().process_frame
+
+func position_relative_to(target: Control) -> void:
+		await get_tree().process_frame
+		if self: center_above_if_space_or_below(target, Vector2(0, MARGIN))
+
+func show_with_animation() -> void:
+		show()
+		scale = Vector2.ZERO
+		rotation_degrees = -5
+		
+		var tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC).parallel()
+		tween.tween_property(self, "scale", Vector2.ONE, 0.3)
+		tween.tween_property(self, "rotation_degrees", 0, 0.3)
+
+func hide_with_animation() -> void:
+		var tween = create_tween()
+		tween.set_ease(Tween.EASE_IN)
+		tween.set_trans(Tween.TRANS_BACK)
+		tween.tween_property(self, "scale", Vector2.ZERO, 0.2)
+		tween.tween_callback(hide)
+
+
+
+================================================
+File: misc/tooltip_display.gd.uid
+================================================
+uid://dolj2uiojqvts
+
+
+
+================================================
+File: misc/tooltip_display.tscn
+================================================
+[gd_scene load_steps=2 format=3 uid="uid://dyemx8h22argg"]
+
+[ext_resource type="Script" uid="uid://dolj2uiojqvts" path="res://resources/misc/tooltip_display.gd" id="1_s3g6d"]
+
+[node name="TooltipDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s3g6d")
+
+[node name="TooltipLabel" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "tfdjgnfn"
+metadata/_edit_use_anchors_ = true
+
+[node name="IconTexture" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+
+
+================================================
+File: misc/tooltip_manager.gd
+================================================
+#class_name TooltipManager
+extends Node
+
+## Main singleton that handles tooltip requests
+## Access via TooltipManager.get_instance().show_tooltip(content, target)
+
+signal tooltip_shown(content: TooltipContent, target: Control)
+signal tooltip_hidden()
+
+var _current_tooltip: TooltipDisplay = null
+
+func _ready() -> void:
+	# Create tooltip display when manager is ready
+	_current_tooltip = preload("uid://dyemx8h22argg").instantiate()
+	self.add_child(_current_tooltip)
+	_current_tooltip.hide()
+
+func show_tooltip(content: TooltipContent, target: Control) -> void:
+	if not is_instance_valid(_current_tooltip):
+		return
+		
+	_current_tooltip.set_content(content)
+	_current_tooltip.position_relative_to(target)
+	_current_tooltip.show_with_animation()
+	tooltip_shown.emit(content, target)
+
+func hide_tooltip() -> void:
+	if is_instance_valid(_current_tooltip):
+		_current_tooltip.hide_with_animation()
+		tooltip_hidden.emit()
+
+
+
+================================================
+File: misc/tooltip_manager.gd.uid
+================================================
+uid://poage2dpw13m
+
+
+
+================================================
+File: powerups/heal_powerup.tres
+================================================
+[gd_resource type="Resource" script_class="PowerupData" load_steps=3 format=3 uid="uid://c4vkfrnhe7gn8"]
+
+[ext_resource type="Script" uid="uid://bctrrfit1c7va" path="res://resources/powerups/powerup_data.gd" id="1_8ncm3"]
+[ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/sprites/heal_powerup.png" id="1_s8tip"]
+
+[resource]
+script = ExtResource("1_8ncm3")
+id = "heal"
+icon = ExtResource("1_s8tip")
+icon_modulate = Color(0.36, 1, 0.36, 1)
+icon_scale = Vector2(0.3, 0.3)
+spawn_chance_percent = 50.0
+powerup_type = 2
+metadata/_custom_type_script = ExtResource("1_8ncm3")
+
+
+
+================================================
+File: powerups/powerup_data.gd
+================================================
+class_name PowerupData extends BaseData
+
+@export var icon : Texture2D
+@export var icon_modulate : Color = Color.WHITE
+@export var icon_scale : Vector2 = Vector2(0.3, 0.3)
+@export var spawn_chance_percent : float = NAN
+
+
+
+================================================
+File: powerups/powerup_data.gd.uid
+================================================
+uid://bctrrfit1c7va
+
+
+
+================================================
+File: powerups/screen_blast_powerup.tres
+================================================
+[gd_resource type="Resource" script_class="PowerupData" load_steps=3 format=3 uid="uid://ff18iggvak6h"]
+
+[ext_resource type="Script" uid="uid://bctrrfit1c7va" path="res://resources/powerups/powerup_data.gd" id="1_puui2"]
+[ext_resource type="Texture2D" uid="uid://ddkwkn3fyh6qq" path="res://assets/sprites/screen_blast_powerup_icon.png" id="1_y4tvk"]
+
+[resource]
+script = ExtResource("1_puui2")
+icon = ExtResource("1_y4tvk")
+icon_modulate = Color(0.34902, 0.34902, 0.34902, 1)
+icon_scale = Vector2(0.09, 0.093)
+spawn_chance_percent = 25.0
+powerup_type = 1
+id = "shockwave"
+local_to_scene = false
+metadata/_custom_type_script = ExtResource("1_puui2")
+
+
+
+================================================
+File: powerups/slow_time_powerup.tres
+================================================
+[gd_resource type="Resource" script_class="PowerupData" load_steps=3 format=3 uid="uid://co1l4ykdh5yer"]
+
+[ext_resource type="Script" uid="uid://bctrrfit1c7va" path="res://resources/powerups/powerup_data.gd" id="1_68hos"]
+[ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="1_ffv4k"]
+
+[resource]
+script = ExtResource("1_68hos")
+icon = ExtResource("1_ffv4k")
+icon_modulate = Color(1, 1, 1, 1)
+icon_scale = Vector2(0.069, 0.063)
+spawn_chance_percent = 100.0
+powerup_type = 0
+id = "slow_time"
+local_to_scene = false
+metadata/_custom_type_script = ExtResource("1_68hos")
+
+
+
+================================================
+File: powerups/temp_invincible_powerup.tres
+================================================
+[gd_resource type="Resource" script_class="PowerupData" load_steps=3 format=3 uid="uid://cw5xlfwubk72c"]
+
+[ext_resource type="Texture2D" uid="uid://b7b32402tako6" path="res://assets/sprites/star_powerup.svg" id="1_krgy0"]
+[ext_resource type="Script" uid="uid://bctrrfit1c7va" path="res://resources/powerups/powerup_data.gd" id="1_w0ove"]
+
+[resource]
+script = ExtResource("1_w0ove")
+icon = ExtResource("1_krgy0")
+icon_modulate = Color(1, 1, 1, 1)
+icon_scale = Vector2(0.3, 0.3)
+spawn_chance_percent = 10.0
+powerup_type = 3
+id = "star"
+local_to_scene = false
+metadata/_custom_type_script = ExtResource("1_w0ove")
+
+
+
+================================================
+File: shaders/blood_bg.gdshader
+================================================
+shader_type canvas_item;
+
+// Tweak these in the editor!
+group_uniforms Visuals;
+uniform vec4 deep_color : source_color = vec4(0.5, 0.05, 0.1, 1.0);
+uniform vec4 mid_color : source_color = vec4(1.0, 0.1, 0.2, 1.0);
+uniform vec4 cell_color : source_color = vec4(1.0, 0.5, 0.3, 1.0);
+
+group_uniforms Flow;
+uniform float flow_speed : hint_range(0.0, 0.2) = 0.05;
+uniform float noise_scale : hint_range(1.0, 10.0) = 4.0;
+uniform float distortion_amount : hint_range(0.0, 0.05) = 0.01;
+
+group_uniforms Cells;
+uniform float cell_scale : hint_range(10.0, 50.0) = 25.0;
+uniform float cell_density : hint_range(0.0, 1.0) = 0.15;
+uniform float cell_speed_multiplier = 1.5;
+
+group_uniforms Effects;
+uniform float vignette_intensity : hint_range(0.0, 2.0) = 1.2;
+uniform float vignette_smoothness : hint_range(0.1, 2.0) = 0.7;
+
+
+//// Helper Functions for Procedural Noise
+// 2D Hash function
+vec2 random(vec2 p) {
+    p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+    return -1.0 + 2.0 * fract(sin(p) * 43758.5453123);
+}
+
+// Value Noise function
+float value_noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f); // Smoothstep
+    
+    vec2 a = random(i);
+    vec2 b = random(i + vec2(1.0, 0.0));
+    vec2 c = random(i + vec2(0.0, 1.0));
+    vec2 d = random(i + vec2(1.0, 1.0));
+
+    return mix(mix(dot(a, f), dot(b, f - vec2(1.0, 0.0)), f.x),
+               mix(dot(c, f - vec2(0.0, 1.0)), dot(d, f - vec2(1.0, 1.0)), f.x), f.y);
+}
+
+
+void fragment() {
+    //// Distortion
+    // Make the view wavy, like looking through liquid.
+    vec2 distorted_uv = UV;
+    distorted_uv.y += sin(distorted_uv.x * 8.0 + TIME) * distortion_amount;
+    distorted_uv.x += cos(distorted_uv.y * 8.0 + TIME * 0.7) * distortion_amount;
+
+    //// Background Flow
+    // Two layers of noise moving in different directions for a liquid effect.
+    vec2 motion = vec2(TIME * flow_speed, -TIME * flow_speed * 0.6);
+    float noise1 = value_noise((distorted_uv + motion) * noise_scale);
+    float noise2 = value_noise((distorted_uv - motion) * noise_scale * 1.5);
+    float combined_noise = (noise1 + noise2) * 0.5;
+
+    // Mix the two main blood colors based on the flow.
+    vec3 base_color = mix(deep_color.rgb, mid_color.rgb, combined_noise);
+
+    //// Floating Cells
+    // A separate, faster, and smaller noise layer for the cell-like blobs.
+    vec2 cell_motion = vec2(-TIME * flow_speed * cell_speed_multiplier, 0);
+    float cell_noise = value_noise((distorted_uv + cell_motion) * cell_scale);
+    
+    // Use smoothstep to create hard-edged circles from the noise peaks.
+    // 'cell_density' controls the cutoff point, determining how many cells appear.
+    float cell_mask = smoothstep(1.0 - cell_density, 1.0 - (cell_density * 0.9), cell_noise);
+    
+    // Mix the cells on top of the base color.
+    vec3 final_color = mix(base_color, cell_color.rgb, cell_mask);
+
+    //// Vignette
+    // Darken the corners to focus the player's view on the center.
+    float dist_from_center = distance(UV, vec2(0.5));
+    float vignette = smoothstep(vignette_smoothness, 0.2, dist_from_center);
+    vignette = pow(vignette, vignette_intensity);
+    
+    // Apply vignette and set the final color
+    COLOR.rgb = final_color * vignette;
+}
+
+
+
+================================================
+File: shaders/blood_bg.gdshader.uid
+================================================
+uid://hinhyhe3jn5u
+
+
+
+================================================
+File: shaders/bloom.gdshader
+================================================
+shader_type canvas_item;
+
+uniform float threshold: hint_range(0.0, 1.0) = 0.5; // Brightness threshold for bloom
+uniform float intensity: hint_range(0.0, 2.0) = 1.0; // Overall bloom strength
+uniform float blur_scale: hint_range(0.5, 4.0) = 1.0; // Size of bloom effect
+uniform vec4 bloom_color: source_color = vec4(1.0);
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+// Gaussian weight calculation
+float gaussian(float x, float sigma) {
+    return (1.0 / (sqrt(2.0 * 3.14159) * sigma)) * exp(-((x * x) / (2.0 * sigma * sigma)));
+}
+
+vec4 sample_glow_pixel(sampler2D tex, vec2 uv, float lod) {
+    vec4 color = textureLod(tex, uv, lod);
+    float brightness = max(max(color.r, color.g), color.b);
+    return max(color * smoothstep(threshold - 0.1, threshold + 0.1, brightness) - threshold, vec4(0.0));
+}
+
+void fragment() {
+    vec2 ps = SCREEN_PIXEL_SIZE * blur_scale;
+
+    // Multi-sample blur with gaussian weights
+    vec4 blur_sum = vec4(0.0);
+    float weight_sum = 0.0;
+
+    // Sample 13 points
+    for(float x = -6.0; x <= 6.0; x++) {
+        float weight = gaussian(x, 3.0);
+        vec2 offset = vec2(x * ps.x, 0.0);
+        blur_sum += sample_glow_pixel(SCREEN_TEXTURE, SCREEN_UV + offset, 2.0) * weight;
+        weight_sum += weight;
+    }
+
+    vec4 horizontal_blur = blur_sum / weight_sum;
+    blur_sum = vec4(0.0);
+    weight_sum = 0.0;
+
+    // Vertical blur pass
+    for(float y = -6.0; y <= 6.0; y++) {
+        float weight = gaussian(y, 3.0);
+        vec2 offset = vec2(0.0, y * ps.y);
+        blur_sum += sample_glow_pixel(SCREEN_TEXTURE, SCREEN_UV + offset, 2.0) * weight;
+        weight_sum += weight;
+    }
+
+    vec4 vertical_blur = blur_sum / weight_sum;
+
+    // Combine horizontal and vertical blur
+    vec4 glowing_col = (horizontal_blur + vertical_blur) * 0.5;
+
+    // Get original color
+    vec4 original = texture(SCREEN_TEXTURE, SCREEN_UV);
+
+    // Blend bloom with original color
+    COLOR = original + (glowing_col * bloom_color * intensity);
+}
+
+
+================================================
+File: shaders/bloom.gdshader.uid
+================================================
+uid://dh00a4a3e8voi
+
+
+
+================================================
+File: shaders/blurbg.gdshader
+================================================
+shader_type canvas_item;
+
+uniform float blur_amount = 1.0;
+uniform float speed_factor = 1.0;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+void fragment() {
+    vec2 uv = SCREEN_UV;
+    vec2 velocity = vec2(TIME * speed_factor, 0.0);
+    COLOR = textureLod(SCREEN_TEXTURE, uv + velocity * blur_amount, 0.0);
+}
+
+//void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+	// Uncomment to replace the default light processing function with this one.
+//}
+
+
+
+================================================
+File: shaders/blurbg.gdshader.uid
+================================================
+uid://wysfdoi708dk
+
+
+
+================================================
+File: shaders/button_shine.gdshader
+================================================
+shader_type canvas_item;
+
+uniform sampler2D shine_gradient;
+uniform float shine_speed = 1.0;
+
+void fragment() {
+    float shine_pos = mod(TIME * shine_speed - UV.x - UV.y, 3.0);
+    float shine_value = texture(shine_gradient, vec2(shine_pos, 0.0)).r;
+    COLOR = vec4(1.0, 1.0, 1.0, shine_value);
+}
+
+
+================================================
+File: shaders/button_shine.gdshader.uid
+================================================
+uid://08dhjnpcan4i
+
+
+
+================================================
+File: shaders/circletransition.gdshader
+================================================
+shader_type canvas_item;
+
+uniform float progress : hint_range(0.0, 1.0);
+uniform vec4 color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+void fragment() {
+    vec2 uv = UV;
+    vec2 center = vec2(0.5, 0.5);
+    float dist = distance(uv, center);
+    float mask = smoothstep(progress, progress + 0.02, dist + 0.05);
+    COLOR = vec4(color.rgb, mask);
+}
+
+
+================================================
+File: shaders/circletransition.gdshader.uid
+================================================
+uid://dnms5hsmipkyv
+
+
+
+================================================
+File: shaders/rarity_glow.gdshader
+================================================
+shader_type canvas_item;
+
+uniform vec4 glow_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float pulse_speed: hint_range(0.0, 5.0) = 1.0;
+uniform float pulse_intensity: hint_range(0.0, 0.5) = 0.1;
+
+void fragment() {
+    vec4 texture_color = texture(TEXTURE, UV);
+
+    // Create a soft inner glow mask from the alpha channel
+    float glow_mask = smoothstep(0.0, 1.0, texture_color.a);
+
+    // Create a pulsing effect
+    float pulse = sin(TIME * pulse_speed) * 0.5 + 0.5; // Oscillates between 0 and 1
+    float pulse_glow = pulse * pulse_intensity;
+
+    // Mix the glow color with the texture color
+    vec3 final_rgb = mix(texture_color.rgb, glow_color.rgb, glow_mask * pulse_glow);
+
+    COLOR = vec4(final_rgb, texture_color.a);
+}
+
+
+
+================================================
+File: shaders/rarity_glow.gdshader.uid
+================================================
+uid://bjgmekwk3ka0q
+
+
+
+================================================
+File: shaders/slow_motion.gdshader
+================================================
+shader_type canvas_item;
+
+uniform float chromatic_aberration : hint_range(0.0, 5.0) = 0.0;
+uniform float vignette_intensity : hint_range(0.0, 1.0) = 0.0;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+void fragment() {
+    vec2 uv = SCREEN_UV;
+    vec2 center = vec2(0.5, 0.5);
+
+    // Chromatic aberration
+    float r = texture(SCREEN_TEXTURE, uv + vec2(chromatic_aberration * 0.01, 0.0)).r;
+    float g = texture(SCREEN_TEXTURE, uv).g;
+    float b = texture(SCREEN_TEXTURE, uv - vec2(chromatic_aberration * 0.01, 0.0)).b;
+
+    // Vignette
+    float dist = length(uv - center);
+    float vignette = smoothstep(0.8, 0.2, dist * (1.0 + vignette_intensity));
+
+    COLOR = vec4(r, g, b, 1.0) * vignette;
+}
+
+
+================================================
+File: shaders/slow_motion.gdshader.uid
+================================================
+uid://bpib10m6uoyvv
+
+
+
+================================================
+File: shaders/star_effect.gdshader
+================================================
+shader_type canvas_item;
+
+uniform float cycle_speed = 2.0;
+uniform float brightness = 1.2;
+uniform float saturation = 0.4;
+
+void fragment() {
+    vec4 texture_color = texture(TEXTURE, UV);
+
+    // The rainbow effect (timed part)
+    float hue = fract(TIME * cycle_speed);
+
+    // Convert HSV to RGB
+    vec3 rgb = vec3(0.0);
+    float h = hue * 6.0;
+    float i = floor(h);
+    float f = h - i;
+    float p = 1.0 - saturation;
+    float q = 1.0 - saturation * f;
+    float t = 1.0 - saturation * (1.0 - f);
+
+    if (i == 0.0) rgb = vec3(1.0, t, p);
+    else if (i == 1.0) rgb = vec3(q, 1.0, p);
+    else if (i == 2.0) rgb = vec3(p, 1.0, t);
+    else if (i == 3.0) rgb = vec3(p, q, 1.0);
+    else if (i == 4.0) rgb = vec3(t, p, 1.0);
+    else rgb = vec3(1.0, p, q);
+
+    // Apply rainbow color only to non-transparent pixels
+    vec4 rainbow = vec4(rgb * brightness, texture_color.a);
+    COLOR = texture_color * rainbow;
+}
+
+
+================================================
+File: shaders/star_effect.gdshader.uid
+================================================
+uid://bdl51to7btcu8
+
+
+
+================================================
+File: shaders/wavy_effect.gdshader
+================================================
+shader_type canvas_item;
+
+uniform float amplitude = 0.02;
+uniform float frequency = 3.0;
+uniform float speed = 2.0;
+uniform vec4 modulate_color = vec4(1.0, 1.0, 1.0, 1.0);
+
+void fragment() {
+    vec2 uv = UV;
+    uv.x += sin(uv.y * frequency + TIME * speed) * amplitude;
+    COLOR = texture(TEXTURE, uv) * modulate_color;
+}
+
+
+================================================
+File: shaders/wavy_effect.gdshader.uid
+================================================
+uid://cx3foo3o15go8
+
+
+
+================================================
+File: theme/currency_label_settings.tres
+================================================
+[gd_resource type="LabelSettings" format=3 uid="uid://i8bl646qytw4"]
+
+[resource]
+font_size = 20
+font_color = Color(0.855075, 0.840864, 0, 1)
+outline_color = Color(1, 1, 1, 0.890196)
+
+
+
+================================================
+File: theme/item_name_label_settings.tres
+================================================
+[gd_resource type="LabelSettings" format=3 uid="uid://c6ucvvlfvsecr"]
+
+[resource]
+font_color = Color(0, 0.99, 0.9405, 1)
+outline_color = Color(1, 1, 1, 0.890196)
+shadow_size = 16
+shadow_color = Color(0.347879, 0.353048, 0.257074, 1)
+
+
+
+================================================
+File: theme/label-settings-default.tres
+================================================
+[gd_resource type="LabelSettings" format=3 uid="uid://c7d047estc02"]
+
+[resource]
+outline_color = Color(1, 1, 1, 0.890196)
+shadow_size = 16
+shadow_color = Color(0.647059, 0.654902, 0.52549, 1)
+shadow_offset = Vector2(2, 2)
+
+
+
+================================================
+File: theme/theme-main.tres
+================================================
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://ducfept6pmkkm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0fj6"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.3)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i3yxg"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hm15c"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.225, 0.225, 0.225, 0.6)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0k0c8"]
+bg_color = Color(1.73271e-06, 0.712143, 0.452838, 0.615686)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fe206"]
+bg_color = Color(0.176471, 0.682353, 0.647059, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uga4a"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.096628, 0.077119, 0.201494, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l2qd5"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.15276, 0.028959, 0.210331, 0.6)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uk80o"]
+bg_color = Color(0, 0.960784, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[resource]
+default_font_size = 20
+Button/constants/align_to_largest_stylebox = 1
+Button/styles/disabled = SubResource("StyleBoxFlat_y0fj6")
+Button/styles/focus = SubResource("StyleBoxFlat_i3yxg")
+Button/styles/hover = SubResource("StyleBoxFlat_hm15c")
+Button/styles/normal = SubResource("StyleBoxFlat_0k0c8")
+FlatButton/base_type = &"FlatButton"
+LabelSmall/base_type = &"Label"
+LabelSmall/font_sizes/font_size = 16
+LabelSmall/styles/normal = SubResource("StyleBoxFlat_fe206")
+MarginContainer/constants/margin_bottom = 32
+MarginContainer/constants/margin_left = 32
+MarginContainer/constants/margin_right = 32
+MarginContainer/constants/margin_top = 32
+Panel/styles/panel = SubResource("StyleBoxFlat_uga4a")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_l2qd5")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_uk80o")
+
+

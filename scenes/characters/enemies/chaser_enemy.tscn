@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://gj4jr1kbpr1k"]
+
+[ext_resource type="PackedScene" uid="uid://cyaeykwntx0u0" path="res://scenes/characters/base_melee_enemy.tscn" id="1_exk5v"]
+[ext_resource type="Script" uid="uid://yr2ihndjaqry" path="res://scenes/characters/enemies/chaser_enemy.gd" id="2_u5ale"]
+[ext_resource type="Script" uid="uid://cjholoncokybo" path="res://scenes/components/follow_target_component.gd" id="3_si10t"]
+
+[node name="ChaserEnemy" instance=ExtResource("1_exk5v")]
+script = ExtResource("2_u5ale")
+
+[node name="FollowTargetComponent" type="Node" parent="." index="3"]
+script = ExtResource("3_si10t")
+metadata/_custom_type_script = "uid://cjholoncokybo"

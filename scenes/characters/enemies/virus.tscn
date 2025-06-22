@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://du2l151jbq78f"]
+
+[ext_resource type="PackedScene" uid="uid://gj4jr1kbpr1k" path="res://scenes/characters/enemies/chaser_enemy.tscn" id="1_fhpmw"]
+
+[node name="Virus" instance=ExtResource("1_fhpmw")]

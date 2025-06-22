@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://5oulfv8ctux8"]
 
-[ext_resource type="PackedScene" uid="uid://b383ofsmpqt55" path="res://scenes/characters/slime_enemy.tscn" id="1_ywe2e"]
+[ext_resource type="PackedScene" uid="uid://c5sjgq60klnu6" path="res://scenes/characters/enemies/phage_enemy.tscn" id="1_ywe2e"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_un5l1"]
-[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/slime_data.gd" id="3_ams2n"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="3_ams2n"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="4_8f4yi"]
 
 [resource]

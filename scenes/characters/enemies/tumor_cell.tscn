@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0h7lo7im5s1h"]
+
+[ext_resource type="PackedScene" uid="uid://gj4jr1kbpr1k" path="res://scenes/characters/enemies/chaser_enemy.tscn" id="1_yma3f"]
+
+[node name="TumorCell" instance=ExtResource("1_yma3f")]

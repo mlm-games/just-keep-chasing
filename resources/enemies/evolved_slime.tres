@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://c41lhhdbpe2ut"]
 
-[ext_resource type="PackedScene" uid="uid://b383ofsmpqt55" path="res://scenes/characters/slime_enemy.tscn" id="1_3gtkh"]
-[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/slime_data.gd" id="1_pgwt5"]
+[ext_resource type="PackedScene" uid="uid://bt1shbbmu6uqi" path="res://scenes/characters/enemies/slime_enemy.tscn" id="1_3gtkh"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="1_pgwt5"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_3gtkh"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="3_2ra1y"]
 

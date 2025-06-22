@@ -28,7 +28,7 @@ var research_points: int = 0:
 		research_points_updated.emit(research_points)
 		#world.hud.update_currency_label()
 		#world.hud.update_progress_bar(val)
-		
+
 var powerups: Dictionary[StringName, int] = {}
 var upgrade_shop_spawn_divisor: float = 5.0
 
@@ -43,7 +43,6 @@ func reset():
 	for key:StringName in CollectionManager.all_powerups:
 		powerups[key] = 0
 	print("RunState has been reset.")
-
 
 
 

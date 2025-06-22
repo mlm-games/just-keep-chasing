@@ -42,12 +42,6 @@ UiAudioM="*res://addons/my_ecosystem_template/autoloads/ui_audio_manager.gd"
 RunData="*res://autoloads/run_data.gd"
 CollectionManager="*res://autoloads/collection_manager.gd"
 UIManager="*res://autoloads/ui_manager.gd"
-BasicAchievements="*res://addons/achievements/achievements.tscn"
-
-[basic_achievements]
-
-achievements/local_source="res://resources/achievements"
-achievements/save_directory="user://achievements"
 
 [category]
 
@@ -63,7 +57,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/achievements/plugin.cfg", "res://addons/basic_settings_menu/plugin.cfg", "res://addons/godot_resource_groups/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
+enabled=PackedStringArray("res://addons/achievements/plugin.cfg", "res://addons/basic_settings_menu/plugin.cfg", "res://addons/godot_resource_groups/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
 
 [file_customization]
 

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5sjgq60klnu6"]
+
+[ext_resource type="PackedScene" uid="uid://cyaeykwntx0u0" path="res://scenes/characters/base_melee_enemy.tscn" id="1_rts86"]
+[ext_resource type="Shader" uid="uid://cmwr10x5g1rku" path="res://scenes/UI/misc/vector_hologram.gdshader" id="2_xcbqo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y1pxk"]
+shader = ExtResource("2_xcbqo")
+shader_parameter/primary_color = Color(0, 0.6, 1, 1)
+shader_parameter/secondary_color = Color(0, 0.2, 0.5, 1)
+shader_parameter/accent_color = Color(1, 1, 1, 0.5)
+shader_parameter/line_thickness = 0.003
+shader_parameter/animation_speed = 1.0
+shader_parameter/pattern_scale = 3.0
+
+[node name="PhageEnemy" instance=ExtResource("1_rts86")]
+material = SubResource("ShaderMaterial_y1pxk")

@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://bvnjwn81ahpxs"]
+
+[ext_resource type="Script" uid="uid://t73oaarsiqev" path="res://scenes/characters/base_enemy.gd" id="1_0j470"]
+[ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="2_ntc0c"]
+[ext_resource type="Script" uid="uid://bh62la2plrk8u" path="res://scenes/components/velocity_component.gd" id="3_hnlfw"]
+[ext_resource type="Script" uid="uid://cph1hb68v0xjn" path="res://scenes/components/animation_component.gd" id="4_6p2c5"]
+[ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="5_7lvei"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="7_61yi7"]
+[ext_resource type="Script" uid="uid://dsl73aknxcjur" path="res://addons/godot_state_charts/state_chart.gd" id="8_380kt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8pnp1"]
+size = Vector2(56, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
+size = Vector2(44, 40)
+
+[node name="BaseEnemy" type="CharacterBody2D" groups=["Enemies"]]
+motion_mode = 1
+platform_on_leave = 2
+platform_floor_layers = 4294967292
+script = ExtResource("1_0j470")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_ntc0c")]
+
+[node name="VelocityComponent" type="Node" parent="."]
+script = ExtResource("3_hnlfw")
+metadata/_custom_type_script = "uid://bh62la2plrk8u"
+
+[node name="AnimationComponent" type="Node" parent="." node_paths=PackedStringArray("anim_player", "sprite")]
+script = ExtResource("4_6p2c5")
+anim_player = NodePath("../AnimationPlayer")
+sprite = NodePath("../Sprite2D")
+metadata/_custom_type_script = "uid://cph1hb68v0xjn"
+
+[node name="EnemyHitboxComponent" parent="." node_paths=PackedStringArray("health_component", "parent") instance=ExtResource("5_7lvei")]
+unique_name_in_owner = true
+collision_layer = 4
+collision_mask = 3
+health_component = NodePath("../HealthComponent")
+parent = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitboxComponent"]
+shape = SubResource("RectangleShape2D_8pnp1")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mgdpr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.06, 0.057)
+texture = ExtResource("7_61yi7")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("8_380kt")
+metadata/_custom_type_script = "uid://dsl73aknxcjur"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

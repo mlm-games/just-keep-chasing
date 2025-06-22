@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://c7j5jqynag4uw"]
 
-[ext_resource type="Script" uid="uid://b13rnxpo5kt4b" path="res://addons/my-ecosystem-template/transitions/transitions.gd" id="1_mlxrt"]
+[ext_resource type="Script" uid="uid://b13rnxpo5kt4b" path="res://autoloads/transitions.gd" id="1_mlxrt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t7n6f"]
 

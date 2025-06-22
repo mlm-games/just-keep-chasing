@@ -1,5 +1,5 @@
 class_name BaseEnemy extends BaseCharacter
-
+#TODO: save a animtion_library which will be used by default by enemies
 var research_point_value : int
 
 var health_mult: float = 1.0

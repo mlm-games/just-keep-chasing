@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dov78p71w2v4"]
+
+[ext_resource type="PackedScene" uid="uid://cyaeykwntx0u0" path="res://scenes/characters/base_melee_enemy.tscn" id="1_4u8ah"]
+[ext_resource type="Script" uid="uid://drc0iwg6se7jf" path="res://scenes/characters/enemies/parasite.gd" id="2_2x2p8"]
+[ext_resource type="PackedScene" uid="uid://6vdpux1qk7u6" path="res://scenes/gameplay/hazards/toxic_pool.tscn" id="3_7d3c5"]
+
+[node name="Parasite" instance=ExtResource("1_4u8ah")]
+script = ExtResource("2_2x2p8")
+toxic_pool_scene = ExtResource("3_7d3c5")
+drop_interval = 1.5
+move_change_interval = 2.0
+
+[node name="MoveTimer" type="Timer" parent="." index="9"]
+
+[node name="DropPoolTimer" type="Timer" parent="." index="10"]
