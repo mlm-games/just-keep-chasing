@@ -42,7 +42,7 @@ libraries = {
 [node name="EnemyHitboxComponent" parent="." node_paths=PackedStringArray("health_component", "parent") instance=ExtResource("3_w61i0")]
 unique_name_in_owner = true
 collision_layer = 4
-collision_mask = 3
+collision_mask = 2
 health_component = NodePath("../HealthComponent")
 parent = NodePath("..")
 

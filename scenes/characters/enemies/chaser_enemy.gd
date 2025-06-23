@@ -16,5 +16,5 @@ func _physics_process(delta: float) -> void:
 		velocity_component.stop()
 		return
 	
-	follow_component.follow_target(velocity_component)
+	follow_component.follow_target(velocity_component, enemy_data_resource.base_speed)
 	animation_component.update_movement(velocity_component.velocity)

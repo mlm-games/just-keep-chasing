@@ -5,11 +5,11 @@ var hud: HUD
 
 func push_layer(scene: PackedScene):
 	if not ui_stack.is_empty():
-		ui_stack.back().hide() # Hide the layer below or make it slightly transparent?
+		if ui_stack.back(): ui_stack.back().hide() # Hide the layer below or make it slightly transparent?
 	
 	var new_layer = scene.instantiate()
 	ui_stack.append(new_layer)
-	get_tree().root.add_child(new_layer)
+	get_tree().get_first_node_in_group("PopupsRoot").add_child(new_layer)
 	get_tree().paused = true # Pause the game when any UI is open
 
 func pop_layer():

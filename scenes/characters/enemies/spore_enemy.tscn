@@ -10,3 +10,6 @@
 script = ExtResource("2_23e3q")
 burst_projectile_scene = ExtResource("3_43wfe")
 metadata/_custom_type_script = "uid://di53um5f8x0jl"
+
+[node name="AnimationPlayer" parent="." index="4"]
+libraries = {}

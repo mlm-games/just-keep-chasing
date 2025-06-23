@@ -11,8 +11,6 @@ var _knockback_vector := Vector2.ZERO
 var _knockback_timer := 0.0
 var _is_knocked_back := false
 
-@export var speed : float
-
 
 func _physics_process(delta: float) -> void:
 	var body: CharacterBody2D = get_parent() as CharacterBody2D
@@ -43,7 +41,7 @@ func _physics_process(delta: float) -> void:
 
 
 ## Sets the velocity based on a direction vector and the component's speed.
-func accelerate_to(direction: Vector2, local_speed: float = 0) -> void:
+func accelerate_to(direction: Vector2, speed: float = 0) -> void:
 	# Don't accept movement input during knockback
 	if _is_knocked_back:
 		return

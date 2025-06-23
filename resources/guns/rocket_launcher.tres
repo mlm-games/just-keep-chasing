@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("3_ddkhx")
-unlocked = false
+unlocked = true
 weapon_scene = ExtResource("5_vjhkm")
 sprite = ExtResource("3_p456a")
 bullet = ExtResource("1_l1tml")
@@ -19,9 +19,9 @@ fire_rate = 0.5
 sprite_scale = Vector2(1, 1)
 sprite_position = Vector2(45, 5)
 sprite_rotation_degrees = 0.0
-sprite_flip_h = true
+sprite_flip_h = false
 sprite_modulate = Color(1, 1, 1, 1)
-bullet_spawn_offset = Vector2(300, -111)
+bullet_spawn_offset = Vector2(0, 0)
 fire_animation_skew = 0.055
 fire_animation_duration = 0.375
 bullets_per_shot = 1

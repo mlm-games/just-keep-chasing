@@ -49,7 +49,7 @@ property_name=1
 
 [debug]
 
-gdscript/warnings/untyped_declaration=1
+gdscript/warnings/unused_parameter=0
 
 [display]
 
@@ -80,6 +80,8 @@ import/blender/enabled=false
 ProjectilesNode="Contains the node which contains all projectiles"
 MovementJoystick=""
 ShootingJoystick=""
+Player=""
+PopupsRoot=""
 
 [godot_resource_groups]
 

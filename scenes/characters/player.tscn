@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b3mf65fcnvmvu"]
+[gd_scene load_steps=14 format=3 uid="uid://b3mf65fcnvmvu"]
 
 [ext_resource type="Script" uid="uid://crf18oy3oc75j" path="res://scenes/characters/player.gd" id="1_cvyhv"]
 [ext_resource type="Texture2D" uid="uid://brk1vhy0k5ah2" path="res://assets/sprites/player.svg" id="2_atpat"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="6_bedk8"]
 [ext_resource type="Script" uid="uid://bvb2hxpdk5tde" path="res://scenes/components/player_input_component.gd" id="7_6eyoc"]
 [ext_resource type="Script" uid="uid://bh62la2plrk8u" path="res://scenes/components/velocity_component.gd" id="8_eojnx"]
+[ext_resource type="AnimationLibrary" uid="uid://cvxhas1qg2ntb" path="res://scenes/characters/player_anims.tres" id="9_2l4js"]
 [ext_resource type="Script" uid="uid://cph1hb68v0xjn" path="res://scenes/components/animation_component.gd" id="10_2l4js"]
 [ext_resource type="Script" uid="uid://dcm4p61vcyfim" path="res://scenes/weapons-related/inventory_component.gd" id="10_7vyk4"]
 
@@ -16,94 +17,6 @@ radius = 38.0132
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d6keb"]
 radius = 38.0132
-
-[sub_resource type="Animation" id="Animation_mfor4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_rr1si"]
-resource_name = "hurt_end"
-length = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 0.670588, 0.494118, 1), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_kthah"]
-resource_name = "hurt_start"
-length = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 0.670588, 0.494118, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_h0oty"]
-resource_name = "idle"
-loop_mode = 1
-
-[sub_resource type="Animation" id="Animation_spicx"]
-resource_name = "moving"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.333333, 0.466667, 0.6, 0.933333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 3), Vector2(0, 0), Vector2(0, -3), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_noojc"]
-_data = {
-&"RESET": SubResource("Animation_mfor4"),
-&"hurt_end": SubResource("Animation_rr1si"),
-&"hurt_start": SubResource("Animation_kthah"),
-&"idle": SubResource("Animation_h0oty"),
-&"moving": SubResource("Animation_spicx")
-}
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 9
@@ -126,6 +39,7 @@ metadata/_custom_type_script = "uid://bvb2hxpdk5tde"
 
 [node name="AnimationComponent" type="Node" parent="." node_paths=PackedStringArray("anim_player", "sprite")]
 script = ExtResource("10_2l4js")
+anims_prefix = ""
 anim_player = NodePath("../AnimationPlayer")
 sprite = NodePath("../Sprite2D")
 metadata/_custom_type_script = "uid://cph1hb68v0xjn"
@@ -153,7 +67,7 @@ shape = SubResource("CircleShape2D_d6keb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_noojc")
+&"": ExtResource("9_2l4js")
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

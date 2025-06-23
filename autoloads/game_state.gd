@@ -9,9 +9,6 @@ const RESEARCH_TEXTURE = "assets/sprites/currency.png"
 
 #region global_game_specific_variables
 
-var price_multiplier: float = 0.5
-var price_increase_rate: float = 0.07
-
 var highest_game_time: float = 0.0
 
 ## If screen is being touched, then use this direction
@@ -55,8 +52,6 @@ var is_in_shop : bool = false
 
 var player_reload_speed_mult : float
 var player_health_mult : float
-var upgrade_shop_spawn_divisor : float = 5
-
 
 #endregion
 
@@ -73,11 +68,6 @@ func update_highest_game_time(time: float) -> void:
 	if time > highest_game_time:
 		highest_game_time = time
 
-
-# Methods for managing game state
-func reset_game() -> void:
-	price_multiplier = 0
-	price_increase_rate = 0.07
 	
 	#current_level = 1
 	#is_game_paused = false

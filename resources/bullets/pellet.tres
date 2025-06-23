@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="ProjectileData" load_steps=4 format=3 uid="uid://ccjjel7gxlyjx"]
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=6 format=3 uid="uid://ccjjel7gxlyjx"]
 
 [ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_3i10t"]
+[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_oadwr"]
 [ext_resource type="Texture2D" uid="uid://bogbptl8oh8pv" path="res://assets/sprites/shotgun-shell.png" id="2_ahgb7"]
+[ext_resource type="PackedScene" uid="uid://rhergnlmde1y" path="res://scenes/components/bullet_spawn_particles.tscn" id="3_towwq"]
 
 [sub_resource type="Resource" id="Resource_qpgk3"]
 metadata/__load_path__ = "res://resources/bullets/bullet_data.gd"
@@ -23,5 +25,7 @@ sprite_rotation = 0.0
 sprite_offset = Vector2(0, 0)
 collision_shape_radius = 9.0
 collision_shape_mask = 3
+base_scene = ExtResource("1_oadwr")
+spawn_particles = ExtResource("3_towwq")
 lifespan_time = 100.0
 metadata/_custom_type_script = SubResource("Resource_qpgk3")

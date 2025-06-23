@@ -107,8 +107,8 @@ func _on_mouse_exited():
 
 
 func pick_augment_by_rarity() -> AugmentsData:
-	var all_augments = CollectionManager.augments.values()
-	var valid_augments = all_augments.filter(func(aug): return aug.augment_price * GameState.price_multiplier < GameState.research_points)
+	var all_augments = CollectionManager.all_augments.values()
+	var valid_augments = all_augments.filter(func(aug): return aug.augment_price * RunData.price_multiplier < RunData.research_points)
 	
 	if valid_augments.is_empty():
 		# No buyable augments
@@ -121,7 +121,7 @@ func pick_augment_by_rarity() -> AugmentsData:
 func setup_slot() -> void:
 	if augment != null:
 		@warning_ignore("narrowing_conversion")
-		final_price = augment.augment_price * GameState.price_multiplier
+		final_price = augment.augment_price * RunData.price_multiplier
 		%TextureRect.texture = augment.augment_icon
 		%UpgradeLabel.text = tr(augment.id.capitalize())
 		%PriceContainer.text = GameState.get_currency_bbcode() + str(final_price)
@@ -170,10 +170,10 @@ func buy_if_rich_enough() -> void:
 	if RunData.research_points - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD) >= final_price:
 		GameState.apply_augment(augment)
 		# Increase the price multiplier after purchase
-		GameState.price_multiplier *= (1 + GameState.price_increase_rate)
+		RunData.price_multiplier *= (1 + RunData.price_increase_rate)
 		RunData.research_points -= final_price
 		
-		CountStats.augment_items_collection_stats[augment.get_class() + " " + augment.resource_name] += 1
+		#CountStats.augment_items_collection_stats[augment.get_class() + " " + augment.resource_name] += 1
 		
 		queue_free()
 

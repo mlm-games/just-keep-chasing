@@ -8,7 +8,7 @@
 
 [resource]
 script = ExtResource("1_ebba0")
-unlocked = false
+unlocked = true
 weapon_scene = ExtResource("4_qd7hi")
 sprite = ExtResource("3_qd7hi")
 bullet = ExtResource("1_adtgj")
@@ -32,4 +32,5 @@ screen_shake_frequency = 20.0
 screen_shake_amplitude = 0.75
 id = "buckshot_shotgun"
 local_to_scene = false
+enabled = true
 metadata/_custom_type_script = "uid://d0a57wqy65ei8"

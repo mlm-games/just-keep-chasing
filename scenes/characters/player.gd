@@ -36,11 +36,9 @@ func _ready() -> void:
 	
 
 func _on_input_direction_changed(direction: Vector2) -> void:
-	velocity_component.accelerate_to(direction)
+	velocity_component.accelerate_to(direction, CharacterStats.get_stat(CharacterStats.Stats.PLAYER_SPEED))
 
-func _physics_process(_delta: float) -> void:
-	velocity_component.speed = CharacterStats.get_stat(CharacterStats.Stats.PLAYER_SPEED)
-	
+func _physics_process(_delta: float) -> void: 
 	animation_component.update_movement(velocity_component.velocity)
 
 
@@ -48,15 +46,13 @@ func _physics_process(_delta: float) -> void:
 # The HealthComponent should now call this instead of modifying velocity directly.
 # For example, in _on_health_component_taking_damage(), you would add:
 # var knockback_direction = attack.source_global_position.direction_to(global_position)
-# velocity_component.apply_knockback(knockback_direction * KNOCKBACK_FORCE, 0.2)
+# knockback_component.apply_knockback(knockback_direction * KNOCKBACK_FORCE, 0.2)
 # You no longer need `update_knock_timer` here. It's gone!
 
 
 func _on_character_stat_changed(stat_key: CharacterStats.Stats, new_value: float):
 	if stat_key == CharacterStats.Stats.PLAYER_MAX_HEALTH:
 		health_component.set_max_health(new_value)
-	elif stat_key == CharacterStats.Stats.PLAYER_SPEED:
-		velocity_component.speed = new_value
 
 func _on_health_component_entity_died() -> void:
 	hide()
@@ -72,7 +68,7 @@ func _on_health_component_entity_died() -> void:
 
 func _on_health_component_taking_damage() -> void:
 	taking_damage = true
-	#TODO: velocity_component.apply_knockback() here.
+	#TODO: knockback_component.apply_knockback() here.
 	ScreenEffects.screen_shake(0.1, 0.5)
 	await get_tree().create_timer(0.1).timeout
 	taking_damage = false

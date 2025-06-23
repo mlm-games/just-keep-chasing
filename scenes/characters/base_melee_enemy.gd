@@ -78,19 +78,11 @@ func _on_hitbox_component_area_exited(area: Area2D) -> void:
 		can_deal_damage = false
 
 func _on_health_component_entity_died() -> void:
-	if not health_component.is_dead():
-		GameState.emit_research_points(global_position, research_point_value)
-		## NOTE: The AnimationComponent now handles the queue_free() after the death anim.
-		animation_component.on_entity_died()
-		
+	GameState.emit_research_points(global_position, research_point_value)
+	## NOTE: The AnimationComponent now handles the queue_free() after the death anim.
+	animation_component.on_entity_died()
+	
 
-		$CollisionShape2D.set_deferred("disabled", true)
-		hitbox_component.get_node("CollisionShape2D").set_deferred("disabled", true)
-		set_physics_process(false)
-
-func shake(amount: float, duration: float):
-	ScreenEffects.shake(amount, duration)
-
-func flash_sprite(color: Color, duration: float):
-	if is_instance_valid(sprite):
-		ScreenEffects.flash_sprite(sprite, color, duration)
+	$CollisionShape2D.set_deferred("disabled", true)
+	hitbox_component.get_node("CollisionShape2D").set_deferred("disabled", true)
+	set_physics_process(false)

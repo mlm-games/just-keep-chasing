@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="ProjectileData" load_steps=2 format=3 uid="uid://iu7mno7fgee1"]
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=4 format=3 uid="uid://iu7mno7fgee1"]
 
+[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_6grkc"]
 [ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_64tkw"]
+[ext_resource type="PackedScene" uid="uid://rhergnlmde1y" path="res://scenes/components/bullet_spawn_particles.tscn" id="3_g4evm"]
 
 [resource]
 script = ExtResource("1_64tkw")
 projectile_speed = 750.0
 projectile_range = 1000
-projectile_damage = -1.0
+projectile_damage = 10.0
 projectile_spread = 0.0
 projectile_dot = 0.0
 projectile_dot_duration = 0.0
@@ -18,4 +20,7 @@ sprite_rotation = 0.0
 sprite_offset = Vector2(0, 0)
 collision_shape_radius = 9.0
 collision_shape_mask = 3
+base_scene = ExtResource("1_6grkc")
+spawn_particles = ExtResource("3_g4evm")
+lifespan_time = 100.0
 metadata/_custom_type_script = "uid://cr3s7huv3l64s"

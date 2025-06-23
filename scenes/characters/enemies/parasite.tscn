@@ -10,6 +10,9 @@ toxic_pool_scene = ExtResource("3_7d3c5")
 drop_interval = 1.5
 move_change_interval = 2.0
 
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {}
+
 [node name="MoveTimer" type="Timer" parent="." index="9"]
 
 [node name="DropPoolTimer" type="Timer" parent="." index="10"]

@@ -8,7 +8,7 @@
 
 [resource]
 script = ExtResource("1_6ux22")
-unlocked = false
+unlocked = true
 weapon_scene = ExtResource("4_a0tsk")
 sprite = ExtResource("3_a0tsk")
 bullet = ExtResource("1_h5tx8")

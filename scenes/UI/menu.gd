@@ -15,7 +15,6 @@ func _ready() -> void:
 	%PlayButton.grab_focus()
 	#if OS.has_feature('web'):
 		#%ExitButton.queue_free() # exit button dosn't make sense on HTML5
-	GameState.reset_game()
 	run_title_anim()
 	run_buttons_anim()
 	

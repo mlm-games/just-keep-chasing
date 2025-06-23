@@ -96,6 +96,7 @@ func is_alive() -> bool:
 
 func check_health() -> void:
 	if not is_alive():
+		dying = true
 		entity_died.emit()
 
 func disable_for_secs(secs: float) -> void:
@@ -121,3 +122,11 @@ func check_for_death() -> void:
 
 func is_dead() -> bool:
 	return dying
+
+func shake(amount: float, duration: float):
+	pass
+	#ScreenEffects.shake(amount, duration)
+
+func flash_sprite(color: Color, duration: float):
+	pass
+	#ScreenEffects.flash_sprite(owner.sprite, color, duration)

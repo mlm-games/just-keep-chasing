@@ -132,7 +132,7 @@ _data = {
 [node name="World" type="Node2D" groups=["World"]]
 script = ExtResource("1_li0ht")
 
-[node name="HUD" parent="." instance=ExtResource("6_vltvt")]
+[node name="HUD" parent="." groups=["PopupsRoot"] instance=ExtResource("6_vltvt")]
 unique_name_in_owner = true
 layer = 20
 
