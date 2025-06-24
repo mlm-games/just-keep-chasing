@@ -1,13 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkk7wewc51p0l"]
+[gd_scene load_steps=5 format=3 uid="uid://dkk7wewc51p0l"]
 
+[ext_resource type="Script" uid="uid://bkr7t3fuf7xjj" path="res://scenes/characters/enemies/nerve_impulse.gd" id="1_frray"]
 [ext_resource type="Texture2D" uid="uid://cxnlpb6ei2d5g" path="res://assets/sprites/bg_static_particles.svg" id="2_6mflg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_210d3"]
 radius = 8.0
 height = 60.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_frray"]
+radius = 2.0
+height = 10.0
+
 [node name="NerveImpulse" type="CharacterBody2D"]
 collision_layer = 4
+script = ExtResource("1_frray")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_210d3")
@@ -23,3 +29,8 @@ scale = Vector2(3.2, 0.8)
 
 [node name="DamageArea" type="Area2D" parent="."]
 collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(0, -1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_frray")

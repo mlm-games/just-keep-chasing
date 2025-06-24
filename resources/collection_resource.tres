@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CollectionResource" load_steps=30 format=3]
+[gd_resource type="Resource" script_class="CollectionResource" load_steps=33 format=3]
 
 [ext_resource type="Resource" path="res://resources/augments/basic_repair.tres" id="1_51ty7"]
 [ext_resource type="Resource" path="res://resources/augments/bullet_buffer.tres" id="2_21i0v"]
@@ -12,9 +12,12 @@
 [ext_resource type="Resource" path="res://resources/enemies/evolved_slime.tres" id="10_52q21"]
 [ext_resource type="Resource" path="res://resources/enemies/gunner_slime.tres" id="11_uwrhl"]
 [ext_resource type="Resource" path="res://resources/enemies/phase_enemy.tres" id="12_18ovc"]
+[ext_resource type="Resource" path="res://resources/enemies/nerve-impulse.tres" id="12_hecn4"]
 [ext_resource type="Resource" path="res://resources/enemies/small_slime.tres" id="12_u2rfg"]
+[ext_resource type="Resource" path="res://resources/enemies/parasite.tres" id="13_ohxkr"]
 [ext_resource type="Resource" path="res://resources/enemies/spore_enemy.tres" id="14_ega57"]
 [ext_resource type="Resource" path="res://resources/guns/birdshot_shotgun.tres" id="14_g5768"]
+[ext_resource type="Resource" path="res://resources/enemies/prion.tres" id="15_131m2"]
 [ext_resource type="Resource" path="res://resources/enemies/tumor_cell.tres" id="15_ega57"]
 [ext_resource type="Resource" path="res://resources/guns/buckshot_shotgun.tres" id="15_j07jx"]
 [ext_resource type="Resource" path="res://resources/enemies/virus.tres" id="16_f63db"]
@@ -36,7 +39,10 @@ enemies = Dictionary[StringName, Variant]({
 &"basic_slime": ExtResource("9_131m2"),
 &"evolved_slime": ExtResource("10_52q21"),
 &"gunner_slime": ExtResource("11_uwrhl"),
+&"nerve-impulse": ExtResource("12_hecn4"),
+&"parasite": ExtResource("13_ohxkr"),
 &"phase_enemy": ExtResource("12_18ovc"),
+&"prion": ExtResource("15_131m2"),
 &"small_slime": ExtResource("12_u2rfg"),
 &"spore_enemy": ExtResource("14_ega57"),
 &"tumor_cell": ExtResource("15_ega57"),

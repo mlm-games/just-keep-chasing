@@ -16,6 +16,10 @@ var world: World #TODO: remove these
 var player: Player
 var hud: HUD
 
+var spawnable_enemies: Dictionary[int, EnemyData] = {} #key: spawn_range, value: Enemydata
+var enemy_spawn_type_range := Vector2i(1, 1)
+
+
 var elapsed_time: int = 0:
 	set(val):
 		elapsed_time = val
@@ -41,6 +45,8 @@ func reset():
 	upgrade_shop_spawn_divisor = 5.0
 	price_multiplier = 0.5
 	price_increase_rate = 0.07
+	spawnable_enemies = {}
+	enemy_spawn_type_range = Vector2i(1, 1)
 	projectile_root = get_tree().get_first_node_in_group("ProjectilesNode")
 	world = get_tree().get_first_node_in_group("World")
 	player = get_tree().get_first_node_in_group("Player")
@@ -54,3 +60,8 @@ func reset():
 func powerup_collected(powerup_type: StringName) -> void:
 	powerups[powerup_type] += 1
 	#world.hud.update_hud_buttons()
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause"):
+		pass

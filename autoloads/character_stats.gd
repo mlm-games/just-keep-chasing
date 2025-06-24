@@ -120,10 +120,6 @@ func modify_stat(stat_key: Stats, operation: Operation, value: float) -> void:
 				#game_stats[stat.key] *= stat.value
 			#Operation.EXPONENTIAL:
 				#game_stats[stat.key] = pow(game_stats[stat.key], stat.value)
-		#if stat.key == Stats.PLAYER_MAX_HEALTH:
-			##Update max_health in player's health component
-			#get_tree().get_nodes_in_group("Player")[0].update_max_health(game_stats[Stats.PLAYER_MAX_HEALTH])
-
 
 func save_stats() -> Dictionary:
 	var save_data := {}

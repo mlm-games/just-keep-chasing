@@ -8,8 +8,6 @@ const POWERUPS_DIR : String = "res://resources/powerups/"
 const ENEMY_DATA_DIR : String = "res://resources/enemies/"
 const GUN_DATA_DIR : String = "res://resources/guns/"
 
-static var collection_res : CollectionResource = CollectionResource.new()
-
 var all_enemies: Dictionary = {}
 var all_augments: Dictionary = {}
 var all_powerups: Dictionary[StringName, PowerupData] = {}

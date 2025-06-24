@@ -14,7 +14,7 @@ var achievement : Achievement
 	#self.achievement = achievement
 
 func _ready() -> void:
-	title.text = achievement.name
+	title.text = achievement.title
 	description.text = achievement.description
 	progress.text = str(achievement.current_progress) + " / " + str(achievement.count_goal)
 	reward.text = achievement.reward
@@ -39,3 +39,7 @@ func update_achievement_progress() -> void:
 func _on_unlock_button_pressed() -> void:
 	if achievement.count_goal == achievement.current_progress:
 		BasicAchievements.unlock_achievement(achievement.name.to_snake_case())
+
+func set_data(data_item: Achievement):
+	achievement = data_item
+	

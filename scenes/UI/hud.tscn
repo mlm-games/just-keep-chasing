@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://p3ijv0nq3035"]
+[gd_scene load_steps=18 format=3 uid="uid://p3ijv0nq3035"]
 
 [ext_resource type="Script" uid="uid://cvt3rh70tefcl" path="res://scenes/UI/HUD.gd" id="1_ldp5k"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="2_vgwca"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://ddkwkn3fyh6qq" path="res://assets/sprites/screen_blast_powerup_icon.png" id="3_ytqdl"]
 [ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/sprites/heal_powerup.png" id="4_lcl0g"]
 [ext_resource type="PackedScene" uid="uid://dqnb688fw4wpi" path="res://scenes/UI/currency_label.tscn" id="7_7wvwv"]
-[ext_resource type="PackedScene" uid="uid://barl4q1kugrmm" path="res://scenes/gameplay/pause-layer/pause-layer.tscn" id="7_avxcw"]
 [ext_resource type="Texture2D" uid="uid://1r3wv2gwfpw6" path="res://assets/sprites/change_gun.png" id="8_7wvwv"]
 [ext_resource type="PackedScene" uid="uid://durs0whgiacrv" path="res://scenes/UI/joystick.tscn" id="9_7wvwv"]
 
@@ -39,8 +38,6 @@ events = [SubResource("InputEventAction_hq20a")]
 [node name="HUD" type="CanvasLayer" groups=["HUD"]]
 process_mode = 3
 script = ExtResource("1_ldp5k")
-
-[node name="PauseLayer" parent="." instance=ExtResource("7_avxcw")]
 
 [node name="GameTimer" type="Timer" parent="."]
 unique_name_in_owner = true

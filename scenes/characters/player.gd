@@ -52,7 +52,7 @@ func _physics_process(_delta: float) -> void:
 
 func _on_character_stat_changed(stat_key: CharacterStats.Stats, new_value: float):
 	if stat_key == CharacterStats.Stats.PLAYER_MAX_HEALTH:
-		health_component.set_max_health(new_value)
+		update_max_health(new_value)
 
 func _on_health_component_entity_died() -> void:
 	hide()

@@ -1,4 +1,5 @@
-class_name NerveImpulse extends CharacterBody2D
+class_name NerveImpulse extends BaseEnemy
+##Dummy enemy inheritance, acts like a bullet
 
 @export var speed: float = 1000.0
 @export var damage: float = 25.0

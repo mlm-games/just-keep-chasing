@@ -21,6 +21,7 @@ func _ready() -> void:
 	%PlayButton.pressed.connect(_on_PlayButton_pressed)
 	%SettingsButton.pressed.connect(_on_settings_button_pressed)
 	%AchievementsButton.pressed.connect(_on_achievements_button_pressed)
+	%CreditsButton.pressed.connect(add_child.bind(preload("uid://bq0gelfcjnqvg").instantiate()))
 	%ExitButton.pressed.connect(_on_ExitButton_pressed)
 
 func _on_PlayButton_pressed() -> void:
@@ -39,7 +40,7 @@ func _on_ExitButton_pressed() -> void:
 
 
 func _on_settings_button_pressed() -> void:
-	ScreenEffects.change_scene_with_transition(SettingsScene)
+	add_child(preload(SettingsScene).instantiate())
 
 
 func _on_achievements_button_pressed() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cyaeykwntx0u0"]
+[gd_scene load_steps=12 format=3 uid="uid://cyaeykwntx0u0"]
 
 [ext_resource type="Script" uid="uid://cbkm21ne5idhp" path="res://scenes/characters/base_melee_enemy.gd" id="1_np7gm"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_mcomt"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_f4fx4"]
 [ext_resource type="AnimationLibrary" uid="uid://c5w2n8g7e1bdf" path="res://scenes/characters/reusable_anims.tres" id="5_j1tbp"]
 [ext_resource type="Script" uid="uid://dsl73aknxcjur" path="res://addons/godot_state_charts/state_chart.gd" id="8_j1tbp"]
+[ext_resource type="Script" uid="uid://c8ff8j0tad7ib" path="res://addons/godot_state_charts/compound_state.gd" id="9_bu8ev"]
 [ext_resource type="Script" uid="uid://bh62la2plrk8u" path="res://scenes/components/velocity_component.gd" id="9_uira5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pnp1"]
@@ -60,3 +61,6 @@ texture = ExtResource("2_mcomt")
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("8_j1tbp")
 metadata/_custom_type_script = "uid://dsl73aknxcjur"
+
+[node name="CompoundState" type="Node" parent="StateChart"]
+script = ExtResource("9_bu8ev")

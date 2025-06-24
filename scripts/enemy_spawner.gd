@@ -14,12 +14,7 @@ static func spawn_enemy(enemy_data: EnemyData, position: Vector2) -> Node2D:
 
 static func get_random_by_spawn_chance() -> EnemyData:
 	#TODO: Replace randfs in the powertype scene or script (as a static fn?) itself or implement a better version
-	var enemy_data: EnemyData = spawnable_enemies[randi_range(enemy_spawn_type_range.x, enemy_spawn_type_range.y)]
+	var enemy_data: EnemyData = RunData.spawnable_enemies[randi_range(RunData.enemy_spawn_type_range.x, RunData.enemy_spawn_type_range.y)]
 	if enemy_data.enemy_spawn_chance < randf():
 		enemy_data = get_random_by_spawn_chance()
 	return enemy_data
-
-
-
-static var spawnable_enemies: Dictionary[int, EnemyData] = {} #key: spawn_range, value: Enemydata
-static var enemy_spawn_type_range := Vector2i(1, 1)

@@ -178,45 +178,6 @@ theme_override_colors/font_color = Color(0.92549, 0.92549, 0.92549, 1)
 text = "<GodotVersion>"
 script = ExtResource("5_fdyjp")
 
-[node name="Credits" type="VBoxContainer" parent="MarginContainer/Control"]
-visible = false
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -86.0
-offset_top = -23.0
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="MadeByLabel" type="Label" parent="MarginContainer/Control/Credits"]
-layout_mode = 2
-theme_type_variation = &"LabelSmall"
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "made by: ..."
-
-[node name="Developer1" type="Label" parent="MarginContainer/Control/Credits"]
-visible = false
-layout_mode = 2
-theme_type_variation = &"LabelSmall"
-theme_override_colors/font_color = Color(0.92549, 0.92549, 0.92549, 1)
-
-[node name="Developer2" type="Label" parent="MarginContainer/Control/Credits"]
-visible = false
-layout_mode = 2
-theme_type_variation = &"LabelSmall"
-theme_override_colors/font_color = Color(0.886275, 0.87451, 0.87451, 1)
-text = "Developer 2"
-
-[node name="Developer3" type="Label" parent="MarginContainer/Control/Credits"]
-visible = false
-layout_mode = 2
-theme_type_variation = &"LabelSmall"
-theme_override_colors/font_color = Color(0.886275, 0.87451, 0.87451, 1)
-text = "Developer 3"
-
 [node name="PanelContainer" type="NinePatchRect" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -259,6 +220,11 @@ text = "MENU_LABEL_SETTINGS"
 unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_ACHIEVEMENTS"
+
+[node name="CreditsButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "MENU_LABEL_CREDITS"
 
 [node name="ExitButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
 unique_name_in_owner = true

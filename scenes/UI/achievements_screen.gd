@@ -3,7 +3,6 @@ extends Control
 
 signal unlocked()
 
-@onready var achievements_container := %AchievementsContainer
 @onready var achievement_label_template := load("uid://ba8wjuxwmjiug")
 
 

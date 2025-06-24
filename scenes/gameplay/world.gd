@@ -65,7 +65,7 @@ func _ready() -> void:
 	RunData.time_updated.connect(_on_elapsed_time_updated)
 	RunData.research_points_updated.connect(_on_research_points_changed)
 	
-	EnemySpawner.spawnable_enemies = CollectionManager.get_enemy_dict_by_spawn_order()
+	RunData.spawnable_enemies = CollectionManager.get_enemy_dict_by_spawn_order()
 
 
 func _on_research_points_changed(new_amount: int):
@@ -99,21 +99,26 @@ func _on_enemy_spawn_timer_timeout() -> void:
 func time_based_enemy_type_changer() -> void:
 	match RunData.elapsed_time:
 		15:
-			EnemySpawner.enemy_spawn_type_range.y = 2
+			RunData.enemy_spawn_type_range.y = 2
 			enemy_spawn_timer.wait_time = 3
 		45:
-			EnemySpawner.enemy_spawn_type_range.y = 3
-			enemy_spawn_timer.wait_time = 4
+			RunData.enemy_spawn_type_range.y = 3
+			enemy_spawn_timer.wait_time = 3.5
 		75: 
-			EnemySpawner.enemy_spawn_type_range.y = 4
-			enemy_spawn_timer.wait_time = 5
+			RunData.enemy_spawn_type_range.y = 4
+			enemy_spawn_timer.wait_time = 4
 		100:
-			EnemySpawner.enemy_spawn_type_range.y = 4
+			RunData.enemy_spawn_type_range.y = 4
 			enemy_spawn_timer.wait_time = 2.5
+		125:
+			RunData.enemy_spawn_type_range.y = 5
 		#_:
 			#enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
 			#if enemy_spawn_timer.wait_time == 0.5:
 				#CharacterStats.modify_stat(CharacterStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION, CharacterStats.Operation.ADD, -0.1)
+
+func _process(delta: float) -> void:
+	time_based_enemy_type_changer()
 
 func _on_powerup_spawn_timer_timeout() -> void:
 	powerup_spawn_timer.start()

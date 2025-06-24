@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://jviwk0181p3q"]
+
+[ext_resource type="PackedScene" uid="uid://cdjopw1nw1odb" path="res://scenes/characters/enemies/prion.tscn" id="1_od5y5"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_pqgr4"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="3_esi3u"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="4_7nvo8"]
+
+[resource]
+script = ExtResource("3_esi3u")
+base_enemy_scene = ExtResource("1_od5y5")
+base_contact_damage = 0.0
+research_point_value = 4
+enemy_spawn_chance = 0.67
+enemy_spawn_order = 5
+character_hitbox_shape_value = Vector2(44, 40)
+character_scale = Vector2(1, 1)
+sprite_texture = ExtResource("4_7nvo8")
+sprite_scale = Vector2(1, 1)
+sprite_color = Color(0, 0.168627, 0.909804, 1)
+base_health = 11.0
+base_speed = 120.0
+modifiers = Array[ExtResource("2_pqgr4")]([])
+id = "prion"
+local_to_scene = false
+enabled = true
+metadata/_custom_type_script = "uid://bwk8dueikqaq0"

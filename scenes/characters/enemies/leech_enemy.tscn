@@ -24,9 +24,8 @@ material = SubResource("ShaderMaterial_awho7")
 script = ExtResource("2_tpt5d")
 metadata/_custom_type_script = "uid://dntbebw70xeap"
 
-[node name="CompoundState" type="Node" parent="StateChart" index="0"]
-script = ExtResource("5_mouyv")
-initial_state = NodePath("Alive")
+[node name="CompoundState" parent="StateChart" index="0"]
+initial_state = NodePath("Dying")
 
 [node name="Alive" type="Node" parent="StateChart/CompoundState" index="0"]
 script = ExtResource("5_mouyv")

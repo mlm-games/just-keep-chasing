@@ -95,8 +95,10 @@ func _load_achievements() -> void:
 	while file_name != "":
 		if not dir.current_is_dir() and file_name.ends_with(".tres"):
 			var achievement: Achievement = load(achievements_dir.path_join(file_name))
-			if achievement and achievement.id != "":
-				achievements[achievement.id] = achievement
+			if achievement and achievement.id == "":
+				achievements[achievement.title.to_snake_case()] = achievement
+			else:
+				push_error("Click here")
 		file_name = dir.get_next()
 
 
