@@ -28,20 +28,10 @@ This game is currently under active development. Many features are experimental 
 - More polished UI elements
 - Background assets
 
-## 🔧 Run in editor for debugging
-
-1. Clone the repository:
-```bash
-git clone https://codeberg.org/username/just-keep-chasing.git
-```
-
-2. Run it in the godot editor.
-
-
 ## 🕹️ How to Play
 
 - WASD or Arrow Keys: Move
-- Space to change gun
+- Space to change gun (might get changed)
 
 ## 👥 Contributing
 
@@ -52,25 +42,18 @@ We welcome contributions! If you'd like to help, please:
 3. Make your changes
 4. Submit a pull request
 
-### Particularly Looking For Before :
-- Artists as our art is not pleasant to look at..
-
-
 ## 📝 License
 
 This project is licensed under the GPL 3.0 only license - see the [LICENSE](LICENSE) file for details.
 
-## 🎮 Development Status
-
-Current Version: 0.7.1 (Pre-alpha)
-
 ### Known Issues
 - FIXME or HACK entries
 - artwork needs replacement
+- Sound effects (and maybe music) definitely need replacements
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-- [Credits for any assets/resources used](credits.md)
+- [Credits for any assets/resources used](credits.md) or viewable through the game too by clicking the credits button
 - And all the Contributors
 
 ---
