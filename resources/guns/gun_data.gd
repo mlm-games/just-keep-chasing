@@ -10,7 +10,8 @@ class_name GunData extends BaseData
 @export var ammo: int = max_ammo
 @export var targeting_range: float
 @export var fire_rate: float
-@export var fire_audio: AudioStreamWAV
+@export var fire_audio: Array[AudioStream]
+@export var reload_audio: AudioStream
 @export var damage_dropoff_curve: Curve
 @export var speed_dropoff_curve: Curve
 

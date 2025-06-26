@@ -64,5 +64,6 @@ func check_time_condition(time:int) -> void:
 #region Signals
 
 func _on_guns_button_pressed() -> void:
+	UiAudioM.play_ui_sound(preload("res://assets/music/gun sounds by q009/weapswitch.ogg"))
 	RunData.player.inventory_component.switch_to_next_gun()
 #endregion

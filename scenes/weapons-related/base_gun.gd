@@ -25,8 +25,7 @@ func _ready() -> void:
 	%BulletSpawnPoint.position = gun_data.bullet_spawn_offset
 	
 	$CollisionShape2D.shape.radius = gun_data.targeting_range
-	%ShootAudioPlayer.stream = gun_data.fire_audio
-	%ReloadAudioPlayer.stream = gun_data.fire_audio #TODO
+	#%ReloadAudioPlayer.stream = gun_data.fire_audio #TODO
 	
 	reload_timer.wait_time = gun_data.reload_time
 	reload_timer.one_shot = true
@@ -51,7 +50,7 @@ func spawn_bullet() -> void:
 	if ammo > 0:
 		#var stat_key : StringName = CountStats.get_stat_key(gun_data) #FIXME: How is this an resource? Unfixable lol bug in engine?
 		#CountStats.guns_fired_by_type_stats[stat_key] += 1
-		%ShootAudioPlayer.play()
+		AudioManager.play_random_sound(gun_data.fire_audio)
 		
 		%Sprite2D.rotation_degrees = 0
 		for _i in range(gun_data.bullets_per_shot):

@@ -4,6 +4,7 @@ class_name AnimButton extends Button
 #NOTE: the hover and click audio is configured from UiAudioM
 
 var tween: Tween
+var _sound_override: AudioStream
 
 func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered)

@@ -82,6 +82,8 @@ func _create_setting_control(parent: Container, category: String, setting_name: 
 
 	# Determine which template and options to use based on setting name or type
 	match setting_name:
+		"max_fps":
+			template = INT_CONTAINER
 		"resolution":
 			template = OPTION_CONTAINER
 			for res in SettingsConstants.RESOLUTIONS_ARRAY:

@@ -1,8 +1,11 @@
-[gd_resource type="Resource" script_class="GunData" load_steps=5 format=3 uid="uid://bqdrridmtt4q1"]
+[gd_resource type="Resource" script_class="GunData" load_steps=8 format=3 uid="uid://bqdrridmtt4q1"]
 
 [ext_resource type="Resource" uid="uid://cnp06ev13f5af" path="res://resources/bullets/rocket.tres" id="1_l1tml"]
+[ext_resource type="AudioStream" uid="uid://dm63dcpqu5wpq" path="res://assets/music/gun sounds by q009/rlauncher.ogg" id="2_ddkhx"]
+[ext_resource type="AudioStream" uid="uid://bkkibfjph177e" path="res://assets/music/gun sounds by q009/rlauncher2.ogg" id="3_5axtf"]
 [ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="3_ddkhx"]
 [ext_resource type="Texture2D" uid="uid://dtcwya5fb7uxw" path="res://assets/sprites/weapons/rocket_launcher.svg" id="3_p456a"]
+[ext_resource type="AudioStream" uid="uid://cqytrb8372hnw" path="res://assets/music/gun sounds by q009/rlauncher3.ogg" id="4_vjhkm"]
 [ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="5_vjhkm"]
 
 [resource]
@@ -16,6 +19,7 @@ max_ammo = 1
 ammo = null
 targeting_range = 600.0
 fire_rate = 0.5
+fire_audio = Array[AudioStream]([ExtResource("2_ddkhx"), ExtResource("3_5axtf"), ExtResource("4_vjhkm")])
 sprite_scale = Vector2(1, 1)
 sprite_position = Vector2(45, 5)
 sprite_rotation_degrees = 0.0

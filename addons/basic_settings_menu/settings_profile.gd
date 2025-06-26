@@ -17,7 +17,7 @@ class_name SettingsProfile extends Resource
 }
 #@export_group("Audio")
 @export var audio: Dictionary = {
-	"Master": 0.8,
-	"Music": 0.8,
-	"Sfx": 0.8,
+	"Master": 0.5,
+	"Music": 0.5,
+	"Sfx": 0.5,
 }

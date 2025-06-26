@@ -1,9 +1,12 @@
-[gd_resource type="Resource" script_class="GunData" load_steps=5 format=3 uid="uid://p55oxm68od4p"]
+[gd_resource type="Resource" script_class="GunData" load_steps=8 format=3 uid="uid://p55oxm68od4p"]
 
 [ext_resource type="Resource" uid="uid://iu7mno7fgee1" path="res://resources/bullets/sniper_bullet.tres" id="1_fah2k"]
+[ext_resource type="AudioStream" uid="uid://dp2i2gi654v15" path="res://assets/music/gun sounds by q009/ren2.ogg" id="2_62vhr"]
 [ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="2_l7xjp"]
+[ext_resource type="AudioStream" uid="uid://cco7ggim52av0" path="res://assets/music/gun sounds by q009/ren3.ogg" id="3_ajgm1"]
 [ext_resource type="Texture2D" uid="uid://bi2cgn31beb4c" path="res://assets/sprites/weapons/sniper.svg" id="3_fah2k"]
 [ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="4_62vhr"]
+[ext_resource type="AudioStream" uid="uid://m5fvh36ty3qn" path="res://assets/music/gun sounds by q009/ren.ogg" id="4_an5bw"]
 
 [resource]
 script = ExtResource("2_l7xjp")
@@ -16,6 +19,7 @@ max_ammo = 1
 ammo = null
 targeting_range = 750.0
 fire_rate = 0.5
+fire_audio = Array[AudioStream]([ExtResource("2_62vhr"), ExtResource("3_ajgm1"), ExtResource("4_an5bw")])
 sprite_scale = Vector2(1, 1)
 sprite_position = Vector2(45, 5)
 sprite_rotation_degrees = 0.0

@@ -3,8 +3,8 @@
 extends Node
 
 # Sound Resources (cannot be configured in the inspector, as of 4.4, so set it later here)
-@export var default_click_sound: AudioStream
-@export var default_hover_sound: AudioStream
+@export var default_click_sound: AudioStream = preload("res://assets/music/GUI_Sound_Effects_by_Lokif/misc_menu.wav")
+@export var default_hover_sound: AudioStream = preload("res://assets/music/GUI_Sound_Effects_by_Lokif/click_2.wav")
 
 # Internal Player Pool
 const POOL_SIZE = 5 # UI sounds are less frequent, so a smaller pool is fine
@@ -23,12 +23,12 @@ func _ready():
 # Public API
 
 func play_click_sound():
-	_play_ui_sound(default_click_sound)
+	play_ui_sound(default_click_sound)
 
 func play_hover_sound():
-	_play_ui_sound(default_hover_sound)
+	play_ui_sound(default_hover_sound)
 
-func _play_ui_sound(stream: AudioStream):
+func play_ui_sound(stream: AudioStream):
 	if not stream: return
 
 	var player: AudioStreamPlayer = _player_pool.get_object()

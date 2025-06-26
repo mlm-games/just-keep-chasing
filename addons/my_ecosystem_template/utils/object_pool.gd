@@ -71,7 +71,7 @@ func get_object() -> Node:
 		obj = _available.pop_front()
 	
 	_active.append(obj)
-	obj.visible = true
+	if obj.has_method("show"): obj.visible = true
 	if obj.has_method("set_process"): obj.set_process(true)
 	if obj.has_method("set_physics_process"): obj.set_physics_process(true)
 	if obj.has_method("_on_spawned_from_pool"): obj._on_spawned_from_pool()

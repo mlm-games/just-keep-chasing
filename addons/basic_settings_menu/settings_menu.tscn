@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dp42fom7cc3n0"]
+[gd_scene load_steps=7 format=3 uid="uid://dp42fom7cc3n0"]
 
+[ext_resource type="Theme" uid="uid://bt255sn41frcj" path="res://addons/basic_settings_menu/theme-settings.tres" id="1_wuklk"]
 [ext_resource type="Script" uid="uid://dcvc700ur1w4b" path="res://addons/basic_settings_menu/settings_menu.gd" id="2_m8nmd"]
 [ext_resource type="PackedScene" uid="uid://bwcsibejua3bb" path="res://addons/basic_settings_menu/setting_confirmation_dialog.tscn" id="3_3fo0h"]
 [ext_resource type="Script" uid="uid://cnfh1rl7a17mv" path="res://addons/my_ecosystem_template/transitions/popup_animator.gd" id="4_k0wj0"]
@@ -19,6 +20,7 @@ offset_top = 2.0
 offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_wuklk")
 script = ExtResource("2_m8nmd")
 metadata/_edit_use_anchors_ = true
 
