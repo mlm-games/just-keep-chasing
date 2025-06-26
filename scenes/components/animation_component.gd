@@ -11,6 +11,9 @@ class_name AnimationComponent extends Node
 var _is_taking_damage: bool = false
 var _last_velocity: Vector2 = Vector2.ZERO
 
+func _ready() -> void:
+	anim_player.speed_scale = randf_range(0.5, 1.1)
+
 
 ## Called by the character's physics process to update movement animations.
 func update_movement(current_velocity: Vector2):

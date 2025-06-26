@@ -4,15 +4,6 @@ signal slot_clicked
 
 @export var augment: AugmentsData
 
-# Rarity colors
-const RARITY_COLORS: Dictionary = {
-	0: Color.WHITE, # Common
-	1: Color.GREEN, # Uncommon
-	2: Color.BLUE,  # Rare
-	3: Color.PURPLE, # Epic
-	4: Color.ORANGE # Legendary
-}
-
 var final_price: int
 var panel_entered : bool = false
 var hover_tween: Tween
@@ -23,6 +14,7 @@ var original_scale := scale
 @onready var upgrade_label: Label = %UpgradeLabel
 @onready var price_container: RichTextLabel = %PriceContainer
 @onready var panel: PanelContainer = %Panel
+@onready var description_label: RichTextLabel = %DescriptionLabel
 
 func _ready():
 	augment = pick_augment_by_rarity()
@@ -35,20 +27,24 @@ func _ready():
 	
 	panel.mouse_entered.connect(_on_panel_mouse_entered)
 	panel.mouse_exited.connect(_on_panel_mouse_exited)
+	
+	pivot_offset = size/2
+	resized.connect(func(): pivot_offset = size/2)
 
 func _setup_slot():
 	final_price = int(augment.augment_price * RunData.price_multiplier)
 	
 	texture_rect.texture = augment.augment_icon
-	upgrade_label.text = tr(augment.id.capitalize())
+	upgrade_label.text = tr(CollectionManager.get_resource_name(augment).capitalize())
 	price_container.text = GameState.get_currency_bbcode() + str(final_price)
+	description_label.text = StaticUtils.get_augment_description(augment)
 	
 	_set_visuals_from_rarity()
 	_update_buyable_state()
 
 func _set_visuals_from_rarity():
 	# Assume rarity is an int from 0 to 4
-	var rarity_color = RARITY_COLORS.get(augment.rarity, Color.WHITE)
+	var rarity_color = C.RARITY_COLORS.get(augment.rarity, Color.WHITE)
 	
 	# Apply a shader-based glow
 	var mat = ShaderMaterial.new()

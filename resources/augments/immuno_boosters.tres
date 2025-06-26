@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://dbhqk1tq5grf8"]
 
 [ext_resource type="Texture2D" uid="uid://bwn1fetdqmm3c" path="res://assets/sprites/immuno-booster.svg" id="1_e4qs5"]
-[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="2_1auth"]
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="2_1auth"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="3_aaedq"]
 
 [sub_resource type="Resource" id="Resource_3ju77"]

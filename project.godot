@@ -49,7 +49,7 @@ BasicAchievements="*res://addons/achievements/achievements.tscn"
 [basic_achievements]
 
 achievements/local_source="res://resources/achievements"
-achievements/save_directory="user://"
+achievements/save_directory="user://achievements"
 
 [category]
 
@@ -99,6 +99,7 @@ auto_rebuild=true
 
 theme/custom="uid://d26u4ffjbtvf8"
 theme/custom_font="uid://cl7cmdn6sfwjb"
+theme/default_font_multichannel_signed_distance_field=true
 
 [input]
 

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://cpoybg7bupnm3"]
 
 [ext_resource type="Texture2D" uid="uid://qxnxnrjoe7x3" path="res://assets/sprites/trigger_eyepod.svg" id="1_7wbi6"]
-[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augmentations.gd" id="1_dj52t"]
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="1_dj52t"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_7wbi6"]
 
 [sub_resource type="Resource" id="Resource_3epvh"]
