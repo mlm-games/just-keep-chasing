@@ -55,6 +55,7 @@ func stop() -> void:
 
 ## Applies an instant force, pushing the character back.
 func apply_knockback(force: Vector2, duration: float = 0.2) -> void:
-	_knockback_vector = force
-	_knockback_timer = duration
-	_is_knocked_back = true
+	if force != Vector2.ZERO:
+		_knockback_vector = force
+		_knockback_timer = duration
+		_is_knocked_back = true

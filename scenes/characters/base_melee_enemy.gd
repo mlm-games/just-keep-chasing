@@ -78,7 +78,7 @@ func _on_hitbox_component_area_exited(area: Area2D) -> void:
 		can_deal_damage = false
 
 func _on_health_component_entity_died() -> void:
-	GameState.emit_research_points(global_position, research_point_value)
+	DropsSpawner.emit_research_points(global_position, research_point_value)
 	## NOTE: The AnimationComponent now handles the queue_free() after the death anim.
 	animation_component.on_entity_died()
 	

@@ -8,5 +8,5 @@ var dot_type: GameState.StatusEffectType
 var crit_rate: float = 0
 var crit_damage: float = 0 # 0 to 1, multiplies with damage
 
-var knockback_force : Vector2 = Vector2.ONE
+var knockback_force : Vector2 = Vector2.ZERO
 var knockback_duration : float = 0

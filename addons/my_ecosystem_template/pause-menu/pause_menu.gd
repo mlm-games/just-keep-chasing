@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 const SETTINGS_MENU_SCENE = preload("res://addons/basic_settings_menu/settings_menu.tscn")
 
@@ -25,16 +25,18 @@ func _input(event: InputEvent) -> void:
 
 func pause() -> void:
 	get_tree().paused = true
+	show()
 	page_animator.animate_in()
 	resume_button.grab_focus()
 
 func unpause() -> void:
 	# We unpause *after* the animation is done.
-	page_animator.animate_out(Callable(self, "_on_unpause_animation_finished"))
+	page_animator.animate_out(_on_unpause_animation_finished)
 
 func _on_unpause_animation_finished() -> void:
 	get_tree().paused = false
-	
+	hide()
+
 func _on_resume_button_pressed() -> void:
 	unpause()
 

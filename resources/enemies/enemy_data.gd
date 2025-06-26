@@ -3,7 +3,9 @@ class_name EnemyData extends BaseCharacterData
 @export var base_enemy_scene : PackedScene
 
 @export var base_contact_damage : float = 0
-@export var research_point_value : int = int(NAN)
+@export var enemy_knockback: float = 0.0
+
+@export var research_point_value : int
 @export var enemy_spawn_chance : float = 1
 @export var enemy_spawn_order : int = 1
 

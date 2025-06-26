@@ -50,7 +50,7 @@ func spawn_bullet() -> void:
 	if ammo > 0:
 		#var stat_key : StringName = CountStats.get_stat_key(gun_data) #FIXME: How is this an resource? Unfixable lol bug in engine?
 		#CountStats.guns_fired_by_type_stats[stat_key] += 1
-		AudioManager.play_random_sound(gun_data.fire_audio)
+		StaticAudioM.play_random_sound(gun_data.fire_audio)
 		
 		%Sprite2D.rotation_degrees = 0
 		for _i in range(gun_data.bullets_per_shot):
@@ -75,7 +75,7 @@ func spawn_bullet() -> void:
 
 func reload() -> void:
 	# Use similar anim for shooting
-	%ReloadAudioPlayer.play()
+	#StaticAudioM.play_sound_varied(preload("res://assets/music/gun sounds by q009/outofammo.ogg"))
 	play_reload_animation()
 	if not reload_timer.is_stopped():
 		return

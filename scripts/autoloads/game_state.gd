@@ -2,7 +2,7 @@ extends Node
 
 const MenuScene = "uid://c2gocuhw2o7py"
 const SettingsScene = "uid://dp42fom7cc3n0"
-const LoadedCurrencyScene = preload("uid://do1wux8nsle53")
+
 
 const SETTINGS_RES_PATH: String = "user://settings.tres"
 const RESEARCH_TEXTURE = "assets/sprites/currency.png"
@@ -12,7 +12,6 @@ const RESEARCH_TEXTURE = "assets/sprites/currency.png"
 var highest_game_time: float = 0.0
 
 ## If screen is being touched, then use this direction
-var movement_joystick_direction : Vector2 = Vector2.ZERO
 
 var shooting_joystick_direction : Vector2 = Vector2.ZERO
 
@@ -68,17 +67,6 @@ func update_highest_game_time(time: float) -> void:
 	if time > highest_game_time:
 		highest_game_time = time
 
-	
-	#current_level = 1
-	#is_game_paused = false
-	#is_game_over = false
-	#inventory.clear()
-	#collected_items.clear()
-	#last_checkpoint = Vector2.ZERO
-	#respawn_position = Vector2.ZERO
-	 #Reinitialize the player?
-
-
 
 #region Saving and loading
 #NOTE: To be done at the during the last phase of dev.
@@ -100,10 +88,6 @@ func unlock_gun(gun: GunData) -> void:
 	gun.unlocked = true
 	#TODO: save_unlocked_guns()
 
-func emit_research_points(enemy_position: Vector2, research_point_drops: int) -> void:
-	for i in research_point_drops:
-		var drop: CurrencyDrop = LoadedCurrencyScene.instantiate()
-		drop.global_position = enemy_position
-		RunData.world.add_child.call_deferred(drop)
+
 
 #endregion

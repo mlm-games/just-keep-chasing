@@ -31,20 +31,21 @@ config/icon="uid://duc0bvo61ljvv"
 
 [autoload]
 
-ScreenEffects="*res://autoloads/transitions.tscn"
+ScreenEffects="*res://scripts/autoloads/transitions.tscn"
 DebugShortcuts="*res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.tscn"
-GameState="*res://autoloads/game_state.gd"
-CharacterStats="*res://autoloads/character_stats.gd"
-CountStats="*res://autoloads/count_stats.gd"
+GameState="*res://scripts/autoloads/game_state.gd"
+CharacterStats="*res://scripts/autoloads/character_stats.gd"
+CountStats="*res://scripts/autoloads/count_stats.gd"
 TooltipManager="*res://resources/misc/tooltip_manager.gd"
 UiAudioM="*res://addons/my_ecosystem_template/autoloads/ui_audio_manager.gd"
-RunData="*res://autoloads/run_data.gd"
-CollectionManager="*res://autoloads/collection_manager.gd"
-UIManager="*res://autoloads/ui_manager.gd"
+RunData="*res://scripts/autoloads/run_data.gd"
+CollectionManager="*res://scripts/autoloads/collection_manager.gd"
+UIManager="*res://scripts/autoloads/ui_manager.gd"
 SettingsManager="*res://addons/basic_settings_menu/settings_manager.gd"
 PauseMenu="*res://addons/my_ecosystem_template/pause-menu/pause_menu.tscn"
 SettingsApplier="*res://addons/basic_settings_menu/settings_applier.gd"
 BasicAchievements="*res://addons/achievements/achievements.tscn"
+StaticAudioM="*res://addons/my_ecosystem_template/autoloads/static_audio_manager.gd"
 
 [basic_achievements]
 
@@ -72,10 +73,10 @@ enabled=PackedStringArray("res://addons/achievements/plugin.cfg", "res://addons/
 folder_colors={
 "res://addons/": "orange",
 "res://assets/": "blue",
-"res://autoloads/": "green",
 "res://resources/": "purple",
 "res://scenes/": "red",
-"res://scripts/": "teal"
+"res://scripts/": "teal",
+"res://scripts/autoloads/": "green"
 }
 
 [filesystem]
