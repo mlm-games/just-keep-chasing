@@ -6,8 +6,8 @@
 
 [resource]
 script = ExtResource("1_64tkw")
-projectile_speed = 750.0
-projectile_range = 1000
+projectile_speed = 10000.0
+projectile_range = 10000
 projectile_damage = 10.0
 projectile_spread = 0.0
 projectile_dot = 0.0

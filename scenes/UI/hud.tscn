@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://p3ijv0nq3035"]
+[gd_scene load_steps=20 format=3 uid="uid://p3ijv0nq3035"]
 
 [ext_resource type="Script" uid="uid://cvt3rh70tefcl" path="res://scenes/UI/HUD.gd" id="1_ldp5k"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="2_vgwca"]
@@ -34,6 +34,12 @@ action = &"slow_time_powerup"
 
 [sub_resource type="Shortcut" id="Shortcut_1gu8p"]
 events = [SubResource("InputEventAction_hq20a")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_h03ao"]
+action = &"switch-weapon"
+
+[sub_resource type="Shortcut" id="Shortcut_7wvwv"]
+events = [SubResource("InputEventAction_h03ao")]
 
 [node name="HUD" type="CanvasLayer" groups=["HUD"]]
 process_mode = 3
@@ -151,16 +157,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="MovementJoystickSprite2D" parent="." groups=["MovementJoystick"] instance=ExtResource("9_7wvwv")]
-unique_name_in_owner = true
-visible = false
-scale = Vector2(0.26, 0.26)
-
-[node name="ShootingJoystickSprite2D" parent="." groups=["ShootingJoystick"] instance=ExtResource("9_7wvwv")]
-unique_name_in_owner = true
-visible = false
-scale = Vector2(0.26, 0.26)
-
 [node name="GunsButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
@@ -170,6 +166,7 @@ offset_right = 1152.0
 offset_bottom = 125.0
 rotation = 3.14159
 pivot_offset = Vector2(62, 62)
+shortcut = SubResource("Shortcut_7wvwv")
 texture_normal = ExtResource("8_7wvwv")
 ignore_texture_size = true
 stretch_mode = 4
@@ -187,6 +184,14 @@ grow_horizontal = 2
 grow_vertical = 0
 max_value = 1.0
 show_percentage = false
+
+[node name="ShootingJoystickSprite2D" parent="." groups=["ShootingJoystick"] instance=ExtResource("9_7wvwv")]
+unique_name_in_owner = true
+visible = false
+
+[node name="MovementJoystickSprite2D" parent="." groups=["MovementJoystick"] instance=ExtResource("9_7wvwv")]
+unique_name_in_owner = true
+visible = false
 
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/InvincibleButton" to="." method="_on_invincible_button_pressed"]
 [connection signal="pressed" from="Control/PanelContainer/HBoxContainer/HealButton" to="." method="_on_heal_button_pressed"]

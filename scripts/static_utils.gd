@@ -10,7 +10,7 @@ static func get_augment_description(augment: AugmentsData) -> String:
 	
 	return "\n".join(description_lines)
 
-# Generates a description for a single StatModifier.
+## Generates a description for a single StatModifier.
 static func get_modifier_description(modifier: StatModifier) -> String:
 	var stat_name = C.STAT_NAMES.get(modifier.key, "Stat")
 	var operation_text = ""
