@@ -9,6 +9,7 @@
 script = ExtResource("3_xqyaw")
 base_enemy_scene = ExtResource("1_qnoou")
 base_contact_damage = 5.0
+enemy_knockback = 0.0
 research_point_value = 1
 enemy_spawn_chance = 0.67
 enemy_spawn_order = 5

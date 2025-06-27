@@ -10,6 +10,8 @@ const MAX_POOL_SIZE = 50
 var _player_pool: ObjectPool
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	# The pool needs a scene to instantiate. Since AudioStreamPlayer is a built-in
 	# type, we can't provide a .tscn file. Instead, we create a script that
 	# generates the scene on the fly.

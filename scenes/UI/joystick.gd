@@ -21,6 +21,10 @@ func _ready():
 	_inner_ring_half = (inner_stick.size * inner_stick.scale) / 2
 
 func _gui_input(event):
+	if get_tree().paused == true:
+		_reset()
+		return
+	
 	if event is InputEventScreenTouch:
 		if event.is_pressed() and _touch_index == -1:
 			_start_position = event.position
@@ -36,6 +40,8 @@ func _gui_input(event):
 
 	elif event is InputEventScreenDrag and event.index == _touch_index:
 		_update_stick_position(event.position)
+	
+
 
 func _update_stick_position(pos: Vector2):
 	var vec = pos - _start_position

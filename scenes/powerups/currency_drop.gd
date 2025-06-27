@@ -15,8 +15,7 @@ func _ready() -> void:
 	tween.tween_property(self, "global_position", global_position + 150*Vector2(randf_range(-1,1), randf_range(-1,1)), 0.75)
 
 func collect() -> void:
-	audio_stream_player.reparent(get_tree().get_root())
-	audio_stream_player.play()
+	StaticAudioM.play_sound_varied(preload("res://assets/sfx/hover.ogg"))
 	RunData.research_points += currency_value
 	
 	CountStats.total_count_stats["essence_collected"] += currency_value

@@ -8,7 +8,11 @@ var currency_mult: float = 1.0
 
 @export var enemy_data_resource: EnemyData
 
+@onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
+
 func _ready() -> void:
+	visible_on_screen_notifier_2d.screen_exited.connect(_on_visible_on_screen_notifier_2d_screen_exited)
+	visible_on_screen_notifier_2d.screen_entered.connect(_on_visible_on_screen_notifier_2d_screen_entered)
 	CharacterStats.stat_changed.connect(_on_global_enemy_stat_changed)
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:

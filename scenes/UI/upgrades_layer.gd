@@ -6,12 +6,11 @@ const UPGRADES_LAYER = "uid://24v2w4t8hgkl"
 @onready var upgrade_slots_to_add_below_node: Control = %SpacerControl2
 
 func _ready() -> void:
-	##Due to: When shop opens up, the gun fires too fast
-	RunData.player.base_gun.unset_ignore_time_scale()
 	RunData.is_in_shop = true
-
 	
-	var tween : Tween = get_tree().create_tween().set_parallel(true).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	StaticAudioM.play_sound_varied(preload("res://assets/sfx/hover.ogg"), -0.4, +5)
+	
+	var tween : Tween = get_tree().create_tween().set_parallel(true).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_ignore_time_scale()
 	tween.tween_property(Engine, "time_scale", 0.01, 0.25)
 	tween.tween_property($Control, "modulate", Color.WHITE, 0.25)
 	for i in range(3):
@@ -30,7 +29,7 @@ func red_out_unbuyable_slots() -> void:
 			slot.red_out_unbuyable_slots()
 
 func _on_close_button_pressed() -> void:
-	RunData.upgrade_shop_spawn_divisor += %OptionsContainer.get_child_count() * 3
+	RunData.upgrade_shop_spawn_divisor += %OptionsContainer.get_child_count()
 	var tween : Tween = get_tree().create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_ignore_time_scale()
 	tween.tween_property(Engine, "time_scale", 1, 0.1)
 	tween.tween_property($Control, "modulate", Color.TRANSPARENT, 0.1)

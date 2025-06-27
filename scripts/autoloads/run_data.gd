@@ -33,7 +33,7 @@ var research_points: int = 0:
 		#world.hud.update_currency_label()
 		#world.hud.update_progress_bar(val)
 
-var price_multiplier: float = 0.5
+var price_multiplier: float = 0.3
 var price_increase_rate: float = 0.07
 
 var powerups: Dictionary[StringName, int] = {}
@@ -43,7 +43,7 @@ func reset():
 	elapsed_time = 0
 	research_points = 0
 	upgrade_shop_spawn_divisor = 5.0
-	price_multiplier = 0.5
+	price_multiplier = 0.3
 	price_increase_rate = 0.07
 	spawnable_enemies = {}
 	enemy_spawn_type_range = Vector2i(1, 1)

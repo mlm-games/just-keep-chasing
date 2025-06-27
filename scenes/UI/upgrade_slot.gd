@@ -83,7 +83,7 @@ func buy_augment():
 
 func _play_purchase_animation():
 	set_process_input(false) # Prevent further clicks
-	var tween = create_tween().set_parallel().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
+	var tween = create_tween().set_parallel().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK).set_ignore_time_scale()
 	tween.tween_property(self, "scale", Vector2.ZERO, 0.3)
 	tween.tween_property(self, "modulate:a", 0.0, 0.3)
 	
@@ -93,12 +93,12 @@ func _play_purchase_animation():
 	queue_free()
 
 func _on_mouse_entered():
-	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_ignore_time_scale()
 	tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.15)
 	# UIAudioManager.play_hover_sound()
 
 func _on_mouse_exited():
-	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_ignore_time_scale()
 	tween.tween_property(self, "scale", Vector2.ONE, 0.15)
 
 

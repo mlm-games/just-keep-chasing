@@ -25,11 +25,13 @@ script = ExtResource("2_m8nmd")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
-modulate = Color(0.533333, 0.6, 0.780392, 0.101961)
+modulate = Color(0.0823529, 0.105882, 0.133333, 0.352941)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = -0.0451389
+anchor_top = -0.0895062
+anchor_right = 1.08767
+anchor_bottom = 1.10648
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2n80e")
@@ -172,7 +174,7 @@ metadata/_custom_type_script = "uid://cmo5qw3rubish"
 [node name="ResetButton" type="Button" parent="MarginContainer/VBoxContainer/BottomContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_horizontal = 6
 size_flags_vertical = 4
 text = "Reset"
 script = ExtResource("6_3nbua")
@@ -181,6 +183,7 @@ metadata/_custom_type_script = "uid://cmo5qw3rubish"
 [node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/BottomContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 10
 size_flags_vertical = 4
 text = "MENU_LABEL_BACK"
 script = ExtResource("6_3nbua")
