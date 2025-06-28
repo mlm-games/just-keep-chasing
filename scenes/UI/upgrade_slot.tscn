@@ -1,10 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://dq2rptl6lv3tc"]
+[gd_scene load_steps=8 format=3 uid="uid://dq2rptl6lv3tc"]
 
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="1_3i5ot"]
 [ext_resource type="Script" uid="uid://cqvofyt2rkhcc" path="res://scenes/UI/upgrade_slot.gd" id="1_dya2o"]
 [ext_resource type="PackedScene" uid="uid://dqnb688fw4wpi" path="res://scenes/UI/currency_label.tscn" id="1_o3l4u"]
 [ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/sprites/heal_powerup.png" id="2_3bwd0"]
 [ext_resource type="LabelSettings" uid="uid://c6ucvvlfvsecr" path="res://resources/theme/item_name_label_settings.tres" id="2_071u4"]
+
+[sub_resource type="Gradient" id="Gradient_mw0f0"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3i5ot"]
+gradient = SubResource("Gradient_mw0f0")
+fill_from = Vector2(0.566038, 0.391509)
+fill_to = Vector2(0, 1)
 
 [node name="SlotContainer" type="MarginContainer"]
 offset_right = 200.0
@@ -74,3 +81,8 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "5"
 horizontal_alignment = 1
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(142, 182)
+scale = Vector2(3.4375, 4.6875)
+texture = SubResource("GradientTexture2D_3i5ot")

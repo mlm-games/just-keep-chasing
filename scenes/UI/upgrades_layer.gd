@@ -8,7 +8,7 @@ const UPGRADES_LAYER = "uid://24v2w4t8hgkl"
 func _ready() -> void:
 	RunData.is_in_shop = true
 	
-	StaticAudioM.play_sound_varied(preload("res://assets/sfx/hover.ogg"), -0.4, +5)
+	StaticAudioM.play_sound_varied(preload("res://assets/sfx/hover.ogg"), -0.4, +10)
 	
 	var tween : Tween = get_tree().create_tween().set_parallel(true).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_ignore_time_scale()
 	tween.tween_property(Engine, "time_scale", 0.01, 0.25)
@@ -33,10 +33,9 @@ func _on_close_button_pressed() -> void:
 	var tween : Tween = get_tree().create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_ignore_time_scale()
 	tween.tween_property(Engine, "time_scale", 1, 0.1)
 	tween.tween_property($Control, "modulate", Color.TRANSPARENT, 0.1)
+	tween.set_parallel(false).tween_callback(UIManager.pop_layer)
 	await tween.finished
-	hide()
 	RunData.is_in_shop = false
-	get_tree().paused = false
 
 static func new_upgrade_layer() -> UpgradesLayer:
 	return load(UPGRADES_LAYER).instantiate()

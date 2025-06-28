@@ -12,5 +12,6 @@ func _on_menu_button_pressed() -> void:
 
 func _on_continue_button_pressed() -> void:
 	UIManager.pop_layer()
+	#get_tree().paused = false
 	#get_parent().remove_child(self)
 	#self.queue_free()

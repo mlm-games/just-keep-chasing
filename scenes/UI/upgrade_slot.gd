@@ -9,6 +9,10 @@ var panel_entered : bool = false
 var hover_tween: Tween
 var hover_scale := Vector2(1.1, 1.1)
 var original_scale := scale
+var bought := false:
+	set(val): if val == true:
+		panel.mouse_entered.disconnect(_on_panel_mouse_entered)
+		panel.mouse_exited.disconnect(_on_panel_mouse_exited)
 
 @onready var texture_rect: TextureRect = %TextureRect
 @onready var upgrade_label: Label = %UpgradeLabel
@@ -56,7 +60,7 @@ func _set_visuals_from_rarity():
 	# panel.add_theme_stylebox_override("panel", load("res://.../rare_panel_style.tres"))
 	
 func _update_buyable_state():
-	var can_afford = RunData.research_points >= final_price
+	var can_afford = RunData.research_points >= final_price + CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD)
 	set_process_input(can_afford) # Only allow input if it can be bought
 	
 	if can_afford:
@@ -82,12 +86,12 @@ func buy_augment():
 	_play_purchase_animation()
 
 func _play_purchase_animation():
-	set_process_input(false) # Prevent further clicks
-	var tween = create_tween().set_parallel().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK).set_ignore_time_scale()
+	set_process_input(false)
+	var tween = create_tween().set_parallel().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK).set_ignore_time_scale().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	tween.tween_property(self, "scale", Vector2.ZERO, 0.3)
 	tween.tween_property(self, "modulate:a", 0.0, 0.3)
 	
-	# UIAudioManager.play_purchase_sound() # Example
+	UiAudioM.play_ui_sound(preload("res://assets/sfx/open_002.ogg")) # Example
 	
 	await tween.finished
 	queue_free()
@@ -95,7 +99,7 @@ func _play_purchase_animation():
 func _on_mouse_entered():
 	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_ignore_time_scale()
 	tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.15)
-	# UIAudioManager.play_hover_sound()
+	UiAudioM.play_hover_sound()
 
 func _on_mouse_exited():
 	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_ignore_time_scale()
@@ -144,9 +148,6 @@ func _on_panel_mouse_entered() -> void:
 	# Fixme: Play hover sound
 	#AudioManager.play_sfx("hover")
 	
-	var content = TooltipContent.new()
-	content.text = tooltip_text
-	TooltipManager.show_tooltip(content, self)
 
 func _on_panel_mouse_exited() -> void:
 	panel_entered = false
@@ -166,20 +167,21 @@ func buy_if_rich_enough() -> void:
 	if RunData.research_points - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD) >= final_price:
 		GameState.apply_augment(augment)
 		# Increase the price multiplier after purchase
-		RunData.price_multiplier *= (2 + RunData.price_increase_rate)
+		RunData.price_multiplier *= (1.25 + RunData.price_increase_rate)
 		RunData.research_points -= final_price
-		
+		bought = true
+		var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_ignore_time_scale().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+		tween.tween_property(self, "scale", Vector2.ZERO, 0.25)
 		#CountStats.augment_items_collection_stats[augment.get_class() + " " + augment.resource_name] += 1
-		
-		queue_free()
+		UiAudioM.play_ui_sound(preload("res://assets/sfx/open_002.ogg"))
+		tween.tween_callback(queue_free)
 
 
 func _input(event: InputEvent) -> void:
 	if panel_entered and event.is_pressed():
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-			# Click anim when unbuyable
 			var click_tween : Tween = create_tween()
-			click_tween.set_trans(Tween.TRANS_CUBIC)
+			click_tween.set_trans(Tween.TRANS_BOUNCE)
 			click_tween.set_ease(Tween.EASE_OUT).set_ignore_time_scale()
 			click_tween.tween_property(self, "scale", original_scale * 0.95, 0.1)
 			click_tween.tween_property(self, "scale", hover_scale, 0.1)

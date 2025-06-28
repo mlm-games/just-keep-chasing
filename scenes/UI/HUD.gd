@@ -38,7 +38,7 @@ var progress_bar_tween: Tween
 
 func update_progress_bar(new_amount: int) -> void:
 	var progress = minf(float(new_amount) / RunData.upgrade_shop_spawn_divisor, 1.0)
-	var tween = create_tween().set_ease(Tween.EASE_OUT)
+	var tween = create_tween().set_ease(Tween.EASE_OUT).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_ignore_time_scale()
 	tween.tween_property(next_upgrade_bar, "value", progress, 0.3)
 
 
