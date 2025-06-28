@@ -51,7 +51,7 @@ func damage(attack: Attack) -> void:
 		RunData.world.add_child(DamageNumbers.new_damage_text(final_damage, parent_node.global_position))
 	
 	taking_damage.emit()
-	knockback_requested.emit(attack.knockback_force, attack.knockback_duration)
+	knockback_requested.emit(attack.knockback_force * attack.knockback_direction, attack.stun_duration)
 	health_changed.emit(current_health)
 	
 	if current_health <= 0:

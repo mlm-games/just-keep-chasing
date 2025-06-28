@@ -10,6 +10,8 @@ class_name ProjectileData extends Resource
 @export var projectile_dot_type : GameState.StatusEffectType = 0
 @export var projectile_aoe_data : AreaOfEffectAttack
 @export var projectile_max_pierce_count: int = 1
+@export var projectile_knockback_force: float = 0.0
+@export var projectile_stun_duration: float = 0.0
 
 @export_group("Sprite Properties", "sprite_")
 @export var sprite_scale : Vector2 = Vector2(0.06, 0.17)

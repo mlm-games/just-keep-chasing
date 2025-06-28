@@ -19,6 +19,6 @@ func dot(attack: Attack) -> void:
 	if health_component:
 		health_component.dot(attack)
 
-func apply_knockback(direction: Vector2, force: float, knockback_duration: float) -> void:
+func apply_knockback(direction: Vector2, force: float, stun_duration: float) -> void:
 	if !parent: parent = get_parent()
-	parent.apply_knockback(direction, force, knockback_duration)
+	parent.apply_knockback(direction, force, stun_duration)

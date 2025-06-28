@@ -48,6 +48,9 @@ func _physics_process(delta: float) -> void:
 func _on_area_entered(body: Node2D) -> void:
 	if body is HitboxComponent:
 		attack.attack_damage = projectile_data.projectile_damage
+		attack.knockback_force = projectile_data.projectile_knockback_force
+		attack.stun_duration = projectile_data.projectile_stun_duration
+		attack.knockback_direction = direction
 		
 		body.apply_knockback(direction, 10, 0.2)
 		if not is_zero_approx(projectile_data.projectile_dot):

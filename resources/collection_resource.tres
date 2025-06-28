@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CollectionResource" load_steps=33 format=3]
+[gd_resource type="Resource" script_class="CollectionResource" load_steps=34 format=3]
 
 [ext_resource type="Resource" path="res://resources/augments/basic_repair.tres" id="1_51ty7"]
 [ext_resource type="Resource" path="res://resources/augments/bullet_buffer.tres" id="2_21i0v"]
@@ -27,6 +27,7 @@
 [ext_resource type="Resource" path="res://resources/guns/pump_action_shotgun.tres" id="19_w56ut"]
 [ext_resource type="Resource" path="res://resources/guns/rocket_launcher.tres" id="20_lo8vq"]
 [ext_resource type="Resource" path="res://resources/guns/sniper.tres" id="21_lwfym"]
+[ext_resource type="Resource" path="res://resources/guns/debug_killer_action_shotgun.tres" id="22_ohxkr"]
 [ext_resource type="Resource" path="res://resources/powerups/heal_powerup.tres" id="22_twkyw"]
 [ext_resource type="Resource" path="res://resources/powerups/screen_blast_powerup.tres" id="23_3p302"]
 [ext_resource type="Resource" path="res://resources/powerups/slow_time_powerup.tres" id="24_hnllu"]
@@ -67,6 +68,7 @@ powerups = Dictionary[StringName, Variant]({
 guns = Dictionary[StringName, Variant]({
 &"birdshot_shotgun": ExtResource("14_g5768"),
 &"buckshot_shotgun": ExtResource("15_j07jx"),
+&"debug_killer_action_shotgun": ExtResource("22_ohxkr"),
 &"double_barrel_shotgun": ExtResource("16_ix4pa"),
 &"machine_gun": ExtResource("17_m02nr"),
 &"pistol": ExtResource("18_7l2tv"),
