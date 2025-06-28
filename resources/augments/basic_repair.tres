@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Augments" load_steps=6 format=3 uid="uid://dwyjyfw01chxg"]
+[gd_resource type="Resource" script_class="AugmentsData" load_steps=6 format=3 uid="uid://dwyjyfw01chxg"]
 
 [ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/sprites/heal_powerup.png" id="1_m5far"]
 [ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="2_53ewh"]
@@ -22,7 +22,10 @@ duration = 0.0
 script = ExtResource("2_53ewh")
 augment_icon = ExtResource("1_m5far")
 augment_price = 10
+rarity = 0
 stats_to_modify = Array[ExtResource("3_itdj1")]([SubResource("Resource_hmhfi"), SubResource("Resource_aveke")])
+auto_generate_description = true
+custom_description = ""
 id = null
 local_to_scene = false
 enabled = true

@@ -2,7 +2,7 @@ class_name UpgradesLayer extends CanvasLayer
 
 const UpgradeScenePath = "uid://dq2rptl6lv3tc"
 const UPGRADES_LAYER = "uid://24v2w4t8hgkl"
-@onready var hud : HUD = get_tree().get_first_node_in_group("HUD")
+@onready var hud : HUD = RunData.hud
 @onready var upgrade_slots_to_add_below_node: Control = %SpacerControl2
 
 func _ready() -> void:

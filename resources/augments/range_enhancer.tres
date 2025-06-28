@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://vkrfjwuxjcky"]
+[gd_resource type="Resource" script_class="AugmentsData" load_steps=5 format=3 uid="uid://vkrfjwuxjcky"]
 
-[ext_resource type="Texture2D" uid="uid://byg2ihb05tf4" path="res://assets/sprites/og_background_pic.png" id="1_33m5x"]
+[ext_resource type="Texture2D" uid="uid://c18bf3a6guoxf" path="res://assets/sprites/augments/range-enhancer.svg" id="1_33m5x"]
 [ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="1_xk0ku"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_33m5x"]
 
@@ -16,8 +16,10 @@ metadata/_custom_type_script = ExtResource("2_33m5x")
 script = ExtResource("1_xk0ku")
 augment_icon = ExtResource("1_33m5x")
 augment_price = 24
-stats_to_modify = Array[ExtResource("2_33m5x")]([SubResource("Resource_xk0ku")])
 rarity = 1.0
+stats_to_modify = Array[ExtResource("2_33m5x")]([SubResource("Resource_xk0ku")])
+auto_generate_description = true
+custom_description = ""
 id = ""
 local_to_scene = false
 enabled = true

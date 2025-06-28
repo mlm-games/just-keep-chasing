@@ -166,7 +166,7 @@ func buy_if_rich_enough() -> void:
 	if RunData.research_points - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD) >= final_price:
 		GameState.apply_augment(augment)
 		# Increase the price multiplier after purchase
-		RunData.price_multiplier *= (1 + RunData.price_increase_rate)
+		RunData.price_multiplier *= (2 + RunData.price_increase_rate)
 		RunData.research_points -= final_price
 		
 		#CountStats.augment_items_collection_stats[augment.get_class() + " " + augment.resource_name] += 1

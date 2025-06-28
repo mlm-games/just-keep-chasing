@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://dbhqk1tq5grf8"]
+[gd_resource type="Resource" script_class="AugmentsData" load_steps=5 format=3 uid="uid://dbhqk1tq5grf8"]
 
 [ext_resource type="Texture2D" uid="uid://bwn1fetdqmm3c" path="res://assets/sprites/immuno-booster.svg" id="1_e4qs5"]
 [ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="2_1auth"]
@@ -15,8 +15,10 @@ duration = 0.0
 script = ExtResource("2_1auth")
 augment_icon = ExtResource("1_e4qs5")
 augment_price = 15
-stats_to_modify = Array[ExtResource("3_aaedq")]([SubResource("Resource_3ju77")])
 rarity = 1.0
+stats_to_modify = Array[ExtResource("3_aaedq")]([SubResource("Resource_3ju77")])
+auto_generate_description = true
+custom_description = ""
 id = null
 local_to_scene = false
 enabled = true

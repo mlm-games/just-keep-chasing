@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://dfa7mnmd8k67j"]
+[gd_resource type="Resource" script_class="AugmentsData" load_steps=5 format=3 uid="uid://dfa7mnmd8k67j"]
 
 [ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="1_nfj5v"]
 [ext_resource type="Texture2D" uid="uid://qxnxnrjoe7x3" path="res://assets/sprites/trigger_eyepod.svg" id="1_ygoqw"]
@@ -16,8 +16,10 @@ metadata/_custom_type_script = ExtResource("2_ygoqw")
 script = ExtResource("1_nfj5v")
 augment_icon = ExtResource("1_ygoqw")
 augment_price = 100
+rarity = 4
 stats_to_modify = Array[ExtResource("2_ygoqw")]([SubResource("Resource_1sb3c")])
-rarity = 0.1
+auto_generate_description = true
+custom_description = ""
 id = ""
 local_to_scene = false
 enabled = true

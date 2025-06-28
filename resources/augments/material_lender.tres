@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Augments" load_steps=5 format=3 uid="uid://h6641yt2noof"]
+[gd_resource type="Resource" script_class="AugmentsData" load_steps=5 format=3 uid="uid://h6641yt2noof"]
 
 [ext_resource type="Texture2D" uid="uid://1r3wv2gwfpw6" path="res://assets/sprites/change_gun.png" id="1_34msf"]
 [ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="1_xf436"]
@@ -16,8 +16,10 @@ metadata/_custom_type_script = ExtResource("2_34msf")
 script = ExtResource("1_xf436")
 augment_icon = ExtResource("1_34msf")
 augment_price = 5
-stats_to_modify = Array[ExtResource("2_34msf")]([SubResource("Resource_34msf")])
 rarity = 1.0
+stats_to_modify = Array[ExtResource("2_34msf")]([SubResource("Resource_34msf")])
+auto_generate_description = true
+custom_description = ""
 id = ""
 local_to_scene = false
 enabled = true
