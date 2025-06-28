@@ -19,6 +19,7 @@ projectile_dot_duration = 0.0
 projectile_dot_type = 0
 projectile_max_pierce_count = 1
 projectile_knockback_force = 0.0
+projectile_stun_duration = 0.0
 sprite_scale = Vector2(0.12, 0.04)
 sprite_modulate = Color(1, 1, 0, 1)
 sprite_texture = ExtResource("2_xxnb8")

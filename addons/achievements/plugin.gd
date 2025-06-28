@@ -38,9 +38,9 @@ func _enter_tree() -> void:
 	add_autoload_singleton(SETTINGS_BASE.to_pascal_case(), "res://addons/achievements/achievements.tscn")
 
 
-func _exit_tree() -> void:
-	remove_autoload_singleton(SETTINGS_BASE.to_pascal_case())
-	_remove_settings()
+#func _exit_tree() -> void:
+	#remove_autoload_singleton(SETTINGS_BASE.to_pascal_case())
+	#_remove_settings()
 
 
 func _setup_settings() -> void:
