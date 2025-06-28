@@ -45,6 +45,12 @@ SettingsManager="*res://addons/basic_settings_menu/settings_manager.gd"
 PauseMenu="*res://addons/my_ecosystem_template/pause-menu/pause_menu.tscn"
 SettingsApplier="*res://addons/basic_settings_menu/settings_applier.gd"
 StaticAudioM="*res://addons/my_ecosystem_template/autoloads/static_audio_manager.gd"
+BasicAchievements="*res://addons/achievements/achievements.tscn"
+
+[basic_achievements]
+
+achievements/local_source="res://resources/achievements"
+achievements/save_directory="user://achievements"
 
 [category]
 

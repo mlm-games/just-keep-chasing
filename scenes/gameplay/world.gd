@@ -118,8 +118,7 @@ func time_based_enemy_type_changer() -> void:
 				#CharacterStats.modify_stat(CharacterStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION, CharacterStats.Operation.ADD, -0.1)
 
 func _process(delta: float) -> void:
-	pass
-	#time_based_enemy_type_changer()
+	time_based_enemy_type_changer()
 
 func _on_powerup_spawn_timer_timeout() -> void:
 	powerup_spawn_timer.start()
