@@ -41,7 +41,7 @@ static func spawn_particles(particle_scene: PackedScene, global_pos: Vector2, pa
 ## [param global_pos]: The global position where the number should appear.
 ##[br]
 ## [param color]: The [Color] of the number text.
-static func spawn_damage_number(amount: int, global_pos: Vector2, color: Color = Color.WHITE) -> void:
+static func spawn_damage_number(amount: int, global_pos: Vector2, color: Color = Color.WHITE, max_spread: float = 90) -> void:
 	var label = Label.new()
 	label.text = str(amount)
 	label.add_theme_color_override("font_color", color)
@@ -50,9 +50,9 @@ static func spawn_damage_number(amount: int, global_pos: Vector2, color: Color =
 	Engine.get_main_loop().current_scene.add_child(label)
 	label.global_position = global_pos
 	
-	var tween = label.create_tween()
+	var tween = label.create_tween().set_ease(randi_range(0, 3)).set_trans(randi_range(0, 10))  #Tween.TRANS_SPRING)
 	tween.set_parallel()
-	tween.tween_property(label, "position:y", label.position.y - 50, 1.0)
+	tween.tween_property(label, "position", Vector2(label.position.x + randf_range(-max_spread, max_spread) , label.position.y - 50), 1.0)
 	tween.tween_property(label, "modulate:a", 0.0, 1.0)
 	tween.finished.connect(label.queue_free)
 

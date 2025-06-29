@@ -63,12 +63,12 @@ func _ready() -> void:
 	RunData.reset()
 	_on_autoscroll_timer_timeout()
 	RunData.time_updated.connect(_on_elapsed_time_updated)
-	RunData.research_points_updated.connect(_on_research_points_changed)
+	RunData.mito_energy_updated.connect(_on_mito_energy_changed)
 	
 	RunData.spawnable_enemies = CollectionManager.get_enemy_dict_by_spawn_order()
 
 
-func _on_research_points_changed(new_amount: int):
+func _on_mito_energy_changed(new_amount: int):
 	# Check if it's time to show the upgrade shop
 	if new_amount >= RunData.upgrade_shop_spawn_divisor and not RunData.is_in_shop:
 		RunData.upgrade_shop_spawn_divisor += 10 + (10 * (RunData.elapsed_time * 0.001))

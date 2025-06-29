@@ -36,7 +36,7 @@ func set_data_values() -> void:
 		
 	health_component.initialize(enemy_data_resource.base_health)
 	contact_attack_damage = enemy_data_resource.base_contact_damage
-	research_point_value = enemy_data_resource.research_point_value
+	mito_energy_value = enemy_data_resource.mito_energy_value
 	#velocity_component.max_speed = enemy_data_resource.base_speed
 	
 	scale = enemy_data_resource.character_scale
@@ -78,7 +78,7 @@ func _on_hitbox_component_area_exited(area: Area2D) -> void:
 		can_deal_damage = false
 
 func _on_health_component_entity_died() -> void:
-	DropsSpawner.emit_research_points(global_position, research_point_value)
+	DropsSpawner.emit_mito_energy(global_position, mito_energy_value)
 	## NOTE: The AnimationComponent now handles the queue_free() after the death anim.
 	animation_component.on_entity_died()
 	

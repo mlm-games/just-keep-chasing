@@ -2,7 +2,7 @@
 extends Node
 
 signal time_updated(seconds: int)
-signal research_points_updated(amount: int)
+signal mito_energy_updated(amount: int)
 signal in_shop_changed(is_in_shop: bool)
 
 var is_in_shop : bool = false:
@@ -26,10 +26,10 @@ var elapsed_time: int = 0:
 		time_updated.emit(elapsed_time)
 		#if world: world.time_based_enemy_type_changer()
 
-var research_points: int = 0:
+var mito_energy: int = 0:
 	set(val):
-		research_points = val
-		research_points_updated.emit(research_points)
+		mito_energy = val
+		mito_energy_updated.emit(mito_energy)
 		#world.hud.update_currency_label()
 		#world.hud.update_progress_bar(val)
 
@@ -41,7 +41,7 @@ var upgrade_shop_spawn_divisor: float = 5.0
 
 func reset():
 	elapsed_time = 0
-	research_points = 0
+	mito_energy = 0
 	upgrade_shop_spawn_divisor = 5.0
 	price_multiplier = 0.3
 	price_increase_rate = 0.07

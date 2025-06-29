@@ -65,7 +65,7 @@ func _set_visuals_from_rarity():
 	# panel.add_theme_stylebox_override("panel", load("res://.../rare_panel_style.tres"))
 	
 func _update_buyable_state():
-	var can_afford = RunData.research_points >= final_price + CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD)
+	var can_afford = RunData.mito_energy >= final_price + CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD)
 	set_process_input(can_afford) # Only allow input if it can be bought
 	
 	if can_afford:
@@ -81,9 +81,9 @@ func _gui_input(event: InputEvent):
 		accept_event() # Consume the input
 
 func buy_augment():
-	if RunData.research_points < final_price: return
+	if RunData.mito_energy < final_price: return
 
-	RunData.research_points -= final_price
+	RunData.mito_energy -= final_price
 	GameState.apply_augment(augment)
 	CountStats.increment_stat(augment, 1, CountStats.augment_items_collection_stats)
 
@@ -113,7 +113,7 @@ func _on_mouse_exited():
 
 func pick_augment_by_rarity() -> AugmentsData:
 	var all_augments = CollectionManager.all_augments.values()
-	var valid_augments = all_augments.filter(func(aug): return aug.augment_price * RunData.price_multiplier < RunData.research_points)
+	var valid_augments = all_augments.filter(func(aug): return aug.augment_price * RunData.price_multiplier < RunData.mito_energy)
 	
 	if valid_augments.is_empty():
 		# No buyable augments
@@ -133,7 +133,7 @@ func setup_slot() -> void:
 		red_out_unbuyable_slots()
 
 func red_out_unbuyable_slots() -> void:
-	if final_price > RunData.research_points - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD):
+	if final_price > RunData.mito_energy - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD):
 		CommonTweens.set_tweened_value(%PriceContainer, "modulate", Color(1.0, 0.333, 0.11))
 		CommonTweens.set_tweened_value(self, "modulate",Color(0.7, 0.7, 0.7)) # Dim the whole slot
 
@@ -169,11 +169,11 @@ func _on_panel_mouse_exited() -> void:
 	hover_tween.tween_property(self, "scale", original_scale, 0.1)
 
 func buy_if_rich_enough() -> void:
-	if RunData.research_points - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD) >= final_price:
+	if RunData.mito_energy - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD) >= final_price:
 		GameState.apply_augment(augment)
 		# Increase the price multiplier after purchase
 		RunData.price_multiplier *= (1.25 + RunData.price_increase_rate)
-		RunData.research_points -= final_price
+		RunData.mito_energy -= final_price
 		bought = true
 		var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_ignore_time_scale().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 		tween.tween_property(self, "scale", Vector2.ZERO, 0.25)

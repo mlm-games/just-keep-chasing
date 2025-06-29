@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://bk83oh4onda7n"]
+
+[ext_resource type="Script" uid="uid://cao033pj1ip8a" path="res://scenes/components/explosion_vfx.gd" id="1_8i7x2"]
+
+[sub_resource type="Gradient" id="Gradient_8i7x2"]
+offsets = PackedFloat32Array(0, 0.783784, 1)
+colors = PackedColorArray(0.839216, 0.792157, 0.321569, 1, 0.84682, 0.801987, 0.325649, 0.952703, 1, 1, 0.407843, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_13n3i"]
+gradient = SubResource("Gradient_8i7x2")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.839623, 0.165094)
+
+[sub_resource type="Gradient" id="Gradient_7rme3"]
+offsets = PackedFloat32Array(0, 0.346154, 0.692308, 1)
+colors = PackedColorArray(1, 1, 0, 1, 0.796516, 0.793766, 0.192382, 1, 1, 0.188235, 0, 1, 0.286275, 0.247059, 0.298039, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7aqhp"]
+gradient = SubResource("Gradient_7rme3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ati0o"]
+particle_flag_disable_z = true
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.0
+scale_max = 0.0
+color_ramp = SubResource("GradientTexture1D_7aqhp")
+
+[node name="ExplosionVFX" type="GPUParticles2D"]
+emitting = false
+amount = 50
+texture = SubResource("GradientTexture2D_13n3i")
+one_shot = true
+speed_scale = 1.5
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ati0o")
+script = ExtResource("1_8i7x2")

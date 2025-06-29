@@ -1,5 +1,5 @@
 # Purpose: A collectible research point that uses the 2D physics engine.
-class_name ResearchPoint extends RigidBody2D
+class_name MitoEnergy extends RigidBody2D
 
 @export var value: int = 1
 
@@ -27,8 +27,8 @@ func _on_pickup_area_body_entered(body: Node2D):
 func _on_body_entered(body: Node2D):
 	if body.is_in_group("Player"):
 		# Assuming the player has a method to add points
-		if body.has_method("collect_research_points"):
-			body.collect_research_points(value)
+		if body.has_method("collect_mito_energy"):
+			body.collect_mito_energy(value)
 		
 		# Play a collection sound/VFX here
 		queue_free()

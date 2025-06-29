@@ -15,7 +15,7 @@ var pop_up_on_screen : bool = false
 @onready var next_upgrade_bar: ProgressBar = %NextUpgradeBar
 
 func _ready() -> void:
-	RunData.research_points_updated.connect(func(val): update_currency_label(val); update_progress_bar(val))
+	RunData.mito_energy_updated.connect(func(val): update_currency_label(val); update_progress_bar(val))
 	RunData.time_updated.connect(func(val): update_timer_label(val); check_time_condition(val))
 	%GameTimer.timeout.connect(func(): RunData.elapsed_time += 1)
 
@@ -55,7 +55,7 @@ func update_currency_label(val: int) -> void:
 
 func check_time_condition(time:int) -> void:
 	#FIXME: Temp Upgrade condition, fix it later
-	if RunData.research_points / RunData.upgrade_shop_spawn_divisor > 1.0 and RunData.research_points != 0 and !GameState.is_in_shop:
+	if RunData.mito_energy / RunData.upgrade_shop_spawn_divisor > 1.0 and RunData.mito_energy != 0 and !GameState.is_in_shop:
 		RunData.upgrade_shop_spawn_divisor += 10 + (10 * (RunData.elapsed_time * 0.001))
 		#Hack: also some kind of sound for sure (in layer only)
 		add_child(UpgradesLayer.new_upgrade_layer())

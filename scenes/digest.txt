@@ -1555,7 +1555,7 @@ File: enemies/basic_slime.tres
 script = ExtResource("1_22qtp")
 base_enemy_scene = ExtResource("1_w6r45")
 base_contact_damage = 10.0
-research_point_value = 3
+mito_energy_value = 3
 enemy_spawn_chance = 1.0
 enemy_spawn_order = 2
 character_hitbox_shape_value = Vector2(44, 40)
@@ -1581,7 +1581,7 @@ class_name EnemyData extends BaseCharacterData
 @export var base_enemy_scene : PackedScene
 
 @export var base_contact_damage : float = 0
-@export var research_point_value : int = int(NAN)
+@export var mito_energy_value : int = int(NAN)
 @export var enemy_spawn_chance : float = 1
 @export var enemy_spawn_order : int = 1
 
@@ -1620,7 +1620,7 @@ File: enemies/evolved_slime.tres
 script = ExtResource("1_pgwt5")
 base_enemy_scene = ExtResource("1_3gtkh")
 base_contact_damage = 10.0
-research_point_value = 5
+mito_energy_value = 5
 enemy_spawn_chance = 0.75
 enemy_spawn_order = 3
 character_hitbox_shape_value = Vector2(44, 40)
@@ -1653,7 +1653,7 @@ File: enemies/gunner_slime.tres
 script = ExtResource("1_ijfsl")
 base_enemy_scene = ExtResource("1_ns0f3")
 base_contact_damage = 0.0
-research_point_value = 10
+mito_energy_value = 10
 enemy_spawn_chance = 0.25
 enemy_spawn_order = 4
 character_hitbox_shape_value = Vector2(44, 40)
@@ -1686,7 +1686,7 @@ File: enemies/phase_enemy.tres
 script = ExtResource("3_ams2n")
 base_enemy_scene = ExtResource("1_ywe2e")
 base_contact_damage = 20.0
-research_point_value = 5
+mito_energy_value = 5
 enemy_spawn_chance = 0.3
 enemy_spawn_order = 3
 character_hitbox_shape_value = Vector2(44, 40)
@@ -1717,7 +1717,7 @@ File: enemies/small_slime.tres
 script = ExtResource("1_e4fic")
 base_enemy_scene = ExtResource("1_c1m5j")
 base_contact_damage = 10.0
-research_point_value = 1
+mito_energy_value = 1
 enemy_spawn_chance = 1.0
 enemy_spawn_order = 1
 character_hitbox_shape_value = Vector2(44, 40)
@@ -1749,7 +1749,7 @@ File: enemies/spore_enemy.tres
 script = ExtResource("3_0sgli")
 base_enemy_scene = ExtResource("1_uurf7")
 base_contact_damage = 20.0
-research_point_value = 5
+mito_energy_value = 5
 enemy_spawn_chance = 0.3
 enemy_spawn_order = 3
 character_hitbox_shape_value = Vector2(44, 40)
@@ -1779,7 +1779,7 @@ File: enemies/tumor_cell.tres
 script = ExtResource("2_ysdfg")
 base_enemy_scene = ExtResource("1_ysdfg")
 base_contact_damage = 10.0
-research_point_value = 20
+mito_energy_value = 20
 enemy_spawn_chance = 1.0
 enemy_spawn_order = 3
 character_hitbox_shape_value = Vector2(44, 40)
@@ -1810,7 +1810,7 @@ File: enemies/virus.tres
 script = ExtResource("3_xqyaw")
 base_enemy_scene = ExtResource("1_qnoou")
 base_contact_damage = 5.0
-research_point_value = 1
+mito_energy_value = 1
 enemy_spawn_chance = 0.67
 enemy_spawn_order = 3
 character_hitbox_shape_value = Vector2(44, 40)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dva0ud3l80mos"]
 
-[ext_resource type="Script" uid="uid://cp1u1qlxvaksq" path="res://scenes/gameplay/research_points.gd" id="1_thgig"]
+[ext_resource type="Script" uid="uid://cp1u1qlxvaksq" path="res://scenes/gameplay/mito_energy.gd" id="1_thgig"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_faq61"]
 
@@ -9,7 +9,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_f7hnp"]
 radius = 23.0
 
-[node name="ResearchPoints" type="RigidBody2D"]
+[node name="MitoEnergy" type="RigidBody2D"]
 script = ExtResource("1_thgig")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

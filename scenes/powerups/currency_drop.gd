@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func collect() -> void:
 	StaticAudioM.play_sound_varied(preload("res://assets/sfx/hover.ogg"))
-	RunData.research_points += currency_value
+	RunData.mito_energy += currency_value
 	
 	CountStats.total_count_stats["essence_collected"] += currency_value
 	
