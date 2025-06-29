@@ -1,10 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://dq2rptl6lv3tc"]
+[gd_scene load_steps=11 format=3 uid="uid://dq2rptl6lv3tc"]
 
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="1_3i5ot"]
 [ext_resource type="Script" uid="uid://cqvofyt2rkhcc" path="res://scenes/UI/upgrade_slot.gd" id="1_dya2o"]
 [ext_resource type="PackedScene" uid="uid://dqnb688fw4wpi" path="res://scenes/UI/currency_label.tscn" id="1_o3l4u"]
 [ext_resource type="Texture2D" uid="uid://dmw0epi5dsppp" path="res://assets/sprites/heal_powerup.png" id="2_3bwd0"]
 [ext_resource type="LabelSettings" uid="uid://c6ucvvlfvsecr" path="res://resources/theme/item_name_label_settings.tres" id="2_071u4"]
+[ext_resource type="Shader" uid="uid://bjgmekwk3ka0q" path="res://resources/shaders/rarity_glow.gdshader" id="3_3i5ot"]
+[ext_resource type="Script" uid="uid://cnfh1rl7a17mv" path="res://addons/my_ecosystem_template/transitions/popup_animator.gd" id="7_unfms"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_unfms"]
+shader = ExtResource("3_3i5ot")
+shader_parameter/glow_color = Color(1, 1, 0.219608, 0.705882)
+shader_parameter/pulse_speed = 1.0
+shader_parameter/pulse_intensity = 0.1
 
 [sub_resource type="Gradient" id="Gradient_mw0f0"]
 
@@ -14,6 +22,7 @@ fill_from = Vector2(0.566038, 0.391509)
 fill_to = Vector2(0, 1)
 
 [node name="SlotContainer" type="MarginContainer"]
+process_mode = 3
 offset_right = 200.0
 offset_bottom = 260.0
 focus_mode = 2
@@ -43,6 +52,7 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_unfms")
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_vertical = 3
@@ -83,6 +93,12 @@ text = "5"
 horizontal_alignment = 1
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(142, 182)
 scale = Vector2(3.4375, 4.6875)
 texture = SubResource("GradientTexture2D_3i5ot")
+
+[node name="PopupAnimator" type="Node" parent="." node_paths=PackedStringArray("target_node")]
+script = ExtResource("7_unfms")
+target_node = NodePath("..")
+metadata/_custom_type_script = "uid://cnfh1rl7a17mv"

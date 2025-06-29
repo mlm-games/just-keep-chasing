@@ -1,8 +1,8 @@
 shader_type canvas_item;
 
 uniform vec4 glow_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
-uniform float pulse_speed: hint_range(0.0, 5.0) = 1.0;
-uniform float pulse_intensity: hint_range(0.0, 0.5) = 0.1;
+uniform float pulse_speed: hint_range(0.0, 5.0) = 2.0;
+uniform float pulse_intensity: hint_range(0.0, 0.5) = 0.3;
 
 void fragment() {
     vec4 texture_color = texture(TEXTURE, UV);

@@ -17,6 +17,7 @@ const DEFAULT_SETTINGS = [
 		"name": SETTINGS_BASE + "/achievements/save_directory",
 		"type": TYPE_STRING,
 		"hint": PROPERTY_HINT_DIR,
+		"hint_string": "",
 		"value": "user://achievements"
 	},
 	{
@@ -44,7 +45,7 @@ func _enter_tree() -> void:
 
 
 func _setup_settings() -> void:
-	for setting in DEFAULT_SETTINGS:
+	for setting: Dictionary in DEFAULT_SETTINGS:
 		if not ProjectSettings.has_setting(setting.name):
 			ProjectSettings.set_setting(setting.name, setting.value)
 
@@ -52,7 +53,7 @@ func _setup_settings() -> void:
 			"name": setting.name,
 			"type": setting.type,
 			"hint": setting.hint,
-			"hint_string": setting.hint_string
+			"hint_string": setting.hint_string if setting.has("hint_string") else ""
 		}
 		ProjectSettings.add_property_info(property_info)
 	

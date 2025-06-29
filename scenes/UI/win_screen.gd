@@ -4,10 +4,10 @@ class_name WinScreen extends Control
 
 
 func _ready():
-	ScreenEffects.transition("circleOut")
+	STransitions.transition("circleOut")
 
 func _on_menu_button_pressed() -> void:
-	ScreenEffects.change_scene_with_transition("uid://c2gocuhw2o7py")
+	STransitions.change_scene_with_transition("uid://c2gocuhw2o7py")
 
 
 func _on_continue_button_pressed() -> void:

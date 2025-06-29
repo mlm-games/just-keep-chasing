@@ -11,6 +11,8 @@ class_name PopupAnimator extends Node
 
 var _active_tween: Tween
 
+signal animated_in
+
 func _ready() -> void:
 	if not target_node:
 		target_node = get_parent()
@@ -33,13 +35,15 @@ func animate_in() -> void:
 	target_node.modulate = Color.TRANSPARENT
 	target_node.visible = true
 
-	_active_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	_active_tween = get_tree().create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_ignore_time_scale()
 
 	_active_tween.tween_property(target_node, "scale", Vector2.ONE, transition_duration)\
 		.set_trans(transition_type).set_ease(ease_type_in)
 		
 
 	_active_tween.parallel().tween_property(target_node, "modulate", Color.WHITE, transition_duration)
+	
+	_active_tween.tween_callback(animated_in.emit)
 
 func animate_out(on_finish: Callable = Callable()) -> void:
 	if _active_tween:

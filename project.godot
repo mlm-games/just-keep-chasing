@@ -31,7 +31,6 @@ config/icon="uid://duc0bvo61ljvv"
 
 [autoload]
 
-ScreenEffects="*res://scripts/autoloads/transitions.tscn"
 DebugShortcuts="*res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.tscn"
 GameState="*res://scripts/autoloads/game_state.gd"
 CharacterStats="*res://scripts/autoloads/character_stats.gd"
@@ -46,11 +45,14 @@ PauseMenu="*res://addons/my_ecosystem_template/pause-menu/pause_menu.tscn"
 SettingsApplier="*res://addons/basic_settings_menu/settings_applier.gd"
 StaticAudioM="*res://addons/my_ecosystem_template/autoloads/static_audio_manager.gd"
 BasicAchievements="*res://addons/achievements/achievements.tscn"
+STransitions="*res://addons/my_ecosystem_template/transitions/screen_transitions.tscn"
 
 [basic_achievements]
 
 achievements/local_source="res://resources/achievements"
 achievements/save_directory="user://achievements"
+achievements/save_file_name="achievements_save.dat"
+achievements/password="HEPBa4jUuAFvbgCe5ZVploDbMneGzU6p"
 
 [category]
 
@@ -59,6 +61,7 @@ property_name=1
 [debug]
 
 gdscript/warnings/unused_parameter=0
+gdscript/warnings/static_called_on_instance=0
 
 [display]
 

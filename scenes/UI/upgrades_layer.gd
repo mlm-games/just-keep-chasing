@@ -29,10 +29,14 @@ func red_out_unbuyable_slots() -> void:
 			slot.red_out_unbuyable_slots()
 
 func _on_close_button_pressed() -> void:
-	RunData.upgrade_shop_spawn_divisor += %OptionsContainer.get_child_count()
-	var tween : Tween = get_tree().create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_ignore_time_scale()
+	RunData.upgrade_shop_spawn_divisor += %OptionsContainer.get_child_count() / 2.0
+	var tween : Tween = get_tree().create_tween().set_parallel(true).set_ease(Tween.EASE_IN).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_ignore_time_scale()
 	tween.tween_property(Engine, "time_scale", 1, 0.1)
 	tween.tween_property($Control, "modulate", Color.TRANSPARENT, 0.1)
+	for slot in %OptionsContainer.get_children():
+		if slot is SlotContainer:
+			tween.tween_property(slot.point_light_2d, "energy", 0, 0.1)
+			tween.tween_property(slot, "scale", Vector2.ZERO, 0.1)
 	tween.set_parallel(false).tween_callback(UIManager.pop_layer)
 	await tween.finished
 	RunData.is_in_shop = false

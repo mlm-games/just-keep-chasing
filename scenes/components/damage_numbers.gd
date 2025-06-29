@@ -26,7 +26,7 @@ static func new_damage_text(damage: float, initial_global_position: Vector2, ani
 	var instance : DamageNumbers = DamageNumbersScene.instantiate()
 	instance.global_position = initial_global_position
 	
-	instance.text = str(int(ceil(damage)))
+	UIEffects.animate_number(instance, 0, (int(ceil(damage))))
 	var movement : Vector2 = Vector2.UP.rotated(randf_range(-spread/2, spread/2)) * DISTANCE
 	instance.pivot_offset = instance.size / 2
 	instance.scale += clamp(Vector2(damage/1000, damage/1000), Vector2.ONE/2,Vector2.ONE*3) 

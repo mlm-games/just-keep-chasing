@@ -46,9 +46,10 @@ func damage(attack: Attack) -> void:
 	current_health = max(0, current_health - final_damage)
 	
 	#TODO: move this to slime or base_enemy
-	if parent_node is SlimeEnemy:
+	if parent_node is BaseEnemy:
 		CountStats.increment_stat("damage_dealt", int(final_damage))
-		RunData.world.add_child(DamageNumbers.new_damage_text(final_damage, parent_node.global_position))
+		#RunData.world.add_child(DamageNumbers.new_damage_text(final_damage, parent_node.global_position))
+		VFXSpawner.spawn_damage_number(final_damage, parent_node.global_position)
 	
 	taking_damage.emit()
 	knockback_requested.emit(attack.knockback_force * attack.knockback_direction, attack.stun_duration)
@@ -110,7 +111,7 @@ func disable_for_secs(secs: float) -> void:
 	
 
 #func display_floating_dmg_numbers(dmg_val: float) -> void:
-	#var nos_instance := ScreenEffects.FLOATING_DAMAGE_TEXT.instantiate()
+	#var nos_instance := STransitions.FLOATING_DAMAGE_TEXT.instantiate()
 	#nos_instance.global_position = parent.global_position
 	#RunData.world.add_child(nos_instance)
 	#nos_instance.display(dmg_val)
@@ -125,8 +126,8 @@ func is_dead() -> bool:
 
 func shake(amount: float, duration: float):
 	pass
-	#ScreenEffects.shake(amount, duration)
+	#STransitions.shake(amount, duration)
 
 func flash_sprite(color: Color, duration: float):
 	pass
-	#ScreenEffects.flash_sprite(owner.sprite, color, duration)
+	#STransitions.flash_sprite(owner.sprite, color, duration)

@@ -25,17 +25,17 @@ func _ready() -> void:
 	%ExitButton.pressed.connect(_on_ExitButton_pressed)
 
 func _on_PlayButton_pressed() -> void:
-	ScreenEffects.transition("fadeToBlack", true)
-	await ScreenEffects.transition_player.animation_finished
+	STransitions.transition("fadeToBlack", true)
+	await STransitions.transition_player.animation_finished
+	STransitions.transition("circleOut", false, 1.5)
 	get_tree().change_scene_to_file(WorldScene)
-	ScreenEffects.transition("circleOut", false, 1.5)
 	#await get_tree().create_timer(0.01).timeout
 
 
 func _on_ExitButton_pressed() -> void:
 	# gently shutdown the game
-	ScreenEffects.transition()
-	await ScreenEffects.transition_player.animation_finished
+	STransitions.transition()
+	await STransitions.transition_player.animation_finished
 	get_tree().quit()
 
 
@@ -44,7 +44,7 @@ func _on_settings_button_pressed() -> void:
 
 
 func _on_achievements_button_pressed() -> void:
-	ScreenEffects.change_scene_with_transition(AchievementsScene)
+	STransitions.change_scene_with_transition(AchievementsScene)
 
 func run_title_anim() -> void:
 	tween = get_tree().create_tween().set_trans(Tween.TRANS_SINE).set_parallel()

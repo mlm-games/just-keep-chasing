@@ -82,7 +82,8 @@ func _state_enter(expect_transition:bool = false):
 				_active_state = _initial_state
 				_active_state._state_enter(false)
 		else:
-			push_warning("No initial state set for state '" + name + "'.")
+			pass
+			#push_warning("No initial state set for state '" + name + "'.")
 
 func _state_step():
 	super._state_step()

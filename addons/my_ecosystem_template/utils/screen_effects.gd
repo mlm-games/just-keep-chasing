@@ -88,10 +88,70 @@ static func flash_white(node: Node, duration: float = 0.1) -> void:
 ##[br][br]
 ## [codeblock lang=gdscript]
 ## async func _on_bullet_impact():
-##     ScreenEffects.freeze_frame(0.08)
+##     STransitions.freeze_frame(0.08)
 ##     # ...spawn explosion, deal damage, etc.
 ## [/codeblock]
 static func freeze_frame(duration: float = 0.05) -> void:
 	Engine.time_scale = 0.0
 	await Engine.get_main_loop().create_timer(duration, true, false, true).timeout
 	Engine.time_scale = 1.0
+
+
+## Others
+
+#hack: insert no of cycles formula/ use frequency instead of duration for another function called smooth screen shake?
+static func screen_shake(duration: float, amplitude: float, camera: Camera2D = Engine.get_main_loop().root.get_viewport().get_camera_2d()) -> void:
+	var tween : Tween =  Engine.get_main_loop().create_tween()
+	var original_position : Vector2 = camera.position
+	for i in range(int(duration * 60)):  # Assuming 60 FPS
+		var camera_offset : Vector2 = Vector2(randf() * amplitude * 2 - amplitude, 0)
+		tween.tween_property(camera, "position", original_position + camera_offset, 1.0 / 60)  # Tween for 1 frame
+	tween.tween_property(camera, "position", original_position, 1.0 / 60)  # Return to original position
+
+
+static func camera_shake(intensity: float = 1.5, duration: float = 1.5, decay: float = 3.0, camera: Camera2D =  Engine.get_main_loop().root.get_viewport().get_camera_2d()) -> void:
+	# Stop any existing shake tweens
+	if camera.has_meta("shake_tween") and camera.get_meta("shake_tween").is_valid():
+			camera.get_meta("shake_tween").kill()
+	
+	var tween : Tween =  Engine.get_main_loop().create_tween()
+	camera.set_meta("shake_tween", tween)
+	
+	var original_position := camera.position
+	var original_rotation := camera.rotation
+	
+	# This will be called by tween_method to update the camera shake
+	var shake_function := func(progress: float) -> void:
+		var remaining := 1.0 - progress
+		var current_intensity := intensity * pow(remaining, decay)
+		
+		if current_intensity > 0.01:
+			var cam_offset := Vector2(
+				intensity * 5.0 * current_intensity * randf_range(-1, 1),
+				intensity * 5.0 * current_intensity * randf_range(-1, 1)
+			)
+			var cam_rotation := 0.1 * intensity * current_intensity * randf_range(-1, 1)
+			
+			camera.position = original_position + cam_offset
+			camera.rotation = original_rotation + cam_rotation
+		else:
+			camera.position = original_position
+			camera.rotation = original_rotation
+	
+	#call our shake function over the duration
+	tween.tween_method(shake_function, 0.0, 1.0, duration)
+	
+	# Reset camera when done
+	tween.tween_callback(func() -> void:
+		camera.position = original_position
+		camera.rotation = original_rotation
+	)
+
+static func squash_simple(target: Object, x_force: float, y_force: float, duration: float = 0.3, trans_type: Tween.TransitionType = Tween.TRANS_QUAD, ) -> void:
+	var tween : Tween =  Engine.get_main_loop().create_tween()
+	# initial squash
+	tween.tween_property(target, "scale:x", 1 - x_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(target, "scale:y", 1 + y_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
+	# return to normal
+	tween.tween_property(target, "scale:x", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(target, "scale:y", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)

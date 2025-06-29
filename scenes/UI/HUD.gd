@@ -50,7 +50,7 @@ func update_timer_label(time: int) -> void:
 
 
 func update_currency_label(val: int) -> void:
-	currency_label.text = GameState.get_currency_bbcode() + str(val)
+	UIEffects.animate_number(currency_label, int(currency_label.text.trim_prefix(GameState.get_currency_bbcode())), val, GameState.get_currency_bbcode(), 0.1)
 
 
 func check_time_condition(time:int) -> void:

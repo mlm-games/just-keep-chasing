@@ -2,7 +2,7 @@ extends Node
 
 const SAVE_FILE_PATH = "user://count_stats.save"
  
-var total_count_stats : Dictionary[StringName, int] = {
+var total_count_stats : Dictionary[StringName, float] = {
 	"damage_dealt": 0,
 	"damage_taken": 0,
 	"enemies_killed": 0,
@@ -86,7 +86,7 @@ func load_stats() -> void:
 		file = null
 			
 		if data is Dictionary:
-			var loaded_stats : Dictionary[StringName, int] = data["total_count_stats"]
+			var loaded_stats : Dictionary[StringName, float] = data["total_count_stats"]
 			for key:String in loaded_stats:
 					if total_count_stats.has(key):
 							total_count_stats[key] = loaded_stats[key]

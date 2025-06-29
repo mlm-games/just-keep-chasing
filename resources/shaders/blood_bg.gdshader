@@ -33,7 +33,7 @@ float value_noise(vec2 p) {
     vec2 i = floor(p);
     vec2 f = fract(p);
     f = f * f * (3.0 - 2.0 * f); // Smoothstep
-    
+
     vec2 a = random(i);
     vec2 b = random(i + vec2(1.0, 0.0));
     vec2 c = random(i + vec2(0.0, 1.0));
@@ -65,11 +65,11 @@ void fragment() {
     // A separate, faster, and smaller noise layer for the cell-like blobs.
     vec2 cell_motion = vec2(-TIME * flow_speed * cell_speed_multiplier, 0);
     float cell_noise = value_noise((distorted_uv + cell_motion) * cell_scale);
-    
+
     // Use smoothstep to create hard-edged circles from the noise peaks.
     // 'cell_density' controls the cutoff point, determining how many cells appear.
     float cell_mask = smoothstep(1.0 - cell_density, 1.0 - (cell_density * 0.9), cell_noise);
-    
+
     // Mix the cells on top of the base color.
     vec3 final_color = mix(base_color, cell_color.rgb, cell_mask);
 
@@ -78,7 +78,7 @@ void fragment() {
     float dist_from_center = distance(UV, vec2(0.5));
     float vignette = smoothstep(vignette_smoothness, 0.2, dist_from_center);
     vignette = pow(vignette, vignette_intensity);
-    
+
     // Apply vignette and set the final color
     COLOR.rgb = final_color * vignette;
 }

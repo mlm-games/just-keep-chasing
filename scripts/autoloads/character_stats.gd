@@ -86,7 +86,7 @@ func modify_stat(stat_key: Stats, operation: Operation, value: float) -> void:
 	
 	#FIXME: Not possible, idk why it assigns a random stat definition for item_lend_threshold.
 	var stat : StatDefinition = _stats[stat_key]
-	var old_value : float = stat.current_value
+	var _old_value : float = stat.current_value
 	match operation:
 		Operation.ADD:
 			stat.current_value = clamp(stat.current_value + value, 

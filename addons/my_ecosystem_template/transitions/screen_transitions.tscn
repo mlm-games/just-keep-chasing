@@ -1,12 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://c7j5jqynag4uw"]
+[gd_scene load_steps=10 format=3 uid="uid://c7j5jqynag4uw"]
 
-[ext_resource type="Script" uid="uid://b13rnxpo5kt4b" path="res://scripts/autoloads/transitions.gd" id="1_mlxrt"]
-[ext_resource type="Shader" uid="uid://dnms5hsmipkyv" path="res://resources/shaders/circletransition.gdshader" id="2_bdbvc"]
+[ext_resource type="Script" uid="uid://b13rnxpo5kt4b" path="res://addons/my_ecosystem_template/transitions/screen_transitions.gd" id="1_mlxrt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t7n6f"]
-shader = ExtResource("2_bdbvc")
-shader_parameter/progress = 0.0
-shader_parameter/color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_8o81u"]
 length = 0.001
@@ -136,11 +132,6 @@ _data = {
 &"slightFlash": SubResource("Animation_qqa86")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fyb5o"]
-shader = ExtResource("2_bdbvc")
-shader_parameter/progress = 1.0
-shader_parameter/color = Color(0, 0, 0, 1)
-
 [node name="TransitionScreen" type="CanvasLayer"]
 process_mode = 3
 layer = 99
@@ -175,7 +166,6 @@ root_node = NodePath("../..")
 
 [node name="ShaderRect" type="ColorRect" parent="."]
 visible = false
-material = SubResource("ShaderMaterial_fyb5o")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

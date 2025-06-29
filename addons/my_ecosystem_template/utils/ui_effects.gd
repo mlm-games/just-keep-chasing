@@ -52,9 +52,9 @@ static func typewriter_effect(label: RichTextLabel, speed: float = 0.05) -> void
 ## [param to]: The integer value to count to.
 ##[br]
 ## [param duration]: The total time in seconds for the count animation.
-static func animate_number(label: Label, from: int, to: int, duration: float = 1.0) -> void:
-	var tween = label.create_tween()
-	tween.tween_method(func(value): label.text = str(int(value)), float(from), float(to), duration)
+static func animate_number(label: Variant, from: int, to: int, prefix_text: String = "" , duration: float = 0.1) -> void:
+	var tween = label.create_tween().set_ease(Tween.EASE_IN)
+	tween.tween_method(func(value): label.text = prefix_text + str(int(value)), float(from), float(to), duration)
 
 
 ## Creates a pulsing glow effect on a [Control] node using a shader.
@@ -73,12 +73,10 @@ static func pulse_glow(node: Control, color: Color = Color.WHITE, duration: floa
 	if not node.material or not node.material is ShaderMaterial:
 		push_warning("UIEffects.pulse_glow requires the node to have a ShaderMaterial.")
 		node.material = ShaderMaterial.new()
-		# Assumes you have a glow shader at this path
-		# node.material.shader = preload("res://shaders/ui_glow.gdshader")
+		node.material.shader = preload("res://addons/my_ecosystem_template/shaders/ui_glow.gdshader")
 		return
-
-	# This line is an example; your shader might have different parameter names.
-	# node.material.set_shader_parameter("glow_color", color)
+	
+	node.material.set_shader_parameter("glow_color", color)
 	
 	var tween = node.create_tween()
 	tween.set_loops()

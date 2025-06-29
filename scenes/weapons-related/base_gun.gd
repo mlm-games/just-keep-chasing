@@ -66,7 +66,7 @@ func spawn_bullet() -> void:
 				bullet_data.projectile_damage *= CharacterStats.get_stat(CharacterStats.Stats.GUN_ENEMY_DAMAGE_MULT)
 				#@warning_ignore("narrowing_conversion")
 				#bullet_data.projectile_range *= CharacterStats.get_stat(CharacterStats.Stats.GUN_ENEMY_TARGETTING_RANGE_MULT)
-			ScreenEffects.camera_shake(gun_data.screen_shake_amplitude, gun_data.fire_rate) 
+			StaticScreenEffects.camera_shake(gun_data.screen_shake_amplitude, gun_data.fire_rate) 
 			var bullet_instance : BaseProjectile = BaseProjectile.new_instance(bullet_data)
 			bullet_instance.global_position = bullet_spawn_point.global_position
 			bullet_instance.global_rotation_degrees = bullet_spawn_point.global_rotation_degrees + randf_range(-gun_data.bullet_spread, gun_data.bullet_spread)

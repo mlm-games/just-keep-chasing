@@ -19,6 +19,7 @@ var bought := false:
 @onready var price_container: RichTextLabel = %PriceContainer
 @onready var panel: PanelContainer = %Panel
 @onready var description_label: RichTextLabel = %DescriptionLabel
+@onready var point_light_2d: PointLight2D = %PointLight2D
 
 func _ready():
 	augment = pick_augment_by_rarity()
@@ -34,6 +35,10 @@ func _ready():
 	
 	pivot_offset = size/2
 	resized.connect(func(): pivot_offset = size/2)
+	
+	$PopupAnimator.animate_in()
+	await $PopupAnimator.animated_in
+	red_out_unbuyable_slots()
 
 func _setup_slot():
 	final_price = int(augment.augment_price * RunData.price_multiplier)
@@ -129,8 +134,8 @@ func setup_slot() -> void:
 
 func red_out_unbuyable_slots() -> void:
 	if final_price > RunData.research_points - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD):
-		%PriceContainer.modulate = Color(1.0, 0.333, 0.11)
-		modulate = Color(0.7, 0.7, 0.7) # Dim the whole slot
+		CommonTweens.set_tweened_value(%PriceContainer, "modulate", Color(1.0, 0.333, 0.11))
+		CommonTweens.set_tweened_value(self, "modulate",Color(0.7, 0.7, 0.7)) # Dim the whole slot
 
 func _on_panel_mouse_entered() -> void:
 	panel_entered = true

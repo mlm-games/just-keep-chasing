@@ -77,10 +77,10 @@ func _on_research_points_changed(new_amount: int):
 func _on_elapsed_time_updated(new_time: int):
 	# Win condition (temp)
 	if new_time == 300: #NOTE: Using >= causes it to show up every frame when continuing
-		ScreenEffects.transition("circleIn")
-		await ScreenEffects.transition_player.animation_finished
+		STransitions.transition("circleIn")
+		await STransitions.transition_player.animation_finished
 		UIManager.push_layer(load("uid://degok78oygxw3"))
-		ScreenEffects.transition("circleOut")
+		STransitions.transition("circleOut")
 		
 		## Stop timers so this only happens once
 		#%EnemySpawnTimer.stop()
@@ -203,9 +203,9 @@ func use_powerup(powerup_type: StringName) -> void:
 				else:
 					RunData.powerups[powerup_type] += 1
 			&"screen_blast_powerup":
-				ScreenEffects.transition("slightFlash")
+				STransitions.transition("slightFlash")
 				get_tree().call_group("On Screen Enemies", "queue_free")
-				ScreenEffects.screen_shake(1, 2.5)
+				STransitions.screen_shake(1, 2.5)
 			&"heal_powerup":
 				player.health_component.heal_or_damage(20)
 			&"temp_invincible_powerup":
