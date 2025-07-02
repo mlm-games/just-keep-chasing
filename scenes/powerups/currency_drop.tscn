@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://biich4lcrpmcr" path="res://assets/music/GUI_Sound_Effects_by_Lokif/positive.wav" id="3_imjud"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
-radius = 9.64
+radius = 21.095
 
 [sub_resource type="Gradient" id="Gradient_spd34"]
 interpolation_mode = 2

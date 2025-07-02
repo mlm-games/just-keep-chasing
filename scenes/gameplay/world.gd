@@ -66,6 +66,8 @@ func _ready() -> void:
 	RunData.mito_energy_updated.connect(_on_mito_energy_changed)
 	
 	RunData.spawnable_enemies = CollectionManager.get_enemy_dict_by_spawn_order()
+	
+	get_tree().root.focus_exited.connect(func(): if not PauseMenu.visible: PauseMenu.pause())
 
 
 func _on_mito_energy_changed(new_amount: int):

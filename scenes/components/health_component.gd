@@ -26,9 +26,9 @@ enum HealthModificationType {
 func _ready() -> void:
 	pass
 
-func initialize(new_max_health: float) -> void:
+func initialize(new_max_health: float, update_health : bool = true) -> void:
 	max_health = new_max_health
-	current_health = max_health
+	if update_health: current_health = max_health
 	
 	max_health_changed.emit(max_health)
 	health_changed.emit(current_health)

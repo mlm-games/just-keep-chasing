@@ -11,7 +11,7 @@ func _ready() -> void:
 	StaticAudioM.play_sound_varied(preload("res://assets/sfx/hover.ogg"), -0.4, +10)
 	
 	var tween : Tween = get_tree().create_tween().set_parallel(true).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_ignore_time_scale()
-	tween.tween_property(Engine, "time_scale", 0.01, 0.25)
+	#tween.tween_property(Engine, "time_scale", 0.01, 0.25)
 	tween.tween_property($Control, "modulate", Color.WHITE, 0.25)
 	for i in range(3):
 		var upgrade_slot : Node = load(UpgradeScenePath).instantiate()

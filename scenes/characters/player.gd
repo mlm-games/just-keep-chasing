@@ -53,6 +53,8 @@ func _physics_process(_delta: float) -> void:
 func _on_character_stat_changed(stat_key: CharacterStats.Stats, new_value: float):
 	if stat_key == CharacterStats.Stats.PLAYER_MAX_HEALTH:
 		update_max_health(new_value)
+	if stat_key == CharacterStats.Stats.PLAYER_HEALTH:
+		update_max_health(health_component.max_health)
 
 func _on_health_component_entity_died() -> void:
 	hide()
@@ -81,7 +83,7 @@ func _on_health_component_health_changed(new_health: float) -> void:
 	progress_bar.value = new_health
 
 func update_max_health(new_max_health: float) -> void:
-		health_component.initialize(new_max_health)
+		health_component.initialize(new_max_health, true)
 
 
 func _equip_gun(gun_data: GunData):

@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="AugmentsData" load_steps=7 format=3 uid="uid://riwfdvrsfj8j"]
+
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="1_8asw7"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_fyb45"]
+
+[sub_resource type="Gradient" id="Gradient_26p5d"]
+colors = PackedColorArray(0, 1, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gsylv"]
+gradient = SubResource("Gradient_26p5d")
+fill = 1
+fill_from = Vector2(0.52, 0.495)
+
+[sub_resource type="Resource" id="Resource_34msf"]
+script = ExtResource("2_fyb45")
+value = 1.05
+key = 0
+operation = 1
+duration = 0.0
+metadata/_custom_type_script = ExtResource("2_fyb45")
+
+[sub_resource type="Resource" id="Resource_8asw7"]
+script = ExtResource("2_fyb45")
+value = 100.0
+key = 1
+operation = 2
+duration = 0.0
+metadata/_custom_type_script = "uid://d2sqcjy2gnmwg"
+
+[resource]
+script = ExtResource("1_8asw7")
+augment_icon = SubResource("GradientTexture2D_gsylv")
+augment_price = 25
+rarity = 2
+stats_to_modify = Array[ExtResource("2_fyb45")]([SubResource("Resource_34msf"), SubResource("Resource_8asw7")])
+auto_generate_description = true
+custom_description = ""
+id = ""
+local_to_scene = false
+enabled = true

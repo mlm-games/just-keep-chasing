@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="ProjectileData" load_steps=8 format=3 uid="uid://cnp06ev13f5af"]
 
 [ext_resource type="Script" uid="uid://b6nld5qtnrfes" path="res://scenes/weapons-related/area_of_effect_attack.gd" id="1_7mxyb"]
-[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_sgvwu"]
 [ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_wlp51"]
+[ext_resource type="PackedScene" uid="uid://cg2df7bcomrg" path="res://scenes/weapons-related/rocket_projectile.tscn" id="1_x8bv4"]
 [ext_resource type="PackedScene" uid="uid://bk83oh4onda7n" path="res://scenes/components/explosion_vfx.tscn" id="2_x8bv4"]
 [ext_resource type="Texture2D" uid="uid://bs4majlyqdhvb" path="res://assets/sprites/projectiles/rocket.svg" id="3_lroq3"]
 [ext_resource type="PackedScene" uid="uid://rhergnlmde1y" path="res://scenes/components/bullet_spawn_particles.tscn" id="4_x8bv4"]
@@ -35,7 +35,7 @@ sprite_rotation = 0.0
 sprite_offset = Vector2(0, 0)
 collision_shape_radius = 9.0
 collision_shape_mask = 3
-base_scene = ExtResource("1_sgvwu")
+base_scene = ExtResource("1_x8bv4")
 spawn_particles = ExtResource("4_x8bv4")
 lifespan_time = 100.0
 metadata/_custom_type_script = "uid://cr3s7huv3l64s"

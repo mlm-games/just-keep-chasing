@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="CollectionResource" load_steps=34 format=3]
+[gd_resource type="Resource" script_class="CollectionResource" load_steps=36 format=3]
 
 [ext_resource type="Resource" path="res://resources/augments/basic_repair.tres" id="1_51ty7"]
 [ext_resource type="Resource" path="res://resources/augments/bullet_buffer.tres" id="2_21i0v"]
 [ext_resource type="Resource" path="res://resources/augments/immuno_boosters.tres" id="3_18ovc"]
 [ext_resource type="Resource" path="res://resources/augments/material_lender.tres" id="4_ega57"]
+[ext_resource type="Resource" path="res://resources/augments/mito_attractor.tres" id="5_52q21"]
 [ext_resource type="Resource" path="res://resources/augments/range_enhancer.tres" id="5_f63db"]
 [ext_resource type="Resource" path="res://resources/augments/spreadlock.tres" id="6_5d78j"]
 [ext_resource type="Resource" path="res://resources/augments/texo_card.tres" id="7_hecn4"]
+[ext_resource type="Resource" path="res://resources/augments/revitalize.tres" id="7_uwrhl"]
 [ext_resource type="Resource" path="res://resources/augments/ultra_texo_card.tres" id="8_ohxkr"]
 [ext_resource type="Resource" path="res://resources/enemies/basic_slime.tres" id="9_131m2"]
 [ext_resource type="Resource" path="res://resources/enemies/evolved_slime.tres" id="10_52q21"]
@@ -54,7 +56,9 @@ augments = Dictionary[StringName, Variant]({
 &"bullet_buffer": ExtResource("2_21i0v"),
 &"immuno_boosters": ExtResource("3_18ovc"),
 &"material_lender": ExtResource("4_ega57"),
+&"mito_attractor": ExtResource("5_52q21"),
 &"range_enhancer": ExtResource("5_f63db"),
+&"revitalize": ExtResource("7_uwrhl"),
 &"spreadlock": ExtResource("6_5d78j"),
 &"texo_card": ExtResource("7_hecn4"),
 &"ultra_texo_card": ExtResource("8_ohxkr")

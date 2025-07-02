@@ -52,7 +52,7 @@ func _on_area_entered(body: Node2D) -> void:
 		attack.stun_duration = projectile_data.projectile_stun_duration
 		attack.knockback_direction = direction
 		
-		body.apply_knockback(direction, 10, 0.2)
+		#body.apply_knockback(direction, 10, 0.2)
 		if not is_zero_approx(projectile_data.projectile_dot):
 			attack.dot_type = projectile_data.projectile_dot_type
 			attack.dot_duration = projectile_data.projectile_dot_duration

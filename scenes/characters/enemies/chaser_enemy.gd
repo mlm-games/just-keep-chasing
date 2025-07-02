@@ -12,9 +12,4 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	
-	if health_component.is_dead(): 
-		velocity_component.stop()
-		return
-	
 	follow_component.follow_target(velocity_component, enemy_data_resource.base_speed)
-	animation_component.update_movement(velocity_component.velocity)

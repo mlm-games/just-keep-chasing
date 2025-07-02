@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="AugmentsData" load_steps=5 format=3 uid="uid://dgn4tk367k3q3"]
+
+[ext_resource type="Texture2D" uid="uid://1r3wv2gwfpw6" path="res://assets/sprites/change_gun.png" id="1_v7kxq"]
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="2_jvim6"]
+[ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="3_8wyp4"]
+
+[sub_resource type="Resource" id="Resource_34msf"]
+script = ExtResource("3_8wyp4")
+value = -5.0
+key = 14
+operation = 0
+duration = 0.0
+metadata/_custom_type_script = ExtResource("3_8wyp4")
+
+[resource]
+script = ExtResource("2_jvim6")
+augment_icon = ExtResource("1_v7kxq")
+augment_price = 5
+rarity = 1.0
+stats_to_modify = Array[ExtResource("3_8wyp4")]([SubResource("Resource_34msf")])
+auto_generate_description = true
+custom_description = ""
+id = ""
+local_to_scene = false
+enabled = true

@@ -4,13 +4,14 @@ class_name RocketProjectile extends BaseProjectile
 func _on_area_entered(body: Node2D) -> void:
 	# Instead of dealing damage directly, we create an explosion
 	explode()
-	# The explosion will deal the damage, so the rocket itself doesn't need to.
+	# The explosion will deal the damage, so the rocket itself doesn't need to a lot.
 	queue_free()
 
 func explode():
 	# Spawn the visual effect
 	if projectile_data.projectile_aoe_data.explosion_vfx:
-		var vfx = projectile_data.projectile_aoe_data.explosion_vfx.instantiate()
+		var vfx : ExplosionVFX = projectile_data.projectile_aoe_data.explosion_vfx.instantiate()
+		vfx.aoe_data = projectile_data.projectile_aoe_data
 		RunData.projectile_root.add_child(vfx)
 		vfx.global_position = global_position
 
@@ -19,10 +20,12 @@ func explode():
 	var query = PhysicsShapeQueryParameters2D.new()
 	query.shape = CircleShape2D.new()
 	query.shape.radius = projectile_data.projectile_aoe_data.radius
+	query.collide_with_areas = true
 	query.transform = Transform2D(0, global_position)
 	query.collision_mask = self.collision_mask # Hit the same things the rocket would
 	
-	var hit_bodies = space_state.intersect_shape(query)
+	var hit_bodies := space_state.intersect_shape(query)
+	
 	
 	for hit in hit_bodies:
 		var body = hit.collider

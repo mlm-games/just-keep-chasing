@@ -59,6 +59,9 @@ func _physics_process(delta: float) -> void:
 	apply_contact_damage(delta)
 	if not health_component.is_dead():
 		animation_component.update_movement(velocity_component.velocity)
+	else:
+		velocity_component.stop()
+		return
 
 func apply_contact_damage(delta: float) -> void:
 	if can_deal_damage and player_hitbox:

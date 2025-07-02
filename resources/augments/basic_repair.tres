@@ -4,13 +4,6 @@
 [ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="2_53ewh"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="3_itdj1"]
 
-[sub_resource type="Resource" id="Resource_hmhfi"]
-script = ExtResource("3_itdj1")
-value = 5.0
-key = 0
-operation = 0
-duration = 0.0
-
 [sub_resource type="Resource" id="Resource_aveke"]
 script = ExtResource("3_itdj1")
 value = 20.0
@@ -18,12 +11,20 @@ key = 1
 operation = 0
 duration = 0.0
 
+[sub_resource type="Resource" id="Resource_m5far"]
+script = ExtResource("3_itdj1")
+value = 0.95
+key = 8
+operation = 1
+duration = 0.0
+metadata/_custom_type_script = "uid://d2sqcjy2gnmwg"
+
 [resource]
 script = ExtResource("2_53ewh")
 augment_icon = ExtResource("1_m5far")
 augment_price = 10
 rarity = 0
-stats_to_modify = Array[ExtResource("3_itdj1")]([SubResource("Resource_hmhfi"), SubResource("Resource_aveke")])
+stats_to_modify = Array[ExtResource("3_itdj1")]([SubResource("Resource_aveke"), SubResource("Resource_m5far")])
 auto_generate_description = true
 custom_description = ""
 id = null

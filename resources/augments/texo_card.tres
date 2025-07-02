@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_cd0ui"]
 script = ExtResource("2_pef1a")
-value = 0.98
+value = 0.85
 key = 8
 operation = 1
 duration = 0.0
