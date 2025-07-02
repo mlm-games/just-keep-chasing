@@ -53,7 +53,7 @@ This project is licensed under the GPL 3.0 only license - see the [LICENSE](LICE
 
 ## Acknowledgments
 
-- [Credits for any assets/resources used](credits.md) or viewable through the game too by clicking the credits button
+- [Credits for any assets/resources used](credits.md) (old, not updated) or viewable through the game (new) by clicking the credits button
 - And all the Contributors
 
 ---
