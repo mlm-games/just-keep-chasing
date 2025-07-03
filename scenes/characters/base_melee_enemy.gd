@@ -82,10 +82,12 @@ func _on_hitbox_component_area_exited(area: Area2D) -> void:
 
 func _on_health_component_entity_died() -> void:
 	DropsSpawner.emit_mito_energy(global_position, mito_energy_value)
-	## NOTE: The AnimationComponent now handles the queue_free() after the death anim.
-	animation_component.on_entity_died()
+	CountStats.increment_stat(CountStats.get_stat_key(enemy_data_resource), 1, CountStats.enemies_type_killed_stats)
 	
 
 	$CollisionShape2D.set_deferred("disabled", true)
 	hitbox_component.get_node("CollisionShape2D").set_deferred("disabled", true)
 	set_physics_process(false)
+	
+	animation_component.on_entity_died()
+	## NOTE: The AnimationComponent now handles the queue_free() after the death anim.

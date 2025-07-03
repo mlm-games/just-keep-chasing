@@ -25,21 +25,21 @@ resources_spreadsheet_view/resource_cell_label_mode=1
 config/name="Nanobot's Survival"
 config/description="You are an advanced AI nanobot and are tasked to kill some viruses in the human's body... whose pico guns can auto-fire without ur need but some are needed to be reloaded or their ammo box should be restocked..."
 config/version="0.0.1"
+config/tags=PackedStringArray("roguelike")
 run/main_scene="res://scenes/UI/menu.tscn"
 config/features=PackedStringArray("4.4")
 config/icon="uid://duc0bvo61ljvv"
-config/tags=PackedStringArray("roguelike")
 
 [autoload]
 
-DebugShortcuts="*res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.tscn"
 GameState="*res://scripts/autoloads/game_state.gd"
+CollectionManager="*res://scripts/autoloads/collection_manager.gd"
+DebugShortcuts="*res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.tscn"
 CharacterStats="*res://scripts/autoloads/character_stats.gd"
 CountStats="*res://scripts/autoloads/count_stats.gd"
 TooltipManager="*res://resources/misc/tooltip_manager.gd"
 UiAudioM="*res://addons/my_ecosystem_template/autoloads/ui_audio_manager.gd"
 RunData="*res://scripts/autoloads/run_data.gd"
-CollectionManager="*res://scripts/autoloads/collection_manager.gd"
 UIManager="*res://scripts/autoloads/ui_manager.gd"
 SettingsManager="*res://addons/basic_settings_menu/settings_manager.gd"
 PauseMenu="*res://addons/my_ecosystem_template/pause-menu/pause_menu.tscn"

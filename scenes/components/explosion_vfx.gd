@@ -17,3 +17,17 @@ func _ready():
 	speed_scale = 1.5
 	explosiveness = 1.0
 	one_shot = true
+	
+	animate_explosion()
+	
+
+
+func animate_explosion():
+	var tween = create_tween()
+	tween.tween_method(
+		func(value): set_instance_shader_parameter("ring_width", value),
+		0.5,
+		0.0,
+		lifetime
+	)
+	#tween.tween_callback(queue_free)

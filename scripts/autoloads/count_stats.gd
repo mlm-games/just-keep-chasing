@@ -39,12 +39,14 @@ func _init_dicts() -> void:
 	for powerup_type:PowerupData in CollectionManager.all_powerups.values():
 		powerup_collection_stats.get_or_add( CountStats.get_stat_key(powerup_type), 0)
 
-func increment_stat(stat_key: Variant, amount: int = 1, stat_dict: Dictionary = total_count_stats) -> void:
+func increment_stat(stat_key: StringName, amount: int = 1, stat_dict: Dictionary = total_count_stats) -> void:
 	if stat_dict.has(stat_key):
 		stat_dict[stat_key] += amount
 		stat_updated.emit(stat_key, stat_dict[stat_key])
 		
 		save_stats()
+	else:
+		push_error("Stat key doesnt exist: " + stat_key)
 
 signal stat_updated(stat_key: String, new_value: int)
 
@@ -64,10 +66,10 @@ func get_stat(stat_key: StringName) -> int:
 func save_stats() -> void:
 	var save_data := {
 		"total_count_stats": total_count_stats.duplicate(true),
-		"powerup_stats": _serialize_resource_dict(powerup_collection_stats),
-		"enemy_stats": _serialize_resource_dict(enemies_type_killed_stats),
-		"gun_stats": _serialize_resource_dict(guns_fired_by_type_stats),
-		"augment_stats": _serialize_resource_dict(augment_items_collection_stats)
+		"powerup_stats": powerup_collection_stats.duplicate(true),
+		"enemy_stats": enemies_type_killed_stats.duplicate(true),
+		"gun_stats": guns_fired_by_type_stats.duplicate(true),
+		"augment_stats": augment_items_collection_stats.duplicate(true)
 	}
 	
 	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
@@ -86,33 +88,33 @@ func load_stats() -> void:
 		file = null
 			
 		if data is Dictionary:
-			var loaded_stats : Dictionary[StringName, float] = data["total_count_stats"]
-			for key:String in loaded_stats:
-					if total_count_stats.has(key):
-							total_count_stats[key] = loaded_stats[key]
-			
+			for loaded_stats : Dictionary[StringName, float] in data:
+				for key:String in loaded_stats:
+						if total_count_stats.has(key):
+								total_count_stats[key] = loaded_stats[key]
+				
 			#TODO: Load resource-based stats
 	else:
 			push_error("Failed to load stats data: " + str(FileAccess.get_open_error()))
 
 
-static func _serialize_resource_dict(resource_dict: Dictionary) -> Dictionary:
-	var serialized := {}
-	
-	for resource:BaseData in resource_dict:
-			serialized[ResourceLoader.get_resource_uid(resource.resource_path)] = resource_dict[resource]
-			#print(ResourceUID.id_to_text(ResourceLoader.get_resource_uid(resource.resource_path)))
-	return serialized
-
-static func _deserialize_resource_dict(serialized_dict: Dictionary, target_dict: Dictionary, resource_collection: Dictionary) -> void:
-	for resource_uid_int in serialized_dict:
-		for resource:Resource in resource_collection.values():
-			
-			if ResourceLoader.get_resource_uid(resource.resource_path) == resource_uid_int:
-				target_dict[resource] = serialized_dict[resource_uid_int]
-				break
-			else:
-				printerr("Hi, click here for a suprise **")
+#static func _serialize_resource_dict(resource_dict: Dictionary) -> Dictionary:
+	#var serialized := {}
+	#
+	#for resource:BaseData in resource_dict:
+			#serialized[ResourceLoader.get_resource_uid(resource.resource_path)] = resource_dict[resource]
+			##print(ResourceUID.id_to_text(ResourceLoader.get_resource_uid(resource.resource_path)))
+	#return serialized
+#
+#static func _deserialize_resource_dict(serialized_dict: Dictionary, target_dict: Dictionary, resource_collection: Dictionary) -> void:
+	#for resource_uid_int in serialized_dict:
+		#for resource:Resource in resource_collection.values():
+			#
+			#if ResourceLoader.get_resource_uid(resource.resource_path) == resource_uid_int:
+				#target_dict[resource] = serialized_dict[resource_uid_int]
+				#break
+			#else:
+				#printerr("Hi, click here for a suprise **")
 
 func update_longest_run_time(current_time: int) -> void:
 	if current_time > total_count_stats["longest_run_time"]:
@@ -122,4 +124,7 @@ func update_longest_run_time(current_time: int) -> void:
 
 
 static func get_stat_key(data: BaseData) -> StringName:
-	return (data.get_class() + " " + data.resource_name)
+	#var res_class : StringName
+	#match data:
+		#data when data is AugmentsData: 
+	return (CollectionManager.get_resource_name(data))

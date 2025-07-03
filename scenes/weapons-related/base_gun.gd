@@ -48,8 +48,7 @@ func _physics_process(_delta: float) -> void:
 
 func spawn_bullet() -> void:
 	if ammo > 0:
-		#var stat_key : StringName = CountStats.get_stat_key(gun_data) #FIXME: How is this an resource? Unfixable lol bug in engine?
-		#CountStats.guns_fired_by_type_stats[stat_key] += 1
+		CountStats.guns_fired_by_type_stats[CountStats.get_stat_key(gun_data)] += 1
 		StaticAudioM.play_random_sound(gun_data.fire_audio)
 		
 		%Sprite2D.rotation_degrees = 0

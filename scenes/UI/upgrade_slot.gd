@@ -85,7 +85,7 @@ func buy_augment():
 
 	RunData.mito_energy -= final_price
 	GameState.apply_augment(augment)
-	CountStats.increment_stat(augment, 1, CountStats.augment_items_collection_stats)
+	CountStats.increment_stat(CountStats.get_stat_key(augment), 1, CountStats.augment_items_collection_stats)
 
 	# Play a satisfying purchase animation and sound
 	_play_purchase_animation()
@@ -177,7 +177,7 @@ func buy_if_rich_enough() -> void:
 		bought = true
 		var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_ignore_time_scale().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 		tween.tween_property(self, "scale", Vector2.ZERO, 0.25)
-		#CountStats.augment_items_collection_stats[augment.get_class() + " " + augment.resource_name] += 1
+		CountStats.increment_stat(CountStats.get_stat_key(augment), 1, CountStats.augment_items_collection_stats)
 		UiAudioM.play_ui_sound(preload("res://assets/sfx/open_002.ogg"))
 		tween.tween_callback(queue_free)
 

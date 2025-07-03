@@ -58,8 +58,14 @@ func get_enemy_dict_by_spawn_order() -> Dictionary[int, EnemyData]:
 		dict.get_or_add(enemy.enemy_spawn_order, enemy)
 	return dict
 
-static func get_resource_name(res: Resource):
+static func get_resource_name(res: Resource) -> StringName:
 	if res.resource_name != "":
 		return res.resource_name
 	
-	return res.resource_path.trim_suffix(".tres").split("/")[-1].trim_prefix("*/")
+	var res_name = res.resource_path.trim_suffix(".tres").split("/")[-1].trim_prefix("*/")
+	
+	if res_name != "":
+		return res_name
+	else:
+		push_error("Res path not present for resource")
+		return "temp"

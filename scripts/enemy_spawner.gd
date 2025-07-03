@@ -5,9 +5,10 @@ static func spawn_enemy(enemy_data: EnemyData, position: Vector2) -> Node2D:
 		push_error("EnemyData is missing a base scene: " + enemy_data.resource_path)
 		return null
 		
-	var enemy_instance = enemy_data.base_enemy_scene.instantiate()
+	var enemy_instance : BaseEnemy = enemy_data.base_enemy_scene.instantiate()
 	# The enemy's own _ready function handles the application of data.
 	enemy_instance.enemy_data_resource = enemy_data.duplicate(true)
+	enemy_instance.enemy_data_resource.resource_name = CollectionManager.get_resource_name(enemy_data)
 	enemy_instance.global_position = position
 	return enemy_instance
 
