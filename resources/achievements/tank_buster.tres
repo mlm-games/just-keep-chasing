@@ -10,5 +10,5 @@ reward = "Increases raw damage modifier by 10"
 count_goal = 5000.0
 stat_key = "armored_damage_dealt"
 is_secret = false
-is_active = true
+is_active = false
 metadata/_custom_type_script = "uid://dtyklwbxenibb"

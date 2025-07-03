@@ -23,8 +23,7 @@ func get_achievement(id: String) -> Achievement:
 func get_all_achievements() -> Array[Achievement]:
 	return achievements.values()
 
-
-func update_achievement(id: String, progress_increase: float) -> void:
+func update_achievement(id: String, progress: float) -> void:
 	var achievement := get_achievement(id)
 	if not achievement:
 		push_warning("Achievement System: Tried to update non-existent achievement with id: " + id)
@@ -33,7 +32,7 @@ func update_achievement(id: String, progress_increase: float) -> void:
 	if achievement.unlocked:
 		return
 
-	achievement.current_progress = min(achievement.current_progress + progress_increase, achievement.count_goal)
+	achievement.current_progress = min(progress, achievement.count_goal)
 	
 	if achievement.current_progress >= achievement.count_goal:
 		unlock_achievement(id)
@@ -157,3 +156,8 @@ func _get_save_path() -> String:
 func _check_all_achievements() -> void:
 	if unlocked_achievements.size() == achievements.size():
 		all_achievements_unlocked.emit()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		CountStats.request_save()

@@ -1,130 +1,165 @@
 extends Node
 
 const SAVE_FILE_PATH = "user://count_stats.save"
- 
-var total_count_stats : Dictionary[StringName, float] = {
-	"damage_dealt": 0,
-	"damage_taken": 0,
-	"enemies_killed": 0,
-	"powerups_used": 0,
-	"games_won": 0,
-	"games_played": 0,
-	"health_healed": 0,
-	"essence_collected": 0,
-	"longest_run_time": 0,
-	"bullets_fired": 0
+
+# Public property to control saving behavior from the Inspector.
+@export var save_on_exit := true
+
+# ("total", "powerups", etc...) are "categories"
+var _all_stats: Dictionary = {
+	"total": {
+		"damage_dealt": 0.0,
+		"damage_taken": 0.0,
+		"enemies_killed": 0,
+		"powerups_used": 0,
+		"games_won": 0,
+		"games_played": 0,
+		"health_healed": 0.0,
+		"mito_energy_collected": 0,
+		"longest_run_time": 0.0,
+		"bullets_fired": 0
+	},
+	"powerups": {},
+	"enemies": {},
+	"guns": {},
+	"augments": {}
 }
 
-var powerup_collection_stats : Dictionary[StringName, int] = {}
-var enemies_type_killed_stats : Dictionary[StringName, int] = {}
-var guns_fired_by_type_stats : Dictionary[StringName, int] = {}
-var augment_items_collection_stats : Dictionary[StringName, int] = {}
+#tracks if data has changed, preventing unnecessary disk writes.
+var _is_dirty := false
+
+signal stat_updated(stat_key: StringName, new_value: Variant)
 
 
 func _ready() -> void:
-	_init_dicts()
+	_initialize_dynamic_stats()
 	load_stats()
 
-## Auto adds the keys instead of manually having to change them everytime
-func _init_dicts() -> void:
-	for enemy_type:EnemyData in CollectionManager.all_enemies.values():
-		enemies_type_killed_stats.get_or_add( CountStats.get_stat_key(enemy_type), 0)
-	
-	for gun_type:GunData in CollectionManager.all_guns.values():
-		guns_fired_by_type_stats.get_or_add( CountStats.get_stat_key(gun_type), 0)
-	
-	for augment_type:AugmentsData in CollectionManager.all_augments.values():
-		augment_items_collection_stats.get_or_add( CountStats.get_stat_key(augment_type), 0)
-	
-	for powerup_type:PowerupData in CollectionManager.all_powerups.values():
-		powerup_collection_stats.get_or_add( CountStats.get_stat_key(powerup_type), 0)
 
-func increment_stat(stat_key: StringName, amount: int = 1, stat_dict: Dictionary = total_count_stats) -> void:
-	if stat_dict.has(stat_key):
-		stat_dict[stat_key] += amount
-		stat_updated.emit(stat_key, stat_dict[stat_key])
-		
-		save_stats()
-	else:
-		push_error("Stat key doesnt exist: " + stat_key)
+func _notification(what: int) -> void:
+	# Automatically save any changed data when the game window is closed.
+	if save_on_exit and what == NOTIFICATION_WM_CLOSE_REQUEST:
+		request_save()
 
-signal stat_updated(stat_key: String, new_value: int)
 
-func get_stat(stat_key: StringName) -> int:
-	#TODO: Doesnt work reliably, Change it later
-	if stat_key.contains("powerup") :
-		return powerup_collection_stats.get(stat_key, 0)
-	elif stat_key.contains("augment"):
-		return augment_items_collection_stats.get(stat_key, 0)
-	elif stat_key.contains("gun"):
-		return guns_fired_by_type_stats.get(stat_key, 0)
-	elif stat_key.contains("enemy"):
-		return enemies_type_killed_stats.get(stat_key, 0)
-	else:
-		return total_count_stats.get(stat_key, 0)
 
-func save_stats() -> void:
-	var save_data := {
-		"total_count_stats": total_count_stats.duplicate(true),
-		"powerup_stats": powerup_collection_stats.duplicate(true),
-		"enemy_stats": enemies_type_killed_stats.duplicate(true),
-		"gun_stats": guns_fired_by_type_stats.duplicate(true),
-		"augment_stats": augment_items_collection_stats.duplicate(true)
-	}
+# ensures even if a save file is old, all current items have a stat entry.
+func _initialize_dynamic_stats() -> void:
+	for enemy_type: EnemyData in CollectionManager.all_enemies.values():
+		var key = get_stat_key(enemy_type)
+		_all_stats.enemies[key] = 0
 	
+	for gun_type: GunData in CollectionManager.all_guns.values():
+		var key = get_stat_key(gun_type)
+		_all_stats.guns[key] = 0
+	
+	for augment_type: AugmentsData in CollectionManager.all_augments.values():
+		var key = get_stat_key(augment_type)
+		_all_stats.augments[key] = 0
+	
+	for powerup_type: PowerupData in CollectionManager.all_powerups.values():
+		var key = get_stat_key(powerup_type)
+		_all_stats.powerups[key] = 0
+
+
+## Call this from other scripts to trigger a save, e.g., when returning to the main menu.
+func request_save() -> void:
+	if _is_dirty:
+		_save_to_disk()
+		_is_dirty = false # Reset the flag after saving.
+
+
+## Increments a stat by a given amount.
+## Finds the stat automatically across all categories.
+func increment_stat(stat_key: StringName, amount: Variant = 1) -> void:
+	for category in _all_stats.values():
+		if category.has(stat_key):
+			category[stat_key] += amount
+			stat_updated.emit(stat_key, category[stat_key])
+			_is_dirty = true # Mark that we have unsaved changes.
+			return
+	
+	push_error("Attempted to increment a non-existent stat key: %s" % stat_key)
+
+
+## Sets a stat to a specific value. Useful for things like "longest_run_time".
+func set_stat(stat_key: StringName, value: Variant) -> void:
+	for category in _all_stats.values():
+		if category.has(stat_key):
+			# Only update and mark as dirty if the value actually changes.
+			if category[stat_key] != value:
+				category[stat_key] = value
+				stat_updated.emit(stat_key, value)
+				_is_dirty = true
+			return
+			
+	push_error("Attempted to set a non-existent stat key: %s" % stat_key)
+
+
+## Gets the current value of any stat.
+func get_stat(stat_key: StringName) -> Variant:
+	for category in _all_stats.values():
+		if category.has(stat_key):
+			return category[stat_key]
+			
+	push_warning("Attempted to get a non-existent stat key: %s" % stat_key)
+	return null # Or 0
+
+
+func update_longest_run_time(current_time: float) -> void:
+	var longest_time = get_stat("longest_run_time")
+	if current_time > longest_time:
+		set_stat("longest_run_time", current_time)
+		# No need to save here, it will be handled on exit or via request_save().
+
+
+
+## The actual file writing operation. Kept private.
+func _save_to_disk() -> void:
 	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
-	if file: file.store_var(save_data); file = null # Deinit
-	else:
-		push_error("Failed to save stats data: " + str(FileAccess.get_open_error()))
+	if not file:
+		push_error("Failed to open save file for writing: %s. Error: %s" % [SAVE_FILE_PATH, error_string(FileAccess.get_open_error())])
+		return
+		
+	file.store_var(_all_stats)
+	print("Game stats saved.")
 
 
+## Loads stats from disk and safely merges them with the current data structure.
 func load_stats() -> void:
 	if not FileAccess.file_exists(SAVE_FILE_PATH):
+		print("No save file found. Using default stats.")
+		return
+
+	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
+	if not file:
+		push_error("Failed to open save file for reading: %s. Error: %s" % [SAVE_FILE_PATH, error_string(FileAccess.get_open_error())])
 		return
 	
-	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
-	if file:
-		var data : Variant = file.get_var()
-		file = null
+	# Check for empty file to prevent errors
+	if file.get_length() == 0:
+		push_warning("Save file is empty, cannot load stats.")
+		return
+
+	var loaded_data: Dictionary = file.get_var()
+	if not loaded_data is Dictionary:
+		push_error("Save file is corrupted or in an unknown format.")
+		return
+	
+	# **This is the key:** We MERGE the loaded data.
+	# This makes the process robust against adding/removing stat keys between game versions.
+	for category_key in _all_stats: # Iterate through our *current* categories ("total", "enemies", etc.)
+		if loaded_data.has(category_key):
+			var current_category_dict: Dictionary = _all_stats[category_key]
+			var loaded_category_dict: Dictionary = loaded_data[category_key]
 			
-		if data is Dictionary:
-			for loaded_stats : Dictionary[StringName, float] in data:
-				for key:String in loaded_stats:
-						if total_count_stats.has(key):
-								total_count_stats[key] = loaded_stats[key]
-				
-			#TODO: Load resource-based stats
-	else:
-			push_error("Failed to load stats data: " + str(FileAccess.get_open_error()))
+			for stat_key in current_category_dict: # Iterate through our *current* stat keys
+				if loaded_category_dict.has(stat_key):
+					# Overwrite the default value with the saved value.
+					current_category_dict[stat_key] = loaded_category_dict[stat_key]
+
+	print("Game stats loaded successfully.")
 
 
-#static func _serialize_resource_dict(resource_dict: Dictionary) -> Dictionary:
-	#var serialized := {}
-	#
-	#for resource:BaseData in resource_dict:
-			#serialized[ResourceLoader.get_resource_uid(resource.resource_path)] = resource_dict[resource]
-			##print(ResourceUID.id_to_text(ResourceLoader.get_resource_uid(resource.resource_path)))
-	#return serialized
-#
-#static func _deserialize_resource_dict(serialized_dict: Dictionary, target_dict: Dictionary, resource_collection: Dictionary) -> void:
-	#for resource_uid_int in serialized_dict:
-		#for resource:Resource in resource_collection.values():
-			#
-			#if ResourceLoader.get_resource_uid(resource.resource_path) == resource_uid_int:
-				#target_dict[resource] = serialized_dict[resource_uid_int]
-				#break
-			#else:
-				#printerr("Hi, click here for a suprise **")
-
-func update_longest_run_time(current_time: int) -> void:
-	if current_time > total_count_stats["longest_run_time"]:
-		total_count_stats["longest_run_time"] = current_time
-		stat_updated.emit("longest_run_time", current_time)
-		save_stats()
-
-
-static func get_stat_key(data: BaseData) -> StringName:
-	#var res_class : StringName
-	#match data:
-		#data when data is AugmentsData: 
-	return (CollectionManager.get_resource_name(data))
+static func get_stat_key(data: Resource) -> StringName:
+	return CollectionManager.get_resource_name(data)

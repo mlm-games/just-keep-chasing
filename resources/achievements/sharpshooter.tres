@@ -10,5 +10,5 @@ reward = "Increases targeting range by 25%"
 count_goal = 90.0
 stat_key = "targeting_accuracy"
 is_secret = false
-is_active = true
+is_active = false
 metadata/_custom_type_script = "uid://dtyklwbxenibb"

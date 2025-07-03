@@ -47,6 +47,7 @@ SettingsApplier="*res://addons/basic_settings_menu/settings_applier.gd"
 StaticAudioM="*res://addons/my_ecosystem_template/autoloads/static_audio_manager.gd"
 BasicAchievements="*res://addons/achievements/achievements.tscn"
 STransitions="*res://addons/my_ecosystem_template/transitions/screen_transitions.tscn"
+Initializer="*res://scripts/autoloads/initializer.gd"
 
 [basic_achievements]
 

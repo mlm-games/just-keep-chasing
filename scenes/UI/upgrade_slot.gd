@@ -75,20 +75,20 @@ func _update_buyable_state():
 		modulate = Color(0.6, 0.6, 0.6) # Dim the whole slot
 		price_container.modulate = Color(1.0, 0.3, 0.3)
 
-func _gui_input(event: InputEvent):
-	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
-		buy_augment()
-		accept_event() # Consume the input
+#func _gui_input(event: InputEvent):
+	#if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
+		#buy_augment()
+		#accept_event() # Consume the input
 
-func buy_augment():
-	if RunData.mito_energy < final_price: return
-
-	RunData.mito_energy -= final_price
-	GameState.apply_augment(augment)
-	CountStats.increment_stat(CountStats.get_stat_key(augment), 1, CountStats.augment_items_collection_stats)
-
-	# Play a satisfying purchase animation and sound
-	_play_purchase_animation()
+#func buy_augment():
+	#if RunData.mito_energy < final_price: return
+#
+	#RunData.mito_energy -= final_price
+	#GameState.apply_augment(augment)
+	#CountStats.increment_stat(CountStats.get_stat_key(augment))
+#
+	## Play a satisfying purchase animation and sound
+	#_play_purchase_animation()
 
 func _play_purchase_animation():
 	set_process_input(false)
@@ -177,7 +177,7 @@ func buy_if_rich_enough() -> void:
 		bought = true
 		var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_ignore_time_scale().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 		tween.tween_property(self, "scale", Vector2.ZERO, 0.25)
-		CountStats.increment_stat(CountStats.get_stat_key(augment), 1, CountStats.augment_items_collection_stats)
+		CountStats.increment_stat(CountStats.get_stat_key(augment))
 		UiAudioM.play_ui_sound(preload("res://assets/sfx/open_002.ogg"))
 		tween.tween_callback(queue_free)
 

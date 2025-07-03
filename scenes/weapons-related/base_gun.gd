@@ -48,7 +48,7 @@ func _physics_process(_delta: float) -> void:
 
 func spawn_bullet() -> void:
 	if ammo > 0:
-		CountStats.guns_fired_by_type_stats[CountStats.get_stat_key(gun_data)] += 1
+		CountStats.increment_stat(CountStats.get_stat_key(gun_data))
 		StaticAudioM.play_random_sound(gun_data.fire_audio)
 		
 		%Sprite2D.rotation_degrees = 0

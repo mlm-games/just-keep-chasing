@@ -21,3 +21,9 @@ func pop_layer():
 		ui_stack.back().show() # Show the layer below
 	else:
 		get_tree().paused = false # Unpause if no UI is left
+
+
+func pause():
+	if ui_stack.is_empty() or PauseMenu.visible: return
+	
+	PauseMenu.pause()

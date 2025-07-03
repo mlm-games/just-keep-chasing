@@ -18,6 +18,6 @@ func collect() -> void:
 	StaticAudioM.play_sound_varied(preload("res://assets/sfx/hover.ogg"))
 	RunData.mito_energy += currency_value
 	
-	CountStats.total_count_stats["essence_collected"] += currency_value
+	CountStats.increment_stat("mito_energy_collected")
 	
 	queue_free()

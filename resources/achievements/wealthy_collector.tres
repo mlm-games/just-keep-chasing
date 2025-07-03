@@ -5,10 +5,10 @@
 [resource]
 script = ExtResource("1_bu1q2")
 title = "Wealthy Collector"
-description = "Collect 10000 currency"
+description = "Collect 10000 Mito Energy"
 reward = "Increases currency pickup range by 50%"
 count_goal = 10000.0
-stat_key = "currency_collected"
+stat_key = "mito_energy_collected"
 is_secret = false
 is_active = true
 metadata/_custom_type_script = "uid://dtyklwbxenibb"

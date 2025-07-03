@@ -82,7 +82,7 @@ func _on_hitbox_component_area_exited(area: Area2D) -> void:
 
 func _on_health_component_entity_died() -> void:
 	DropsSpawner.emit_mito_energy(global_position, mito_energy_value)
-	CountStats.increment_stat(CountStats.get_stat_key(enemy_data_resource), 1, CountStats.enemies_type_killed_stats)
+	CountStats.increment_stat(CountStats.get_stat_key(enemy_data_resource))
 	
 
 	$CollisionShape2D.set_deferred("disabled", true)

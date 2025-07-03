@@ -67,6 +67,11 @@ func update_highest_game_time(time: float) -> void:
 	if time > highest_game_time:
 		highest_game_time = time
 
+func update_achievements():
+	for achievement in BasicAchievements.get_all_achievements():
+		if achievement.is_active:
+			BasicAchievements.update_achievement(achievement.title.to_snake_case(), CountStats.get_stat(achievement.stat_key))
+
 
 #region Saving and loading
 #NOTE: To be done at the during the last phase of dev.

@@ -7,6 +7,7 @@ signal unlocked()
 
 
 func _ready() -> void:
+	GameState.update_achievements()
 	# Get all achievement data
 	var all_achievements = BasicAchievements.get_all_achievements()
 	# Tell the list view to populate itself
