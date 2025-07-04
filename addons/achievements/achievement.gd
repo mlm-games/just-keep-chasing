@@ -11,6 +11,7 @@ var id: String:
 
 # Can be a string ("damage_dealt") or a Resource for more complex stats.
 @export var stat_key: String # Variant Will work in 4.5 
+@export var unlock_resource: Array[Resource]
 
 @export var is_secret: bool = false
 @export var is_active: bool = true # to be able to disable achievements without deleting them

@@ -67,5 +67,5 @@ static func get_resource_name(res: Resource) -> StringName:
 	if res_name != "":
 		return res_name
 	else:
-		push_error("Res path not present for resource")
+		push_error("Res path or name not present for resource")
 		return "temp"

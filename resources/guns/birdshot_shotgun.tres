@@ -10,7 +10,6 @@
 
 [resource]
 script = ExtResource("1_t0yg6")
-unlocked = false
 weapon_scene = ExtResource("4_62yvp")
 sprite = ExtResource("3_62yvp")
 bullet = ExtResource("1_3jueo")
@@ -35,4 +34,5 @@ screen_shake_amplitude = 0.25
 id = "birdshot_shotgun"
 local_to_scene = false
 enabled = true
+unlocked = false
 metadata/_custom_type_script = "uid://d0a57wqy65ei8"

@@ -2,9 +2,6 @@ extends Node
 
 const SAVE_FILE_PATH = "user://count_stats.save"
 
-# Public property to control saving behavior from the Inspector.
-@export var save_on_exit := true
-
 # ("total", "powerups", etc...) are "categories"
 var _all_stats: Dictionary = {
 	"total": {
@@ -22,7 +19,10 @@ var _all_stats: Dictionary = {
 	"powerups": {},
 	"enemies": {},
 	"guns": {},
-	"augments": {}
+	"augments": {},
+	"unlocked_guns": {},
+	"unlocked_enemies": {},
+	"unlocked_augments": {},
 }
 
 #tracks if data has changed, preventing unnecessary disk writes.
@@ -38,7 +38,9 @@ func _ready() -> void:
 
 func _notification(what: int) -> void:
 	# Automatically save any changed data when the game window is closed.
-	if save_on_exit and what == NOTIFICATION_WM_CLOSE_REQUEST:
+	#if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		#request_save()
+	if what == NOTIFICATION_PREDELETE:
 		request_save()
 
 
@@ -48,14 +50,17 @@ func _initialize_dynamic_stats() -> void:
 	for enemy_type: EnemyData in CollectionManager.all_enemies.values():
 		var key = get_stat_key(enemy_type)
 		_all_stats.enemies[key] = 0
+		_all_stats.unlocked_enemies[key] = enemy_type.unlocked
 	
 	for gun_type: GunData in CollectionManager.all_guns.values():
 		var key = get_stat_key(gun_type)
 		_all_stats.guns[key] = 0
+		_all_stats.unlocked_guns[key] = gun_type.unlocked
 	
 	for augment_type: AugmentsData in CollectionManager.all_augments.values():
 		var key = get_stat_key(augment_type)
 		_all_stats.augments[key] = 0
+		_all_stats.unlocked_augments[key] = augment_type.unlocked
 	
 	for powerup_type: PowerupData in CollectionManager.all_powerups.values():
 		var key = get_stat_key(powerup_type)
@@ -158,7 +163,24 @@ func load_stats() -> void:
 					# Overwrite the default value with the saved value.
 					current_category_dict[stat_key] = loaded_category_dict[stat_key]
 
-	print("Game stats loaded successfully.")
+	print("Game stats loaded successfully. Applying unlocks to collection_manager and gamestate")
+	_apply_unlocks_to_collections()
+
+func _apply_unlocks_to_collections():
+	for gun_data in CollectionManager.all_guns.values():
+		gun_data.unlocked = _all_stats.unlocked_guns.has(get_stat_key(gun_data))
+		if gun_data.unlocked:
+			GameState.unlocked_guns.get_or_add(get_stat_key(gun_data), gun_data)
+	
+	for enemy_data in CollectionManager.all_enemies.values():
+		enemy_data.unlocked = _all_stats.unlocked_enemies.has(get_stat_key(enemy_data))
+		if enemy_data.unlocked:
+			GameState.unlocked_enemies.get_or_add(get_stat_key(enemy_data), enemy_data)
+	
+	for augment_data in CollectionManager.all_augments.values():
+		augment_data.unlocked = _all_stats.unlocked_augments.has(get_stat_key(augment_data))
+		if augment_data.unlocked:
+			GameState.unlocked_augments.get_or_add(get_stat_key(augment_data), augment_data)
 
 
 static func get_stat_key(data: Resource) -> StringName:

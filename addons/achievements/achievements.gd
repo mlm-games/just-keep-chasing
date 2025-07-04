@@ -156,8 +156,3 @@ func _get_save_path() -> String:
 func _check_all_achievements() -> void:
 	if unlocked_achievements.size() == achievements.size():
 		all_achievements_unlocked.emit()
-
-
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_WM_GO_BACK_REQUEST:
-		CountStats.request_save()

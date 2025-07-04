@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Achievement" load_steps=3 format=3 uid="uid://86y2j50pmewa"]
+
+[ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_e3al7"]
+[ext_resource type="Resource" uid="uid://bbkqomwace01i" path="res://resources/guns/double_barrel_shotgun.tres" id="2_2df6a"]
+
+[resource]
+script = ExtResource("1_e3al7")
+title = "Starter"
+description = "Kill 5 enemies"
+reward = "Unlocks gun: Double barrel shotgun"
+count_goal = 5.0
+stat_key = "enemies_killed"
+unlock_resource = Array[Resource]([ExtResource("2_2df6a")])
+is_secret = false
+is_active = true
+metadata/_custom_type_script = "uid://dtyklwbxenibb"

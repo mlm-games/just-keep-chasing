@@ -36,6 +36,16 @@ enum Effects {
 
 
 #var current_level: int = 1
+
+## The problem with this is parallel states.. 
+#enum GameState {
+	#RUNNING,
+	#PAUSED,
+	#IN_SHOP,
+	#GAME_OVER,
+	#MENU
+#}
+
 var is_game_paused: bool = false
 var is_game_over: bool = false
 var is_in_shop : bool = false
@@ -84,14 +94,15 @@ func load_game() -> void:
 	pass
 	
 
-#Use a initial resource with all initial values and reset to that...? No that is for save reset... Just delete save file lul
+#Use a initial resource with all initial values and reset to that...? No that is for save reset... Just delete save file or rename it lul
 
-static var unlocked_guns: Dictionary = {}  # gun_name: bool
-var all_possible_guns : Dictionary
+var unlocked_guns: Dictionary = {}  # gun_name: bool
+var unlocked_enemies := {}
+var unlocked_augments := {}
 
 func unlock_gun(gun: GunData) -> void:
-	gun.unlocked = true
-	#TODO: save_unlocked_guns()
+	CountStats._all_stats.unlocked_guns[CollectionManager.get_resource_name(gun)] = true
+	CollectionManager.all_guns.get(CollectionManager.get_resource_name(gun)).unlocked = true
 
 
 

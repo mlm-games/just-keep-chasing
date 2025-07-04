@@ -16,6 +16,7 @@ class_name BaseData extends Resource
 
 @export var local_to_scene : bool = false # Do not share stat upgrades
 @export var enabled := true
+@export var unlocked := true
 
 
 #func _init() -> void:

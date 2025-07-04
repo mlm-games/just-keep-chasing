@@ -1,7 +1,5 @@
 class_name GunData extends BaseData
 
-@export var unlocked: bool = false
-
 @export var weapon_scene: PackedScene
 @export var sprite: Texture2D
 @export var bullet: ProjectileData
