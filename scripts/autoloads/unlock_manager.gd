@@ -7,9 +7,10 @@ func _on_achievement_unlocked(achievement: Achievement):
 	if not achievement.unlock_resource:
 		return
 	
-	var success: GameState.unlock_gun(achievement.unlock_resource)
+	for res in achievement.unlock_resource:
+		GameState.unlock_gun(res)
 	
-	if success:
-		print("Unlocked new content from achievement '%s': %s" % [achievement.title, resource_to_unlock.resource_path])
+	#if success:
+		print("Unlocked new content from achievement '%s': %s" % [achievement.title, CollectionManager.get_resource_name(res)])
 	
 	#TODO: PopUpManager.show_unlock_notification(resource_to_unlock) ?

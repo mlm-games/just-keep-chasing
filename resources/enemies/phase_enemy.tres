@@ -24,3 +24,4 @@ modifiers = Array[ExtResource("2_un5l1")]([])
 id = ""
 local_to_scene = false
 enabled = true
+unlocked = true

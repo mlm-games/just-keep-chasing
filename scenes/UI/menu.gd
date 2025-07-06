@@ -19,8 +19,8 @@ func _ready() -> void:
 	run_buttons_anim()
 	
 	%PlayButton.pressed.connect(_on_PlayButton_pressed)
-	%SettingsButton.pressed.connect(_on_settings_button_pressed)
-	%AchievementsButton.pressed.connect(_on_achievements_button_pressed)
+	%SettingsButton.pressed.connect(add_child.bind(preload(SettingsScene).instantiate()))
+	%AchievementsButton.pressed.connect(STransitions.change_scene_with_transition.bind(AchievementsScene))
 	%CreditsButton.pressed.connect(add_child.bind(preload("uid://bq0gelfcjnqvg").instantiate()))
 	%ExitButton.pressed.connect(_on_ExitButton_pressed)
 
@@ -38,13 +38,6 @@ func _on_ExitButton_pressed() -> void:
 	await STransitions.transition_player.animation_finished
 	get_tree().quit()
 
-
-func _on_settings_button_pressed() -> void:
-	add_child(preload(SettingsScene).instantiate())
-
-
-func _on_achievements_button_pressed() -> void:
-	STransitions.change_scene_with_transition(AchievementsScene)
 
 func run_title_anim() -> void:
 	tween = get_tree().create_tween().set_trans(Tween.TRANS_SINE).set_parallel()

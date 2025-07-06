@@ -43,7 +43,7 @@ var _max_size: int ## The maximum number of objects this pool can manage.
 ## [param initial_size]: The number of objects to pre-instantiate when the pool is created.
 ##[br]
 ## [param max_size]: The hard limit on the number of objects (active + available) this pool can have.
-func _init(scene: PackedScene, initial_size: int = 10, max_size: int = 100):
+func _init(scene: PackedScene, initial_size: int = 20, max_size: int = 100):
 	_pool_scene = scene
 	_max_size = max_size
 	
@@ -63,7 +63,8 @@ func get_object() -> Node:
 	
 	if _available.is_empty():
 		if _active.size() >= _max_size:
-			push_warning("ObjectPool: Max size reached. Cannot create new object.")
+			push_warning("ObjectPool: Max size reached. Deleting old object.")
+			#_active.pop_back()
 			return null
 		obj = _pool_scene.instantiate()
 		add_child(obj)

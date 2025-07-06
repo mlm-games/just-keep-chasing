@@ -24,4 +24,5 @@ modifiers = Array[ExtResource("3_r14q4")]([])
 id = "small_slime"
 local_to_scene = false
 enabled = true
+unlocked = true
 metadata/_custom_type_script = "uid://bwk8dueikqaq0"

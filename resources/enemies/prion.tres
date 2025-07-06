@@ -24,4 +24,5 @@ modifiers = Array[ExtResource("2_vi4h2")]([])
 id = "virus"
 local_to_scene = false
 enabled = true
+unlocked = true
 metadata/_custom_type_script = "uid://bwk8dueikqaq0"
