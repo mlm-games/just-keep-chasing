@@ -78,6 +78,3 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _input(_event: InputEvent) -> void:
 	if transition_player.is_playing():
 			get_viewport().set_input_as_handled()
-
-
-## Need to be in an autoload to work. (or have a refernce to the scenetree)
