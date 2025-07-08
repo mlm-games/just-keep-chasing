@@ -1,381 +1,415 @@
-name: Build and Release Game
+name: Release builds
 
 on:
-  push:
-    branches: '**'
-  pull_request:
-    branches: '**'
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Version number (e.g., 1.0.0)'
+      version_name:
+        description: 'Version name (e.g., 0.1.2)'
         required: true
-        type: string
-      upload_releases:
-        description: 'Upload to GitHub releases'
+      upload_to_itch:
+        description: 'Upload exported files to itch.io?'
         required: false
-        default: true
+        default: 'true'
         type: boolean
-      mark_prerelease:
-        description: 'Mark as pre-release'
+      auto_generate_changelog:
+        description: 'Auto-generate changelog from commits'
         required: false
         default: false
         type: boolean
-      upload_to_itch:
-        description: 'Upload to itch.io'
-        required: false
-        default: true
+      mark_prerelease:
+        description: 'Mark as prerelease'
+        required: true
+        default: 'false'
         type: boolean
-
-env:
-  ITCH_GAME_PATH: 'ragebreaker/just-keep-chasing'
-  BUILD_OUTPUT_DIR: '${{ github.workspace }}/builds'
+      # publish_to_choco:
+      #   description: 'Publish to Chocolatey'
+      #   required: false
+      #   default: 'false'
+      #   type: boolean
+      # publish_to_winget:
+      #   description: 'Publish to WinGet'
+      #   required: false
+      #   default: 'false'
+      #   type: boolean
+      # publish_to_scoop:
+      #   description: 'Manual Publish to Scoop'
+      #   required: false
+      #   default: 'false'
+      #   type: boolean
+      # publish_to_aur:
+      #   description: 'Publish to AUR'
+      #   required: false
+      #   default: 'false'
+      #   type: boolean
+      # publish_to_snap:
+      #   description: 'Publish to Snapcraft'
+      #   required: false
+      #   default: 'false'
+      #   type: boolean
 
 jobs:
-  # Detect export presets from the project
-  detect-platforms:
+  commit-vercode-changes:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.detect.outputs.matrix }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        
-      - name: Detect export presets
-        id: detect
-        run: |
-          # Extract preset names from export_presets.cfg
-          if [ ! -f "export_presets.cfg" ]; then
-            echo "Error: export_presets.cfg not found"
-            exit 1
-          fi
-          
-          # Parse preset names and create matrix
-          presets=$(grep -E '^name="[^"]*"' export_presets.cfg | sed 's/name="\([^"]*\)"/\1/')
-          
-          # Create JSON matrix
-          matrix_json='{"include":['
-          first=true
-          
-          while IFS= read -r preset; do
-            if [ -n "$preset" ]; then
-              # Determine artifact name and extension based on preset name
-              artifact_name=""
-              file_extension=""
-              
-              case "$preset" in
-                *"Windows"*)
-                  artifact_name="windows"
-                  file_extension=".exe"
-                  ;;
-                *"Linux/X11 arm64"*|*"Linux arm64"*)
-                  artifact_name="linux-arm64"
-                  file_extension=".arm64"
-                  ;;
-                *"Linux"*|*"X11"*)
-                  artifact_name="linux-x64"
-                  file_extension=".x86_64"
-                  ;;
-                *"macOS"*|*"Mac"*)
-                  artifact_name="macos"
-                  file_extension=".zip"
-                  ;;
-                *"Android x86"*)
-                  artifact_name="android-x86"
-                  file_extension=".apk"
-                  ;;
-                *"Android"*)
-                  artifact_name="android"
-                  file_extension=".apk"
-                  ;;
-                *"Web"*|*"HTML"*)
-                  artifact_name="web"
-                  file_extension=".html"
-                  ;;
-                *)
-                  # Generic fallback
-                  artifact_name=$(echo "$preset" | tr '[:upper:]' '[:lower:]' | tr ' /' '-')
-                  file_extension=""
-                  ;;
-              esac
-              
-              if [ "$first" = false ]; then
-                matrix_json+=','
-              fi
-              first=false
-              
-              matrix_json+="{\"platform\":\"$preset\",\"artifact_name\":\"$artifact_name\",\"file_extension\":\"$file_extension\"}"
-            fi
-          done <<< "$presets"
-          
-          matrix_json+=']}'
-          
-          echo "Detected platforms: $presets"
-          echo "Matrix JSON: $matrix_json"
-          echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
-
-  # Generate release notes if this is a release
-  prepare-release:
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    outputs:
-      release-notes: ${{ steps.notes.outputs.release-notes }}
-      release-name: ${{ steps.notes.outputs.release-name }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Generate Release Notes
-        id: notes
-        uses: mlm-games/release-notes-generator@main
-        with:
-          version: ${{ inputs.version }}
-          changelog-path: 'CHANGELOG.md'
-          format: '- {{subject}} by @{{author}}'
-          exclude-patterns: 'chore:,ci:,docs:,build:,Merge pull request'
-          auto-commit: 'true'
-          commit-message: 'chore: update changelog for v${{ inputs.version }}'
-
-  build:
-    runs-on: ubuntu-latest
-    needs: [detect-platforms, prepare-release]
-    if: always() && needs.detect-platforms.result == 'success' && (needs.prepare-release.result == 'success' || needs.prepare-release.result == 'skipped')
     permissions:
       contents: write
-    
-    strategy:
-      matrix: ${{ fromJson(needs.detect-platforms.outputs.matrix) }}
-      fail-fast: false
-
+    outputs:
+      new_version_code: ${{ steps.prev_version.outputs.new_code }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          lfs: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Git LFS
+      - name: Get Previous Version Code
+        id: prev_version
         run: |
-          git lfs install
-          git lfs pull
+          PREV_CODE=$(grep -o 'version/code=[0-9]*' export_presets.cfg | head -1 | cut -d= -f2)
+          NEW_CODE=$((PREV_CODE + 10))
+          echo "prev_code=${PREV_CODE}" >> $GITHUB_OUTPUT
+          echo "new_code=${NEW_CODE}" >> $GITHUB_OUTPUT
 
-      - name: Cache Godot files
-        uses: actions/cache@v4
+      - name: Generate Release Notes
+        uses: mlm-games/release-notes-generator@main
         with:
-          path: |
-            ~/.local/share/godot/
-            ~/.config/godot/
-            .godot/
-          key: ${{ runner.os }}-godot-${{ matrix.platform }}-${{ hashFiles('project.godot') }}
-          restore-keys: |
-            ${{ runner.os }}-godot-${{ matrix.platform }}-
-            ${{ runner.os }}-godot-
+          version: ${{ inputs.version_name }}
+          changelog-path: 'CHANGELOG.md'
+          version-file-path: './fastlane/metadata/android/en-US/changelogs/${{ steps.prev_version.outputs.new_code }}.txt'
+          version-code: '${{ steps.prev_version.outputs.new_code }}'
+          exclude-patterns: 'Update ,Merge ,Auto-generate changelog'
+          auto-commit: 'true'
+          commit-message: 'Update release notes for v{{version}}'
+          # metainfo-path: './others/flathub/io.github.mlm_games.imagot.metainfo.xml'  # TODO: Change here when copying
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build game for ${{ matrix.platform }}
-        id: build
+      - name: Commit Previous Version Code
+        run: |
+          echo "Previous version code: ${{ steps.prev_version.outputs.prev_code }}"
+          echo "New version code: ${{ steps.prev_version.outputs.new_code }}"
+
+          VERSION_CODE=${{ steps.prev_version.outputs.new_code }}
+
+          sed -i "/version\/name=\".*\"/s//version\/name=\"${{ inputs.version_name }}\"/" export_presets.cfg
+
+          # Update version codes
+          sed -i "0,/version\/code=[0-9]*/s//version\/code=$VERSION_CODE/" export_presets.cfg
+          sed -i "0,/version\/code=[0-9]*/! {0,/version\/code=[0-9]*/s//version\/code=$((VERSION_CODE+1))/}" export_presets.cfg
+          sed -i "$(grep -n 'version/code=' export_presets.cfg | tail -n1 | cut -d: -f1),\$s/version\/code=[0-9]*/version\/code=$((VERSION_CODE+2))/" export_presets.cfg
+
+      - name: Commit Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Actions"
+          git pull
+          git add export_presets.cfg
+          git add ./fastlane/metadata/android/en-US/changelogs/${{ steps.prev_version.outputs.new_code }}.txt
+          git commit -m "Update version to ${{ inputs.version_name }} (${{ steps.prev_version.outputs.new_code }})"
+          git push
+
+
+  prepare-and-build:
+    needs: commit-vercode-changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        platform: ["Windows Desktop", "Linux/X11", "macOS", "Android arm32", "Android arm64", "Linux/X11 arm64", "Android x86 and x86 64", "Web"]
+      fail-fast: false
+      max-parallel: 1
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: git pull
+        shell: bash
+        run: |
+          git pull
+
+      - name: Build
         uses: mlm-games/godot-build-action@main
         with:
-          GODOT_VER: ''  # Empty string = use latest version
-          GODOT_PREVIEW_BUILDS: false
           EXPORT_PRESET_NAME: ${{ matrix.platform }}
-          ITCH_USER_SLASH_GAME: ${{ env.ITCH_GAME_PATH }}
-          BUTLER_UPLOAD: ${{ github.event_name == 'workflow_dispatch' && inputs.upload_to_itch || false }}
-          INSTALL_BLENDER: false
-          IMPORT_TIMEOUT: '60'
-          VERBOSE_IMPORT: true
+          ITCH_USER_SLASH_GAME: "ragebreaker/just-keep-chasing" #TODO: Edit when copying
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
           KEYSTORE_PASSPHRASE: ${{ secrets.KEYSTORE_PASSPHRASE }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          BUTLER_UPLOAD: ${{ inputs.upload_to_itch }}
+        continue-on-error: true
 
-      - name: Prepare artifacts
-        id: prepare
+      - name: Set artifact name and pull latest
+        id: artifact-name
+        shell: bash
         run: |
-          # Find the actual exported file
-          cd "${{ env.BUILD_OUTPUT_DIR }}"
-          
-          # Use Python to parse the export_presets.cfg more reliably
-          export_path=$(python3 -c "
-          import re
-          with open('../export_presets.cfg', 'r') as f:
-              content = f.read()
-          
-          # Find the preset section
-          preset_name = '''${{ matrix.platform }}'''
-          pattern = rf'name=\"{re.escape(preset_name)}\".*?export_path=\"([^\"]+)\"'
-          match = re.search(pattern, content, re.DOTALL)
-          
-          if match:
-              print(match.group(1))
-          ")
-          
-          if [ -n "$export_path" ]; then
-            # Extract just the filename
-            export_filename=$(basename "$export_path")
-            echo "Looking for exported file: $export_filename"
-            
-            # Find the file
-            exported_file=$(find . -name "$export_filename" -type f | head -1)
-            
-            if [ -n "$exported_file" ]; then
-              echo "Found exported file: $exported_file"
-              
-              # Determine version suffix
-              if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-                version_suffix="v${{ inputs.version }}"
-              else
-                version_suffix="$(echo ${{ github.sha }} | cut -c1-7)"
-              fi
-              
-              # For web builds, create a zip
-              if [[ "${{ matrix.platform }}" == *"Web"* ]] || [[ "${{ matrix.platform }}" == *"HTML"* ]]; then
-                web_dir=$(dirname "$exported_file")
-                cd "$web_dir"
-                zip -r "../${{ matrix.artifact_name }}-${version_suffix}.zip" .
-                cd ..
-                artifact_file="${{ matrix.artifact_name }}-${version_suffix}.zip"
-              else
-                # For other platforms, rename the file with version
-                # Get the file extension properly
-                filename=$(basename "$exported_file")
-                if [[ "$filename" == *.* ]]; then
-                  extension="${filename##*.}"
-                  artifact_file="${{ matrix.artifact_name }}-${version_suffix}.${extension}"
-                else
-                  # No extension (like Linux binaries)
-                  artifact_file="${{ matrix.artifact_name }}-${version_suffix}"
-                fi
-                cp "$exported_file" "$artifact_file"
-              fi
-              
-              echo "artifact_file=$artifact_file" >> $GITHUB_OUTPUT
-              echo "artifact_path=${{ env.BUILD_OUTPUT_DIR }}/$artifact_file" >> $GITHUB_OUTPUT
-            else
-              echo "Error: Could not find exported file: $export_filename"
-              echo "Contents of build directory:"
-              find . -type f -name "*" | head -20
-              exit 1
-            fi
-          else
-            echo "Error: Could not determine export path for preset '${{ matrix.platform }}'"
-            exit 1
-          fi
+          PLATFORM="${{ matrix.platform }}"
+          SAFE_NAME="${PLATFORM//[^a-zA-Z0-9_]/_}"
+          echo "name=${SAFE_NAME}" >> $GITHUB_OUTPUT
+          git pull
 
-
-      - name: Upload build artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact_name }}
-          path: ${{ steps.prepare.outputs.artifact_path }}
-          retention-days: 30
+          name: ${{ steps.artifact-name.outputs.name }}-build
+          path: ${{ github.workspace }}/builds/
 
-  # Create release after all builds complete
-  create-release:
-    if: |
-      github.event_name == 'workflow_dispatch' && 
-      inputs.upload_releases
-    needs: [detect-platforms, prepare-release, build]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: release-artifacts
-
-      - name: Prepare release files
-        run: |
-          # Create release directory
-          mkdir -p release-files
-          
-          # Move all artifacts to release directory (they're already properly named)
-          find release-artifacts -type f -exec mv {} release-files/ \;
-          
-          # List files for debugging
-          echo "Release files:"
-          ls -la release-files/
-
-      - name: Create GitHub Release
+      - name: Upload to Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ inputs.version }}
-          name: ${{ needs.prepare-release.outputs.release-name || format('Release v{0}', inputs.version) }}
-          body: |
-            ## 🎮 Just Keep Chasing - v${{ inputs.version }}
-            
-            ### 📝 Release Notes
-            ${{ needs.prepare-release.outputs.release-notes }}
-            
-            ### 📦 Downloads
-            Download the appropriate file for your platform from the assets below.
-            
-            ### 🚀 Installation
-            - **Windows**: Download the `.exe` file and run it
-            - **Linux**: Download the appropriate file, make it executable with `chmod +x`, then run it
-            - **macOS**: Download and extract the `.zip` file, then run the app
-            - **Android**: Download and install the `.apk` file
-            - **Web**: Download and extract the `.zip` file, then host on a web server
-            
-            ---
-            Full changelog: [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
-          files: release-files/*
+          files: ${{ github.workspace }}/builds/*
+          name: ${{ inputs.version_name }}
+          tag_name: ${{ inputs.version_name }}
+          body_path: ./fastlane/metadata/android/en-US/changelogs/${{ needs.commit-vercode-changes.outputs.new_version_code }}.txt
           prerelease: ${{ inputs.mark_prerelease }}
-          draft: false
+          generate_release_notes: true
+        continue-on-error: true
 
-      - name: Update major version tag
+      - name: Generate SHA256 checksums
+        shell: bash
         run: |
-          git config user.name "actions-user"
-          git config user.email "temp@example.com"
-          MAJOR_VERSION=$(echo "${{ inputs.version }}" | cut -d. -f1)
-          git tag -fa "v${MAJOR_VERSION}" -m "Update major version tag"
-          git push origin "v${MAJOR_VERSION}" --force
+          cd ${{ github.workspace }}/builds/
 
-  # Summary job
-  summary:
-    if: always()
-    needs: [detect-platforms, build, create-release]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Build Summary
-        run: |
-          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
+          # Create checksums file
+          echo "# SHA256 Checksums for ${{ matrix.platform }}" > SHA256SUMS.txt
+          echo "Generated on $(date)" >> SHA256SUMS.txt
+          echo "" >> SHA256SUMS.txt
+
+          # Calculate checksums for each file and append to checksums file
+          for file in *; do
+            if [ -f "$file" ] && [ "$file" != "SHA256SUMS.txt" ]; then
+              HASH=$(sha256sum "$file" | cut -d ' ' -f 1)
+              echo "$HASH  $file" >> SHA256SUMS.txt
+              echo "File: $file"
+              echo "SHA256: $HASH"
+            fi
+          done
+        continue-on-error: true
+
+
+  # publish-chocolatey:
+  #   needs: [prepare-and-build]
+  #   if: ${{ inputs.publish_to_choco == true }}
+  #   runs-on: windows-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - name: Download Windows build artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: Windows_Desktop-build
+  #         path: ./choco-package
+
+  #     - name: List downloaded files
+  #       shell: pwsh
+  #       run: |
+  #         Write-Output "Files in choco-package:"
+  #         Get-ChildItem -Path ".\choco-package" -Recurse
+
+  #     - name: Generate checksums if missing
+  #       shell: pwsh
+  #       run: |
+  #         if (-not (Test-Path ".\choco-package\SHA256SUMS.txt")) {
+  #           Write-Output "SHA256SUMS.txt not found, generating checksums..."
+  #           $files = Get-ChildItem -Path ".\choco-package" -File
+  #           $checksumContent = @()
+  #           $checksumContent += "# SHA256 Checksums for Windows Desktop"
+  #           $checksumContent += "Generated on $(Get-Date)"
+  #           $checksumContent += ""
+
+  #           foreach ($file in $files) {
+  #             $hash = Get-FileHash -Path $file.FullName -Algorithm SHA256
+  #             $checksumContent += "$($hash.Hash.ToLower())  $($file.Name)"
+  #             Write-Output "File: $($file.Name)"
+  #             Write-Output "SHA256: $($hash.Hash.ToLower())"
+  #           }
+
+  #           $checksumContent | Out-File -FilePath ".\choco-package\SHA256SUMS.txt" -Encoding UTF8
+  #         }
+
+  #     - name: Setup Chocolatey
+  #       uses: crazy-max/ghaction-chocolatey@v3
+  #       with:
+  #         args: -v
+
+  #     - name: Update Chocolatey nuspec version
+  #       shell: pwsh
+  #       run: |
+  #         $nuspecPath = ".\chocolatey\imagot.nuspec"
+  #         $content = Get-Content $nuspecPath
+  #         $content = $content -replace "<version>.*</version>", "<version>${{ inputs.version_name }}</version>"
+  #         $content | Set-Content $nuspecPath
+
+  #     - name: Update Chocolatey install script
+  #       shell: pwsh
+  #       run: |
+  #         # Get the SHA256 hash from the checksums file
+  #         $checksumFile = Get-Content ".\choco-package\SHA256SUMS.txt"
+  #         $exeFileName = "imagot.exe"
+  #         $hashLine = $checksumFile | Where-Object { $_ -match "$exeFileName$" }
+  #         if ($hashLine) {
+  #           $hash = ($hashLine -split '\s+')[0]
+  #           Write-Output "Found hash: $hash for $exeFileName"
+  #         } else {
+  #           Write-Error "Could not find hash for $exeFileName in SHA256SUMS.txt"
+  #           Write-Output "Available files in checksums:"
+  #           $checksumFile | ForEach-Object { Write-Output $_ }
+  #           exit 1
+  #         }
+
+  #         # Update the chocolateyinstall.ps1 file
+  #         $installPath = ".\chocolatey\tools\chocolateyinstall.ps1"
+  #         $content = Get-Content $installPath
+  #         $content = $content -replace "url\s*=\s*'.*'", "url = 'https://github.com/mlm-games/imagot/releases/download/${{ inputs.version_name }}/imagot.exe'"
+  #         $content = $content -replace "checksum\s*=\s*'.*'", "checksum = '$hash'"
+  #         $content | Set-Content $installPath
+
+  #         Write-Output "Updated chocolateyinstall.ps1 with new URL and checksum"
+
+  #     - name: Pack and push Chocolatey package
+  #       shell: pwsh
+  #       env:
+  #         CHOCO_API_KEY: ${{ secrets.CHOCO_API_KEY }}
+  #       run: |
+  #         choco pack .\chocolatey\imagot.nuspec
+  #         choco push imagot.${{ inputs.version_name }}.nupkg --source https://push.chocolatey.org/ --api-key $env:CHOCO_API_KEY
+
+  # publish-winget:
+  #   needs: [prepare-and-build]
+  #   if: ${{ inputs.publish_to_winget == true }}
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: Download Windows build artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: Windows_Desktop-build
+  #         path: ./winget-package
+
+  #     - name: Submit to WinGet
+  #       uses: vedantmgoyal2009/winget-releaser@v2
+  #       with:
+  #         identifier: MLMGames.Imagot
+  #         version: ${{ inputs.version_name }}
+  #         release-tag: ${{ inputs.version_name }}
+  #         token: ${{ secrets.WINGET_TOKEN }}
+
+  # update-scoop-bucket:
+  #   needs: [prepare-and-build]
+  #   runs-on: ubuntu-latest
+  #   if: ${{ inputs.publish_to_scoop == true }}
+  #   permissions:
+  #     contents: write
+  #   steps:
+  #     - name: Download Windows build artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: Windows_Desktop-build
+  #         path: ./windows-build
+
+  #     - name: Get SHA256 hash
+  #       id: get-hash
+  #       run: |
+
+  #         cd ./build-artifact
+  #         EXE_FILE=$(find . -name "*.exe" | head -n 1)
+  #         if [ -z "$EXE_FILE" ]; then
+  #           echo "::error::No EXE file found in artifact!"
+  #           exit 1
+  #         fi
+  #         EXE_NAME=$(basename "$EXE_FILE")
+  #         HASH=$(sha256sum "$EXE_NAME" | cut -d' ' -f1)
+  #         echo "sha256=${HASH}" >> $GITHUB_OUTPUT
+  #         echo "Found SHA256: ${HASH}"
+
+  #     - name: Checkout Scoop bucket
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: ${{ github.repository_owner }}/buckets-scoop  
+  #         token: ${{ secrets.SCOOP_TOKEN }}
+  #         path: scoop-bucket
+
+  #     - name: Update Scoop manifest
+  #       run: |
+  #         cd scoop-bucket/bucket
           
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "### Release Information" >> $GITHUB_STEP_SUMMARY
-            echo "- **Version**: v${{ inputs.version }}" >> $GITHUB_STEP_SUMMARY
-            echo "- **Pre-release**: ${{ inputs.mark_prerelease }}" >> $GITHUB_STEP_SUMMARY
-            echo "- **Upload to GitHub**: ${{ inputs.upload_releases }}" >> $GITHUB_STEP_SUMMARY
-            echo "- **Upload to itch.io**: ${{ inputs.upload_to_itch }}" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-          fi
+  #         # Update the manifest using jq
+  #         jq --arg version "${{ inputs.version_name }}" \
+  #            --arg hash "${{ steps.get-hash.outputs.sha256 }}" \
+  #            --arg url "https://github.com/${{ github.repository }}/releases/download/${{ inputs.version_name }}/imagot.exe" \
+  #            '.version = $version | 
+  #             .architecture."64bit".url = $url | 
+  #             .architecture."64bit".hash = $hash' \
+  #            imagot.json > imagot.json.tmp && mv imagot.json.tmp imagot.json
+
+  #     - name: Commit and push changes
+  #       run: |
+  #         cd scoop-bucket
+  #         git config user.name "GitHub Actions"
+  #         git config user.email "actions@github.com"
+  #         git add bucket/imagot.json
+  #         git commit -m "Update Imagot to ${{ inputs.version_name }}"
+  #         git push
+
+
+  # publish-snap:
+  #   needs: [prepare-and-build]
+  #   runs-on: ubuntu-latest
+  #   if: ${{ inputs.publish_to_snap == true }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
           
-          echo "### Detected Platforms" >> $GITHUB_STEP_SUMMARY
-          echo "Platforms were automatically detected from export_presets.cfg" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
+  #     - name: Download Linux build
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: Linux-build
+  #         path: ./builds
           
-          echo "### Build Status" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ needs.build.result }}" == "success" ]; then
-            echo "✅ All builds completed successfully" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ Some builds failed" >> $GITHUB_STEP_SUMMARY
-          fi
+  #     - name: Make executable
+  #       run: chmod +x ./builds/imagot
+        
+  #     - name: Copy icon
+  #       run: |
+  #         mkdir -p snap/gui
+  #         cp icon.png snap/gui/icon.png
           
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Artifacts" >> $GITHUB_STEP_SUMMARY
-          echo "Build artifacts are available in the [Actions artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) section." >> $GITHUB_STEP_SUMMARY
+  #     - name: Update version in snapcraft.yaml
+  #       run: |
+  #         sed -i "s/version: .*/version: '${{ inputs.version_name }}'/" snap/snapcraft.yaml
           
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ inputs.upload_releases }}" == "true" ]; then
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "### Release" >> $GITHUB_STEP_SUMMARY
-            echo "GitHub Release: [v${{ inputs.version }}](https://github.com/${{ github.repository }}/releases/tag/v${{ inputs.version }})" >> $GITHUB_STEP_SUMMARY
-          fi
-  
+  #     - name: Build snap
+  #       uses: snapcore/action-build@v1
+  #       id: build
+        
+  #     - name: Publish to Snap Store
+  #       uses: snapcore/action-publish@v1
+  #       env:
+  #         SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+  #       with:
+  #         snap: ${{ steps.build.outputs.snap }}
+  #         release: stable
+
+
+  # update-aur:
+  #   needs: [prepare-and-build]
+  #   runs-on: ubuntu-latest
+  #   if: ${{ inputs.publish_to_aur == true }}
+  #   steps:
+  #     - name: Trigger AUR publish workflow
+  #       uses: actions/github-script@v7
+  #       with:
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  #         script: |
+  #           await github.rest.actions.createWorkflowDispatch({
+  #             owner: context.repo.owner,
+  #             repo: context.repo.repo,
+  #             workflow_id: 'aur-upload.yml',
+  #             ref: 'main',
+  #             inputs: {
+  #               version_name: '${{ inputs.version_name }}',
+  #               increment_pkgrel: 'false'
+  #             }
+  #           });
+
+  #           console.log('Triggered AUR publish workflow for version ${{ inputs.version_name }}');
