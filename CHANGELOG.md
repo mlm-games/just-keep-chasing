@@ -1,3 +1,11 @@
+## v0.8.11
+
+- use proper export presets by @mlm-studios
+- use a simple looks improving shader, rename slime to bact by @mlm-studios
+- pause only when game ui_stack is empty by @mlm-studios
+- add stat keys by @mlm-studios
+
+
 ## v0.8.10
 
 

@@ -1,5 +1,4 @@
-- object pool improvement , fix audio settings by @mlm-studios
-- fix unlock_manager, reduce code in menu, misc object pool changes by @mlm-studios
-- try adding unlocking (initial setup) by @mlm-studios
-- Better saving of achievement progress, fix stat updation by @mlm-studios
-- improve explosions, stats tracking improvements by @mlm-studios
+- use proper export presets by @mlm-studios
+- use a simple looks improving shader, rename slime to bact by @mlm-studios
+- pause only when game ui_stack is empty by @mlm-studios
+- add stat keys by @mlm-studios
