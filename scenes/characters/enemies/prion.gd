@@ -6,9 +6,6 @@ class_name Prion extends BaseEnemy
 @export var fire_cooldown: float = 2.5
 @export var aim_duration: float = 0.7
 
-@onready var health_component: HealthComponent = $HealthComponent
-@onready var velocity_component: VelocityComponent = $VelocityComponent
-@onready var animation_component: AnimationComponent = $AnimationComponent
 @onready var fire_cooldown_timer: Timer = $FireCooldownTimer
 @onready var sprite: Sprite2D = $Sprite2D
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b3mf65fcnvmvu"]
+[gd_scene load_steps=16 format=3 uid="uid://b3mf65fcnvmvu"]
 
 [ext_resource type="Script" uid="uid://crf18oy3oc75j" path="res://scenes/characters/player.gd" id="1_cvyhv"]
 [ext_resource type="Texture2D" uid="uid://brk1vhy0k5ah2" path="res://assets/sprites/player.svg" id="2_atpat"]
@@ -11,6 +11,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://cvxhas1qg2ntb" path="res://scenes/characters/player_anims.tres" id="9_2l4js"]
 [ext_resource type="Script" uid="uid://cph1hb68v0xjn" path="res://scenes/components/animation_component.gd" id="10_2l4js"]
 [ext_resource type="Script" uid="uid://dcm4p61vcyfim" path="res://scenes/weapons-related/inventory_component.gd" id="10_7vyk4"]
+[ext_resource type="Shader" uid="uid://dkg0rxg12mlmn" path="res://scenes/characters/simple_polish_adder.gdshader" id="10_jk2m4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8iqyn"]
 radius = 38.0132
@@ -18,7 +19,31 @@ radius = 38.0132
 [sub_resource type="CircleShape2D" id="CircleShape2D_d6keb"]
 radius = 38.0132
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xhtjm"]
+shader = ExtResource("10_jk2m4")
+shader_parameter/enable_shadow = true
+shader_parameter/shadow_offset = Vector2(-2.13, 3)
+shader_parameter/shadow_color = Color(0, 0, 0, 0.3)
+shader_parameter/shadow_blur = 2.0
+shader_parameter/enable_outline = true
+shader_parameter/outline_width = 1.5
+shader_parameter/outline_color = Color(0.1, 0.1, 0.1, 1)
+shader_parameter/enable_inner_glow = true
+shader_parameter/inner_glow_width = 3.0
+shader_parameter/inner_glow_color = Color(1, 1, 1, 0.15)
+shader_parameter/enable_gradient = true
+shader_parameter/gradient_top = Color(1, 1, 1, 0.1)
+shader_parameter/gradient_bottom = Color(0, 0, 0, 0.2)
+shader_parameter/enable_texture = true
+shader_parameter/texture_scale = 1.0
+shader_parameter/texture_strength = 0.05
+shader_parameter/saturation = 1.1
+shader_parameter/brightness = 0.05
+shader_parameter/contrast = 1.1
+shader_parameter/smoothing = 0.5
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+position = Vector2(0, -40)
 collision_layer = 9
 collision_mask = 9
 motion_mode = 1
@@ -72,6 +97,7 @@ libraries = {
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_xhtjm")
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_atpat")
 flip_h = true
@@ -84,5 +110,6 @@ offset_right = 42.0
 offset_bottom = 60.0
 theme = ExtResource("6_8qvmc")
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [connection signal="area_entered" from="HitboxComponent" to="HitboxComponent/PickupsCheckerComponent" method="_on_hitbox_component_area_entered"]

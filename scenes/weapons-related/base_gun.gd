@@ -60,7 +60,7 @@ func spawn_bullet() -> void:
 				#@warning_ignore("narrowing_conversion")
 				#bullet_data.projectile_range *= CharacterStats.get_stat(CharacterStats.Stats.TARGETTING_RANGE_MULT)
 				#bullet_data.projectile_speed *=
-			if get_parent() is SlimeEnemy:
+			if get_parent() is BactEnemy:
 				bullet_data.projectile_damage += CharacterStats.get_stat(CharacterStats.Stats.RAW_GUN_ENEMY_DAMAGE_REDUCTION)
 				bullet_data.projectile_damage *= CharacterStats.get_stat(CharacterStats.Stats.GUN_ENEMY_DAMAGE_MULT)
 				#@warning_ignore("narrowing_conversion")
@@ -126,7 +126,7 @@ func _on_fire_rate_timer_timeout() -> void:
 func play_fire_animation() -> void:
 	if tween: 
 		tween.kill()
-	tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
+	tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	#tween.tween_property(%Sprite2D, "skew", rad_to_deg(gun_data.fire_animation_skew), gun_data.reload_time/2)
 	tween.tween_property(%Sprite2D, "offset:x", -250*gun_data.fire_rate, gun_data.fire_rate/2)
 	#tween.tween_property(%Sprite2D, "skew", 0, gun_data.fire_rate/2)

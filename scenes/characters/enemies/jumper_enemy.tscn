@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://c53e5ffabqvci"]
 
 [ext_resource type="Script" uid="uid://bf8tgk53pdptr" path="res://scenes/characters/enemies/jumper_enemy.gd" id="1_3sin1"]
-[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_8846s"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/bact.svg" id="2_8846s"]
 [ext_resource type="Resource" path="res://resources/enemies/temp_slime.tres" id="2_f4ol1"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="3_6vmuo"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_242sf"]

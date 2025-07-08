@@ -10,12 +10,12 @@
 [ext_resource type="Resource" path="res://resources/augments/texo_card.tres" id="7_hecn4"]
 [ext_resource type="Resource" path="res://resources/augments/revitalize.tres" id="7_uwrhl"]
 [ext_resource type="Resource" path="res://resources/augments/ultra_texo_card.tres" id="8_ohxkr"]
-[ext_resource type="Resource" path="res://resources/enemies/basic_slime.tres" id="9_131m2"]
-[ext_resource type="Resource" path="res://resources/enemies/evolved_slime.tres" id="10_52q21"]
-[ext_resource type="Resource" path="res://resources/enemies/gunner_slime.tres" id="11_uwrhl"]
+[ext_resource type="Resource" path="res://resources/enemies/basic_bact.tres" id="9_131m2"]
+[ext_resource type="Resource" path="res://resources/enemies/evolved_bact.tres" id="10_52q21"]
+[ext_resource type="Resource" path="res://resources/enemies/gunner_bact.tres" id="11_uwrhl"]
 [ext_resource type="Resource" path="res://resources/enemies/phase_enemy.tres" id="12_18ovc"]
 [ext_resource type="Resource" path="res://resources/enemies/nerve-impulse.tres" id="12_hecn4"]
-[ext_resource type="Resource" path="res://resources/enemies/small_slime.tres" id="12_u2rfg"]
+[ext_resource type="Resource" path="res://resources/enemies/small_bact.tres" id="12_u2rfg"]
 [ext_resource type="Resource" path="res://resources/enemies/parasite.tres" id="13_ohxkr"]
 [ext_resource type="Resource" path="res://resources/enemies/spore_enemy.tres" id="14_ega57"]
 [ext_resource type="Resource" path="res://resources/guns/birdshot_shotgun.tres" id="14_g5768"]
@@ -39,14 +39,14 @@
 [resource]
 script = ExtResource("26_4kn0p")
 enemies = Dictionary[StringName, Variant]({
-&"basic_slime": ExtResource("9_131m2"),
-&"evolved_slime": ExtResource("10_52q21"),
-&"gunner_slime": ExtResource("11_uwrhl"),
+&"basic_bact": ExtResource("9_131m2"),
+&"evolved_bact": ExtResource("10_52q21"),
+&"gunner_bact": ExtResource("11_uwrhl"),
 &"nerve-impulse": ExtResource("12_hecn4"),
 &"parasite": ExtResource("13_ohxkr"),
 &"phase_enemy": ExtResource("12_18ovc"),
 &"prion": ExtResource("15_131m2"),
-&"small_slime": ExtResource("12_u2rfg"),
+&"small_bact": ExtResource("12_u2rfg"),
 &"spore_enemy": ExtResource("14_ega57"),
 &"tumor_cell": ExtResource("15_ega57"),
 &"virus": ExtResource("16_f63db")

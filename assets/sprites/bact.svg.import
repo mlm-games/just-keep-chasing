@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkcqpdo5mlrjx"
-path="res://.godot/imported/slime_hit_particles.svg-1c63f784db23f25f3658e49226189408.ctex"
+uid="uid://duc0bvo61ljvv"
+path="res://.godot/imported/bact.svg-e1d10a2c4569026ecebb7b615f125ea4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/slime_hit_particles.svg"
-dest_files=["res://.godot/imported/slime_hit_particles.svg-1c63f784db23f25f3658e49226189408.ctex"]
+source_file="res://assets/sprites/bact.svg"
+dest_files=["res://.godot/imported/bact.svg-e1d10a2c4569026ecebb7b615f125ea4.ctex"]
 
 [params]
 

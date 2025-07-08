@@ -49,7 +49,7 @@ func on_entity_died():
 	await anim_player.animation_finished
 	owner.queue_free() # The component is responsible for freeing its owner after death anim.
 
-func on_taking_damage():
+func on_taking_damage(_dmg):
 	_is_taking_damage = true
 	anim_player.play(anims_prefix + "hurt_start")
 	await anim_player.animation_finished

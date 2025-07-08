@@ -1,7 +1,7 @@
 class_name HealthComponent extends Node
 
 signal entity_died
-signal taking_damage
+signal taking_damage(damage: float)
 signal health_changed(new_health: float)
 signal max_health_changed(new_max_health: float)
 signal knockback_requested(force: Vector2, duration: float)
@@ -45,13 +45,7 @@ func damage(attack: Attack) -> void:
 
 	current_health = max(0, current_health - final_damage)
 	
-	#TODO: move this to slime or base_enemy
-	if parent_node is BaseEnemy:
-		CountStats.increment_stat("damage_dealt", int(final_damage))
-		#RunData.world.add_child(DamageNumbers.new_damage_text(final_damage, parent_node.global_position))
-		VFXSpawner.spawn_damage_number(final_damage, parent_node.global_position)
-	
-	taking_damage.emit()
+	taking_damage.emit(final_damage)
 	knockback_requested.emit(attack.knockback_force * attack.knockback_direction, attack.stun_duration)
 	health_changed.emit(current_health)
 	

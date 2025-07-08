@@ -94,6 +94,7 @@ horizontal_alignment = 1
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 unique_name_in_owner = true
+visible = false
 position = Vector2(142, 182)
 scale = Vector2(3.4375, 4.6875)
 texture = SubResource("GradientTexture2D_3i5ot")

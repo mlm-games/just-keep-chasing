@@ -168,6 +168,7 @@ offset_top = -20.0
 grow_horizontal = 2
 grow_vertical = 0
 max_value = 1.0
+step = 0.001
 show_percentage = false
 
 [node name="ShootingJoystickSprite2D" parent="." groups=["ShootingJoystick"] instance=ExtResource("9_7wvwv")]

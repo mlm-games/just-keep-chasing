@@ -207,7 +207,7 @@ func use_powerup(powerup_type: StringName) -> void:
 			&"screen_blast_powerup":
 				STransitions.transition("slightFlash")
 				get_tree().call_group("On Screen Enemies", "queue_free")
-				STransitions.screen_shake(1, 2.5)
+				StaticScreenEffects.screen_shake(1, 2.5)
 			&"heal_powerup":
 				player.health_component.heal_or_damage(20)
 			&"temp_invincible_powerup":

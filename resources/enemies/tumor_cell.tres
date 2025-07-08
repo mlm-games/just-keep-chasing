@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="1_b1l8f"]
 [ext_resource type="PackedScene" uid="uid://b0h7lo7im5s1h" path="res://scenes/characters/enemies/tumor_cell.tscn" id="1_ysdfg"]
 [ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="2_ysdfg"]
-[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="4_ls70h"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/bact.svg" id="4_ls70h"]
 
 [resource]
 script = ExtResource("2_ysdfg")

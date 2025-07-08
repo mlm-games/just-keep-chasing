@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duc0bvo61ljvv"
-path="res://.godot/imported/slime.svg-182a9cc13c3590adbb568a2a9394ff2b.ctex"
+uid="uid://buqj8udj42uq6"
+path="res://.godot/imported/bact.png-fd8bd689ca03dc8ecee71bd8f74bd638.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/slime.svg"
-dest_files=["res://.godot/imported/slime.svg-182a9cc13c3590adbb568a2a9394ff2b.ctex"]
+source_file="res://assets/sprites/bact.png"
+dest_files=["res://.godot/imported/bact.png-fd8bd689ca03dc8ecee71bd8f74bd638.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

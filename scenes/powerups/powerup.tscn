@@ -1,9 +1,33 @@
-[gd_scene load_steps=6 format=3 uid="uid://x2gb17exe2xq"]
+[gd_scene load_steps=8 format=3 uid="uid://x2gb17exe2xq"]
 
 [ext_resource type="Script" uid="uid://buv40e5a827xo" path="res://scenes/powerups/powerup_manager.gd" id="1_hl65c"]
+[ext_resource type="Shader" uid="uid://dkg0rxg12mlmn" path="res://scenes/characters/simple_polish_adder.gdshader" id="2_wb3hp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
 radius = 42.86
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w801e"]
+shader = ExtResource("2_wb3hp")
+shader_parameter/enable_shadow = true
+shader_parameter/shadow_offset = Vector2(3, 3)
+shader_parameter/shadow_color = Color(0, 0, 0, 0.3)
+shader_parameter/shadow_blur = 2.0
+shader_parameter/enable_outline = true
+shader_parameter/outline_width = 1.5
+shader_parameter/outline_color = Color(0.1, 0.1, 0.1, 1)
+shader_parameter/enable_inner_glow = true
+shader_parameter/inner_glow_width = 3.0
+shader_parameter/inner_glow_color = Color(1, 1, 1, 0.15)
+shader_parameter/enable_gradient = true
+shader_parameter/gradient_top = Color(1, 1, 1, 0.1)
+shader_parameter/gradient_bottom = Color(0, 0, 0, 0.2)
+shader_parameter/enable_texture = true
+shader_parameter/texture_scale = 1.0
+shader_parameter/texture_strength = 0.05
+shader_parameter/saturation = 1.1
+shader_parameter/brightness = 0.05
+shader_parameter/contrast = 1.1
+shader_parameter/smoothing = 0.5
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7gkke"]
 size = Vector2(33, 34)
@@ -30,6 +54,7 @@ shape = SubResource("CircleShape2D_rxdp3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.347817, 0.347817, 0.347817, 1)
+material = SubResource("ShaderMaterial_w801e")
 texture = SubResource("PlaceholderTexture2D_7gkke")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

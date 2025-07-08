@@ -1,11 +1,35 @@
-[gd_scene load_steps=7 format=3 uid="uid://do1wux8nsle53"]
+[gd_scene load_steps=9 format=3 uid="uid://do1wux8nsle53"]
 
 [ext_resource type="Script" uid="uid://dn66uob7diy48" path="res://scenes/powerups/currency_drop.gd" id="1_m2agr"]
 [ext_resource type="Texture2D" uid="uid://d4nafedjghyog" path="res://assets/sprites/currency.svg" id="2_ff12p"]
+[ext_resource type="Shader" uid="uid://dkg0rxg12mlmn" path="res://scenes/characters/simple_polish_adder.gdshader" id="2_npuoh"]
 [ext_resource type="AudioStream" uid="uid://biich4lcrpmcr" path="res://assets/music/GUI_Sound_Effects_by_Lokif/positive.wav" id="3_imjud"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
 radius = 21.095
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y1cap"]
+shader = ExtResource("2_npuoh")
+shader_parameter/enable_shadow = true
+shader_parameter/shadow_offset = Vector2(3, 3)
+shader_parameter/shadow_color = Color(0, 0, 0, 0.3)
+shader_parameter/shadow_blur = 4.317
+shader_parameter/enable_outline = true
+shader_parameter/outline_width = 0.0
+shader_parameter/outline_color = Color(0.1, 0.1, 0.1, 1)
+shader_parameter/enable_inner_glow = false
+shader_parameter/inner_glow_width = 3.0
+shader_parameter/inner_glow_color = Color(1, 1, 1, 0.15)
+shader_parameter/enable_gradient = false
+shader_parameter/gradient_top = Color(1, 1, 1, 0.1)
+shader_parameter/gradient_bottom = Color(0, 0, 0, 0.2)
+shader_parameter/enable_texture = true
+shader_parameter/texture_scale = 1.0
+shader_parameter/texture_strength = 0.05
+shader_parameter/saturation = 1.1
+shader_parameter/brightness = -0.17
+shader_parameter/contrast = 1.1
+shader_parameter/smoothing = 0.5
 
 [sub_resource type="Gradient" id="Gradient_spd34"]
 interpolation_mode = 2
@@ -28,6 +52,7 @@ shape = SubResource("CircleShape2D_rxdp3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.703808, 0.703808, 0.703808, 1)
+material = SubResource("ShaderMaterial_y1cap")
 scale = Vector2(0.225, 0.225)
 texture = ExtResource("2_ff12p")
 

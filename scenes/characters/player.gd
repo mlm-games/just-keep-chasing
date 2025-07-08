@@ -68,7 +68,7 @@ func _on_health_component_entity_died() -> void:
 	UIManager.push_layer(preload("uid://oqyl6r1j4383"))
 	STransitions.transition("circleOut")
 
-func _on_health_component_taking_damage() -> void:
+func _on_health_component_taking_damage(_dmg) -> void:
 	taking_damage = true
 	#TODO: knockback_component.apply_knockback() here.
 	StaticScreenEffects.screen_shake(0.1, 0.5)

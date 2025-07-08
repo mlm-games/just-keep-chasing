@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dkk7wewc51p0l" path="res://scenes/characters/enemies/nerve_impulse.tscn" id="1_rc7su"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_w0lln"]
 [ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="3_bbl7t"]
-[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="4_vvxly"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/bact.svg" id="4_vvxly"]
 
 [resource]
 script = ExtResource("3_bbl7t")

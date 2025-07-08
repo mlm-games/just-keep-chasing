@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dfbi8k6eqssuk"]
 
-[ext_resource type="Texture2D" uid="uid://dkcqpdo5mlrjx" path="res://assets/sprites/slime_hit_particles.svg" id="1_dyu55"]
+[ext_resource type="Texture2D" uid="uid://dkcqpdo5mlrjx" path="res://assets/sprites/enemy_hit_particles.svg" id="1_dyu55"]
 [ext_resource type="Script" uid="uid://dk41yw0sd5m5u" path="res://scenes/components/modular_hit_particles.gd" id="2_rb66u"]
 
 [sub_resource type="Curve" id="Curve_fcux4"]

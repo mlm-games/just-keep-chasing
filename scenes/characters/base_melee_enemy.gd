@@ -2,10 +2,6 @@ class_name BaseMeleeEnemy extends BaseEnemy
 
 const LoadedParticlesScene = preload("uid://dfbi8k6eqssuk")
 
-@onready var velocity_component: VelocityComponent = $VelocityComponent
-@onready var health_component: HealthComponent = $HealthComponent
-@onready var hitbox_component: HitboxComponent = %EnemyHitboxComponent
-@onready var animation_component: AnimationComponent = $AnimationComponent
 @onready var sprite: Sprite2D = $Sprite2D
 
 var contact_attack_damage: float

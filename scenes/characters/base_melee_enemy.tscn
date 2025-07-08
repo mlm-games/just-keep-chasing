@@ -1,11 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://cyaeykwntx0u0"]
+[gd_scene load_steps=14 format=3 uid="uid://cyaeykwntx0u0"]
 
 [ext_resource type="Script" uid="uid://cbkm21ne5idhp" path="res://scenes/characters/base_melee_enemy.gd" id="1_np7gm"]
-[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/slime.svg" id="2_mcomt"]
+[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/bact.svg" id="2_mcomt"]
 [ext_resource type="Script" uid="uid://cph1hb68v0xjn" path="res://scenes/components/animation_component.gd" id="3_kvpyv"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="3_w61i0"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_f4fx4"]
 [ext_resource type="AnimationLibrary" uid="uid://c5w2n8g7e1bdf" path="res://scenes/characters/reusable_anims.tres" id="5_j1tbp"]
+[ext_resource type="Shader" uid="uid://dkg0rxg12mlmn" path="res://scenes/characters/simple_polish_adder.gdshader" id="7_v172n"]
 [ext_resource type="Script" uid="uid://dsl73aknxcjur" path="res://addons/godot_state_charts/state_chart.gd" id="8_j1tbp"]
 [ext_resource type="Script" uid="uid://c8ff8j0tad7ib" path="res://addons/godot_state_charts/compound_state.gd" id="9_bu8ev"]
 [ext_resource type="Script" uid="uid://bh62la2plrk8u" path="res://scenes/components/velocity_component.gd" id="9_uira5"]
@@ -15,6 +16,29 @@ size = Vector2(56, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
 size = Vector2(44, 40)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u32s4"]
+shader = ExtResource("7_v172n")
+shader_parameter/enable_shadow = true
+shader_parameter/shadow_offset = Vector2(3, 3)
+shader_parameter/shadow_color = Color(0, 0, 0, 0.3)
+shader_parameter/shadow_blur = 2.0
+shader_parameter/enable_outline = true
+shader_parameter/outline_width = 1.5
+shader_parameter/outline_color = Color(0.1, 0.1, 0.1, 1)
+shader_parameter/enable_inner_glow = true
+shader_parameter/inner_glow_width = 3.0
+shader_parameter/inner_glow_color = Color(1, 1, 1, 0.15)
+shader_parameter/enable_gradient = true
+shader_parameter/gradient_top = Color(1, 1, 1, 0.1)
+shader_parameter/gradient_bottom = Color(0, 0, 0, 0.2)
+shader_parameter/enable_texture = true
+shader_parameter/texture_scale = 1.0
+shader_parameter/texture_strength = 0.05
+shader_parameter/saturation = 0.8
+shader_parameter/brightness = -0.05
+shader_parameter/contrast = 1.2
+shader_parameter/smoothing = 0.5
 
 [node name="BaseMeleeEnemy" type="CharacterBody2D" groups=["Enemies"]]
 motion_mode = 1
@@ -56,6 +80,7 @@ shape = SubResource("RectangleShape2D_8pnp1")
 shape = SubResource("RectangleShape2D_mgdpr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_u32s4")
 texture = ExtResource("2_mcomt")
 
 [node name="StateChart" type="Node" parent="."]
