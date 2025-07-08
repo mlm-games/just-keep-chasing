@@ -1,101 +1,111 @@
-name: Build and Release Game
+name: Release builds
 
 on:
-  push:
-    branches: '**'
-  pull_request:
-    branches: '**'
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Version number (e.g., 1.0.0)'
+      version_name:
+        description: 'Version name (e.g., 0.1.2)'
         required: true
-        type: string
-      upload_releases:
-        description: 'Upload to GitHub releases'
+      auto_detect_platforms:
+        description: 'Auto-detect all platforms from export_presets.cfg'
         required: false
         default: true
         type: boolean
-      mark_prerelease:
-        description: 'Mark as pre-release'
+      manual_platforms:
+        description: 'Manual platform selection (comma-separated, only used if auto-detect is false)'
+        required: false
+        default: 'Windows Desktop,Linux/X11,macOS,Android arm32,Android arm64,Web'
+        type: string
+      upload_to_itch:
+        description: 'Upload exported files to itch.io?'
+        required: false
+        default: true
+        type: boolean
+      auto_generate_changelog:
+        description: 'Auto-generate changelog from commits'
         required: false
         default: false
         type: boolean
-      upload_to_itch:
-        description: 'Upload to itch.io'
-        required: false
-        default: true
+      mark_prerelease:
+        description: 'Mark as prerelease'
+        required: true
+        default: false
         type: boolean
 
-env:
-  ITCH_GAME_PATH: 'ragebreaker/just-keep-chasing'
-  BUILD_OUTPUT_DIR: '${{ github.workspace }}/builds'
-
 jobs:
-  # Detect export presets from the project
+  # Detect platforms from export_presets.cfg
   detect-platforms:
     runs-on: ubuntu-latest
     outputs:
+      platforms: ${{ steps.detect.outputs.platforms }}
       matrix: ${{ steps.detect.outputs.matrix }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         
-      - name: Detect export presets
+      - name: Detect or parse platforms
         id: detect
         run: |
-          # Extract preset names from export_presets.cfg
-          if [ ! -f "export_presets.cfg" ]; then
-            echo "Error: export_presets.cfg not found"
-            exit 1
+          if [ "${{ inputs.auto_detect_platforms }}" == "true" ]; then
+            echo "Auto-detecting platforms from export_presets.cfg..."
+            
+            if [ ! -f "export_presets.cfg" ]; then
+              echo "Error: export_presets.cfg not found"
+              exit 1
+            fi
+            
+            # Extract preset names from export_presets.cfg
+            platforms=$(grep -E '^name="[^"]*"' export_presets.cfg | sed 's/name="\([^"]*\)"/\1/')
+            
+            # Convert to JSON array for matrix
+            platforms_json=$(echo "$platforms" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+            
+          else
+            echo "Using manual platform selection..."
+            # Parse comma-separated input into array
+            platforms_json=$(echo "${{ inputs.manual_platforms }}" | jq -R -c 'split(",") | map(ltrimstr(" ") | rtrimstr(" "))')
+            platforms=$(echo "${{ inputs.manual_platforms }}" | tr ',' '\n')
           fi
           
-          # Parse preset names and create matrix
-          presets=$(grep -E '^name="[^"]*"' export_presets.cfg | sed 's/name="\([^"]*\)"/\1/')
+          echo "Selected platforms:"
+          echo "$platforms"
           
-          # Create JSON matrix
-          matrix_json='{"include":['
+          # Create matrix JSON with platform details
+          matrix_json='{"platform":['
           first=true
           
-          while IFS= read -r preset; do
-            if [ -n "$preset" ]; then
-              # Determine artifact name and extension based on preset name
+          while IFS= read -r platform; do
+            if [ -n "$platform" ]; then
+              # Determine artifact name based on platform
               artifact_name=""
-              file_extension=""
-              
-              case "$preset" in
+              case "$platform" in
                 *"Windows"*)
                   artifact_name="windows"
-                  file_extension=".exe"
                   ;;
                 *"Linux/X11 arm64"*|*"Linux arm64"*)
                   artifact_name="linux-arm64"
-                  file_extension=".arm64"
                   ;;
                 *"Linux"*|*"X11"*)
                   artifact_name="linux-x64"
-                  file_extension=".x86_64"
                   ;;
                 *"macOS"*|*"Mac"*)
                   artifact_name="macos"
-                  file_extension=".zip"
                   ;;
                 *"Android x86"*)
                   artifact_name="android-x86"
-                  file_extension=".apk"
                   ;;
-                *"Android"*)
-                  artifact_name="android"
-                  file_extension=".apk"
+                *"Android arm32"*)
+                  artifact_name="android-arm32"
+                  ;;
+                *"Android arm64"*)
+                  artifact_name="android-arm64"
                   ;;
                 *"Web"*|*"HTML"*)
                   artifact_name="web"
-                  file_extension=".html"
                   ;;
                 *)
                   # Generic fallback
-                  artifact_name=$(echo "$preset" | tr '[:upper:]' '[:lower:]' | tr ' /' '-')
-                  file_extension=""
+                  artifact_name=$(echo "$platform" | tr '[:upper:]' '[:lower:]' | tr ' /' '-')
                   ;;
               esac
               
@@ -104,278 +114,215 @@ jobs:
               fi
               first=false
               
-              matrix_json+="{\"platform\":\"$preset\",\"artifact_name\":\"$artifact_name\",\"file_extension\":\"$file_extension\"}"
+              matrix_json+="{\"name\":\"$platform\",\"artifact_name\":\"$artifact_name\"}"
             fi
-          done <<< "$presets"
+          done <<< "$platforms"
           
           matrix_json+=']}'
           
-          echo "Detected platforms: $presets"
-          echo "Matrix JSON: $matrix_json"
+          echo "platforms=$platforms_json" >> $GITHUB_OUTPUT
           echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
 
-  # Generate release notes if this is a release
-  prepare-release:
-    if: github.event_name == 'workflow_dispatch'
+  commit-vercode-changes:
     runs-on: ubuntu-latest
-    outputs:
-      release-notes: ${{ steps.notes.outputs.release-notes }}
-      release-name: ${{ steps.notes.outputs.release-name }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Generate Release Notes
-        id: notes
-        uses: mlm-games/release-notes-generator@main
-        with:
-          version: ${{ inputs.version }}
-          changelog-path: 'CHANGELOG.md'
-          format: '- {{subject}} by @{{author}}'
-          exclude-patterns: 'chore:,ci:,docs:,build:,Merge pull request'
-          auto-commit: 'true'
-          commit-message: 'chore: update changelog for v${{ inputs.version }}'
-
-  build:
-    runs-on: ubuntu-latest
-    needs: [detect-platforms, prepare-release]
-    if: always() && needs.detect-platforms.result == 'success' && (needs.prepare-release.result == 'success' || needs.prepare-release.result == 'skipped')
     permissions:
       contents: write
-    
+    outputs:
+      new_version_code: ${{ steps.prev_version.outputs.new_code }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get Previous Version Code
+        id: prev_version
+        run: |
+          PREV_CODE=$(grep -o 'version/code=[0-9]*' export_presets.cfg | head -1 | cut -d= -f2)
+          NEW_CODE=$((PREV_CODE + 10))
+          echo "prev_code=${PREV_CODE}" >> $GITHUB_OUTPUT
+          echo "new_code=${NEW_CODE}" >> $GITHUB_OUTPUT
+
+      - name: Generate Release Notes
+        uses: mlm-games/release-notes-generator@main
+        with:
+          version: ${{ inputs.version_name }}
+          changelog-path: 'CHANGELOG.md'
+          version-file-path: './fastlane/metadata/android/en-US/changelogs/${{ steps.prev_version.outputs.new_code }}.txt'
+          version-code: '${{ steps.prev_version.outputs.new_code }}'
+          exclude-patterns: 'Update ,Merge ,Auto-generate changelog'
+          auto-commit: 'true'
+          commit-message: 'Update release notes for v{{version}}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Version Information
+        run: |
+          echo "Previous version code: ${{ steps.prev_version.outputs.prev_code }}"
+          echo "New version code: ${{ steps.prev_version.outputs.new_code }}"
+
+          VERSION_CODE=${{ steps.prev_version.outputs.new_code }}
+
+          # Update version name
+          sed -i "/version\/name=\".*\"/s//version\/name=\"${{ inputs.version_name }}\"/" export_presets.cfg
+
+          # Update version codes
+          sed -i "0,/version\/code=[0-9]*/s//version\/code=$VERSION_CODE/" export_presets.cfg
+          sed -i "0,/version\/code=[0-9]*/! {0,/version\/code=[0-9]*/s//version\/code=$((VERSION_CODE+1))/}" export_presets.cfg
+          sed -i "$(grep -n 'version/code=' export_presets.cfg | tail -n1 | cut -d: -f1),\$s/version\/code=[0-9]*/version\/code=$((VERSION_CODE+2))/" export_presets.cfg
+
+      - name: Commit Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Actions"
+          git pull
+          git add export_presets.cfg
+          git add ./fastlane/metadata/android/en-US/changelogs/${{ steps.prev_version.outputs.new_code }}.txt || true
+          git commit -m "Update version to ${{ inputs.version_name }} (${{ steps.prev_version.outputs.new_code }})"
+          git push
+
+  prepare-and-build:
+    needs: [detect-platforms, commit-vercode-changes]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       matrix: ${{ fromJson(needs.detect-platforms.outputs.matrix) }}
       fail-fast: false
+      max-parallel: 1
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          lfs: true
+      - uses: actions/checkout@v4
 
-      - name: Setup Git LFS
+      - name: git pull
+        shell: bash
         run: |
-          git lfs install
-          git lfs pull
+          git pull
 
-      - name: Cache Godot files
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.local/share/godot/
-            ~/.config/godot/
-            .godot/
-          key: ${{ runner.os }}-godot-${{ matrix.platform }}-${{ hashFiles('project.godot') }}
-          restore-keys: |
-            ${{ runner.os }}-godot-${{ matrix.platform }}-
-            ${{ runner.os }}-godot-
-
-      - name: Build game for ${{ matrix.platform }}
+      - name: Build
         id: build
         uses: mlm-games/godot-build-action@main
         with:
-          GODOT_VER: ''  # Empty string = use latest version
-          GODOT_PREVIEW_BUILDS: false
-          EXPORT_PRESET_NAME: ${{ matrix.platform }}
-          ITCH_USER_SLASH_GAME: ${{ env.ITCH_GAME_PATH }}
-          BUTLER_UPLOAD: ${{ github.event_name == 'workflow_dispatch' && inputs.upload_to_itch || false }}
-          INSTALL_BLENDER: false
-          IMPORT_TIMEOUT: '60'
-          VERBOSE_IMPORT: true
+          EXPORT_PRESET_NAME: ${{ matrix.platform.name }}
+          ITCH_USER_SLASH_GAME: "ragebreaker/just-keep-chasing"
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
           KEYSTORE_PASSPHRASE: ${{ secrets.KEYSTORE_PASSPHRASE }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          BUTLER_UPLOAD: ${{ inputs.upload_to_itch }}
+        continue-on-error: true
 
       - name: Prepare artifacts
         id: prepare
+        shell: bash
         run: |
-          # Find the actual exported file
-          cd "${{ env.BUILD_OUTPUT_DIR }}"
+          cd ${{ github.workspace }}/builds/
           
-          # Use Python to parse the export_presets.cfg more reliably
-          export_path=$(python3 -c "
-          import re
-          with open('../export_presets.cfg', 'r') as f:
-              content = f.read()
+          # Find the exported file
+          exported_file=$(find . -type f -name "*" | grep -v "SHA256SUMS.txt" | head -1)
           
-          # Find the preset section
-          preset_name = '''${{ matrix.platform }}'''
-          pattern = rf'name=\"{re.escape(preset_name)}\".*?export_path=\"([^\"]+)\"'
-          match = re.search(pattern, content, re.DOTALL)
-          
-          if match:
-              print(match.group(1))
-          ")
-          
-          if [ -n "$export_path" ]; then
-            # Extract just the filename
-            export_filename=$(basename "$export_path")
-            echo "Looking for exported file: $export_filename"
+          if [ -n "$exported_file" ]; then
+            # Determine final artifact name with version
+            filename=$(basename "$exported_file")
             
-            # Find the file
-            exported_file=$(find . -name "$export_filename" -type f | head -1)
-            
-            if [ -n "$exported_file" ]; then
-              echo "Found exported file: $exported_file"
-              
-              # Determine version suffix
-              if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-                version_suffix="v${{ inputs.version }}"
-              else
-                version_suffix="$(echo ${{ github.sha }} | cut -c1-7)"
-              fi
-              
+            # Handle web builds specially
+            if [[ "${{ matrix.platform.name }}" == *"Web"* ]] || [[ "${{ matrix.platform.name }}" == *"HTML"* ]]; then
               # For web builds, create a zip
-              if [[ "${{ matrix.platform }}" == *"Web"* ]] || [[ "${{ matrix.platform }}" == *"HTML"* ]]; then
-                web_dir=$(dirname "$exported_file")
-                cd "$web_dir"
-                zip -r "../${{ matrix.artifact_name }}-${version_suffix}.zip" .
-                cd ..
-                artifact_file="${{ matrix.artifact_name }}-${version_suffix}.zip"
-              else
-                # For other platforms, rename the file with version
-                # Get the file extension properly
-                filename=$(basename "$exported_file")
-                if [[ "$filename" == *.* ]]; then
-                  extension="${filename##*.}"
-                  artifact_file="${{ matrix.artifact_name }}-${version_suffix}.${extension}"
-                else
-                  # No extension (like Linux binaries)
-                  artifact_file="${{ matrix.artifact_name }}-${version_suffix}"
-                fi
-                cp "$exported_file" "$artifact_file"
-              fi
-              
-              echo "artifact_file=$artifact_file" >> $GITHUB_OUTPUT
-              echo "artifact_path=${{ env.BUILD_OUTPUT_DIR }}/$artifact_file" >> $GITHUB_OUTPUT
+              web_dir=$(dirname "$exported_file")
+              cd "$web_dir"
+              zip -r "../${{ matrix.platform.artifact_name }}-v${{ inputs.version_name }}.zip" .
+              cd ..
+              artifact_file="${{ matrix.platform.artifact_name }}-v${{ inputs.version_name }}.zip"
             else
-              echo "Error: Could not find exported file: $export_filename"
-              echo "Contents of build directory:"
-              find . -type f -name "*" | head -20
-              exit 1
+              # For other platforms, rename with version
+              if [[ "$filename" == *.* ]]; then
+                extension="${filename##*.}"
+                artifact_file="${{ matrix.platform.artifact_name }}-v${{ inputs.version_name }}.${extension}"
+              else
+                # No extension (like Linux binaries)
+                artifact_file="${{ matrix.platform.artifact_name }}-v${{ inputs.version_name }}"
+              fi
+              mv "$exported_file" "$artifact_file"
             fi
-          else
-            echo "Error: Could not determine export path for preset '${{ matrix.platform }}'"
-            exit 1
+            
+            echo "artifact_file=$artifact_file" >> $GITHUB_OUTPUT
+            echo "artifact_path=${{ github.workspace }}/builds/$artifact_file" >> $GITHUB_OUTPUT
           fi
+          
+          git pull
 
-
-      - name: Upload build artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact_name }}
+          name: ${{ matrix.platform.artifact_name }}-build
           path: ${{ steps.prepare.outputs.artifact_path }}
-          retention-days: 30
 
-  # Create release after all builds complete
-  create-release:
-    if: |
-      github.event_name == 'workflow_dispatch' && 
-      inputs.upload_releases
-    needs: [detect-platforms, prepare-release, build]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: release-artifacts
-
-      - name: Prepare release files
+      - name: Generate SHA256 checksums
+        shell: bash
         run: |
-          # Create release directory
-          mkdir -p release-files
-          
-          # Move all artifacts to release directory (they're already properly named)
-          find release-artifacts -type f -exec mv {} release-files/ \;
-          
-          # List files for debugging
-          echo "Release files:"
-          ls -la release-files/
+          cd ${{ github.workspace }}/builds/
 
-      - name: Create GitHub Release
+          # Create checksums file
+          echo "# SHA256 Checksums for ${{ matrix.platform.name }}" > SHA256SUMS.txt
+          echo "Generated on $(date)" >> SHA256SUMS.txt
+          echo "" >> SHA256SUMS.txt
+
+          # Calculate checksums for each file
+          for file in *; do
+            if [ -f "$file" ] && [ "$file" != "SHA256SUMS.txt" ]; then
+              HASH=$(sha256sum "$file" | cut -d ' ' -f 1)
+              echo "$HASH  $file" >> SHA256SUMS.txt
+              echo "File: $file"
+              echo "SHA256: $HASH"
+            fi
+          done
+        continue-on-error: true
+
+      - name: Upload to Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ inputs.version }}
-          name: ${{ needs.prepare-release.outputs.release-name || format('Release v{0}', inputs.version) }}
-          body: |
-            ## 🎮 Just Keep Chasing - v${{ inputs.version }}
-            
-            ### 📝 Release Notes
-            ${{ needs.prepare-release.outputs.release-notes }}
-            
-            ### 📦 Downloads
-            Download the appropriate file for your platform from the assets below.
-            
-            ### 🚀 Installation
-            - **Windows**: Download the `.exe` file and run it
-            - **Linux**: Download the appropriate file, make it executable with `chmod +x`, then run it
-            - **macOS**: Download and extract the `.zip` file, then run the app
-            - **Android**: Download and install the `.apk` file
-            - **Web**: Download and extract the `.zip` file, then host on a web server
-            
-            ---
-            Full changelog: [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
-          files: release-files/*
+          files: ${{ steps.prepare.outputs.artifact_path }}
+          name: ${{ inputs.version_name }}
+          tag_name: ${{ inputs.version_name }}
+          body_path: ./fastlane/metadata/android/en-US/changelogs/${{ needs.commit-vercode-changes.outputs.new_version_code }}.txt
           prerelease: ${{ inputs.mark_prerelease }}
-          draft: false
-
-      - name: Update major version tag
-        run: |
-          git config user.name "actions-user"
-          git config user.email "temp@example.com"
-          MAJOR_VERSION=$(echo "${{ inputs.version }}" | cut -d. -f1)
-          git tag -fa "v${MAJOR_VERSION}" -m "Update major version tag"
-          git push origin "v${MAJOR_VERSION}" --force
+          generate_release_notes: true
+        continue-on-error: true
 
   # Summary job
   summary:
     if: always()
-    needs: [detect-platforms, build, create-release]
+    needs: [detect-platforms, prepare-and-build]
     runs-on: ubuntu-latest
     steps:
       - name: Build Summary
         run: |
-          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## Release Build Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "### Release Information" >> $GITHUB_STEP_SUMMARY
-            echo "- **Version**: v${{ inputs.version }}" >> $GITHUB_STEP_SUMMARY
-            echo "- **Pre-release**: ${{ inputs.mark_prerelease }}" >> $GITHUB_STEP_SUMMARY
-            echo "- **Upload to GitHub**: ${{ inputs.upload_releases }}" >> $GITHUB_STEP_SUMMARY
-            echo "- **Upload to itch.io**: ${{ inputs.upload_to_itch }}" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-          fi
+          echo "### Release Information" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version**: ${{ inputs.version_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Pre-release**: ${{ inputs.mark_prerelease }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Upload to itch.io**: ${{ inputs.upload_to_itch }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Platform Detection**: ${{ inputs.auto_detect_platforms && 'Automatic' || 'Manual' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           
-          echo "### Detected Platforms" >> $GITHUB_STEP_SUMMARY
-          echo "Platforms were automatically detected from export_presets.cfg" >> $GITHUB_STEP_SUMMARY
+          echo "### Build Platforms" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ inputs.auto_detect_platforms }}" == "true" ]; then
+            echo "Platforms were automatically detected from export_presets.cfg" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Platforms were manually specified" >> $GITHUB_STEP_SUMMARY
+          fi
           echo "" >> $GITHUB_STEP_SUMMARY
           
           echo "### Build Status" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ needs.build.result }}" == "success" ]; then
+          if [ "${{ needs.prepare-and-build.result }}" == "success" ]; then
             echo "✅ All builds completed successfully" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ Some builds failed" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ Some builds may have failed (check individual job logs)" >> $GITHUB_STEP_SUMMARY
           fi
           
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Artifacts" >> $GITHUB_STEP_SUMMARY
-          echo "Build artifacts are available in the [Actions artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) section." >> $GITHUB_STEP_SUMMARY
-          
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ "${{ inputs.upload_releases }}" == "true" ]; then
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "### Release" >> $GITHUB_STEP_SUMMARY
-            echo "GitHub Release: [v${{ inputs.version }}](https://github.com/${{ github.repository }}/releases/tag/v${{ inputs.version }})" >> $GITHUB_STEP_SUMMARY
-          fi
-  
+          echo "### Release" >> $GITHUB_STEP_SUMMARY
+          echo "GitHub Release: [${{ inputs.version_name }}](https://github.com/${{ github.repository }}/releases/tag/${{ inputs.version_name }})" >> $GITHUB_STEP_SUMMARY
