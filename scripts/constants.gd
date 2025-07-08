@@ -51,3 +51,17 @@ const OPERATION_VERBS = {
 	CharacterStats.Operation.MULTIPLY: "Multiplies",
 	CharacterStats.Operation.REPLACE: "Sets",
 }
+
+
+const COUNT_STAT_KEYS = {
+	damage_dealt = "damage_dealt",
+	damage_taken = "damage_taken",
+	enemies_killed = "enemies_killed",
+	powerups_used = "powerups_used",
+	games_won = "games_won",
+	games_played = "games_played",
+	health_healed = "health_healed",
+	mito_energy_collected = "mito_energy_collected",
+	longest_run_time = "longest_run_time",
+	bullets_fired = "bullets_fired",
+}
