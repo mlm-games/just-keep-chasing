@@ -34,7 +34,7 @@ func unpause() -> void:
 	page_animator.animate_out(_on_unpause_animation_finished)
 
 func _on_unpause_animation_finished() -> void:
-	get_tree().paused = false
+	if UIManager.ui_stack.is_empty(): get_tree().paused = false
 	hide()
 
 func _on_resume_button_pressed() -> void:
