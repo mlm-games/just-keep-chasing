@@ -14,7 +14,7 @@ on:
       manual_platforms:
         description: 'Manual platform selection (comma-separated, only used if auto-detect is false)'
         required: false
-        default: 'Windows Desktop,Linux/X11,macOS,Android arm32,Android arm64,Web'
+        default: 'Windows Desktop,Linux/X11,macOS,Android,Web'
         type: string
       upload_to_itch:
         description: 'Upload exported files to itch.io?'
@@ -54,74 +54,183 @@ jobs:
               exit 1
             fi
             
-            # Extract preset names from export_presets.cfg
-            platforms=$(grep -E '^name="[^"]*"' export_presets.cfg | sed 's/name="\([^"]*\)"/\1/')
+            # Parse export_presets.cfg to extract platform info
+            python3 - <<'EOF' > platform_matrix.json
+import re
+import json
+
+with open('export_presets.cfg', 'r') as f:
+    content = f.read()
+
+# Find all presets
+preset_pattern = r'\[preset\.(\d+)\].*?(?=\[preset\.\d+\]|\Z)'
+presets = re.findall(preset_pattern, content, re.DOTALL)
+
+platforms = []
+matrix_entries = []
+
+for i, preset_content in enumerate(presets):
+    # Extract name
+    name_match = re.search(r'name="([^"]+)"', preset_content)
+    if not name_match:
+        continue
+    
+    name = name_match.group(1)
+    
+    # Extract export path
+    export_path_match = re.search(r'export_path="([^"]+)"', preset_content)
+    export_path = export_path_match.group(1) if export_path_match else ""
+    
+    # Skip if no export path
+    if not export_path:
+        continue
+    
+    # Extract just the filename from the export path
+    export_filename = export_path.split('/')[-1]
+    
+    # Determine artifact name based on platform name
+    artifact_name = ""
+    is_web = False
+    
+    if "Windows" in name:
+        artifact_name = "windows"
+    elif "Linux/X11 arm64" in name or "Linux arm64" in name:
+        artifact_name = "linux-arm64"
+    elif "Linux" in name or "X11" in name:
+        artifact_name = "linux-x64"
+    elif "macOS" in name or "Mac" in name:
+        artifact_name = "macos"
+    elif "Android x86" in name:
+        artifact_name = "android-x86"
+    elif "Android arm32" in name:
+        artifact_name = "android-arm32"
+    elif "Android arm64" in name:
+        artifact_name = "android-arm64"
+    elif "Android" in name:
+        artifact_name = "android"
+    elif "Web" in name or "HTML" in name:
+        artifact_name = "web"
+        is_web = True
+    else:
+        artifact_name = name.lower().replace(' ', '-').replace('/', '-')
+    
+    platforms.append(name)
+    matrix_entries.append({
+        "name": name,
+        "artifact_name": artifact_name,
+        "export_path": export_path,
+        "export_filename": export_filename,
+        "is_web": is_web
+    })
+
+# Output the results
+output = {
+    "platforms": platforms,
+    "matrix": {"platform": matrix_entries}
+}
+
+print(json.dumps(output, indent=2))
+EOF
             
-            # Convert to JSON array for matrix
-            platforms_json=$(echo "$platforms" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+            # Extract the results
+            platforms_json=$(cat platform_matrix.json | jq -c '.platforms')
+            matrix_json=$(cat platform_matrix.json | jq -c '.matrix')
+            
+            echo "Detected platforms:"
+            cat platform_matrix.json | jq '.platforms[]'
             
           else
             echo "Using manual platform selection..."
-            # Parse comma-separated input into array
-            platforms_json=$(echo "${{ inputs.manual_platforms }}" | jq -R -c 'split(",") | map(ltrimstr(" ") | rtrimstr(" "))')
-            platforms=$(echo "${{ inputs.manual_platforms }}" | tr ',' '\n')
+            # For manual selection, we need to match against export_presets.cfg
+            platforms_array=$(echo "${{ inputs.manual_platforms }}" | tr ',' '\n' | sed 's/^ *//;s/ *$//')
+            
+            # Create matrix for manual platforms
+            python3 - <<'EOF' > platform_matrix.json
+import re
+import json
+import sys
+
+manual_platforms = """$platforms_array""".strip().split('\n')
+
+with open('export_presets.cfg', 'r') as f:
+    content = f.read()
+
+# Find all presets
+preset_pattern = r'\[preset\.(\d+)\].*?(?=\[preset\.\d+\]|\Z)'
+presets = re.findall(preset_pattern, content, re.DOTALL)
+
+platforms = []
+matrix_entries = []
+
+for platform_name in manual_platforms:
+    # Find matching preset
+    for preset_content in presets:
+        name_match = re.search(r'name="([^"]+)"', preset_content)
+        if not name_match:
+            continue
+        
+        preset_name = name_match.group(1)
+        
+        # Check if this preset matches the manual platform
+        if platform_name.strip() == preset_name:
+            # Extract export path
+            export_path_match = re.search(r'export_path="([^"]+)"', preset_content)
+            export_path = export_path_match.group(1) if export_path_match else ""
+            
+            if not export_path:
+                continue
+            
+            export_filename = export_path.split('/')[-1]
+            
+            # Determine artifact name
+            artifact_name = ""
+            is_web = False
+            
+            if "Windows" in preset_name:
+                artifact_name = "windows"
+            elif "Linux/X11 arm64" in preset_name:
+                artifact_name = "linux-arm64"
+            elif "Linux" in preset_name:
+                artifact_name = "linux-x64"
+            elif "macOS" in preset_name:
+                artifact_name = "macos"
+            elif "Android x86" in preset_name:
+                artifact_name = "android-x86"
+            elif "Android" in preset_name:
+                artifact_name = "android"
+            elif "Web" in preset_name:
+                artifact_name = "web"
+                is_web = True
+            else:
+                artifact_name = preset_name.lower().replace(' ', '-').replace('/', '-')
+            
+            platforms.append(preset_name)
+            matrix_entries.append({
+                "name": preset_name,
+                "artifact_name": artifact_name,
+                "export_path": export_path,
+                "export_filename": export_filename,
+                "is_web": is_web
+            })
+            break
+
+output = {
+    "platforms": platforms,
+    "matrix": {"platform": matrix_entries}
+}
+
+print(json.dumps(output, indent=2))
+EOF
+            
+            platforms_json=$(cat platform_matrix.json | jq -c '.platforms')
+            matrix_json=$(cat platform_matrix.json | jq -c '.matrix')
           fi
-          
-          echo "Selected platforms:"
-          echo "$platforms"
-          
-          # Create matrix JSON with platform details
-          matrix_json='{"platform":['
-          first=true
-          
-          while IFS= read -r platform; do
-            if [ -n "$platform" ]; then
-              # Determine artifact name based on platform
-              artifact_name=""
-              case "$platform" in
-                *"Windows"*)
-                  artifact_name="windows"
-                  ;;
-                *"Linux/X11 arm64"*|*"Linux arm64"*)
-                  artifact_name="linux-arm64"
-                  ;;
-                *"Linux"*|*"X11"*)
-                  artifact_name="linux-x64"
-                  ;;
-                *"macOS"*|*"Mac"*)
-                  artifact_name="macos"
-                  ;;
-                *"Android x86"*)
-                  artifact_name="android-x86"
-                  ;;
-                *"Android arm32"*)
-                  artifact_name="android-arm32"
-                  ;;
-                *"Android arm64"*)
-                  artifact_name="android-arm64"
-                  ;;
-                *"Web"*|*"HTML"*)
-                  artifact_name="web"
-                  ;;
-                *)
-                  # Generic fallback
-                  artifact_name=$(echo "$platform" | tr '[:upper:]' '[:lower:]' | tr ' /' '-')
-                  ;;
-              esac
-              
-              if [ "$first" = false ]; then
-                matrix_json+=','
-              fi
-              first=false
-              
-              matrix_json+="{\"name\":\"$platform\",\"artifact_name\":\"$artifact_name\"}"
-            fi
-          done <<< "$platforms"
-          
-          matrix_json+=']}'
           
           echo "platforms=$platforms_json" >> $GITHUB_OUTPUT
           echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
+          
+          # Clean up
+          rm -f platform_matrix.json
 
   commit-vercode-changes:
     runs-on: ubuntu-latest
@@ -166,10 +275,28 @@ jobs:
           # Update version name
           sed -i "/version\/name=\".*\"/s//version\/name=\"${{ inputs.version_name }}\"/" export_presets.cfg
 
-          # Update version codes
-          sed -i "0,/version\/code=[0-9]*/s//version\/code=$VERSION_CODE/" export_presets.cfg
-          sed -i "0,/version\/code=[0-9]*/! {0,/version\/code=[0-9]*/s//version\/code=$((VERSION_CODE+1))/}" export_presets.cfg
-          sed -i "$(grep -n 'version/code=' export_presets.cfg | tail -n1 | cut -d: -f1),\$s/version\/code=[0-9]*/version\/code=$((VERSION_CODE+2))/" export_presets.cfg
+          # Update version codes for Android presets
+          # This updates each Android preset's version code incrementally
+          python3 - <<'EOF'
+import re
+
+with open('export_presets.cfg', 'r') as f:
+    content = f.read()
+
+# Find all Android presets and update their version codes
+preset_pattern = r'(\[preset\.\d+\].*?platform="Android".*?)version/code=(\d+)'
+matches = list(re.finditer(preset_pattern, content, re.DOTALL))
+
+version_code = ${{ steps.prev_version.outputs.new_code }}
+
+for i, match in enumerate(matches):
+    old_text = match.group(0)
+    new_text = match.group(1) + f'version/code={version_code + i}'
+    content = content.replace(old_text, new_text)
+
+with open('export_presets.cfg', 'w') as f:
+    f.write(content)
+EOF
 
       - name: Commit Changes
         run: |
@@ -204,7 +331,7 @@ jobs:
         uses: mlm-games/godot-build-action@main
         with:
           EXPORT_PRESET_NAME: ${{ matrix.platform.name }}
-          ITCH_USER_SLASH_GAME: "ragebreaker/just-keep-chasing"
+          ITCH_USER_SLASH_GAME: "ragebreaker/burger-bang"
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
           KEYSTORE_PASSPHRASE: ${{ secrets.KEYSTORE_PASSPHRASE }}
@@ -219,23 +346,50 @@ jobs:
         run: |
           cd ${{ github.workspace }}/builds/
           
-          # Find the exported file
-          exported_file=$(find . -type f -name "*" | grep -v "SHA256SUMS.txt" | head -1)
+          echo "Looking for exported file: ${{ matrix.platform.export_filename }}"
+          echo "Expected in path: ${{ matrix.platform.export_path }}"
+          echo "Contents of builds directory:"
+          find . -type f -name "*" | head -20
           
-          if [ -n "$exported_file" ]; then
-            # Determine final artifact name with version
-            filename=$(basename "$exported_file")
+          # Initialize variables
+          artifact_file=""
+          artifact_path=""
+          
+          # Handle web exports specially
+          if [ "${{ matrix.platform.is_web }}" == "true" ]; then
+            echo "Processing web export..."
             
-            # Handle web builds specially
-            if [[ "${{ matrix.platform.name }}" == *"Web"* ]] || [[ "${{ matrix.platform.name }}" == *"HTML"* ]]; then
-              # For web builds, create a zip
-              web_dir=$(dirname "$exported_file")
-              cd "$web_dir"
+            # Web exports create a directory, not a single file
+            if [ -d "web" ] && [ "$(ls -A web)" ]; then
+              echo "Found web directory, creating zip..."
+              cd web
               zip -r "../${{ matrix.platform.artifact_name }}-v${{ inputs.version_name }}.zip" .
               cd ..
               artifact_file="${{ matrix.platform.artifact_name }}-v${{ inputs.version_name }}.zip"
+              artifact_path="${{ github.workspace }}/builds/$artifact_file"
             else
-              # For other platforms, rename with version
+              echo "Warning: No web directory found"
+            fi
+          else
+            # For non-web platforms, look for the specific exported file
+            # The export path might include subdirectories, so we need to handle that
+            export_filename="${{ matrix.platform.export_filename }}"
+            
+            # Try to find the exact file first
+            if [ -f "$export_filename" ]; then
+              exported_file="./$export_filename"
+            else
+              # If not found, search for it
+              exported_file=$(find . -name "$export_filename" -type f | head -1)
+            fi
+            
+            if [ -n "$exported_file" ] && [ -f "$exported_file" ]; then
+              echo "Found exported file: $exported_file"
+              
+              # Determine final artifact name with version
+              filename=$(basename "$exported_file")
+              
+              # Extract extension if present
               if [[ "$filename" == *.* ]]; then
                 extension="${filename##*.}"
                 artifact_file="${{ matrix.platform.artifact_name }}-v${{ inputs.version_name }}.${extension}"
@@ -243,22 +397,37 @@ jobs:
                 # No extension (like Linux binaries)
                 artifact_file="${{ matrix.platform.artifact_name }}-v${{ inputs.version_name }}"
               fi
-              mv "$exported_file" "$artifact_file"
+              
+              # Copy the file to the new name
+              cp "$exported_file" "$artifact_file"
+              artifact_path="${{ github.workspace }}/builds/$artifact_file"
+            else
+              echo "Warning: Could not find exported file: $export_filename"
             fi
-            
+          fi
+          
+          # Output results
+          if [ -n "$artifact_file" ] && [ -f "$artifact_file" ]; then
             echo "artifact_file=$artifact_file" >> $GITHUB_OUTPUT
-            echo "artifact_path=${{ github.workspace }}/builds/$artifact_file" >> $GITHUB_OUTPUT
+            echo "artifact_path=$artifact_path" >> $GITHUB_OUTPUT
+            echo "success=true" >> $GITHUB_OUTPUT
+            echo "Successfully prepared artifact: $artifact_file"
+          else
+            echo "success=false" >> $GITHUB_OUTPUT
+            echo "Failed to prepare artifact for ${{ matrix.platform.name }}"
           fi
           
           git pull
 
       - name: Upload Artifact
+        if: steps.prepare.outputs.success == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.platform.artifact_name }}-build
           path: ${{ steps.prepare.outputs.artifact_path }}
 
       - name: Generate SHA256 checksums
+        if: steps.prepare.outputs.success == 'true'
         shell: bash
         run: |
           cd ${{ github.workspace }}/builds/
@@ -268,18 +437,15 @@ jobs:
           echo "Generated on $(date)" >> SHA256SUMS.txt
           echo "" >> SHA256SUMS.txt
 
-          # Calculate checksums for each file
-          for file in *; do
-            if [ -f "$file" ] && [ "$file" != "SHA256SUMS.txt" ]; then
-              HASH=$(sha256sum "$file" | cut -d ' ' -f 1)
-              echo "$HASH  $file" >> SHA256SUMS.txt
-              echo "File: $file"
-              echo "SHA256: $HASH"
-            fi
-          done
-        continue-on-error: true
+          # Calculate checksum for the artifact
+          if [ -f "${{ steps.prepare.outputs.artifact_file }}" ]; then
+            HASH=$(sha256sum "${{ steps.prepare.outputs.artifact_file }}" | cut -d ' ' -f 1)
+            echo "$HASH  ${{ steps.prepare.outputs.artifact_file }}" >> SHA256SUMS.txt
+            echo "SHA256: $HASH"
+          fi
 
       - name: Upload to Release
+        if: steps.prepare.outputs.success == 'true'
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ steps.prepare.outputs.artifact_path }}
