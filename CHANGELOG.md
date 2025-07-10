@@ -1,3 +1,9 @@
+## v0.8.13
+
+- rm redundant #hacks, base_shotgun files, bullets inherit from base_data, Performance improvement for android (hopefully) by @mlm-games
+- add lighting, speed dropoff for bullets; reduce gun scan timer, add an instance manager to handle spawns by @mlm-games
+
+
 ## v0.8.11
 
 - use proper export presets by @mlm-studios
