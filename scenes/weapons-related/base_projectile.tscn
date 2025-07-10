@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b5x54mjk1mls0"]
+[gd_scene load_steps=5 format=3 uid="uid://b5x54mjk1mls0"]
 
 [ext_resource type="Script" uid="uid://06e8033heoyv" path="res://scenes/weapons-related/base_projectile.gd" id="1_unj85"]
 [ext_resource type="Texture2D" uid="uid://dpyum42uiw68i" path="res://assets/sprites/long_bullet.png" id="2_g2w41"]
+[ext_resource type="Texture2D" uid="uid://bvpq31reiyyrp" path="res://assets/sprites/projectile_light_texture.svg" id="3_g2w41"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2ap0v"]
 radius = 9.0
@@ -25,3 +26,10 @@ shape = SubResource("CircleShape2D_2ap0v")
 [node name="LifespanTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 100.0
+
+[node name="Light" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(1, 1)
+color = Color(1, 1, 0.396078, 1)
+energy = 3.59
+texture = ExtResource("3_g2w41")

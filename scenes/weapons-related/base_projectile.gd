@@ -11,11 +11,7 @@ var _pierced_enemies: int = 0
 
 @onready var _rand_spread : float = deg_to_rad(randf_range(-projectile_data.projectile_spread, projectile_data.projectile_spread))
 @onready var lifespan_timer: Timer = %LifespanTimer
-
-static func new_instance(data: ProjectileData) -> BaseProjectile:
-	var instance : BaseProjectile = data.base_scene.instantiate()
-	instance.projectile_data = data
-	return instance
+@onready var light: PointLight2D = %Light
 
 
 func _ready() -> void:
@@ -38,8 +34,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	var speed_dropoff_mult = projectile_data.projectile_speed_dropoff_curve.sample(travelled_distance/projectile_data.projectile_range)
 	direction = Vector2.RIGHT.rotated(rotation + _rand_spread)
-	position += direction * projectile_data.projectile_speed * delta
+	position += direction * projectile_data.projectile_speed * delta * speed_dropoff_mult
+	light.energy *= speed_dropoff_mult
 	travelled_distance += projectile_data.projectile_speed * delta
 	if travelled_distance > projectile_data.projectile_range:
 		queue_free()

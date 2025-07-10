@@ -43,5 +43,10 @@ unique_name_in_owner = true
 [node name="ReloadAudioPlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
 
+[node name="EnemyScanTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.2
+autostart = true
+
 [connection signal="area_entered" from="." to="." method="_on_base_weapon_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_base_weapon_area_exited"]

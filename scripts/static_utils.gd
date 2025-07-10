@@ -48,3 +48,17 @@ static func get_modifier_description(modifier: StatModifier) -> String:
 	
 	# Assemble the final string
 	return "%s %s by %s." % [operation_text, stat_name, value_text]
+
+
+static func get_gun_base_curve():
+	var curve = Curve.new()
+	
+	curve.add_point(Vector2.DOWN)
+	curve.add_point(Vector2.RIGHT)
+	
+	curve.point_count = 2
+
+static func duplicate_with_res_name(res: BaseData, incl_subres:= true) -> BaseData:
+	var dupli_res := res.duplicate(incl_subres)
+	dupli_res.resource_name = res.resource_name
+	return dupli_res

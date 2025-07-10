@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="projectile_light_texture.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="13.5625"
+     inkscape:cx="-7.483871"
+     inkscape:cy="32.847926"
+     inkscape:window-width="1536"
+     inkscape:window-height="902"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient2"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2"
+       id="linearGradient3"
+       x1="-5.3156752"
+       y1="10.667162"
+       x2="23.843121"
+       y2="10.667162"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(-1.3009107,0,0,1,31.664179,13.16129)" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path1"
+       style="fill:url(#linearGradient3);stroke:none;stroke-width:0.924486;stroke-linecap:round;stroke-linejoin:round;paint-order:fill markers stroke"
+       inkscape:transform-center-x="2.3065138"
+       inkscape:transform-center-y="-0.30878155"
+       d="M 6.0736453,7.0800781 C 16.047638,7.2269946 39.082915,19.669434 38.571004,25.548828 38.007025,32.026229 7.7351879,43.471084 0.64640823,39.904297 A 22.637044,17.400921 0 0 0 14.097622,24 22.637044,17.400921 0 0 0 1.7720007,8.5097656 C 2.2938792,8.03227 2.84865,7.6711909 3.4362518,7.4492188 4.1479566,7.1803656 5.0418526,7.0648799 6.0736453,7.0800781 Z" />
+  </g>
+</svg>

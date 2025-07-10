@@ -9,6 +9,7 @@ const RELOAD_LOOP_TIME = 0.5
 @onready var bullet_spawn_point: Marker2D = %BulletSpawnPoint
 @onready var reload_timer: Timer = %ReloadTimer
 @onready var fire_rate_timer: Timer = %FireRateTimer
+@onready var enemy_scan_timer: Timer = %EnemyScanTimer
 
 var _target_in_range: Array = []
 var tween: Tween
@@ -29,22 +30,28 @@ func _ready() -> void:
 	
 	reload_timer.wait_time = gun_data.reload_time
 	reload_timer.one_shot = true
-	reload_timer.connect("timeout", _onreload_timer_timeout)
+	reload_timer.timeout.connect(_onreload_timer_timeout)
 	
 	fire_rate_timer.wait_time = gun_data.fire_rate
 	fire_rate_timer.one_shot = true
-	fire_rate_timer.connect("timeout", _on_fire_rate_timer_timeout)
+	fire_rate_timer.timeout.connect(_on_fire_rate_timer_timeout)
 	
+	enemy_scan_timer.timeout.connect(_on_scan_enemy_timer_timeout)
 	
 
-func _physics_process(_delta: float) -> void:
-	#if !GameState.gameplay_options["use_auto_aim"]:
-		#manual_aim_at_target()
-		#return
+func _on_scan_enemy_timer_timeout() -> void:
 	if not _target_in_range.is_empty():
 		auto_aim_at_target()
 		if fire_rate_timer.is_stopped() and reload_timer.is_stopped():
 			fire_rate_timer.start()
+
+func _physics_process(_delta: float) -> void:
+	pass
+	#if !GameState.gameplay_options["use_auto_aim"]:
+		#manual_aim_at_target()
+		#return
+
+
 
 func spawn_bullet() -> void:
 	if ammo > 0:
@@ -53,20 +60,10 @@ func spawn_bullet() -> void:
 		
 		%Sprite2D.rotation_degrees = 0
 		for _i in range(gun_data.bullets_per_shot):
-			var bullet_data: ProjectileData = gun_data.bullet.duplicate(true)
-			if get_parent() is Player:
-				bullet_data.projectile_damage *= CharacterStats.get_stat(CharacterStats.Stats.PLAYER_DAMAGE_MULT)
-				bullet_data.projectile_damage += CharacterStats.get_stat(CharacterStats.Stats.RAW_DAMAGE_MOD)
-				#@warning_ignore("narrowing_conversion")
-				#bullet_data.projectile_range *= CharacterStats.get_stat(CharacterStats.Stats.TARGETTING_RANGE_MULT)
-				#bullet_data.projectile_speed *=
-			if get_parent() is BactEnemy:
-				bullet_data.projectile_damage += CharacterStats.get_stat(CharacterStats.Stats.RAW_GUN_ENEMY_DAMAGE_REDUCTION)
-				bullet_data.projectile_damage *= CharacterStats.get_stat(CharacterStats.Stats.GUN_ENEMY_DAMAGE_MULT)
-				#@warning_ignore("narrowing_conversion")
-				#bullet_data.projectile_range *= CharacterStats.get_stat(CharacterStats.Stats.GUN_ENEMY_TARGETTING_RANGE_MULT)
+			var bullet_data: ProjectileData = StaticUtils.duplicate_with_res_name(gun_data.bullet)
+			bullet_data.projectile_speed_dropoff_curve = gun_data.speed_dropoff_curve
 			StaticScreenEffects.camera_shake(gun_data.screen_shake_amplitude, gun_data.fire_rate) 
-			var bullet_instance : BaseProjectile = BaseProjectile.new_instance(bullet_data)
+			var bullet_instance : BaseProjectile = InstanceManager.new_projectile_instance(bullet_data, get_parent())
 			bullet_instance.global_position = bullet_spawn_point.global_position
 			bullet_instance.global_rotation_degrees = bullet_spawn_point.global_rotation_degrees + randf_range(-gun_data.bullet_spread, gun_data.bullet_spread)
 			RunData.projectile_root.add_child(bullet_instance)

@@ -12,6 +12,7 @@ class_name BaseData extends Resource
 			if Engine.is_editor_hint():
 				if temp_id != "" and id != temp_id:
 					id = temp_id
+		resource_name = temp_id
 		return id
 
 @export var local_to_scene : bool = false # Do not share stat upgrades

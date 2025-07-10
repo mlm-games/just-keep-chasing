@@ -11,7 +11,7 @@ class_name GunData extends BaseData
 @export var fire_audio: Array[AudioStream]
 @export var reload_audio: AudioStream
 @export var damage_dropoff_curve: Curve
-@export var speed_dropoff_curve: Curve
+@export var speed_dropoff_curve: Curve = preload("uid://bhoafm7ej7set")
 
 # Sprite properties
 @export var sprite_scale: Vector2 = Vector2(0.08, 0.08)

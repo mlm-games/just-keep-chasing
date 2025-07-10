@@ -52,6 +52,11 @@ const OPERATION_VERBS = {
 	CharacterStats.Operation.REPLACE: "Sets",
 }
 
+enum CharacterType {
+	ENEMY,
+	PLAYER
+}
+
 
 const COUNT_STAT_KEYS = {
 	damage_dealt = "damage_dealt",

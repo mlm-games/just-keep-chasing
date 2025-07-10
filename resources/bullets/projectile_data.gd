@@ -1,8 +1,7 @@
-class_name ProjectileData extends Resource
+class_name ProjectileData extends BaseData
 
 @export_group("Stats", "projectile_")
 @export var projectile_speed : float = 750
-#@export var projectile_speed_curve : Curve2D = 750
 @export var projectile_range : int = 1000
 @export var projectile_damage : float = -1
 @export var projectile_spread : float = 0
@@ -13,6 +12,7 @@ class_name ProjectileData extends Resource
 @export var projectile_max_pierce_count: int = 1
 @export var projectile_knockback_force: float = 0.0
 @export var projectile_stun_duration: float = 0.0
+var projectile_speed_dropoff_curve : Curve
 
 @export_group("Sprite Properties", "sprite_")
 @export var sprite_scale : Vector2 = Vector2(0.06, 0.17)

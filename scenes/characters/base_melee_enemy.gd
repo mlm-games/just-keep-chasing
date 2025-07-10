@@ -43,7 +43,7 @@ func set_data_values() -> void:
 	
 	if enemy_data_resource.gun: 
 		var enemy_gun: BaseGun = enemy_data_resource.gun.weapon_scene.instantiate()
-		enemy_data_resource.gun.bullet = enemy_data_resource.gun.bullet.duplicate(true)
+		enemy_data_resource.gun.bullet = StaticUtils.duplicate_with_res_name(enemy_data_resource.gun.bullet)
 		enemy_data_resource.gun.bullet.collision_shape_mask = 2 ## Target player
 		enemy_gun.gun_data = enemy_data_resource.gun
 		add_child(enemy_gun)
