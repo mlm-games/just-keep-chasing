@@ -9,10 +9,12 @@ const RELOAD_LOOP_TIME = 0.5
 @onready var bullet_spawn_point: Marker2D = %BulletSpawnPoint
 @onready var reload_timer: Timer = %ReloadTimer
 @onready var fire_rate_timer: Timer = %FireRateTimer
-@onready var enemy_scan_timer: Timer = %EnemyScanTimer
+@onready var closest_enemy_scan_timer: Timer = %ClosestEnemyScanTimer
 
-var _target_in_range: Array = []
+var _target_in_range: Array[Area2D] = []
+var closest_target : Area2D
 var tween: Tween
+
 
 @export var gun_data: GunData
 
@@ -29,28 +31,26 @@ func _ready() -> void:
 	#%ReloadAudioPlayer.stream = gun_data.fire_audio #TODO
 	
 	reload_timer.wait_time = gun_data.reload_time
-	reload_timer.one_shot = true
-	reload_timer.timeout.connect(_onreload_timer_timeout)
+	reload_timer.timeout.connect(_on_reload_timer_timeout)
 	
 	fire_rate_timer.wait_time = gun_data.fire_rate
-	fire_rate_timer.one_shot = true
+	fire_rate_timer.start()
 	fire_rate_timer.timeout.connect(_on_fire_rate_timer_timeout)
 	
-	enemy_scan_timer.timeout.connect(_on_scan_enemy_timer_timeout)
+	closest_enemy_scan_timer.timeout.connect(_on_scan_for_closest_enemy_timer_timeout)
 	
 
-func _on_scan_enemy_timer_timeout() -> void:
+func _physics_process(_delta: float) -> void:
 	if not _target_in_range.is_empty():
 		auto_aim_at_target()
-		if fire_rate_timer.is_stopped() and reload_timer.is_stopped():
-			fire_rate_timer.start()
-
-func _physics_process(_delta: float) -> void:
-	pass
 	#if !GameState.gameplay_options["use_auto_aim"]:
 		#manual_aim_at_target()
 		#return
 
+
+func _on_scan_for_closest_enemy_timer_timeout() -> void:
+	if not _target_in_range.is_empty():
+		closest_target = _get_closest_target()
 
 
 func spawn_bullet() -> void:
@@ -77,15 +77,17 @@ func reload() -> void:
 		return
 	reload_timer.start()
 
-func _onreload_timer_timeout() -> void:
+func _on_reload_timer_timeout() -> void:
 	ammo = gun_data.max_ammo
+	fire_rate_timer.start()
 
-func auto_aim_at_target() -> void:
+
+func _get_closest_target() -> Area2D:
 	_target_in_range = _target_in_range.filter(func(t): return is_instance_valid(t))
 
 	if _target_in_range.is_empty(): return
 	
-	var closest_target: Node2D = null
+	closest_target = null
 	var closest_dist_sq = INF # Use squared distance to avoid costly sqrt()
 	
 	for target in _target_in_range:
@@ -94,11 +96,17 @@ func auto_aim_at_target() -> void:
 			closest_dist_sq = dist_sq
 			closest_target = target
 	
-	if closest_target:
+	return closest_target
+
+func auto_aim_at_target() -> void:
+	closest_target = _get_closest_target()
+	if is_instance_valid(closest_target):
 		var direction = (closest_target.global_position - global_position).normalized()
 
 		rotation = lerp_angle(rotation, direction.angle(), CharacterStats.get_stat(CharacterStats.Stats.GUN_TARGETTING_SPEED))
 		rotation = wrapf(rotation, -PI/2, 3*PI/2)
+	else:
+		closest_target = _get_closest_target()
 
 func manual_aim_at_target() -> void:
 	var direction : Vector2 = GameState.shooting_joystick_direction
@@ -117,8 +125,10 @@ func _on_fire_rate_timer_timeout() -> void:
 		play_fire_animation()
 		spawn_bullet()
 		
-		if ammo <= 0:
-			reload()
+	if ammo <= 0:
+		if reload_timer.is_stopped(): reload()
+	else:
+		fire_rate_timer.start()
 
 func play_fire_animation() -> void:
 	if tween: 

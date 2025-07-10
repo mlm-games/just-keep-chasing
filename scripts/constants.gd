@@ -1,5 +1,20 @@
 class_name C #Constants
 
+# Common sounds
+	#button_hover,
+	#button_down,
+	#button_up,
+	#button_click,
+	#pickup_initial,
+	#pickup_collected,
+	#hit,
+	#lose,
+	#win,
+	#mouse_down,
+	#mouse_up,
+	#transition_in,
+	#transition_out,
+
 enum RARITY {
 	COMMON,
 	UNCOMMON,
@@ -54,7 +69,9 @@ const OPERATION_VERBS = {
 
 enum CharacterType {
 	ENEMY,
-	PLAYER
+	PLAYER,
+	PLAYER_FRIENDS,
+	ENEMY_MINIONS
 }
 
 
@@ -69,4 +86,13 @@ const COUNT_STAT_KEYS = {
 	mito_energy_collected = "mito_energy_collected",
 	longest_run_time = "longest_run_time",
 	bullets_fired = "bullets_fired",
+}
+
+
+enum COLLISION_LAYER_NAMES {
+	World,
+	Player,
+	Enemy,
+	Collectibles,
+	Friends
 }

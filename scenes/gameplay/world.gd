@@ -1,37 +1,16 @@
 #Fixed?: Gun rotating weirdly
 #HACK: Use prophyliptics to make anti-bodies/ buy anti-bodies?
 #hack: the final secret boss is the rogue multiplying xenobot (like how cancer cells are just rogue human cells) (could make a lore story based on this...)
-#HACK: can make an icon also for touchscreenbutton/changeGunButton
-#hack: (not imp due to diff bullet speeds) Changing bullet icons like nuclear throne will feel like bullets are doing different dmg
 #hack: Collision bouncing in the direction of collision direction for specific bullets? or a new bullet spawns from whom it last hit.
 #heartbeast video for making the sawblades balloon game (Collision bouncing in the direction of collision direction)
-#Powerups only in singleplayer
-# when new difficulty is unlocked for all kinds of viruses, achievement can be like: little did he know, the stronger ones were good at hiding 
+# when a new difficulty is unlocked for all kinds of viruses, achievement can be like: little did he know, the stronger ones were good at hiding (like real life)
 #hack:A gamemode, You can only move a certain amt in a certain amt of time, (experiment until its fun)
 #HACK: Player's gun doesnt slow down on slow_time powerup [upgraded! or an ultra augment (like after defeating bosses?]
 #TODO: Add a upgrade that makes you damage enemies on contact
-#TODO: Use backward curves for the bullets speed to decrease as time goes on...
-#hack: if memory available (>90%), let upgrades layer stay, or else free from memory.
-#HACK: Give a first timer tutorial where how T works is told by a video? and Add a fast moving enemy in the end so the player dies, and for every new gun he gets, he will defeat a new wave (previously not impossible, but insane)
-#TODO: Bazooka, destroys obstacles instantly?
-#  Show like every enemy change like infurry runner
-#hack: Add a non-heavy graphics type and normal type, if menu fps above 450 fps, use normal type?
-
-# Common sounds
-	#button_hover,
-	#button_down,
-	#button_up,
-	#button_click,
-	#pickup_initial,
-	#pickup_collected,
-	#hit,
-	#lose,
-	#win,
-	#mouse_down,
-	#mouse_up,
-	#transition_in,
-	#transition_out,
-
+#HACK: Give a first timer tutorial where how T works is told by a video? and Add a fast moving enemy in the end so the player dies, and for every new gun he gets, he will defeat a new wave (previously not impossible, but insane [sf2 ref?])
+#TODO: Bazooka destroys obstacles instantly?
+#  Show every enemy timer change like in furry runner
+#hack: Add a non-heavy graphics type and normal type, if menu fps is above 450 fps, use normal type?
 
 class_name World extends Node2D
 
@@ -42,10 +21,7 @@ const TRANSITION_DURATION = 0.3
 
 @onready var time_scale_tween: Tween
 
-@onready var animation_player := %AnimationPlayer
-#@onready var time_scale_tween: Tween
-
-
+@onready var animation_player : AnimationPlayer = %AnimationPlayer
 @onready var hud: HUD = %HUD
 @onready var out_of_view_spawn_location: PathFollow2D = %OutOfViewSpawnLocation
 @onready var player: Player = %Player
@@ -53,6 +29,7 @@ const TRANSITION_DURATION = 0.3
 @onready var powerups_node: Node2D = %PowerupsNode
 @onready var enemy_spawn_timer: Timer = %EnemySpawnTimer
 @onready var powerup_spawn_timer: Timer = %PowerupSpawnTimer
+@onready var autoscroll_timer: Timer = %AutoscrollTimer
 
 var current_gun_index: int = 0
 var thrown_guns: Array[PackedScene] = []
@@ -61,13 +38,16 @@ var random_autoscroll_speed: Vector2 = Vector2(randf_range(-500, 500), randf_ran
 
 func _ready() -> void:
 	RunData.reset()
-	_on_autoscroll_timer_timeout()
 	RunData.time_updated.connect(_on_elapsed_time_updated)
 	RunData.mito_energy_updated.connect(_on_mito_energy_changed)
 	
-	RunData.spawnable_enemies = CollectionManager.get_enemy_dict_by_spawn_order()
-	
 	get_tree().root.focus_exited.connect(UIManager.pause)
+	enemy_spawn_timer.timeout.connect(spawn_enemy)
+	powerup_spawn_timer.timeout.connect(spawn_powerup)
+	autoscroll_timer.timeout.connect(_on_autoscroll_timer_timeout)
+	
+	
+	RunData.spawnable_enemies = CollectionManager.get_enemy_dict_by_spawn_order()
 
 
 func _on_mito_energy_changed(new_amount: int):
@@ -77,6 +57,7 @@ func _on_mito_energy_changed(new_amount: int):
 		UIManager.push_layer(load("uid://24v2w4t8hgkl")) # Push UpgradesLayer scene
 
 func _on_elapsed_time_updated(new_time: int):
+	time_based_enemy_type_changer()
 	# Win condition (temp)
 	if new_time == 300: #NOTE: Using >= causes it to show up every frame when continuing
 		STransitions.transition("circleIn")
@@ -94,9 +75,6 @@ func _on_autoscroll_timer_timeout() -> void:
 	var tween : Tween = create_tween().set_ease(Tween.EASE_IN)
 	tween.tween_property(%BackgroundParallax2D, "autoscroll", %BackgroundParallax2D.autoscroll + random_autoscroll_speed, 15)
 	#TODO: Make the bigger parts stay constant and the smaller things move? or just add a background layer that doesnt move so it doesnt cause dizzyness
-
-func _on_enemy_spawn_timer_timeout() -> void:
-	spawn_enemy()
 
 func time_based_enemy_type_changer() -> void:
 	match RunData.elapsed_time:
@@ -118,13 +96,6 @@ func time_based_enemy_type_changer() -> void:
 			#enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
 			#if enemy_spawn_timer.wait_time == 0.5:
 				#CharacterStats.modify_stat(CharacterStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION, CharacterStats.Operation.ADD, -0.1)
-
-func _process(delta: float) -> void:
-	time_based_enemy_type_changer()
-
-func _on_powerup_spawn_timer_timeout() -> void:
-	powerup_spawn_timer.start()
-	spawn_powerup()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("switch-weapon"):
@@ -158,11 +129,7 @@ func switch_weapon() -> void:
 	if guns.size() != 0:
 		current_gun_index = (current_gun_index + 1) % guns.size()
 		player.base_gun.queue_free()
-		var gun_instance: BaseGun
-		if guns[current_gun_index] is ShotgunData:
-			gun_instance = preload("uid://rks5cvegm0tb").instantiate()
-		else:
-			gun_instance = preload("uid://djr17spwfqlsu").instantiate()
+		var gun_instance: BaseGun = preload("uid://djr17spwfqlsu").instantiate()
 		gun_instance.gun_data = guns[current_gun_index]
 		player.base_gun = gun_instance
 		player.add_child(player.base_gun)

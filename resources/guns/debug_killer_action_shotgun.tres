@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://ct65f68ja8e6j" path="res://assets/music/gun sounds by q009/shotgun2.ogg" id="3_affhh"]
 [ext_resource type="Script" uid="uid://d0a57wqy65ei8" path="res://resources/guns/shotgun_data.gd" id="4_vqmyj"]
 [ext_resource type="Texture2D" uid="uid://12vyrpw3wdmj" path="res://assets/sprites/shotgun.png" id="5_305kd"]
-[ext_resource type="PackedScene" uid="uid://rks5cvegm0tb" path="res://scenes/weapons-related/base_shotgun.tscn" id="6_5okfm"]
+[ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="6_5okfm"]
 
 [resource]
 script = ExtResource("4_vqmyj")

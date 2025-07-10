@@ -24,14 +24,11 @@ var elapsed_time: int = 0:
 	set(val):
 		elapsed_time = val
 		time_updated.emit(elapsed_time)
-		#if world: world.time_based_enemy_type_changer()
 
 var mito_energy: int = 0:
 	set(val):
 		mito_energy = val
 		mito_energy_updated.emit(mito_energy)
-		#world.hud.update_currency_label()
-		#world.hud.update_progress_bar(val)
 
 var price_multiplier: float = 0.3
 var price_increase_rate: float = 0.07
@@ -60,8 +57,3 @@ func reset():
 func powerup_collected(powerup_type: StringName) -> void:
 	powerups[powerup_type] += 1
 	#world.hud.update_hud_buttons()
-
-
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause"):
-		pass

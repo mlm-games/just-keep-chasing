@@ -29,7 +29,6 @@ wait_time = 100.0
 
 [node name="Light" type="PointLight2D" parent="."]
 unique_name_in_owner = true
-scale = Vector2(1, 1)
 color = Color(1, 1, 0.396078, 1)
 energy = 3.59
 texture = ExtResource("3_g2w41")

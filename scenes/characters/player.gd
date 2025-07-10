@@ -90,10 +90,10 @@ func _equip_gun(gun_data: GunData):
 	if is_instance_valid(base_gun):
 		base_gun.queue_free()
 
-	if gun_data is ShotgunData:
-		base_gun = preload("uid://rks5cvegm0tb").instantiate()
-	else:
-		base_gun = preload("uid://djr17spwfqlsu").instantiate()
+	#if gun_data is ShotgunData:
+		#base_gun = preload("uid://d12y6fhvtdlct").instantiate()
+	#else:
+	base_gun = preload("uid://djr17spwfqlsu").instantiate()
 	
 	base_gun.gun_data = gun_data
 	add_child(base_gun)

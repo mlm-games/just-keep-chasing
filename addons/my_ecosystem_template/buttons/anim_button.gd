@@ -13,8 +13,8 @@ func _ready() -> void:
 	button_up.connect(_on_button_up)
 	pressed.connect(_on_pressed)
 	
-	set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	#set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	#size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	
 	pivot_offset = size/2
 	resized.connect(func(): pivot_offset = size/2)
