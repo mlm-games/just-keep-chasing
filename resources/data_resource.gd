@@ -4,8 +4,10 @@ class_name BaseData extends Resource
 	get:
 		if resource_name != "":
 			return resource_name
+		if resource_path.is_empty():
+			return "Resource path is empty or not saved..."
 		
-		var temp_id = resource_path.get_slice("/", 1).trim_suffix(".tres")
+		var temp_id = resource_path.get_file().trim_suffix(".tres")
 		if id == "": 
 			id = temp_id
 		else:
@@ -15,10 +17,8 @@ class_name BaseData extends Resource
 		resource_name = temp_id
 		return id
 
-@export var local_to_scene : bool = false # Do not share stat upgrades
 @export var enabled := true
 @export var unlocked := true
 
-
-#func _init() -> void:
-	#id = 
+#TODO: Remove?
+@export var local_to_scene : bool = false # Do not share stat upgrades

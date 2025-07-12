@@ -22,6 +22,6 @@ base_health = 30.0
 base_speed = 50.0
 modifiers = Array[ExtResource("2_un5l1")]([])
 id = ""
-local_to_scene = false
 enabled = true
 unlocked = true
+local_to_scene = false
