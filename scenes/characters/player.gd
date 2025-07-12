@@ -8,6 +8,8 @@ class_name Player extends BaseCharacter
 
 @onready var progress_bar: ProgressBar = %ProgressBar
 @onready var inventory_component: InventoryComponent = $InventoryComponent
+@onready var pickups_checker_component: PickupCheckerComponent = %PickupsCheckerComponent
+@onready var hitbox_component: HitboxComponent = %HitboxComponent
 
 var taking_damage := false
 var base_gun: BaseGun
@@ -21,6 +23,7 @@ func _ready() -> void:
 	health_component.taking_damage.connect(_on_health_component_taking_damage)
 	health_component.knockback_requested.connect(velocity_component.apply_knockback)
 	inventory_component.gun_switched.connect(_on_gun_switched)
+	hitbox_component.area_entered.connect(pickups_checker_component._on_hitbox_component_area_entered)
 
 	CharacterStats.stat_changed.connect(_on_character_stat_changed)
 

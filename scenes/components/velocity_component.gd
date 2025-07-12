@@ -13,11 +13,7 @@ var _is_knocked_back := false
 
 
 func _physics_process(delta: float) -> void:
-	var body: CharacterBody2D = get_parent() as CharacterBody2D
-	if not body:
-		printerr("VelocityComponent's parent is not a CharacterBody2D. Disabling component.")
-		set_physics_process(false)
-		return
+	var body: CharacterBody2D = get_parent()
 
 	# Handle knockback timer and state
 	if _is_knocked_back:
@@ -29,20 +25,18 @@ func _physics_process(delta: float) -> void:
 			# Apply knockback velocity
 			body.velocity = _knockback_vector
 			body.move_and_slide()
-			# Update our public velocity property for other nodes to read
 			self.velocity = body.velocity 
 			return # Skip normal movement during knockback
 
 	# Apply normal velocity
 	body.velocity = velocity
 	body.move_and_slide()
-	# Update our public velocity property with the result of the slide (for collision response)
 	self.velocity = body.velocity
 
 
 ## Sets the velocity based on a direction vector and the component's speed.
 func accelerate_to(direction: Vector2, speed: float = 0) -> void:
-	# Don't accept movement input during knockback
+	# Don't accept movement input during knockback (effectively causing a stun effect)
 	if _is_knocked_back:
 		return
 		

@@ -7,6 +7,7 @@
 class_name StaticScreenEffects
 extends RefCounted
 
+static var _screen_shake_tween : Tween
 
 ## Shakes a [Camera2D] node with random offsets that decay over a set duration.
 ##[br][br]
@@ -92,12 +93,18 @@ static func flash_white(node: Node, duration: float = 0.1) -> void:
 ##     # ...spawn explosion, deal damage, etc.
 ## [/codeblock]
 static func freeze_frame(duration: float = 0.05) -> void:
-	Engine.time_scale = 0.0
+	Engine.time_scale = 0.05
 	await Engine.get_main_loop().create_timer(duration, true, false, true).timeout
 	Engine.time_scale = 1.0
 
 
 ## Others
+
+static func flash_sprite(sprite: Sprite2D, color: Color = Color.WHITE, duration: float = 0.1) -> void:
+	var original_modulate = sprite.modulate
+	var tween = Engine.get_main_loop().create_tween().set_parallel()
+	tween.tween_property(sprite, "modulate", color, duration / 2.0).from(original_modulate)
+	tween.chain().tween_property(sprite, "modulate", original_modulate, duration / 2.0)
 
 #hack: insert no of cycles formula/ use frequency instead of duration for another function called smooth screen shake?
 static func screen_shake(duration: float, amplitude: float, camera: Camera2D = Engine.get_main_loop().root.get_viewport().get_camera_2d()) -> void:
@@ -108,7 +115,23 @@ static func screen_shake(duration: float, amplitude: float, camera: Camera2D = E
 		tween.tween_property(camera, "position", original_position + camera_offset, 1.0 / 60)  # Tween for 1 frame
 	tween.tween_property(camera, "position", original_position, 1.0 / 60)  # Return to original position
 
+# For use with anim_library (hit effect only)
+static func shake(amount: float = 10.0, duration: float = 0.2, camera: Camera2D = Engine.get_main_loop().root.get_viewport().get_camera_2d()) -> void:
+	# If a shake is already happening, kill the old one to start the new one.
+	if _screen_shake_tween and _screen_shake_tween.is_running():
+		_screen_shake_tween.kill()
+	
+	camera.offset = Vector2.ZERO
+	_screen_shake_tween = Engine.get_main_loop().create_tween().set_parallel().set_trans(Tween.TRANS_SINE)
+	
+	# Shake horizontally and vertically
+	_screen_shake_tween.tween_property(camera, "offset:x", amount, duration * 0.25).from(0)
+	_screen_shake_tween.tween_property(camera, "offset:y", amount * 0.6, duration * 0.25).from(0)
+	
+	# Smoothly return to center
+	_screen_shake_tween.chain().tween_property(camera, "offset", Vector2.ZERO, duration * 0.75).set_trans(Tween.TRANS_CUBIC)
 
+# For smoother screen shakes
 static func camera_shake(intensity: float = 1.5, duration: float = 1.5, decay: float = 3.0, camera: Camera2D =  Engine.get_main_loop().root.get_viewport().get_camera_2d()) -> void:
 	# Stop any existing shake tweens
 	if camera.has_meta("shake_tween") and camera.get_meta("shake_tween").is_valid():
@@ -148,10 +171,10 @@ static func camera_shake(intensity: float = 1.5, duration: float = 1.5, decay: f
 	)
 
 static func squash_simple(target: Object, x_force: float, y_force: float, duration: float = 0.3, trans_type: Tween.TransitionType = Tween.TRANS_QUAD, ) -> void:
-	var tween : Tween =  Engine.get_main_loop().create_tween()
+	_screen_shake_tween = Engine.get_main_loop().create_tween()
 	# initial squash
-	tween.tween_property(target, "scale:x", 1 - x_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
-	tween.parallel().tween_property(target, "scale:y", 1 + y_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
+	_screen_shake_tween.tween_property(target, "scale:x", 1 - x_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
+	_screen_shake_tween.parallel().tween_property(target, "scale:y", 1 + y_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
 	# return to normal
-	tween.tween_property(target, "scale:x", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)
-	tween.parallel().tween_property(target, "scale:y", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)
+	_screen_shake_tween.tween_property(target, "scale:x", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)
+	_screen_shake_tween.parallel().tween_property(target, "scale:y", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)

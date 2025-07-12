@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://biich4lcrpmcr" path="res://assets/music/GUI_Sound_Effects_by_Lokif/positive.wav" id="3_imjud"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]
-radius = 21.095
+radius = 37.1214
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y1cap"]
 shader = ExtResource("2_npuoh")

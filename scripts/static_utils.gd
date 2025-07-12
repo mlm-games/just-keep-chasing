@@ -57,8 +57,3 @@ static func get_gun_base_curve():
 	curve.add_point(Vector2.RIGHT)
 	
 	curve.point_count = 2
-
-static func duplicate_with_res_name(res: BaseData, incl_subres:= true) -> BaseData:
-	var dupli_res := res.duplicate(incl_subres)
-	dupli_res.resource_name = res.resource_name
-	return dupli_res

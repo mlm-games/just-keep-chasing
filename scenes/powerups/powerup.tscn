@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://x2gb17exe2xq"]
 
-[ext_resource type="Script" uid="uid://buv40e5a827xo" path="res://scenes/powerups/powerup_manager.gd" id="1_hl65c"]
+[ext_resource type="Script" uid="uid://buv40e5a827xo" path="res://scenes/powerups/powerup.gd" id="1_hl65c"]
 [ext_resource type="Shader" uid="uid://dkg0rxg12mlmn" path="res://scenes/characters/simple_polish_adder.gdshader" id="2_wb3hp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rxdp3"]

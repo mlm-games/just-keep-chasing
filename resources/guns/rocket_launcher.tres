@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GunData" load_steps=8 format=3 uid="uid://bqdrridmtt4q1"]
+[gd_resource type="Resource" script_class="GunData" load_steps=9 format=3 uid="uid://bqdrridmtt4q1"]
 
 [ext_resource type="Resource" uid="uid://cnp06ev13f5af" path="res://resources/bullets/rocket.tres" id="1_l1tml"]
 [ext_resource type="AudioStream" uid="uid://dm63dcpqu5wpq" path="res://assets/music/gun sounds by q009/rlauncher.ogg" id="2_ddkhx"]
@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://dtcwya5fb7uxw" path="res://assets/sprites/weapons/rocket_launcher.svg" id="3_p456a"]
 [ext_resource type="AudioStream" uid="uid://cqytrb8372hnw" path="res://assets/music/gun sounds by q009/rlauncher3.ogg" id="4_vjhkm"]
 [ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="5_vjhkm"]
+[ext_resource type="Curve" uid="uid://bhoafm7ej7set" path="res://resources/misc/base_enemy_speed_dropoff_curve.tres" id="6_5axtf"]
 
 [resource]
 script = ExtResource("3_ddkhx")
-unlocked = true
 weapon_scene = ExtResource("5_vjhkm")
 sprite = ExtResource("3_p456a")
 bullet = ExtResource("1_l1tml")
@@ -20,6 +20,7 @@ ammo = null
 targeting_range = 600.0
 fire_rate = 0.5
 fire_audio = Array[AudioStream]([ExtResource("2_ddkhx"), ExtResource("3_5axtf"), ExtResource("4_vjhkm")])
+speed_dropoff_curve = ExtResource("6_5axtf")
 sprite_scale = Vector2(1, 1)
 sprite_position = Vector2(45, 5)
 sprite_rotation_degrees = 0.0
@@ -30,9 +31,10 @@ fire_animation_skew = 0.055
 fire_animation_duration = 0.375
 bullets_per_shot = 1
 bullet_spread = 0.0
-screen_shake_frequency = 19.75
+screen_shake_frequency = 300.0
 screen_shake_amplitude = 0.38
 id = "rocket_launcher"
-local_to_scene = false
 enabled = true
+unlocked = true
+local_to_scene = false
 metadata/_custom_type_script = "uid://cvb1dimncgicl"

@@ -102,13 +102,7 @@ func disable_for_secs(secs: float) -> void:
 	await get_tree().create_timer(secs).timeout
 	invincible = false
 	parent_sprite.material = null
-	
 
-#func display_floating_dmg_numbers(dmg_val: float) -> void:
-	#var nos_instance := STransitions.FLOATING_DAMAGE_TEXT.instantiate()
-	#nos_instance.global_position = parent.global_position
-	#RunData.world.add_child(nos_instance)
-	#nos_instance.display(dmg_val)
 
 func check_for_death() -> void:
 	if current_health <= 0 and not dying:
@@ -119,9 +113,9 @@ func is_dead() -> bool:
 	return dying
 
 func shake(amount: float, duration: float):
-	pass
-	#STransitions.shake(amount, duration)
+	StaticScreenEffects.shake()
+	#StaticScreenEffects.shake(amount, duration)
 
-func flash_sprite(color: Color, duration: float):
+func flash_sprite(color: Color = Color.DARK_GOLDENROD, duration: float = 0.1):
 	pass
-	#STransitions.flash_sprite(owner.sprite, color, duration)
+	#StaticScreenEffects.flash_sprite(owner.sprite, color, duration)

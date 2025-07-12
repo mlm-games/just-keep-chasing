@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GunData" load_steps=8 format=3 uid="uid://p55oxm68od4p"]
+[gd_resource type="Resource" script_class="GunData" load_steps=9 format=3 uid="uid://p55oxm68od4p"]
 
 [ext_resource type="Resource" uid="uid://iu7mno7fgee1" path="res://resources/bullets/sniper_bullet.tres" id="1_fah2k"]
 [ext_resource type="AudioStream" uid="uid://dp2i2gi654v15" path="res://assets/music/gun sounds by q009/ren2.ogg" id="2_62vhr"]
@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://bi2cgn31beb4c" path="res://assets/sprites/weapons/sniper.svg" id="3_fah2k"]
 [ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="4_62vhr"]
 [ext_resource type="AudioStream" uid="uid://m5fvh36ty3qn" path="res://assets/music/gun sounds by q009/ren.ogg" id="4_an5bw"]
+[ext_resource type="Curve" uid="uid://bhoafm7ej7set" path="res://resources/misc/base_enemy_speed_dropoff_curve.tres" id="6_ajgm1"]
 
 [resource]
 script = ExtResource("2_l7xjp")
-unlocked = true
 weapon_scene = ExtResource("4_62vhr")
 sprite = ExtResource("3_fah2k")
 bullet = ExtResource("1_fah2k")
@@ -20,6 +20,7 @@ ammo = null
 targeting_range = 750.0
 fire_rate = 0.5
 fire_audio = Array[AudioStream]([ExtResource("2_62vhr"), ExtResource("3_ajgm1"), ExtResource("4_an5bw")])
+speed_dropoff_curve = ExtResource("6_ajgm1")
 sprite_scale = Vector2(1, 1)
 sprite_position = Vector2(45, 5)
 sprite_rotation_degrees = 0.0
@@ -30,9 +31,10 @@ fire_animation_skew = 0.055
 fire_animation_duration = 0.375
 bullets_per_shot = 1
 bullet_spread = 0.0
-screen_shake_frequency = 5.12
+screen_shake_frequency = 220.0
 screen_shake_amplitude = 0.59
 id = "sniper"
-local_to_scene = false
 enabled = true
+unlocked = true
+local_to_scene = false
 metadata/_custom_type_script = "uid://cvb1dimncgicl"

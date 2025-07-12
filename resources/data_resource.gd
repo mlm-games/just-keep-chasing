@@ -22,3 +22,9 @@ class_name BaseData extends Resource
 
 #TODO: Remove?
 @export var local_to_scene : bool = false # Do not share stat upgrades
+
+
+func duplicate_with_res_name(incl_subres:= false) -> BaseData:
+	var dupli_res := duplicate(incl_subres)
+	dupli_res.resource_name = resource_name
+	return dupli_res

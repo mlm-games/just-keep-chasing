@@ -60,7 +60,7 @@ func spawn_bullet() -> void:
 		
 		%Sprite2D.rotation_degrees = 0
 		for _i in range(gun_data.bullets_per_shot):
-			var bullet_data: ProjectileData = StaticUtils.duplicate_with_res_name(gun_data.bullet)
+			var bullet_data: ProjectileData = gun_data.bullet.duplicate_with_res_name()
 			bullet_data.projectile_speed_dropoff_curve = gun_data.speed_dropoff_curve
 			StaticScreenEffects.camera_shake(gun_data.screen_shake_amplitude, gun_data.fire_rate) 
 			var bullet_instance : BaseProjectile = InstanceManager.new_projectile_instance(bullet_data, get_parent())

@@ -43,7 +43,7 @@ func set_data_values() -> void:
 	
 	if enemy_data_resource.gun: 
 		var enemy_gun: BaseGun = enemy_data_resource.gun.weapon_scene.instantiate()
-		enemy_data_resource.gun.bullet = StaticUtils.duplicate_with_res_name(enemy_data_resource.gun.bullet)
+		enemy_data_resource.gun.bullet = enemy_data_resource.gun.bullet.duplicate_with_res_name()
 		enemy_data_resource.gun.bullet.collision_shape_mask = 2 ## Target player
 		enemy_gun.gun_data = enemy_data_resource.gun
 		add_child(enemy_gun)
@@ -79,7 +79,8 @@ func _on_hitbox_component_area_exited(area: Area2D) -> void:
 func _on_health_component_entity_died() -> void:
 	DropsSpawner.emit_mito_energy(global_position, mito_energy_value)
 	CountStats.increment_stat(CountStats.get_stat_key(enemy_data_resource))
-	
+	AudioManager.play_sound_varied(C.CommonSounds.EnemyHit)
+	StaticScreenEffects.freeze_frame(0.07)
 
 	$CollisionShape2D.set_deferred("disabled", true)
 	hitbox_component.get_node("CollisionShape2D").set_deferred("disabled", true)

@@ -1,12 +1,13 @@
 class_name C #Constants
 
 # Common sounds
+const CommonSounds := {
 	#button_hover,
 	#button_down,
 	#button_up,
 	#button_click,
 	#pickup_initial,
-	#pickup_collected,
+	CurrencyCollected = preload("res://assets/music/GUI_Sound_Effects_by_Lokif/misc_menu_4.wav"),
 	#hit,
 	#lose,
 	#win,
@@ -14,6 +15,8 @@ class_name C #Constants
 	#mouse_up,
 	#transition_in,
 	#transition_out,
+	EnemyHit = preload("res://assets/music/GUI_Sound_Effects_by_Lokif/sharp_echo.wav")
+}
 
 enum RARITY {
 	COMMON,

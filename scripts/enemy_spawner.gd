@@ -7,7 +7,7 @@ static func spawn_enemy(enemy_data: EnemyData, position: Vector2) -> Node2D:
 		
 	var enemy_instance : BaseEnemy = enemy_data.base_enemy_scene.instantiate()
 	# The enemy's own _ready function handles the application of data.
-	enemy_instance.enemy_data_resource = StaticUtils.duplicate_with_res_name(enemy_data)
+	enemy_instance.enemy_data_resource = enemy_data.duplicate_with_res_name()
 	enemy_instance.enemy_data_resource.resource_name = CollectionManager.get_resource_name(enemy_data)
 	enemy_instance.global_position = position
 	return enemy_instance

@@ -8,7 +8,6 @@ var direction : Vector2
 
 var _pierced_enemies: int = 0
 
-
 @onready var _rand_spread : float = deg_to_rad(randf_range(-projectile_data.projectile_spread, projectile_data.projectile_spread))
 @onready var lifespan_timer: Timer = %LifespanTimer
 @onready var light: PointLight2D = %Light
@@ -40,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	light.energy *= speed_dropoff_mult
 	travelled_distance += projectile_data.projectile_speed * delta
 	if travelled_distance > projectile_data.projectile_range:
-		queue_free()
+		animate_free()
 
 
 func _on_area_entered(body: Node2D) -> void:
@@ -57,6 +56,12 @@ func _on_area_entered(body: Node2D) -> void:
 			attack.damage_over_time = projectile_data.projectile_dot
 		body.damage(attack)
 		
+		
 		_pierced_enemies += 1
 		if _pierced_enemies >= projectile_data.projectile_max_pierce_count:
 			queue_free()
+
+func animate_free(anim_time:= 0.1) -> void:
+	var consume_tween = create_tween().set_trans(Tween.TRANS_CUBIC)
+	consume_tween.tween_property(self, "scale", Vector2.ZERO, anim_time)
+	consume_tween.tween_callback(queue_free)

@@ -7,7 +7,7 @@ class_name ProjectileData extends BaseData
 @export var projectile_spread : float = 0
 @export var projectile_dot : float = 0
 @export var projectile_dot_duration : float = 0
-@export var projectile_dot_type : GameState.StatusEffectType = 0
+@export var projectile_dot_type : GameState.StatusEffectType = GameState.StatusEffectType.FIRE
 @export var projectile_aoe_data : AreaOfEffectAttack
 @export var projectile_max_pierce_count: int = 1
 @export var projectile_knockback_force: float = 0.0

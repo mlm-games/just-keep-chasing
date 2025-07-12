@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ShotgunData" load_steps=7 format=3 uid="uid://5lw04hrqi2kv"]
+[gd_resource type="Resource" script_class="ShotgunData" load_steps=8 format=3 uid="uid://5lw04hrqi2kv"]
 
 [ext_resource type="Script" uid="uid://d0a57wqy65ei8" path="res://resources/guns/shotgun_data.gd" id="1_bq3ia"]
 [ext_resource type="Resource" uid="uid://bljhro5a2wk67" path="res://resources/bullets/buckshot.tres" id="1_lktsu"]
@@ -6,10 +6,10 @@
 [ext_resource type="AudioStream" uid="uid://cir8eafb01hmv" path="res://assets/music/gun sounds by q009/shotgun.ogg" id="3_2ldja"]
 [ext_resource type="Texture2D" uid="uid://cuhe3wefntcuq" path="res://assets/sprites/pump_shotgun.png" id="3_lldrk"]
 [ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="4_lldrk"]
+[ext_resource type="Curve" uid="uid://bhoafm7ej7set" path="res://resources/misc/base_enemy_speed_dropoff_curve.tres" id="5_2ldja"]
 
 [resource]
 script = ExtResource("1_bq3ia")
-unlocked = true
 weapon_scene = ExtResource("4_lldrk")
 sprite = ExtResource("3_lldrk")
 bullet = ExtResource("1_lktsu")
@@ -19,6 +19,7 @@ ammo = null
 targeting_range = 1000.0
 fire_rate = 1.25
 fire_audio = Array[AudioStream]([ExtResource("2_t6sxg"), ExtResource("3_2ldja")])
+speed_dropoff_curve = ExtResource("5_2ldja")
 sprite_scale = Vector2(0.102, 0.139)
 sprite_position = Vector2(61.8, 15.11)
 sprite_rotation_degrees = 0.0
@@ -29,9 +30,10 @@ fire_animation_skew = 4.94764
 fire_animation_duration = null
 bullets_per_shot = 4
 bullet_spread = 10.0
-screen_shake_frequency = 10.0
+screen_shake_frequency = 150.0
 screen_shake_amplitude = 1.0
 id = "pump_action_shotgun"
-local_to_scene = false
 enabled = true
+unlocked = true
+local_to_scene = false
 metadata/_custom_type_script = "uid://d0a57wqy65ei8"
