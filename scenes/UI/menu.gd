@@ -40,7 +40,7 @@ func _on_ExitButton_pressed() -> void:
 
 
 func run_title_anim() -> void:
-	tween = %Title.set_trans(Tween.TRANS_SINE).set_parallel()
+	tween = %Title.create_tween().set_trans(Tween.TRANS_SINE).set_parallel()
 	tween.tween_property(%Title, "position:y", 117, 1.25).set_trans(Tween.TRANS_BACK)
 	tween.tween_property(%Title, "position:x", get_viewport_rect().size.x / 2 - 300, 1.25) # Need to find a better way
 	tween = tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE).set_parallel(false)
@@ -49,5 +49,5 @@ func run_title_anim() -> void:
 
 
 func run_buttons_anim() -> void:
-	tween = %ButtonsContainer.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE).set_parallel(false)
+	tween = %ButtonsContainer.create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE).set_parallel(false)
 	tween.tween_property(%ButtonsContainer, "position:y", 248, 1.25).from(800)

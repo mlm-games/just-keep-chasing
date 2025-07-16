@@ -6,13 +6,20 @@ var currency_value : int = 1:
 	get:
 		return currency_value * int(CharacterStats.get_stat(CharacterStats.Stats.DROP_VALUE_MULTIPLIER))
 
-var tween : Tween
+var spawn_tween : Tween
+var loop_tween : Tween
 
 func _ready() -> void:
 	$CollisionShape2D.shape.radius = CharacterStats.get_stat(CharacterStats.Stats.CURRENCY_PICKUP_RANGE)
 	
-	tween = Juice.create_global_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(self, "global_position", global_position + 150*Vector2(randf_range(-1,1), randf_range(-1,1)), 0.75)
+	spawn_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	spawn_tween.tween_property(self, "global_position", global_position + 150*Vector2(randf_range(-1,1), randf_range(-1,1)), 0.75)
+	
+	loop_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_loops()
+	loop_tween.tween_property(%PointLight2D, "energy", 0.1, 1)
+	loop_tween.parallel().tween_property(%Sprite2D, "rotation", 0.5, 5)
+	loop_tween.tween_property(%PointLight2D, "energy", 0.2, 1)
+	loop_tween.parallel().tween_property(%Sprite2D, "rotation", 0.0, 5)
 
 func collect() -> void:
 	StaticAudioM.play_sound_varied(preload("res://assets/sfx/hover.ogg"))
@@ -21,7 +28,3 @@ func collect() -> void:
 	CountStats.increment_stat("mito_energy_collected")
 	
 	queue_free()
-
-
-func _process(delta: float) -> void:
-	tween = create_tween()

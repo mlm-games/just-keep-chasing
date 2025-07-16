@@ -134,8 +134,8 @@ func setup_slot() -> void:
 
 func red_out_unbuyable_slots() -> void:
 	if final_price > RunData.mito_energy - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD):
-		var t1 := Juice.set_tweened_value(%PriceContainer, "modulate", Color(1.0, 0.333, 0.11))
-		var t2 := Juice.set_tweened_value(self, "modulate", Color(0.7, 0.7, 0.7)) # Dim the whole slot
+		var _t1 := Juice.set_tweened_value(%PriceContainer, "modulate", Color(1.0, 0.333, 0.11))
+		var _t2 := Juice.set_tweened_value(self, "modulate", Color(0.7, 0.7, 0.7)) # Dim the whole slot
 		#NOTE: Saving them to a variable doesn't free them from memory if the variable is not rewritten
 
 func _on_panel_mouse_entered() -> void:

@@ -78,7 +78,6 @@ fill_from = Vector2(0.5, 0.5)
 collision_layer = 9
 monitoring = false
 script = ExtResource("1_m2agr")
-metadata/_edit_group_ = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 texture = SubResource("GradientTexture2D_y1cap")
@@ -89,14 +88,17 @@ process_material = SubResource("ParticleProcessMaterial_ilap0")
 shape = SubResource("CircleShape2D_rxdp3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 modulate = Color(0.703808, 0.703808, 0.703808, 1)
 material = SubResource("ShaderMaterial_y1cap")
 scale = Vector2(0.225, 0.225)
 texture = ExtResource("2_ff12p")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+unique_name_in_owner = true
 color = Color(0.716281, 0.712721, 0, 1)
-energy = 0.2
+energy = 0.0
+blend_mode = 1
 texture = SubResource("GradientTexture2D_d6bl0")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

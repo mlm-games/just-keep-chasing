@@ -30,8 +30,8 @@ func explode():
 	for hit in hit_bodies:
 		var body = hit.collider
 		if body is HitboxComponent:
-			var direction = (body.global_position - global_position).normalized()
-			body.apply_knockback(direction, projectile_data.projectile_aoe_data.knockback_force, 0.2)
+			var knockback_dir = (body.global_position - global_position).normalized()
+			body.apply_knockback(knockback_dir, projectile_data.projectile_aoe_data.knockback_force, 0.2)
 			var attack_data = Attack.new()
 			attack_data.attack_damage = projectile_data.projectile_aoe_data.damage
 			body.damage(attack_data)
