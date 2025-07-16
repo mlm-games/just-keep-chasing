@@ -39,4 +39,5 @@ func play_ui_sound(stream: AudioStream):
 	player.play()
 	
 	# Release the player back to the pool when finished.
-	player.finished.connect(_player_pool.release_object.bind(player), CONNECT_ONE_SHOT)
+	if !player.finished.is_connected(_player_pool.release_object): # Incase it was released early 
+		player.finished.connect(_player_pool.release_object.bind(player), CONNECT_ONE_SHOT)

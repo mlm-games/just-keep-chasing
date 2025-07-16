@@ -10,7 +10,7 @@ func _ready():
 		health_comp.entity_died.connect(_on_entity_died)
 
 func _on_entity_died():
-	var projectiles_container = get_tree().get_first_node_in_group("ProjectilesContainer")
+	var projectiles_container = A.tree.get_first_node_in_group("ProjectilesContainer")
 	if not projectiles_container: return
 
 	for i in burst_count:

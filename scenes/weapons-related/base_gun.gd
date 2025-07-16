@@ -13,8 +13,8 @@ const RELOAD_LOOP_TIME = 0.5
 
 var _target_in_range: Array[Area2D] = []
 var closest_target : Area2D
-var tween: Tween
-
+var fire_tween: Tween
+var reload_tween : Tween
 
 @export var gun_data: GunData
 
@@ -62,7 +62,7 @@ func spawn_bullet() -> void:
 		for _i in range(gun_data.bullets_per_shot):
 			var bullet_data: ProjectileData = gun_data.bullet.duplicate_with_res_name()
 			bullet_data.projectile_speed_dropoff_curve = gun_data.speed_dropoff_curve
-			StaticScreenEffects.camera_shake(gun_data.screen_shake_amplitude, gun_data.fire_rate) 
+			ScreenEffects.camera_shake(gun_data.screen_shake_amplitude, gun_data.fire_rate) 
 			var bullet_instance : BaseProjectile = InstanceManager.new_projectile_instance(bullet_data, get_parent())
 			bullet_instance.global_position = bullet_spawn_point.global_position
 			bullet_instance.global_rotation_degrees = bullet_spawn_point.global_rotation_degrees + randf_range(-gun_data.bullet_spread, gun_data.bullet_spread)
@@ -131,29 +131,27 @@ func _on_fire_rate_timer_timeout() -> void:
 		fire_rate_timer.start()
 
 func play_fire_animation() -> void:
-	if tween: 
-		tween.kill()
-	tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	fire_tween = Juice.create_global_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	#tween.tween_property(%Sprite2D, "skew", rad_to_deg(gun_data.fire_animation_skew), gun_data.reload_time/2)
-	tween.tween_property(%Sprite2D, "offset:x", -250*gun_data.fire_rate, gun_data.fire_rate/2)
-	#tween.tween_property(%Sprite2D, "skew", 0, gun_data.fire_rate/2)
-	tween.tween_property(%Sprite2D, "offset:x", 0, gun_data.fire_rate/2)
+	fire_tween.tween_property(%Sprite2D, "offset:x", -250*gun_data.fire_rate, gun_data.fire_rate/2)
+	#fire_tween.tween_property(%Sprite2D, "skew", 0, gun_data.fire_rate/2)
+	fire_tween.tween_property(%Sprite2D, "offset:x", 0, gun_data.fire_rate/2)
 
 func play_reload_animation() -> void:
-	if tween:
-		tween.kill()
-	tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
-	tween.tween_property(%Sprite2D, "rotation_degrees", snappedf(720*gun_data.reload_time/RELOAD_LOOP_TIME, 360), gun_data.reload_time)
+	reload_tween = Juice.create_global_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
+	reload_tween.tween_property(%Sprite2D, "rotation_degrees", snappedf(720*gun_data.reload_time/RELOAD_LOOP_TIME, 360), gun_data.reload_time)
 
 
 func set_ignore_time_scale() -> void:
 	reload_timer.ignore_time_scale = true
 	fire_rate_timer.ignore_time_scale = true
-	if tween: tween.set_ignore_time_scale()
+	if fire_tween: fire_tween.set_ignore_time_scale()
+	if reload_tween: reload_tween.set_ignore_time_scale()
 
 func unset_ignore_time_scale() -> void:
 	reload_timer.ignore_time_scale = false
 	fire_rate_timer.ignore_time_scale = false
-	if tween: tween.set_ignore_time_scale(false)
+	if fire_tween: fire_tween.set_ignore_time_scale(false)
+	if reload_tween: reload_tween.set_ignore_time_scale(false)
 	
 	

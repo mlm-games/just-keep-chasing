@@ -25,7 +25,6 @@ shader_parameter/enable_texture = true
 shader_parameter/texture_scale = 1.0
 shader_parameter/texture_strength = 0.05
 shader_parameter/saturation = 1.1
-shader_parameter/brightness = 0.05
 shader_parameter/contrast = 1.1
 shader_parameter/smoothing = 0.5
 

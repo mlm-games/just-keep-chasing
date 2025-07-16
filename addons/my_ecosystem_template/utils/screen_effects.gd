@@ -4,10 +4,11 @@
 ## shader pulses, and impact flashes. All functions are static and can be
 ## called directly from the [code]ScreenEffects[/code] class without needing
 ## to instantiate it.
-class_name StaticScreenEffects
+class_name ScreenEffects
 extends RefCounted
 
 static var _screen_shake_tween : Tween
+
 
 ## Shakes a [Camera2D] node with random offsets that decay over a set duration.
 ##[br][br]
@@ -21,7 +22,7 @@ static var _screen_shake_tween : Tween
 ##[br]
 ## [param duration]: The total time in seconds the effect should last.
 static func shake_camera(camera: Camera2D, strength: float = 10.0, duration: float = 0.2) -> void:
-	var tween = camera.create_tween()
+	_screen_shake_tween = camera.create_tween()
 	var shake_count = int(duration * 60) # 60 shakes per second
 	
 	for i in shake_count:
@@ -30,9 +31,9 @@ static func shake_camera(camera: Camera2D, strength: float = 10.0, duration: flo
 			randf_range(-strength, strength) * decay,
 			randf_range(-strength, strength) * decay
 		)
-		tween.tween_property(camera, "offset", offset, 1.0/60.0)
+		_screen_shake_tween.tween_property(camera, "offset", offset, 1.0/60.0)
 	
-	tween.tween_property(camera, "offset", Vector2.ZERO, 1.0/60.0)
+	_screen_shake_tween.tween_property(camera, "offset", Vector2.ZERO, 1.0/60.0)
 
 
 ## Creates a brief chromatic aberration "pulse" effect using a shader.
@@ -46,7 +47,7 @@ static func shake_camera(camera: Camera2D, strength: float = 10.0, duration: flo
 ## [param duration]: The total time in seconds for the pulse.
 ##[br]
 ## [param strength]: The maximum strength of the color separation effect.
-static func chromatic_aberration_pulse(shader_material: ShaderMaterial, duration: float = 0.3, strength: float = 15.0) -> void:
+static func chromatic_aberration_pulse(shader_material: ShaderMaterial, duration: float = 0.3, strength: float = 15.0) -> Tween:
 	if not shader_material or not shader_material.shader:
 		push_error("Chromatic Aberration: Invalid ShaderMaterial provided.")
 		return
@@ -54,6 +55,7 @@ static func chromatic_aberration_pulse(shader_material: ShaderMaterial, duration
 	var tween = shader_material.create_tween()
 	tween.tween_property(shader_material, "shader_parameter/strength", strength, duration * 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(shader_material, "shader_parameter/strength", 0.0, duration * 0.7).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	return tween
 
 
 ## Briefly flashes a [Node2D] or [Control] white to indicate a hit or interaction.
@@ -64,7 +66,7 @@ static func chromatic_aberration_pulse(shader_material: ShaderMaterial, duration
 ## [param node]: The [Node2D] or [Control] node to flash. The node must have a [member material] property.
 ##[br]
 ## [param duration]: The time in seconds for the flash to fade out.
-static func flash_white(node: Node, duration: float = 0.1) -> void:
+static func flash_white(node: Node, duration: float = 0.1) -> Tween:
 	if not node.has_method("get_material"):
 		push_error("Node does not have a material property.")
 		return
@@ -77,6 +79,7 @@ static func flash_white(node: Node, duration: float = 0.1) -> void:
 	
 	var tween = node.create_tween()
 	tween.tween_method(func(value): material.set_shader_parameter("flash_amount", value), 1.0, 0.0, duration)
+	return tween
 
 
 ## Pauses the entire game for a very short duration to add impact to an event.
@@ -89,41 +92,32 @@ static func flash_white(node: Node, duration: float = 0.1) -> void:
 ##[br][br]
 ## [codeblock lang=gdscript]
 ## async func _on_bullet_impact():
-##     STransitions.freeze_frame(0.08)
+##     ScreenEffects.freeze_frame(0.08)
 ##     # ...spawn explosion, deal damage, etc.
 ## [/codeblock]
 static func freeze_frame(duration: float = 0.05) -> void:
-	Engine.time_scale = 0.05
-	await Engine.get_main_loop().create_timer(duration, true, false, true).timeout
+	Engine.time_scale = 0.0
+	await A.tree.create_timer(duration, true, false, true).timeout
 	Engine.time_scale = 1.0
 
 
 ## Others
 
-static func flash_sprite(sprite: Sprite2D, color: Color = Color.WHITE, duration: float = 0.1) -> void:
-	var original_modulate = sprite.modulate
-	var tween = Engine.get_main_loop().create_tween().set_parallel()
-	tween.tween_property(sprite, "modulate", color, duration / 2.0).from(original_modulate)
-	tween.chain().tween_property(sprite, "modulate", original_modulate, duration / 2.0)
 
 #hack: insert no of cycles formula/ use frequency instead of duration for another function called smooth screen shake?
-static func screen_shake(duration: float, amplitude: float, camera: Camera2D = Engine.get_main_loop().root.get_viewport().get_camera_2d()) -> void:
-	var tween : Tween =  Engine.get_main_loop().create_tween()
+static func screen_shake(duration: float, amplitude: float, camera: Camera2D = A.get_viewport().get_camera_2d()) -> void:
+	_screen_shake_tween = Juice.create_global_tween()
 	var original_position : Vector2 = camera.position
 	for i in range(int(duration * 60)):  # Assuming 60 FPS
 		var camera_offset : Vector2 = Vector2(randf() * amplitude * 2 - amplitude, 0)
-		tween.tween_property(camera, "position", original_position + camera_offset, 1.0 / 60)  # Tween for 1 frame
-	tween.tween_property(camera, "position", original_position, 1.0 / 60)  # Return to original position
+		_screen_shake_tween.tween_property(camera, "position", original_position + camera_offset, 1.0 / 60)  # Tween for 1 frame
+	_screen_shake_tween.tween_property(camera, "position", original_position, 1.0 / 60)  # Return to original position
 
 # For use with anim_library (hit effect only)
-static func shake(amount: float = 10.0, duration: float = 0.2, camera: Camera2D = Engine.get_main_loop().root.get_viewport().get_camera_2d()) -> void:
-	# If a shake is already happening, kill the old one to start the new one.
-	if _screen_shake_tween and _screen_shake_tween.is_running():
-		_screen_shake_tween.kill()
+static func hit_shake(amount: float = 10.0, duration: float = 0.2, camera: Camera2D = A.get_viewport().get_camera_2d()) -> void:
+	_screen_shake_tween = Juice.create_global_tween(Tween.TRANS_SINE).set_parallel()
 	
 	camera.offset = Vector2.ZERO
-	_screen_shake_tween = Engine.get_main_loop().create_tween().set_parallel().set_trans(Tween.TRANS_SINE)
-	
 	# Shake horizontally and vertically
 	_screen_shake_tween.tween_property(camera, "offset:x", amount, duration * 0.25).from(0)
 	_screen_shake_tween.tween_property(camera, "offset:y", amount * 0.6, duration * 0.25).from(0)
@@ -132,13 +126,11 @@ static func shake(amount: float = 10.0, duration: float = 0.2, camera: Camera2D 
 	_screen_shake_tween.chain().tween_property(camera, "offset", Vector2.ZERO, duration * 0.75).set_trans(Tween.TRANS_CUBIC)
 
 # For smoother screen shakes
-static func camera_shake(intensity: float = 1.5, duration: float = 1.5, decay: float = 3.0, camera: Camera2D =  Engine.get_main_loop().root.get_viewport().get_camera_2d()) -> void:
+static func camera_shake(intensity: float = 1.5, duration: float = 1.5, decay: float = 3.0, camera: Camera2D =  A.get_viewport().get_camera_2d()) -> void:
 	# Stop any existing shake tweens
-	if camera.has_meta("shake_tween") and camera.get_meta("shake_tween").is_valid():
-			camera.get_meta("shake_tween").kill()
 	
-	var tween : Tween =  Engine.get_main_loop().create_tween()
-	camera.set_meta("shake_tween", tween)
+	_screen_shake_tween = A.create_tween()
+	camera.set_meta("shake_tween", _screen_shake_tween)
 	
 	var original_position := camera.position
 	var original_rotation := camera.rotation
@@ -162,19 +154,20 @@ static func camera_shake(intensity: float = 1.5, duration: float = 1.5, decay: f
 			camera.rotation = original_rotation
 	
 	#call our shake function over the duration
-	tween.tween_method(shake_function, 0.0, 1.0, duration)
+	_screen_shake_tween.tween_method(shake_function, 0.0, 1.0, duration)
 	
 	# Reset camera when done
-	tween.tween_callback(func() -> void:
+	_screen_shake_tween.tween_callback(func() -> void:
 		camera.position = original_position
 		camera.rotation = original_rotation
 	)
 
-static func squash_simple(target: Object, x_force: float, y_force: float, duration: float = 0.3, trans_type: Tween.TransitionType = Tween.TRANS_QUAD, ) -> void:
-	_screen_shake_tween = Engine.get_main_loop().create_tween()
+static func squash_simple(target: Object, x_force: float, y_force: float, duration: float = 0.3, trans_type: Tween.TransitionType = Tween.TRANS_QUAD, ) -> Tween:
+	var tween : Tween =  A.create_tween()
 	# initial squash
-	_screen_shake_tween.tween_property(target, "scale:x", 1 - x_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
-	_screen_shake_tween.parallel().tween_property(target, "scale:y", 1 + y_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
+	tween.tween_property(target, "scale:x", 1 - x_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(target, "scale:y", 1 + y_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
 	# return to normal
-	_screen_shake_tween.tween_property(target, "scale:x", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)
-	_screen_shake_tween.parallel().tween_property(target, "scale:y", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)
+	tween.tween_property(target, "scale:x", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(target, "scale:y", 1, duration/2).set_trans(trans_type).set_ease(Tween.EASE_IN)
+	return tween

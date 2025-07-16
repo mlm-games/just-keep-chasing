@@ -4,7 +4,7 @@ var aoe_data : AreaOfEffectAttack
 
 func _ready():
 	emitting = true
-	await get_tree().create_timer(lifetime).timeout
+	await A.tree.create_timer(lifetime).timeout
 	queue_free()
 	
 	texture = preload("uid://dcvutra05kbxb")

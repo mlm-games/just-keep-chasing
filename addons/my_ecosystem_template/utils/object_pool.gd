@@ -25,7 +25,7 @@
 ##
 ## # In the bullet's script (e.g., player_bullet.gd)
 ## func _on_lifetime_ended():
-##     get_tree().get_first_node_in_group("game").bullet_pool.release_object(self)
+##     A.tree.get_first_node_in_group("game").bullet_pool.release_object(self)
 ## [/codeblock]
 class_name ObjectPool
 extends Node

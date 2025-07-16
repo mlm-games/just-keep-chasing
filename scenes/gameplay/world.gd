@@ -41,7 +41,7 @@ func _ready() -> void:
 	RunData.time_updated.connect(_on_elapsed_time_updated)
 	RunData.mito_energy_updated.connect(_on_mito_energy_changed)
 	
-	get_tree().root.focus_exited.connect(UIManager.pause)
+	A.tree.root.focus_exited.connect(UIManager.pause)
 	enemy_spawn_timer.timeout.connect(spawn_enemy)
 	powerup_spawn_timer.timeout.connect(spawn_powerup)
 	autoscroll_timer.timeout.connect(_on_autoscroll_timer_timeout)
@@ -152,11 +152,11 @@ func pick_up_weapon() -> void:
 	#Todo: When near the gun, it is highlighted, so that it can be clicked.
 	print(thrown_guns.size())
 	if thrown_guns.size() > 0:
-		var weapon : BaseGun = get_tree().get_first_node_in_group("Dropped Weapons")
+		var weapon : BaseGun = A.tree.get_first_node_in_group("Dropped Weapons")
 		add_child(weapon)
 		weapon.remove_from_group("Dropped Weapons")
 		weapon.add_to_group("Weapons")
-		get_tree().call_group("Weapons", "queue_free")
+		A.tree.call_group("Weapons", "queue_free")
 		guns.append(thrown_guns.pop_back())
 	else:
 		switch_weapon()
@@ -173,8 +173,8 @@ func use_powerup(powerup_type: StringName) -> void:
 					RunData.powerups[powerup_type] += 1
 			&"screen_blast_powerup":
 				STransitions.transition("slightFlash")
-				get_tree().call_group("On Screen Enemies", "queue_free")
-				StaticScreenEffects.screen_shake(1, 2.5)
+				A.tree.call_group("On Screen Enemies", "queue_free")
+				ScreenEffects.screen_shake(1, 2.5)
 			&"heal_powerup":
 				player.health_component.heal_or_damage(20)
 			&"temp_invincible_powerup":
@@ -200,6 +200,7 @@ func _on_trial_completed(success: bool, gun: GunData) -> void:
 
 func activate_slow_motion() -> void:
 	if Engine.time_scale == NORMAL_TIME:
+		GameFeel.slow_motion()
 		time_scale_tween = create_tween()
 		time_scale_tween.tween_property(Engine, "time_scale", SLOW_TIME, TRANSITION_DURATION)\
 			.set_trans(Tween.TRANS_SINE)\
@@ -214,7 +215,7 @@ func activate_slow_motion() -> void:
 		#play_slow_motion_sound()
 		
 		# Wait for duration then deactivate
-		await get_tree().create_timer(SLOW_DURATION).timeout
+		await A.tree.create_timer(SLOW_DURATION).timeout
 		deactivate_slow_motion()
 
 func deactivate_slow_motion() -> void:

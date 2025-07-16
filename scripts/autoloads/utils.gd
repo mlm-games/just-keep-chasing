@@ -1,1 +1,1 @@
-class_name Utils extends Node
+class_name AutoloadUtils extends Node

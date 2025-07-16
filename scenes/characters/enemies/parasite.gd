@@ -40,7 +40,7 @@ func _on_move_timer_timeout() -> void:
 func _on_drop_pool_timer_timeout() -> void:
 	if not toxic_pool_scene or health_component.is_dead(): return
 
-	var pool_container = get_tree().get_first_node_in_group("ProjectilesContainer")
+	var pool_container = A.tree.get_first_node_in_group("ProjectilesContainer")
 	if not pool_container:
 		push_warning("Parasite: Could not find a 'ProjectilesContainer' node group to spawn pool in.")
 		return

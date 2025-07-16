@@ -7,4 +7,4 @@ func _ready() -> void:
 func _on_size_changed() -> void:
 	pivot_offset = size/2
 	var magnitude: float = 27/size.x
-	StaticScreenEffects.squash_simple(self, magnitude, magnitude)
+	ScreenEffects.squash_simple(self, magnitude, magnitude)

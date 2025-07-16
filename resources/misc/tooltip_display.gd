@@ -32,16 +32,16 @@ func set_content(content: TooltipContent) -> void:
 		label.custom_minimum_size.x = 0
 		label.autowrap_mode = TextServer.AUTOWRAP_OFF
 		
-		await get_tree().process_frame
+		await A.tree.process_frame
 		
 		if size.x > MAX_WIDTH:
 				label.custom_minimum_size.x = MAX_WIDTH
 				label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 				
-				await get_tree().process_frame
+				await A.tree.process_frame
 
 func position_relative_to(target: Control) -> void:
-		await get_tree().process_frame
+		await A.tree.process_frame
 		if self: center_above_if_space_or_below(target, Vector2(0, MARGIN))
 
 func show_with_animation() -> void:

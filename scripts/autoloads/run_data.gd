@@ -44,10 +44,10 @@ func reset():
 	price_increase_rate = 0.07
 	spawnable_enemies = {}
 	enemy_spawn_type_range = Vector2i(1, 1)
-	projectile_root = get_tree().get_first_node_in_group("ProjectilesNode")
-	world = get_tree().get_first_node_in_group("World")
-	player = get_tree().get_first_node_in_group("Player")
-	hud = get_tree().get_first_node_in_group("HUD")
+	projectile_root = A.tree.get_first_node_in_group("ProjectilesNode")
+	world = A.tree.get_first_node_in_group("World")
+	player = A.tree.get_first_node_in_group("Player")
+	hud = A.tree.get_first_node_in_group("HUD")
 	for key:StringName in CollectionManager.all_powerups:
 		powerups[key] = 0
 	print("RunState has been reset.")

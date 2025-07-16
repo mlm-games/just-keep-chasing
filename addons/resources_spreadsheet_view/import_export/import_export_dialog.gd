@@ -63,7 +63,7 @@ func _on_file_selected(path : String):
 	if editor_view.rows.size() > 0:
 		script_path_field.text = editor_view.rows[0].get_script().resource_path
 
-	await get_tree().process_frame
+	await A.tree.process_frame
 	get_parent().popup_centered()
 	position = Vector2.ZERO
 
@@ -121,7 +121,7 @@ func _create_prop_editors():
 	for x in prop_list.get_children():
 		if !x is GridContainer: x.free()
 
-	await get_tree().process_frame
+	await A.tree.process_frame
 	for i in import_data.prop_names.size():
 		var new_node := prop_list_item_scene.instantiate()
 		prop_list.add_child(new_node)
@@ -158,8 +158,8 @@ func _on_import_to_tres_pressed():
 		new_res = import_data.strings_to_resource(entries[i], editor_view.current_path)
 		ResourceSaver.save(new_res)
 
-	await get_tree().process_frame
-	await get_tree().process_frame
+	await A.tree.process_frame
+	await A.tree.process_frame
 	editor_view.refresh()
 	close()
 
@@ -170,14 +170,14 @@ func _on_import_edit_pressed():
 
 	import_data.prop_used_as_filename = ""
 	import_data.save()
-	await get_tree().process_frame
+	await A.tree.process_frame
 	editor_view.display_folder(import_data.resource_path)
 	editor_view.node_columns.hidden_columns[editor_view.current_path] = {
 		"resource_path" : true,
 		"resource_local_to_scene" : true,
 	}
 	editor_view.save_data()
-	await get_tree().process_frame
+	await A.tree.process_frame
 	editor_view.refresh()
 	close()
 
@@ -189,7 +189,7 @@ func _on_export_csv_pressed():
 		exported_cols.erase(x)
 
 	ResourceTablesExportFormatCsv.export_to_file(editor_view.rows, exported_cols, import_data.edited_path, import_data)
-	await get_tree().process_frame
+	await A.tree.process_frame
 	editor_view.refresh()
 	close()
 

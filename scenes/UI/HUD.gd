@@ -10,7 +10,7 @@ var pop_up_on_screen : bool = false
 @onready var heal_button: Button = %HealButton
 @onready var invincible_button : Button = %InvincibleButton
 @onready var timer_label: Label = %TimerLabel
-@onready var player : Player = get_tree().get_first_node_in_group("Player")
+@onready var player : Player = A.tree.get_first_node_in_group("Player")
 @onready var currency_label: RichTextLabel = %CurrencyLabel
 @onready var next_upgrade_bar: ProgressBar = %NextUpgradeBar
 

@@ -10,8 +10,8 @@ var tween : Tween
 
 func _ready() -> void:
 	$CollisionShape2D.shape.radius = CharacterStats.get_stat(CharacterStats.Stats.CURRENCY_PICKUP_RANGE)
-	if tween: tween.kill()
-	tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	
+	tween = Juice.create_global_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(self, "global_position", global_position + 150*Vector2(randf_range(-1,1), randf_range(-1,1)), 0.75)
 
 func collect() -> void:
@@ -21,3 +21,7 @@ func collect() -> void:
 	CountStats.increment_stat("mito_energy_collected")
 	
 	queue_free()
+
+
+func _process(delta: float) -> void:
+	tween = create_tween()

@@ -99,3 +99,12 @@ enum COLLISION_LAYER_NAMES {
 	Collectibles,
 	Friends
 }
+
+enum BusNames {
+	MASTER,
+	MUSIC,
+	SFX
+}
+
+static func get_bus_type(key: BusNames) -> StringName:
+	return BusNames.keys()[key].capitalize()

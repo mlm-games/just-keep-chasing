@@ -16,14 +16,13 @@ extends RefCounted
 ## [param direction]: A normalized [Vector2] indicating the direction of the recoil push.
 ##[br]
 ## [param strength]: The distance in pixels to push the node back.
-static func add_recoil(node: Node2D, direction: Vector2, strength: float = 10.0) -> void:
+static func add_recoil(node: Node2D, direction: Vector2, strength: float = 10.0) -> Tween:
 	var original_pos = node.position
 	node.position += direction * strength
 	
-	var tween = node.create_tween()
-	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_EXPO)
+	var tween = node.create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(node, "position", original_pos, 0.2)
+	return tween
 
 
 ## Applies a knockback force to a [CharacterBody2D] by setting its velocity.
@@ -52,13 +51,14 @@ static func apply_knockback(body: CharacterBody2D, direction: Vector2, force: fl
 ## [param time_scale]: The target time scale (e.g., 0.5 for 50% speed).
 ##[br]
 ## [param duration]: The duration in [b]real-time[/b] seconds that the effect should last before starting to return to normal.
-static func slow_motion(time_scale: float = 0.3, duration: float = 0.5) -> void:
+static func slow_motion(time_scale: float = 0.3, duration: float = 0.5) -> Tween:
 	Engine.time_scale = time_scale
 	# The timer must be process-agnostic to work correctly when time_scale is low or zero.
-	await Engine.get_main_loop().create_timer(duration, true, false, true).timeout
+	await A.tree.create_timer(duration, true, false, true).timeout
 	
-	var tween = Engine.get_main_loop().create_tween()
+	var tween = A.create_tween()
 	tween.tween_property(Engine, "time_scale", 1.0, 0.2).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	return tween
 
 
 ## Vibrates a connected controller.

@@ -6,7 +6,7 @@ const LoadedParticlesScene = preload("uid://dfbi8k6eqssuk")
 
 var contact_attack_damage: float
 
-@onready var player : Player = get_tree().get_first_node_in_group("Player")
+@onready var player : Player = A.tree.get_first_node_in_group("Player")
 
 var player_hitbox: HitboxComponent
 var can_deal_damage := false
@@ -80,7 +80,7 @@ func _on_health_component_entity_died() -> void:
 	DropsSpawner.emit_mito_energy(global_position, mito_energy_value)
 	CountStats.increment_stat(CountStats.get_stat_key(enemy_data_resource))
 	AudioManager.play_sound_varied(C.CommonSounds.EnemyHit)
-	StaticScreenEffects.freeze_frame(0.07)
+	ScreenEffects.freeze_frame(0.07)
 
 	$CollisionShape2D.set_deferred("disabled", true)
 	hitbox_component.get_node("CollisionShape2D").set_deferred("disabled", true)

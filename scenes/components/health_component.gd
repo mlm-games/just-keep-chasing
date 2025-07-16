@@ -73,7 +73,7 @@ func dot(attack: Attack) -> void:
 		current_health -= attack.attack_damage
 			
 		for i in int(attack.dot_duration):
-			await get_tree().create_timer(1).timeout
+			await A.tree.create_timer(1).timeout
 			current_health -= attack.damage_over_time
 			taking_damage.emit()
 			health_changed.emit(current_health)
@@ -99,7 +99,7 @@ func disable_for_secs(secs: float) -> void:
 	var parent_sprite : Sprite2D = get_node("../Sprite2D")
 	parent_sprite.material = ShaderMaterial.new()
 	parent_sprite.material.shader = INVINCIBLE_SHADER
-	await get_tree().create_timer(secs).timeout
+	await A.tree.create_timer(secs).timeout
 	invincible = false
 	parent_sprite.material = null
 
@@ -111,11 +111,3 @@ func check_for_death() -> void:
 
 func is_dead() -> bool:
 	return dying
-
-func shake(amount: float, duration: float):
-	StaticScreenEffects.shake()
-	#StaticScreenEffects.shake(amount, duration)
-
-func flash_sprite(color: Color = Color.DARK_GOLDENROD, duration: float = 0.1):
-	pass
-	#StaticScreenEffects.flash_sprite(owner.sprite, color, duration)

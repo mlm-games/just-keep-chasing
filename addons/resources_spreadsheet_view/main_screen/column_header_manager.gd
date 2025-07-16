@@ -95,7 +95,7 @@ func _update_column_sizes():
 	if grid.get_child_count() == 0:
 		return
 		
-	await get_tree().process_frame
+	await A.tree.process_frame
 	var column_headers := get_children()
 
 	if grid.get_child_count() < column_headers.size(): return
@@ -125,7 +125,7 @@ func _update_column_sizes():
 	grid.show()
 	hide()
 	show()
-	await get_tree().process_frame
+	await A.tree.process_frame
 
 	# Abort if the node has been deleted since.
 	if !is_instance_valid(column_headers[0]):

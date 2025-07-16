@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbmnbn0w62mn6"]
+
+[ext_resource type="Script" uid="uid://ixpppcuhpbdm" path="res://addons/my_ecosystem_template/autoloads/autoload.gd" id="1_yprki"]
+
+[node name="Autoload" type="Node"]
+script = ExtResource("1_yprki")

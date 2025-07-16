@@ -9,8 +9,8 @@ func push_layer(scene: PackedScene):
 	
 	var new_layer = scene.instantiate()
 	ui_stack.append(new_layer)
-	get_tree().get_first_node_in_group("PopupsRoot").add_child(new_layer)
-	get_tree().paused = true # Pause the game when any UI is open
+	A.tree.get_first_node_in_group("PopupsRoot").add_child(new_layer)
+	A.tree.paused = true # Pause the game when any UI is open
 
 func pop_layer():
 	if ui_stack.is_empty(): return
@@ -20,7 +20,7 @@ func pop_layer():
 	if not ui_stack.is_empty():
 		ui_stack.back().show() # Show the layer below
 	else:
-		get_tree().paused = false # Unpause if no UI is left
+		A.tree.paused = false # Unpause if no UI is left
 
 
 func pause():

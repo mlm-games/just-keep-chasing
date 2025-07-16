@@ -9,7 +9,7 @@ class_name Prion extends BaseEnemy
 @onready var fire_cooldown_timer: Timer = $FireCooldownTimer
 @onready var sprite: Sprite2D = $Sprite2D
 
-@onready var player : Player = get_tree().get_first_node_in_group("Player")
+@onready var player : Player = A.tree.get_first_node_in_group("Player")
 
 
 enum SelfState { REPOSITIONING, AIMING }
@@ -58,7 +58,7 @@ func _state_aiming() -> void:
 func _fire_shot() -> void:
 	if not projectile_scene or health_component.is_dead() or not is_instance_valid(player): return
 
-	var projectile_container = get_tree().get_first_node_in_group("ProjectilesContainer")
+	var projectile_container = A.tree.get_first_node_in_group("ProjectilesContainer")
 	if not projectile_container: 
 		push_warning("Prion: Could not find a 'ProjectilesContainer' node group to spawn projectile in.")
 		return

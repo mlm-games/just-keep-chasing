@@ -27,6 +27,13 @@ func _ready() -> void:
 	if is_instance_valid(sprite_2d.material):
 		sprite_2d.material = sprite_2d.material.duplicate()
 
+func shake(amount: float, duration: float):
+	ScreenEffects.hit_shake()
+	#ScreenEffects.shake(amount, duration)
+
+func flash_sprite(color: Color = Color.DARK_GOLDENROD, duration: float = 0.1):
+	pass
+	#ScreenEffects.flash_sprite(owner.sprite, color, duration)
 
 
 func _on_global_enemy_stat_changed(stat_key: CharacterStats.Stats, new_value: float):

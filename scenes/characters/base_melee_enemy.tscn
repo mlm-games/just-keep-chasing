@@ -16,7 +16,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprite2D:material:shader_parameter/brightness")
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/brightness")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -56,7 +56,6 @@ shader_parameter/enable_texture = true
 shader_parameter/texture_scale = 1.0
 shader_parameter/texture_strength = 0.05
 shader_parameter/saturation = 0.8
-shader_parameter/brightness = -0.05
 shader_parameter/contrast = 1.2
 shader_parameter/smoothing = 0.5
 
@@ -79,7 +78,6 @@ sprite = NodePath("../Sprite2D")
 metadata/_custom_type_script = "uid://cph1hb68v0xjn"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../HealthComponent")
 libraries = {
 &"": SubResource("AnimationLibrary_u32s4"),
 &"reusable_anims": ExtResource("5_j1tbp")
@@ -102,7 +100,9 @@ shape = SubResource("RectangleShape2D_mgdpr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_u32s4")
+scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_mcomt")
+offset = Vector2(0, -0.432094)
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("8_j1tbp")

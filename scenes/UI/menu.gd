@@ -10,7 +10,7 @@ const AchievementsScene = "uid://ckqthyukac8wf"
 var tween: Tween
 
 func _ready() -> void:
-	get_tree().paused = false
+	A.tree.paused = false
 	# needed for gamepads to work
 	%PlayButton.grab_focus()
 	#if OS.has_feature('web'):
@@ -28,26 +28,26 @@ func _on_PlayButton_pressed() -> void:
 	STransitions.transition("fadeToBlack", true)
 	await STransitions.transition_player.animation_finished
 	STransitions.transition("circleOut", false, 1.5)
-	get_tree().change_scene_to_file(WorldScene)
-	#await get_tree().create_timer(0.01).timeout
+	A.tree.change_scene_to_file(WorldScene)
+	#await A.tree.create_timer(0.01).timeout
 
 
 func _on_ExitButton_pressed() -> void:
 	# gently shutdown the game
 	STransitions.transition()
 	await STransitions.transition_player.animation_finished
-	get_tree().quit()
+	A.tree.quit()
 
 
 func run_title_anim() -> void:
-	tween = get_tree().create_tween().set_trans(Tween.TRANS_SINE).set_parallel()
+	tween = %Title.set_trans(Tween.TRANS_SINE).set_parallel()
 	tween.tween_property(%Title, "position:y", 117, 1.25).set_trans(Tween.TRANS_BACK)
-	tween.tween_property(%Title, "position:x", get_viewport_rect().size.x/2 - 300, 1.25) # Need to find a better way
+	tween.tween_property(%Title, "position:x", get_viewport_rect().size.x / 2 - 300, 1.25) # Need to find a better way
 	tween = tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE).set_parallel(false)
 	tween.tween_property(%Title.material, "shader_parameter/bounce_height", 0, 1)
-	tween.tween_property(%Title, "position:x", get_viewport_rect().size.x/2 - 325, 1.25).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC).set_delay(5) # Need to find a better way
+	tween.tween_property(%Title, "position:x", get_viewport_rect().size.x / 2 - 325, 1.25).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_ELASTIC).set_delay(5) # Need to find a better way
 
 
 func run_buttons_anim() -> void:
-	tween = get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE).set_parallel(false)
-	tween.tween_property(%ButtonsContainer, "position:y", 248 , 1.25).from(800)
+	tween = %ButtonsContainer.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BOUNCE).set_parallel(false)
+	tween.tween_property(%ButtonsContainer, "position:y", 248, 1.25).from(800)

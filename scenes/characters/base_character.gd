@@ -6,3 +6,4 @@ var knockback_timer: float = 0.0
 func apply_knockback(direction: Vector2, force: float, stun_duration: float) -> void:
 	knockback = direction * force
 	knockback_timer = stun_duration
+	

@@ -7,7 +7,7 @@ var enemy: CharacterBody2D
 var distance: float
 
 func find_closest_enemy():
-	var enemies = get_tree().get_nodes_in_group("Enemies")
+	var enemies = A.tree.get_nodes_in_group("Enemies")
 	var closest_enemy = null
 	var closest_distance = INF
 
