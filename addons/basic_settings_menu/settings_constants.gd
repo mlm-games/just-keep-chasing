@@ -1,6 +1,4 @@
-# Purpose: This Resource is now a PURE DATA container.
-# It holds the structure and default values of your settings.
-# All logic has been moved to SettingsData and SettingsApplier.
+# It holds the structure and default values of some settings.
 
 class_name SettingsConstants extends Resource
 

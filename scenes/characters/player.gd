@@ -65,7 +65,7 @@ func _on_health_component_entity_died() -> void:
 	velocity_component.set_physics_process(false)
 	process_mode = Node.PROCESS_MODE_DISABLED
 	
-	await get_tree().create_timer(0.5).timeout
+	await A.tree.create_timer(0.5).timeout
 	STransitions.transition("circleIn")
 	await STransitions.transition_player.animation_finished
 	UIManager.push_layer(preload("uid://oqyl6r1j4383"))
@@ -74,8 +74,8 @@ func _on_health_component_entity_died() -> void:
 func _on_health_component_taking_damage(_dmg) -> void:
 	taking_damage = true
 	#TODO: knockback_component.apply_knockback() here.
-	StaticScreenEffects.screen_shake(0.1, 0.5)
-	await get_tree().create_timer(0.1).timeout
+	ScreenEffects.screen_shake(0.1, 0.5)
+	await A.tree.create_timer(0.1).timeout
 	taking_damage = false
 
 

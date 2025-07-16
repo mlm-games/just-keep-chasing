@@ -21,7 +21,7 @@ func _ready():
 	_inner_ring_half = (inner_stick.size * inner_stick.scale) / 2
 
 func _gui_input(event):
-	if get_tree().paused == true:
+	if A.tree.paused == true:
 		_reset()
 		return
 	

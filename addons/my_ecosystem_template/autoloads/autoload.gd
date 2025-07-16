@@ -1,7 +1,4 @@
-## Should be set as the autoload by default
+## Should be set as the autoload by default, can call (global) creation and add_child to this instead of getting the scene tree everytime.
 extends Node
 
-static var tree : SceneTree
-
-func _ready():
-	tree = get_tree()
+static var tree : SceneTree = Engine.get_main_loop()

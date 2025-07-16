@@ -17,7 +17,7 @@ class_name SettingsProfile extends Resource
 }
 #@export_group("Audio")
 @export var audio: Dictionary = {
-	"Master": 0.5,
-	"Music": 0.5,
-	"Sfx": 0.5,
+	C.get_bus_type(C.BusNames.MASTER): 0.5,
+	C.get_bus_type(C.BusNames.MUSIC): 0.5,
+	C.get_bus_type(C.BusNames.SFX): 0.5,
 }

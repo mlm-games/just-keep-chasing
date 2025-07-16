@@ -1,4 +1,4 @@
-class_name StaticUtils
+class_name Utils
 
 static func get_augment_description(augment: AugmentsData) -> String:
 	if not augment.auto_generate_description and not augment.custom_description.is_empty():
@@ -48,12 +48,3 @@ static func get_modifier_description(modifier: StatModifier) -> String:
 	
 	# Assemble the final string
 	return "%s %s by %s." % [operation_text, stat_name, value_text]
-
-
-static func get_gun_base_curve():
-	var curve = Curve.new()
-	
-	curve.add_point(Vector2.DOWN)
-	curve.add_point(Vector2.RIGHT)
-	
-	curve.point_count = 2

@@ -11,7 +11,7 @@ func display(damage: float, anim_time: float = 1.0, spread: float = PI/3) -> voi
 	pivot_offset = size / 2
 	scale += clamp(Vector2(damage/1000, damage/1000), Vector2.ONE/2,Vector2.ONE*3) 
 	
-	var tween : Tween = get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
+	var tween : Tween = Juice.create_global_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 	
 	tween.tween_property(self, "position", position + movement, anim_time/2).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(self, "scale", Vector2.ONE, anim_time/2)

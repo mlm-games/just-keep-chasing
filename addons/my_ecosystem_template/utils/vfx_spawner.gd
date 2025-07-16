@@ -20,7 +20,7 @@ extends RefCounted
 ## [param parent]: The node to parent the particles to. If [code]null[/code], it defaults to the current scene root.
 static func spawn_particles(particle_scene: PackedScene, global_pos: Vector2, parent: Node = null) -> void:
 	if not parent:
-		parent = Engine.get_main_loop().current_scene
+		parent = A
 	
 	var particles = particle_scene.instantiate()
 	
@@ -47,7 +47,7 @@ static func spawn_damage_number(amount: int, global_pos: Vector2, color: Color =
 	label.add_theme_color_override("font_color", color)
 	label.add_theme_font_size_override("font_size", 24)
 	
-	Engine.get_main_loop().current_scene.add_child(label)
+	A.add_child(label)
 	label.global_position = global_pos
 	
 	var tween = label.create_tween().set_ease(randi_range(0, 3)).set_trans(randi_range(0, 10))  #Tween.TRANS_SPRING)

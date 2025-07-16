@@ -28,7 +28,7 @@ uniform float texture_strength : hint_range(0.0, 0.5) = 0.05;
 
 // Color enhancement
 uniform float saturation : hint_range(0.0, 2.0) = 1.1;
-uniform float brightness : hint_range(-0.5, 0.5) = 0.05;
+instance uniform float brightness : hint_range(-0.5, 0.5) = 0.05;
 uniform float contrast : hint_range(0.5, 2.0) = 1.1;
 
 // Smooth anti-aliasing

@@ -46,7 +46,7 @@ func _setup_slot():
 	texture_rect.texture = augment.augment_icon
 	upgrade_label.text = tr(CollectionManager.get_resource_name(augment).capitalize())
 	price_container.text = GameState.get_currency_bbcode() + str(final_price)
-	description_label.text = StaticUtils.get_augment_description(augment)
+	description_label.text = Utils.get_augment_description(augment)
 	
 	_set_visuals_from_rarity()
 	_update_buyable_state()
@@ -134,38 +134,24 @@ func setup_slot() -> void:
 
 func red_out_unbuyable_slots() -> void:
 	if final_price > RunData.mito_energy - CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD):
-		CommonTweens.set_tweened_value(%PriceContainer, "modulate", Color(1.0, 0.333, 0.11))
-		CommonTweens.set_tweened_value(self, "modulate",Color(0.7, 0.7, 0.7)) # Dim the whole slot
+		var t1 := Juice.set_tweened_value(%PriceContainer, "modulate", Color(1.0, 0.333, 0.11))
+		var t2 := Juice.set_tweened_value(self, "modulate", Color(0.7, 0.7, 0.7)) # Dim the whole slot
+		#NOTE: Saving them to a variable doesn't free them from memory if the variable is not rewritten
 
 func _on_panel_mouse_entered() -> void:
 	panel_entered = true
 	
-	# Cancel any existing tween
-	if hover_tween:
-		hover_tween.kill()
-	
-	# Create new scale tween
-	hover_tween = create_tween()
-	hover_tween.set_trans(Tween.TRANS_CUBIC)
-	hover_tween.set_ease(Tween.EASE_OUT).set_ignore_time_scale()
+	hover_tween = Juice.create_global_tween().set_ignore_time_scale()
 	hover_tween.tween_property(self, "scale", hover_scale, 0.1)
 	
-	# Fixme: Play hover sound
-	#AudioManager.play_sfx("hover")
+	UiAudioM.play_hover_sound()
 	
 
 func _on_panel_mouse_exited() -> void:
 	panel_entered = false
 	
-	
-	# Cancel any existing tween
-	if hover_tween:
-		hover_tween.kill()
-	
 	# Create new scale tween
-	hover_tween = create_tween()
-	hover_tween.set_trans(Tween.TRANS_CUBIC)
-	hover_tween.set_ease(Tween.EASE_OUT).set_ignore_time_scale()
+	hover_tween = Juice.create_global_tween().set_ignore_time_scale()
 	hover_tween.tween_property(self, "scale", original_scale, 0.1)
 
 func buy_if_rich_enough() -> void:
@@ -185,14 +171,11 @@ func buy_if_rich_enough() -> void:
 func _input(event: InputEvent) -> void:
 	if panel_entered and event.is_pressed():
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-			var click_tween : Tween = create_tween()
-			click_tween.set_trans(Tween.TRANS_BOUNCE)
-			click_tween.set_ease(Tween.EASE_OUT).set_ignore_time_scale()
+			var click_tween : Tween = create_tween().set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT).set_ignore_time_scale()
 			click_tween.tween_property(self, "scale", original_scale * 0.95, 0.1)
 			click_tween.tween_property(self, "scale", hover_scale, 0.1)
 			
-			# FIXME: Play click sound
-			#Sound.play_sfx("click")
+			UiAudioM.play_click_sound()
 			
 			slot_clicked.emit()
 			panel_entered = false

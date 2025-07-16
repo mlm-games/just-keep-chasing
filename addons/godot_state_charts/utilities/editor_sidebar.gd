@@ -60,7 +60,7 @@ func _create_node(type, name:StringName):
 	_undo_redo.add_do_method(_selected_node, "add_child", new_node)
 	_undo_redo.add_undo_method(_selected_node, "remove_child", new_node)
 	_undo_redo.add_do_reference(new_node)
-	_undo_redo.add_do_method(new_node, "set_owner", _selected_node.get_tree().edited_scene_root)
+	_undo_redo.add_do_method(new_node, "set_owner", _selected_node.A.tree.edited_scene_root)
 	_undo_redo.add_do_property(new_node, "name", final_name)
 	_undo_redo.commit_action()
 		

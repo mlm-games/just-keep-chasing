@@ -28,7 +28,7 @@ func save_entries(all_entries : Array, indices : Array, repeat : bool = true):
 			file.store_csv_line(x, import_data.delimeter[0])
 
 		if repeat:
-			timer = editor_view.get_tree().create_timer(3.0)
+			timer = editor_view.A.tree.create_timer(3.0)
 			timer.timeout.connect(save_entries.bind(all_entries, indices, false))
 
 

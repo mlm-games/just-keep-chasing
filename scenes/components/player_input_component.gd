@@ -4,8 +4,8 @@ class_name PlayerInputComponent extends Node
 ## It doesn't move anything itself, it only provides input data.
 
 
-@onready var move_joy = get_tree().get_first_node_in_group("MovementJoystick")
-@onready var shoot_joy = get_tree().get_first_node_in_group("ShootingJoystick")
+@onready var move_joy = A.tree.get_first_node_in_group("MovementJoystick")
+@onready var shoot_joy = A.tree.get_first_node_in_group("ShootingJoystick")
 
 signal direction_changed(direction: Vector2)
 

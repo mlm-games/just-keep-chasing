@@ -22,7 +22,7 @@ static func play_sound_varied(sound: AudioStream, pitch_variation: float = 0.1, 
 	if not sound: return
 	
 	var player = AudioStreamPlayer.new()
-	Engine.get_main_loop().current_scene.add_child(player)
+	A.add_child(player)
 	player.stream = sound
 	player.pitch_scale = randf_range(1.0 - pitch_variation, 1.0 + pitch_variation)
 	player.volume_db = volume_db
@@ -54,10 +54,10 @@ static func play_random_sound(sounds: Array[AudioStream], volume_db: float = 0.0
 ## [param to_player]: The [AudioStreamPlayer] that should be faded in. It will start playing from the beginning.
 ##[br]
 ## [param duration]: The duration of the crossfade in seconds.
-static func crossfade_music(from_player: AudioStreamPlayer, to_player: AudioStreamPlayer, duration: float = 1.0) -> void:
+static func crossfade_music(from_player: AudioStreamPlayer, to_player: AudioStreamPlayer, duration: float = 1.0) -> Tween:
 	if not from_player or not to_player: return
 
-	to_player.volume_db = -80.0 # Effectively silent
+	to_player.volume_db = -80.0
 	to_player.play()
 	
 	var tween = from_player.create_tween()
@@ -65,3 +65,4 @@ static func crossfade_music(from_player: AudioStreamPlayer, to_player: AudioStre
 	tween.tween_property(from_player, "volume_db", -80.0, duration)
 	tween.tween_property(to_player, "volume_db", 0.0, duration)
 	tween.finished.connect(from_player.stop)
+	return tween

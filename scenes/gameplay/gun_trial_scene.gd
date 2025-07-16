@@ -5,7 +5,7 @@ func _ready() -> void:
 	populate_gun_list()
 
 func populate_gun_list() -> void:
-	for gun in get_node("/root/World").guns:
+	for gun in RunData.world.guns:
 		var button = Button.new()
 		button.text = gun.name
 		if GameState.is_gun_unlocked(gun.resource_path):
