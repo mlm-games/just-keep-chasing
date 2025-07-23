@@ -12,9 +12,6 @@ var is_in_shop : bool = false:
 
 
 var projectile_root : Node2D
-var world: World #TODO: remove these
-var player: Player
-var hud: HUD
 
 var spawnable_enemies: Dictionary[int, EnemyData] = {} #key: spawn_range, value: Enemydata
 var enemy_spawn_type_range := Vector2i(1, 1)
@@ -45,9 +42,6 @@ func reset():
 	spawnable_enemies = {}
 	enemy_spawn_type_range = Vector2i(1, 1)
 	projectile_root = A.tree.get_first_node_in_group("ProjectilesNode")
-	world = A.tree.get_first_node_in_group("World")
-	player = A.tree.get_first_node_in_group("Player")
-	hud = A.tree.get_first_node_in_group("HUD")
 	for key:StringName in CollectionManager.all_powerups:
 		powerups[key] = 0
 	print("RunState has been reset.")
@@ -56,4 +50,4 @@ func reset():
 
 func powerup_collected(powerup_type: StringName) -> void:
 	powerups[powerup_type] += 1
-	#world.hud.update_hud_buttons()
+	#HUD.I.update_hud_buttons()

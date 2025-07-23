@@ -1,13 +1,10 @@
 class_name WinScreen extends Control
 
-#@export var world_scene : PackedScene
-
-
 func _ready():
 	STransitions.transition("circleOut")
 
 func _on_menu_button_pressed() -> void:
-	STransitions.change_scene_with_transition("uid://c2gocuhw2o7py")
+	STransitions.change_scene_with_transition(Menu.WorldScene)
 
 
 func _on_continue_button_pressed() -> void:

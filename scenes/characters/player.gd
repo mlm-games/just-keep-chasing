@@ -1,9 +1,14 @@
 class_name Player extends BaseCharacter
 
+static var I: Player
+
+func _init() -> void:
+	I = self
+
 @onready var velocity_component: VelocityComponent = $VelocityComponent
 @onready var input_component: PlayerInputComponent = $PlayerInputComponent
 @onready var health_component: HealthComponent = %HealthComponent
-@onready var animation_component : AnimationComponent = $AnimationComponent
+@onready var animation_component: AnimationComponent = $AnimationComponent
 @onready var sprite: Sprite2D = %Sprite2D
 
 @onready var progress_bar: ProgressBar = %ProgressBar
@@ -37,20 +42,14 @@ func _ready() -> void:
 		_equip_gun(initial_gun_data)
 
 	
-
 func _on_input_direction_changed(direction: Vector2) -> void:
 	velocity_component.accelerate_to(direction, CharacterStats.get_stat(CharacterStats.Stats.PLAYER_SPEED))
 
-func _physics_process(_delta: float) -> void: 
+func _physics_process(_delta: float) -> void:
 	animation_component.update_movement(velocity_component.velocity)
 
 
 # NOTE: Knockback is now handled by the VelocityComponent.
-# The HealthComponent should now call this instead of modifying velocity directly.
-# For example, in _on_health_component_taking_damage(), you would add:
-# var knockback_direction = attack.source_global_position.direction_to(global_position)
-# knockback_component.apply_knockback(knockback_direction * KNOCKBACK_FORCE, 0.2)
-# You no longer need `update_knock_timer` here. It's gone!
 
 
 func _on_character_stat_changed(stat_key: CharacterStats.Stats, new_value: float):
@@ -66,10 +65,7 @@ func _on_health_component_entity_died() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
 	
 	await A.tree.create_timer(0.5).timeout
-	STransitions.transition("circleIn")
-	await STransitions.transition_player.animation_finished
-	UIManager.push_layer(preload("uid://oqyl6r1j4383"))
-	STransitions.transition("circleOut")
+	STransitions.change_scene_with_transition("uid://oqyl6r1j4383", "circleIn")
 
 func _on_health_component_taking_damage(_dmg) -> void:
 	taking_damage = true

@@ -1,4 +1,4 @@
-extends Control
+class_name Menu extends Control
 
 const WorldScene = "uid://4fyoq8npekf0"
 const SettingsScene = "uid://dp42fom7cc3n0"

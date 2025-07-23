@@ -1,7 +1,6 @@
 extends Node
 
 var ui_stack: Array = []
-var hud: HUD
 
 func push_layer(scene: PackedScene):
 	if not ui_stack.is_empty():
@@ -16,7 +15,6 @@ func pop_layer():
 	if ui_stack.is_empty(): return
 	
 	ui_stack.pop_back().queue_free()
-	
 	if not ui_stack.is_empty():
 		ui_stack.back().show() # Show the layer below
 	else:

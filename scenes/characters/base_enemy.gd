@@ -17,8 +17,8 @@ var currency_mult: float = 1.0
 @onready var visible_on_screen_notifier_2d: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 func _ready() -> void:
-	visible_on_screen_notifier_2d.screen_exited.connect(add_to_group.bind("On Screen Enemies"))
-	visible_on_screen_notifier_2d.screen_entered.connect(remove_from_group.bind("On Screen Enemies"))
+	visible_on_screen_notifier_2d.screen_exited.connect(remove_from_group.bind("On Screen Enemies"))
+	visible_on_screen_notifier_2d.screen_entered.connect(add_to_group.bind("On Screen Enemies"))
 	health_component.taking_damage.connect(func(dmg):
 		CountStats.increment_stat(C.COUNT_STAT_KEYS.damage_dealt, int(dmg))
 		VFXSpawner.spawn_damage_number(dmg, global_position))

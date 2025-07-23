@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func collect() -> void:
 	RunData.powerup_collected(CollectionManager.get_resource_name(powerup_data))
-	RunData.world.use_powerup(CollectionManager.get_resource_name(powerup_data)
+	World.I.use_powerup(CollectionManager.get_resource_name(powerup_data)
 	)
 	
 	CountStats.increment_stat(CountStats.get_stat_key(powerup_data))

@@ -14,6 +14,11 @@
 
 class_name World extends Node2D
 
+static var I : World
+
+func _init() -> void:
+	I = self
+
 const NORMAL_TIME = 1.0
 const SLOW_TIME = 0.75
 const SLOW_DURATION = 4.0
@@ -22,7 +27,6 @@ const TRANSITION_DURATION = 0.3
 @onready var time_scale_tween: Tween
 
 @onready var animation_player : AnimationPlayer = %AnimationPlayer
-@onready var hud: HUD = %HUD
 @onready var out_of_view_spawn_location: PathFollow2D = %OutOfViewSpawnLocation
 @onready var player: Player = %Player
 @onready var enemies_node: Node2D = %EnemiesNode
@@ -41,7 +45,7 @@ func _ready() -> void:
 	RunData.time_updated.connect(_on_elapsed_time_updated)
 	RunData.mito_energy_updated.connect(_on_mito_energy_changed)
 	
-	A.tree.root.focus_exited.connect(UIManager.pause)
+	A.tree.root.focus_exited.connect(UIManager.pause) #FIXME: Would still trigger the pause when game is over and in main menu
 	enemy_spawn_timer.timeout.connect(spawn_enemy)
 	powerup_spawn_timer.timeout.connect(spawn_powerup)
 	autoscroll_timer.timeout.connect(_on_autoscroll_timer_timeout)
@@ -179,7 +183,7 @@ func use_powerup(powerup_type: StringName) -> void:
 				player.health_component.heal_or_damage(20)
 			&"temp_invincible_powerup":
 				player.health_component.disable_for_secs(20)
-		#hud.update_hud_buttons()
+		#HUD.I.update_hud_buttons()
 
 func start_gun_trial(gun: GunData) -> void:
 	# Instance the trial scene

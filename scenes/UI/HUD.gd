@@ -2,6 +2,11 @@
 #hack: touch_button_changing_icons...
 class_name HUD extends CanvasLayer
 
+static var I : HUD
+
+func _init() -> void:
+	I = self
+
 const TIMER_FORMAT = "%02d:%02d"
 var pop_up_on_screen : bool = false
 
@@ -65,5 +70,5 @@ func check_time_condition(time:int) -> void:
 
 func _on_guns_button_pressed() -> void:
 	UiAudioM.play_ui_sound(preload("res://assets/music/gun sounds by q009/weapswitch.ogg"))
-	RunData.player.inventory_component.switch_to_next_gun()
+	Player.I.inventory_component.switch_to_next_gun()
 #endregion
