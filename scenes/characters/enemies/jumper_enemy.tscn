@@ -1,16 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://c53e5ffabqvci"]
+[gd_scene load_steps=9 format=3 uid="uid://c53e5ffabqvci"]
 
 [ext_resource type="Script" uid="uid://bf8tgk53pdptr" path="res://scenes/characters/enemies/jumper_enemy.gd" id="1_3sin1"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/bact.svg" id="2_8846s"]
-[ext_resource type="Resource" path="res://resources/enemies/temp_slime.tres" id="2_f4ol1"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="3_6vmuo"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="4_242sf"]
 [ext_resource type="AnimationLibrary" uid="uid://c5w2n8g7e1bdf" path="res://scenes/characters/reusable_anims.tres" id="5_m58gs"]
-[ext_resource type="Script" uid="uid://dsl73aknxcjur" path="res://addons/godot_state_charts/state_chart.gd" id="6_242sf"]
-[ext_resource type="Script" uid="uid://c8ff8j0tad7ib" path="res://addons/godot_state_charts/compound_state.gd" id="7_m58gs"]
-[ext_resource type="Script" uid="uid://bjo0e727so813" path="res://addons/godot_state_charts/parallel_state.gd" id="8_f4ol1"]
-[ext_resource type="Script" uid="uid://bxipn0uqdba0a" path="res://addons/godot_state_charts/atomic_state.gd" id="8_pmltr"]
-[ext_resource type="PackedScene" uid="uid://donfbhh5giyfy" path="res://addons/godot_state_charts/utilities/editor_debugger/editor_debugger.tscn" id="9_pmltr"]
+
+[sub_resource type="Resource" id="Resource_4rt4h"]
+metadata/__load_path__ = "res://resources/enemies/temp_slime.tres"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mgdpr"]
 size = Vector2(44, 40)
@@ -18,19 +15,15 @@ size = Vector2(44, 40)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pnp1"]
 size = Vector2(56, 56)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pmltr"]
-radius = 30.0
-
 [node name="JumperVirus" type="CharacterBody2D" groups=["Enemies"]]
 position = Vector2(363, 235)
 motion_mode = 1
 platform_on_leave = 2
 platform_floor_layers = 4294967292
 script = ExtResource("1_3sin1")
-enemy_data_resource = ExtResource("2_f4ol1")
+enemy_data_resource = SubResource("Resource_4rt4h")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.06, 0.057)
 texture = ExtResource("2_8846s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -56,43 +49,3 @@ autoplay = "follow-x"
 speed_scale = 2.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-
-[node name="StateChart" type="Node" parent="."]
-script = ExtResource("6_242sf")
-metadata/_custom_type_script = "uid://dsl73aknxcjur"
-
-[node name="ParallelState" type="Node" parent="StateChart"]
-script = ExtResource("8_f4ol1")
-metadata/_custom_type_script = "uid://bjo0e727so813"
-
-[node name="Alive" type="Node" parent="StateChart/ParallelState"]
-script = ExtResource("7_m58gs")
-initial_state = NodePath("JumpFoward")
-
-[node name="JumpFoward" type="Node" parent="StateChart/ParallelState/Alive"]
-script = ExtResource("8_pmltr")
-
-[node name="AtomicState" type="Node" parent="StateChart/ParallelState/Alive"]
-script = ExtResource("8_pmltr")
-
-[node name="WhilePlayerTouch" type="Node" parent="StateChart/ParallelState/Alive"]
-script = ExtResource("8_pmltr")
-
-[node name="Die" type="Node" parent="StateChart/ParallelState"]
-script = ExtResource("8_pmltr")
-
-[node name="DebugNode" type="Node" parent="."]
-
-[node name="State Charts" parent="DebugNode" instance=ExtResource("9_pmltr")]
-offset_left = 456.0
-offset_top = 4.0
-offset_right = -2.0
-offset_bottom = 4.0
-
-[node name="CharacterBody2D" type="CharacterBody2D" parent="DebugNode"]
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DebugNode/CharacterBody2D"]
-position = Vector2(157, 228)
-shape = SubResource("CircleShape2D_pmltr")
