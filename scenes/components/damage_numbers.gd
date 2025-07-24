@@ -23,7 +23,7 @@ func display(damage: float, anim_time: float = 1.0, spread: float = PI/3) -> voi
 
 static func new_damage_text(damage: float, initial_global_position: Vector2, anim_time: float = 1.0, spread: float = PI/3) -> DamageNumbers:
 	
-	var instance : DamageNumbers = DamageNumbersScene.instantiate()
+	var instance : DamageNumbers = PoolManager.get_pool(DamageNumbersScene).get_object()
 	instance.global_position = initial_global_position
 	
 	UIEffects.animate_number(instance, 0, (int(ceil(damage))))
@@ -39,6 +39,6 @@ static func new_damage_text(damage: float, initial_global_position: Vector2, ani
 	
 	tween.tween_property(instance, "scale", Vector2.ZERO, anim_time/2)
 	tween.parallel().tween_property(instance, "modulate:a", 0.0, anim_time/2)
-	tween.tween_callback(instance.queue_free)
+	tween.tween_callback(PoolManager.get_pool(DamageNumbersScene).release_object.bind(instance))
 	
 	return instance

@@ -5,7 +5,7 @@ func _on_area_entered(body: Node2D) -> void:
 	# Instead of dealing damage directly, we create an explosion
 	explode()
 	# The explosion will deal the damage, so the rocket itself doesn't need to a lot.
-	queue_free()
+	PoolManager.get_pool(projectile_data.base_scene).release_object(self)
 
 func explode():
 	# Spawn the visual effect

@@ -49,6 +49,7 @@ BasicAchievements="*res://addons/achievements/achievements.tscn"
 STransitions="*res://addons/my_ecosystem_template/transitions/screen_transitions.tscn"
 Initializer="*res://scripts/autoloads/initializer.gd"
 A="*res://addons/my_ecosystem_template/autoloads/autoload.tscn"
+PoolManager="*res://addons/my_ecosystem_template/utils/autoloads/pool_manager.gd"
 
 [basic_achievements]
 
@@ -72,7 +73,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/achievements/plugin.cfg", "res://addons/basic_settings_menu/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
+enabled=PackedStringArray("res://addons/achievements/plugin.cfg", "res://addons/basic_settings_menu/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg")
 
 [file_customization]
 

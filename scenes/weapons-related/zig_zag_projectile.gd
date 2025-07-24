@@ -17,4 +17,4 @@ func _physics_process(delta: float):
 	
 	travelled_distance += projectile_data.projectile_speed * delta
 	if travelled_distance > projectile_data.projectile_range:
-		queue_free()
+		PoolManager.get_pool(projectile_data.base_scene).release_object(self)

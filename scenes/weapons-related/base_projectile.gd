@@ -14,9 +14,9 @@ var _pierced_enemies: int = 0
 
 
 func _ready() -> void:
-	
 	area_entered.connect(_on_area_entered.bind())
-	
+
+func _on_spawned_from_pool():
 	set_collision_mask_value(projectile_data.collision_shape_mask, true)
 	$Sprite2D.texture = projectile_data.sprite_texture
 	$Sprite2D.modulate = projectile_data.sprite_modulate
@@ -28,8 +28,7 @@ func _ready() -> void:
 	VFXSpawner.spawn_particles(projectile_data.spawn_particles, global_position, RunData.projectile_root)
 	
 	lifespan_timer.wait_time = projectile_data.lifespan_time
-	lifespan_timer.timeout.connect(queue_free)
-	
+	lifespan_timer.timeout.connect(PoolManager.get_pool(projectile_data.base_scene).release_object.bind(self))
 
 
 func _physics_process(delta: float) -> void:
@@ -59,9 +58,9 @@ func _on_area_entered(body: Node2D) -> void:
 		
 		_pierced_enemies += 1
 		if _pierced_enemies >= projectile_data.projectile_max_pierce_count:
-			queue_free()
+			PoolManager.get_pool(projectile_data.base_scene).release_object(self)
 
 func animate_free(anim_time:= 0.1) -> void:
 	var consume_tween = create_tween().set_trans(Tween.TRANS_CUBIC)
 	consume_tween.tween_property(self, "scale", Vector2.ZERO, anim_time)
-	consume_tween.tween_callback(queue_free)
+	consume_tween.tween_callback(PoolManager.get_pool(projectile_data.base_scene).release_object.bind(self))

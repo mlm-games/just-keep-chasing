@@ -11,6 +11,8 @@ class_name AnimationComponent extends Node
 var _is_taking_damage: bool = false
 var _last_velocity: Vector2 = Vector2.ZERO
 
+signal died_anim_finished
+
 func _ready() -> void:
 	anim_player.speed_scale = randf_range(0.5, 1.1)
 
@@ -47,7 +49,7 @@ func update_movement(current_velocity: Vector2):
 func on_entity_died():
 	anim_player.play(anims_prefix + "death")
 	await anim_player.animation_finished
-	owner.queue_free() # The component is responsible for freeing its owner after death anim.
+	died_anim_finished.emit()
 
 func on_taking_damage(_dmg):
 	_is_taking_damage = true

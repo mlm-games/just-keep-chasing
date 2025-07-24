@@ -112,7 +112,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func spawn_enemy() -> void:
 	out_of_view_spawn_location.progress_ratio = randf()
 	
-	enemies_node.add_child(EnemySpawner.spawn_enemy(EnemySpawner.get_random_by_spawn_chance(), out_of_view_spawn_location.global_position))
+	EnemySpawner.spawn_enemy(EnemySpawner.get_random_by_spawn_chance(), out_of_view_spawn_location.global_position).reparent(enemies_node)
 
 func spawn_powerup() -> void:
 	out_of_view_spawn_location.progress_ratio = randf()
@@ -120,7 +120,7 @@ func spawn_powerup() -> void:
 	var powerup_data : PowerupData = get_random_powerup()
 	var powerup_instance : Powerup = Powerup.create_new_powerup(powerup_data)
 	powerup_instance.global_position = out_of_view_spawn_location.global_position
-	powerups_node.add_child(powerup_instance)
+	(powerup_instance).reparent(powerups_node)
 
 func get_random_powerup() -> PowerupData:
 	#TODO: Replace randfs in the powertype scene or script (as a static fn?) itself or implement a better version

@@ -6,7 +6,7 @@ const BasePowerupScene : PackedScene = preload("uid://x2gb17exe2xq")
 @export var powerup_data : PowerupData
 
 static func create_new_powerup(passed_data: PowerupData) -> Powerup:
-	var powerup_instance : Powerup = BasePowerupScene.instantiate()
+	var powerup_instance : Powerup = PoolManager.get_pool(BasePowerupScene).get_object()
 	powerup_instance.powerup_data = passed_data
 	return powerup_instance
 
@@ -24,5 +24,5 @@ func collect() -> void:
 	
 	CountStats.increment_stat(CountStats.get_stat_key(powerup_data))
 	
-	queue_free()
+	PoolManager.get_pool(BasePowerupScene).release_object.bind(self)
 	#Hack: Use the non button implementation, then make the powerup buttons unlockable by achievements.. 

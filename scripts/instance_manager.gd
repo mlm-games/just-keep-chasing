@@ -13,6 +13,6 @@ static func new_projectile_instance(data: ProjectileData, shooter: BaseCharacter
 		data.projectile_damage *= CharacterStats.get_stat(CharacterStats.Stats.GUN_ENEMY_DAMAGE_MULT)
 		#@warning_ignore("narrowing_conversion")
 		#data.projectile_range *= CharacterStats.get_stat(CharacterStats.Stats.GUN_ENEMY_TARGETTING_RANGE_MULT)
-	var instance : BaseProjectile = data.base_scene.instantiate()
+	var instance : BaseProjectile = PoolManager.get_pool(data.base_scene).get_object()
 	instance.projectile_data = data
 	return instance

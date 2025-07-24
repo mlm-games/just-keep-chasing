@@ -193,8 +193,4 @@ ignore_texture_size = true
 stretch_mode = 4
 flip_v = true
 
-[connection signal="pressed" from="Control/PanelContainer/HBoxContainer/InvincibleButton" to="." method="_on_invincible_button_pressed"]
-[connection signal="pressed" from="Control/PanelContainer/HBoxContainer/HealButton" to="." method="_on_heal_button_pressed"]
-[connection signal="pressed" from="Control/PanelContainer/HBoxContainer/ScreenBlastButton" to="." method="_on_screen_blast_button_pressed"]
-[connection signal="pressed" from="Control/PanelContainer/HBoxContainer/SlowTimeButton" to="." method="_on_slow_time_button_pressed"]
 [connection signal="pressed" from="GunsButton" to="." method="_on_guns_button_pressed"]

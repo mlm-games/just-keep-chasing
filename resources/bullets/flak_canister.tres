@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="ProjectileData" load_steps=5 format=3 uid="uid://bmtj0qforxxsc"]
+[gd_resource type="Resource" script_class="ProjectileData" load_steps=7 format=3 uid="uid://bmtj0qforxxsc"]
 
 [ext_resource type="Script" uid="uid://b6nld5qtnrfes" path="res://scenes/weapons-related/area_of_effect_attack.gd" id="1_f2qoe"]
+[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_rme84"]
 [ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="2_sqww4"]
 [ext_resource type="Texture2D" uid="uid://bs4majlyqdhvb" path="res://assets/sprites/projectiles/rocket.svg" id="3_rme84"]
+[ext_resource type="PackedScene" uid="uid://rhergnlmde1y" path="res://scenes/components/bullet_spawn_particles.tscn" id="4_68ia1"]
 
 [sub_resource type="Resource" id="Resource_sgvwu"]
 script = ExtResource("1_f2qoe")
@@ -22,6 +24,8 @@ projectile_dot_duration = 0.0
 projectile_dot_type = 0
 projectile_aoe_data = SubResource("Resource_sgvwu")
 projectile_max_pierce_count = 1
+projectile_knockback_force = 0.0
+projectile_stun_duration = 0.0
 sprite_scale = Vector2(0.06, 0.17)
 sprite_modulate = Color(1, 1, 1, 1)
 sprite_texture = ExtResource("3_rme84")
@@ -29,5 +33,11 @@ sprite_rotation = 0.0
 sprite_offset = Vector2(0, 0)
 collision_shape_radius = 9.0
 collision_shape_mask = 3
+base_scene = ExtResource("1_rme84")
+spawn_particles = ExtResource("4_68ia1")
 lifespan_time = 100.0
+id = ""
+enabled = true
+unlocked = true
+local_to_scene = false
 metadata/_custom_type_script = "uid://cr3s7huv3l64s"

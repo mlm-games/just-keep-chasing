@@ -129,7 +129,7 @@ static func hit_shake(amount: float = 10.0, duration: float = 0.2, camera: Camer
 static func camera_shake(intensity: float = 1.5, duration: float = 1.5, decay: float = 3.0, camera: Camera2D =  A.get_viewport().get_camera_2d()) -> void:
 	# Stop any existing shake tweens
 	
-	_screen_shake_tween = A.create_tween()
+	_screen_shake_tween = camera.create_tween()
 	camera.set_meta("shake_tween", _screen_shake_tween)
 	
 	var original_position := camera.position
@@ -163,7 +163,7 @@ static func camera_shake(intensity: float = 1.5, duration: float = 1.5, decay: f
 	)
 
 static func squash_simple(target: Object, x_force: float, y_force: float, duration: float = 0.3, trans_type: Tween.TransitionType = Tween.TRANS_QUAD, ) -> Tween:
-	var tween : Tween =  A.create_tween()
+	var tween : Tween =  target.create_tween()
 	# initial squash
 	tween.tween_property(target, "scale:x", 1 - x_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(target, "scale:y", 1 + y_force, duration/2).set_trans(trans_type).set_ease(Tween.EASE_OUT)

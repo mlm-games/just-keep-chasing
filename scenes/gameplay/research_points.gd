@@ -1,4 +1,3 @@
-# Purpose: A collectible research point that uses the 2D physics engine.
 class_name MitoEnergy extends RigidBody2D
 
 @export var value: int = 1
@@ -13,7 +12,7 @@ var _can_home: bool = false
 @onready var lifetime_timer: Timer = $LifetimeTimer
 
 func _ready():
-	lifetime_timer.timeout.connect(queue_free)
+	lifetime_timer.timeout.connect(PoolManager.get_pool(DropsSpawner.LoadedCurrencyScene).release_object.bind(self))
 
 # Called when the player enters the outer "pickup" area
 func _on_pickup_area_body_entered(body: Node2D):
@@ -31,7 +30,7 @@ func _on_body_entered(body: Node2D):
 			body.collect_mito_energy(value)
 		
 		# Play a collection sound/VFX here
-		queue_free()
+		PoolManager.get_pool(DropsSpawner.LoadedCurrencyScene).release_object.bind(self)
 
 func _integrate_forces(state: PhysicsDirectBodyState2D):
 	if _can_home and is_instance_valid(_target):

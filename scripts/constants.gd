@@ -18,6 +18,8 @@ const CommonSounds := {
 	EnemyHit = preload("res://assets/music/GUI_Sound_Effects_by_Lokif/sharp_echo.wav")
 }
 
+
+
 enum RARITY {
 	COMMON,
 	UNCOMMON,

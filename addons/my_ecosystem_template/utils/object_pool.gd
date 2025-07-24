@@ -98,4 +98,5 @@ func _release_object_internal(obj: Node) -> void:
 	if obj.has_method("hide"): obj.visible = false
 	if obj.has_method("set_process"): obj.set_process(false)
 	if obj.has_method("set_physics_process"): obj.set_physics_process(false)
+	if obj.has_method("_on_released_from_pool"): obj._on_released_from_pool()
 	_available.append(obj)

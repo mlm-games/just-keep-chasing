@@ -23,6 +23,7 @@ func _ready() -> void:
 	hitbox_component.area_exited.connect(_on_hitbox_component_area_exited)
 	
 	set_data_values()
+	
 
 
 func set_data_values() -> void:
@@ -49,6 +50,10 @@ func set_data_values() -> void:
 		add_child(enemy_gun)
 		enemy_gun.set_collision_mask_value(3, false)
 		enemy_gun.set_collision_mask_value(2, true)
+	
+		#Need the data resource for this
+	animation_component.died_anim_finished.connect(PoolManager.get_pool(enemy_data_resource.base_enemy_scene).release_object.bind(self))
+
 
 
 func _physics_process(delta: float) -> void:

@@ -1,4 +1,4 @@
-class_name CurrencyDrop extends PickUp
+class_name CurrencyDrop extends PickUp #Simpler duplicate
 
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
@@ -27,4 +27,4 @@ func collect() -> void:
 	
 	CountStats.increment_stat("mito_energy_collected")
 	
-	queue_free()
+	PoolManager.get_pool(DropsSpawner.LoadedCurrencyScene).release_object.bind(self)
