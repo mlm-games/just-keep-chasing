@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bvnjwn81ahpxs"]
+[gd_scene load_steps=9 format=3 uid="uid://bvnjwn81ahpxs"]
 
 [ext_resource type="Script" uid="uid://t73oaarsiqev" path="res://scenes/characters/base_enemy.gd" id="1_0j470"]
 [ext_resource type="PackedScene" uid="uid://gxc4hcrljhcm" path="res://scenes/components/health_component.tscn" id="2_ntc0c"]
@@ -6,8 +6,6 @@
 [ext_resource type="Script" uid="uid://cph1hb68v0xjn" path="res://scenes/components/animation_component.gd" id="4_6p2c5"]
 [ext_resource type="PackedScene" uid="uid://22o5hm5rorw8" path="res://scenes/components/hitbox_component.tscn" id="5_7lvei"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/bact.svg" id="7_61yi7"]
-[ext_resource type="Script" uid="uid://dsl73aknxcjur" path="res://addons/godot_state_charts/state_chart.gd" id="8_380kt"]
-[ext_resource type="Script" uid="uid://c8ff8j0tad7ib" path="res://addons/godot_state_charts/compound_state.gd" id="8_t0u4l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pnp1"]
 size = Vector2(56, 56)
@@ -51,12 +49,5 @@ shape = SubResource("RectangleShape2D_mgdpr")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.06, 0.057)
 texture = ExtResource("7_61yi7")
-
-[node name="StateChart" type="Node" parent="."]
-script = ExtResource("8_380kt")
-metadata/_custom_type_script = "uid://dsl73aknxcjur"
-
-[node name="CompoundState" type="Node" parent="StateChart"]
-script = ExtResource("8_t0u4l")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
