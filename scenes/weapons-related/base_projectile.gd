@@ -5,49 +5,27 @@ signal data_changed
 var data_resource: ProjectileData:
 	set(val):
 		data_resource = val
-		if is_inside_tree():
-			data_changed.emit()
+		if _is_pooled and is_inside_tree():
+			_apply_projectile_data()
+
+var _is_pooled: bool = false
+var _is_active: bool = false
 
 var attack := Attack.new()
 var travelled_distance := 0.0
 var direction: Vector2
 var _pierced_enemies: int = 0
 var _rand_spread: float
-var _is_active: bool = false
 
 @onready var lifespan_timer: Timer = %LifespanTimer
 @onready var light: PointLight2D = %Light
 
 func _ready() -> void:
-	set_physics_process(false) # Start disabled
+	set_physics_process(false)
 	area_entered.connect(_on_area_entered)
 
-func _on_spawned_from_pool() -> void:
-	_is_active = true
-	travelled_distance = 0.0
-	_pierced_enemies = 0
-	#_rand_spread = deg_to_rad(randf_range(-data_resource.projectile_spread, data_resource.projectile_spread))
-	
-	scale = Vector2.ONE
-	modulate.a = 1.0
-	
-	_on_data_changed()
-	
-	lifespan_timer.start()
-	set_physics_process(true)
 
-func _on_released_to_pool() -> void:
-	_is_active = false
-	set_physics_process(false)
-	
-	lifespan_timer.stop()
-	
-	var tweens = get_tree().get_processed_tweens()
-	for tween in tweens:
-		if tween.is_valid() and is_ancestor_of(tween.get_bound_node()):
-			tween.kill()
-
-func _on_data_changed():
+func _apply_projectile_data():
 	if not is_inside_tree():
 		return
 		
@@ -63,15 +41,20 @@ func _on_data_changed():
 		VFXSpawner.spawn_particles(data_resource.spawn_particles, global_position, RunData.projectile_root)
 	
 	lifespan_timer.wait_time = data_resource.lifespan_time
+	lifespan_timer.start()
+	
+	_rand_spread = deg_to_rad(randf_range(-data_resource.projectile_spread, data_resource.projectile_spread))
 	
 	for connection in lifespan_timer.timeout.get_connections():
 		lifespan_timer.timeout.disconnect(connection.callable)
 	
 	lifespan_timer.timeout.connect(_on_lifespan_timeout)
+	
+	set_physics_process(true)
 
 func _on_lifespan_timeout() -> void:
 	if _is_active:
-		_release_self()
+		release_self()
 
 func _physics_process(delta: float) -> void:
 	if not _is_active:
@@ -104,7 +87,7 @@ func _on_area_entered(body: Node2D) -> void:
 	
 	_pierced_enemies += 1
 	if _pierced_enemies >= data_resource.projectile_max_pierce_count:
-		_release_self()
+		release_self()
 
 func animate_free(anim_time := 0.1) -> void:
 	if not _is_active:
@@ -113,8 +96,30 @@ func animate_free(anim_time := 0.1) -> void:
 	_is_active = false # Prevent further updates
 	var consume_tween = create_tween().set_trans(Tween.TRANS_CUBIC)
 	consume_tween.tween_property(self, "scale", Vector2.ZERO, anim_time)
-	consume_tween.tween_callback(_release_self)
+	consume_tween.tween_callback(release_self)
 
-func _release_self() -> void:
-	if data_resource and data_resource.base_scene:
-		PoolManager.release_to_pool(data_resource.base_scene, self)
+func _on_spawned_from_pool() -> void:
+	_is_pooled = true
+	_is_active = true
+	# Reset only non-data properties
+	travelled_distance = 0.0
+	_pierced_enemies = 0
+	position = Vector2.ZERO
+	light.energy = 3.59
+	scale = Vector2.ONE
+	modulate.a = 1.0
+	visible = true
+	
+	set_physics_process(false)
+
+func _on_released_to_pool() -> void:
+	visible = false
+	set_physics_process(false)
+	lifespan_timer.stop()
+	
+	# Disconnect signals to prevent leaks
+	for connection in area_entered.get_connections():
+		area_entered.disconnect(connection.callable)
+
+func release_self() -> void:
+	PoolManager.release_to_pool(data_resource.base_scene, self)

@@ -66,7 +66,9 @@ func get_object() -> Node:
 	if _available.is_empty():
 		if _active.size() >= _max_size:
 			push_warning("ObjectPool: Max size reached")
-			return null
+			obj = _active.pop_back()
+			release_object(obj)
+			return obj
 		obj = _pool_scene.instantiate()
 		add_child(obj)
 	else:
@@ -100,7 +102,6 @@ func release_object(obj: Node) -> void:
 	
 	_is_releasing[obj] = true
 	
-	# Defer the actual release to next frame
 	_deferred_release.call_deferred(obj)
 
 func _deferred_release(obj: Node) -> void:

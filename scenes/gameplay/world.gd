@@ -112,7 +112,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func spawn_enemy() -> void:
 	out_of_view_spawn_location.progress_ratio = randf()
 	
-	EnemySpawner.spawn_enemy(EnemySpawner.get_random_by_spawn_chance(), out_of_view_spawn_location.global_position).reparent(enemies_node)
+	EnemySpawner.spawn_enemy(EnemySpawner.get_random_by_spawn_chance(), out_of_view_spawn_location.global_position)
 
 func spawn_powerup() -> void:
 	out_of_view_spawn_location.progress_ratio = randf()

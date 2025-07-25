@@ -4,17 +4,16 @@ extends Node
 var pools := {}
 var pool_configs := {
 	# DATA: "scene_path": {"initial_size": 20, "max_size": 100}
+	"uid://b5x54mjk1mls0": {"initial": 200, "max": 10000}
 }
 
 func _ready() -> void:
-	_initialize_common_pools
+	for scene_path in pool_configs:
+		var config = pool_configs[scene_path]
+		var scene = load(scene_path)
+		register_pool(scene, config.initial, config.max)
 
-func _initialize_common_pools() -> void:
-	# commonly used scenes go here
-	#register_pool(preload("TODO: uid for bullet.tscn"), 50, 200)
-	pass
-
-func register_pool(scene: PackedScene, initial_size: int = 20, max_size: int = 100) -> void:
+func register_pool(scene: PackedScene, initial_size: int = 20, max_size: int = 10000) -> void:
 	if not pools.has(scene):
 		var pool = ObjectPool.new(scene, initial_size, max_size)
 		add_child(pool)
