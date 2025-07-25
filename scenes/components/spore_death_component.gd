@@ -17,7 +17,7 @@ func _on_entity_died():
 		var projectile = burst_projectile_scene.instantiate()
 		var angle = (float(i) / burst_count) * TAU
 		
-		projectile.projectile_data.projectile_speed = burst_speed
+		projectile.data_resource.projectile_speed = burst_speed
 		projectile.global_position = owner.global_position
 		projectile.rotation = angle
 		

@@ -10,7 +10,7 @@ func _physics_process(delta: float):
 	
 	if travelled_distance >= detonation_distance:
 		detonate()
-		PoolManager.get_pool(projectile_data.base_scene).release_object(self)
+		PoolManager.get_pool(data_resource.base_scene).release_object(self)
 
 func detonate():
 	var base_angle = global_rotation

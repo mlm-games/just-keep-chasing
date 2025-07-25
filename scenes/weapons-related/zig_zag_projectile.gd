@@ -10,11 +10,11 @@ func _physics_process(delta: float):
 	var forward_direction = Vector2.RIGHT.rotated(global_rotation)
 	var sideways_direction = forward_direction.orthogonal()
 	
-	var forward_movement = forward_direction * projectile_data.projectile_speed * delta
+	var forward_movement = forward_direction * data_resource.projectile_speed * delta
 	var sideways_movement = sideways_direction * sin(_time * wave_frequency) * wave_amplitude * delta
 	
 	position += forward_movement + sideways_movement
 	
-	travelled_distance += projectile_data.projectile_speed * delta
-	if travelled_distance > projectile_data.projectile_range:
-		PoolManager.get_pool(projectile_data.base_scene).release_object(self)
+	travelled_distance += data_resource.projectile_speed * delta
+	if travelled_distance > data_resource.projectile_range:
+		PoolManager.get_pool(data_resource.base_scene).release_object(self)

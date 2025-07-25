@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 		velocity_component.accelerate_to(Vector2.ZERO, 0)
 		return
 	
-	velocity_component.accelerate_to(move_direction, enemy_data_resource.base_speed)
+	velocity_component.accelerate_to(move_direction, data_resource.base_speed)
 	animation_component.update_movement(velocity_component.velocity)
 
 func _on_move_timer_timeout() -> void:

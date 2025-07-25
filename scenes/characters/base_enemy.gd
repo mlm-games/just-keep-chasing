@@ -6,7 +6,7 @@ var health_mult: float = 1.0
 var currency_mult: float = 1.0
 # var currency_type: currency
 
-@export var enemy_data_resource: EnemyData
+@export var data_resource: EnemyData
 
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var velocity_component: VelocityComponent = $VelocityComponent

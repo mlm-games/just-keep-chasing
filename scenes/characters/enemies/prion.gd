@@ -49,7 +49,7 @@ func _state_repositioning() -> void:
 	elif distance_to_player < min_distance:
 		move_direction = direction_from_player # Move away from player
 	
-	velocity_component.accelerate_to(move_direction, enemy_data_resource.base_speed)
+	velocity_component.accelerate_to(move_direction, data_resource.base_speed)
 
 func _state_aiming() -> void:
 	# Stop moving while aiming
@@ -78,7 +78,7 @@ func _on_fire_cooldown_timer_timeout():
 		current_state = SelfState.AIMING
 		# Start the aiming "tell" animation
 		var tween = create_tween()
-		var original_color = enemy_data_resource.sprite_color if enemy_data_resource else Color.WHITE
+		var original_color = data_resource.sprite_color if data_resource else Color.WHITE
 		tween.tween_property(sprite, "modulate", Color.CYAN, aim_duration * 0.8).set_ease(Tween.EASE_IN)
 		tween.tween_callback(_fire_shot)
 		tween.tween_property(sprite, "modulate", original_color, aim_duration * 0.2).set_ease(Tween.EASE_OUT)

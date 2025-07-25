@@ -12,4 +12,4 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	
-	follow_component.follow_target(velocity_component, enemy_data_resource.base_speed)
+	follow_component.follow_target(velocity_component, data_resource.base_speed)

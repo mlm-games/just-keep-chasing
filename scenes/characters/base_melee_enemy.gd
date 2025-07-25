@@ -27,32 +27,32 @@ func _ready() -> void:
 
 
 func set_data_values() -> void:
-	if not enemy_data_resource:
+	if not data_resource:
 		push_warning("Enemy has no EnemyData resource assigned.")
 		return
 		
-	health_component.initialize(enemy_data_resource.base_health)
-	contact_attack_damage = enemy_data_resource.base_contact_damage
-	mito_energy_value = enemy_data_resource.mito_energy_value
-	#velocity_component.max_speed = enemy_data_resource.base_speed
+	health_component.initialize(data_resource.base_health)
+	contact_attack_damage = data_resource.base_contact_damage
+	mito_energy_value = data_resource.mito_energy_value
+	#velocity_component.max_speed = data_resource.base_speed
 	
-	scale = enemy_data_resource.character_scale
-	$CollisionShape2D.shape.size = enemy_data_resource.character_hitbox_shape_value
-	sprite.texture = enemy_data_resource.sprite_texture
-	sprite.scale = enemy_data_resource.sprite_scale
-	sprite.modulate = enemy_data_resource.sprite_color
+	scale = data_resource.character_scale
+	$CollisionShape2D.shape.size = data_resource.character_hitbox_shape_value
+	sprite.texture = data_resource.sprite_texture
+	sprite.scale = data_resource.sprite_scale
+	sprite.modulate = data_resource.sprite_color
 	
-	if enemy_data_resource.gun: 
-		var enemy_gun: BaseGun = enemy_data_resource.gun.weapon_scene.instantiate()
-		enemy_data_resource.gun.bullet = enemy_data_resource.gun.bullet.duplicate_with_res_name()
-		enemy_data_resource.gun.bullet.collision_shape_mask = 2 ## Target player
-		enemy_gun.gun_data = enemy_data_resource.gun
+	if data_resource.gun: 
+		var enemy_gun: BaseGun = data_resource.gun.weapon_scene.instantiate()
+		data_resource.gun.bullet = data_resource.gun.bullet.duplicate_with_res_name()
+		data_resource.gun.bullet.collision_shape_mask = 2 ## Target player
+		enemy_gun.gun_data = data_resource.gun
 		add_child(enemy_gun)
 		enemy_gun.set_collision_mask_value(3, false)
 		enemy_gun.set_collision_mask_value(2, true)
 	
 		#Need the data resource for this
-	animation_component.died_anim_finished.connect(PoolManager.get_pool(enemy_data_resource.base_enemy_scene).release_object.bind(self))
+	animation_component.died_anim_finished.connect(PoolManager.get_pool(data_resource.base_enemy_scene).release_object.bind(self))
 
 
 
@@ -83,7 +83,7 @@ func _on_hitbox_component_area_exited(area: Area2D) -> void:
 
 func _on_health_component_entity_died() -> void:
 	DropsSpawner.emit_mito_energy(global_position, mito_energy_value)
-	CountStats.increment_stat(CountStats.get_stat_key(enemy_data_resource))
+	CountStats.increment_stat(CountStats.get_stat_key(data_resource))
 	AudioManager.play_sound_varied(C.CommonSounds.EnemyHit)
 	ScreenEffects.freeze_frame(0.07)
 

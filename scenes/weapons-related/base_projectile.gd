@@ -1,66 +1,120 @@
 class_name BaseProjectile extends Area2D
 
-var projectile_data: ProjectileData
+signal data_changed
+
+var data_resource: ProjectileData:
+	set(val):
+		data_resource = val
+		if is_inside_tree():
+			data_changed.emit()
 
 var attack := Attack.new()
 var travelled_distance := 0.0
-var direction : Vector2
-
+var direction: Vector2
 var _pierced_enemies: int = 0
+var _rand_spread: float
+var _is_active: bool = false
 
-@onready var _rand_spread : float = deg_to_rad(randf_range(-projectile_data.projectile_spread, projectile_data.projectile_spread))
 @onready var lifespan_timer: Timer = %LifespanTimer
 @onready var light: PointLight2D = %Light
 
-
 func _ready() -> void:
-	area_entered.connect(_on_area_entered.bind())
+	set_physics_process(false) # Start disabled
+	area_entered.connect(_on_area_entered)
 
-func _on_spawned_from_pool():
-	set_collision_mask_value(projectile_data.collision_shape_mask, true)
-	$Sprite2D.texture = projectile_data.sprite_texture
-	$Sprite2D.modulate = projectile_data.sprite_modulate
-	$Sprite2D.scale = projectile_data.sprite_scale
-	$Sprite2D.offset = projectile_data.sprite_offset
-	$Sprite2D.rotation_degrees = projectile_data.sprite_rotation
-	$CollisionShape2D.shape.radius = projectile_data.collision_shape_radius
+func _on_spawned_from_pool() -> void:
+	_is_active = true
+	travelled_distance = 0.0
+	_pierced_enemies = 0
+	#_rand_spread = deg_to_rad(randf_range(-data_resource.projectile_spread, data_resource.projectile_spread))
 	
-	VFXSpawner.spawn_particles(projectile_data.spawn_particles, global_position, RunData.projectile_root)
+	scale = Vector2.ONE
+	modulate.a = 1.0
 	
-	lifespan_timer.wait_time = projectile_data.lifespan_time
-	lifespan_timer.timeout.connect(PoolManager.get_pool(projectile_data.base_scene).release_object.bind(self))
+	_on_data_changed()
+	
+	lifespan_timer.start()
+	set_physics_process(true)
 
+func _on_released_to_pool() -> void:
+	_is_active = false
+	set_physics_process(false)
+	
+	lifespan_timer.stop()
+	
+	var tweens = get_tree().get_processed_tweens()
+	for tween in tweens:
+		if tween.is_valid() and is_ancestor_of(tween.get_bound_node()):
+			tween.kill()
+
+func _on_data_changed():
+	if not is_inside_tree():
+		return
+		
+	set_collision_mask_value(data_resource.collision_shape_mask, true)
+	$Sprite2D.texture = data_resource.sprite_texture
+	$Sprite2D.modulate = data_resource.sprite_modulate
+	$Sprite2D.scale = data_resource.sprite_scale
+	$Sprite2D.offset = data_resource.sprite_offset
+	$Sprite2D.rotation_degrees = data_resource.sprite_rotation
+	$CollisionShape2D.shape.radius = data_resource.collision_shape_radius
+	
+	if _is_active:
+		VFXSpawner.spawn_particles(data_resource.spawn_particles, global_position, RunData.projectile_root)
+	
+	lifespan_timer.wait_time = data_resource.lifespan_time
+	
+	for connection in lifespan_timer.timeout.get_connections():
+		lifespan_timer.timeout.disconnect(connection.callable)
+	
+	lifespan_timer.timeout.connect(_on_lifespan_timeout)
+
+func _on_lifespan_timeout() -> void:
+	if _is_active:
+		_release_self()
 
 func _physics_process(delta: float) -> void:
-	var speed_dropoff_mult = projectile_data.projectile_speed_dropoff_curve.sample(travelled_distance/projectile_data.projectile_range)
+	if not _is_active:
+		return
+		
+	var speed_dropoff_mult = data_resource.projectile_speed_dropoff_curve.sample(travelled_distance / data_resource.projectile_range)
 	direction = Vector2.RIGHT.rotated(rotation + _rand_spread)
-	position += direction * projectile_data.projectile_speed * delta * speed_dropoff_mult
+	position += direction * data_resource.projectile_speed * delta * speed_dropoff_mult
 	light.energy *= speed_dropoff_mult
-	travelled_distance += projectile_data.projectile_speed * delta
-	if travelled_distance > projectile_data.projectile_range:
+	travelled_distance += data_resource.projectile_speed * delta
+	
+	if travelled_distance > data_resource.projectile_range:
 		animate_free()
 
-
 func _on_area_entered(body: Node2D) -> void:
-	if body is HitboxComponent:
-		attack.attack_damage = projectile_data.projectile_damage
-		attack.knockback_force = projectile_data.projectile_knockback_force
-		attack.stun_duration = projectile_data.projectile_stun_duration
-		attack.knockback_direction = direction
+	if not _is_active or body is not HitboxComponent:
+		return
 		
-		#body.apply_knockback(direction, 10, 0.2)
-		if not is_zero_approx(projectile_data.projectile_dot):
-			attack.dot_type = projectile_data.projectile_dot_type
-			attack.dot_duration = projectile_data.projectile_dot_duration
-			attack.damage_over_time = projectile_data.projectile_dot
-		body.damage(attack)
+	attack.attack_damage = data_resource.projectile_damage
+	attack.knockback_force = data_resource.projectile_knockback_force
+	attack.stun_duration = data_resource.projectile_stun_duration
+	attack.knockback_direction = direction
+	
+	if not is_zero_approx(data_resource.projectile_dot):
+		attack.dot_type = data_resource.projectile_dot_type
+		attack.dot_duration = data_resource.projectile_dot_duration
+		attack.damage_over_time = data_resource.projectile_dot
 		
-		
-		_pierced_enemies += 1
-		if _pierced_enemies >= projectile_data.projectile_max_pierce_count:
-			PoolManager.get_pool(projectile_data.base_scene).release_object(self)
+	body.damage(attack)
+	
+	_pierced_enemies += 1
+	if _pierced_enemies >= data_resource.projectile_max_pierce_count:
+		_release_self()
 
-func animate_free(anim_time:= 0.1) -> void:
+func animate_free(anim_time := 0.1) -> void:
+	if not _is_active:
+		return
+		
+	_is_active = false # Prevent further updates
 	var consume_tween = create_tween().set_trans(Tween.TRANS_CUBIC)
 	consume_tween.tween_property(self, "scale", Vector2.ZERO, anim_time)
-	consume_tween.tween_callback(PoolManager.get_pool(projectile_data.base_scene).release_object.bind(self))
+	consume_tween.tween_callback(_release_self)
+
+func _release_self() -> void:
+	if data_resource and data_resource.base_scene:
+		PoolManager.release_to_pool(data_resource.base_scene, self)
