@@ -15,7 +15,7 @@ var _pierced_enemies: int = 0
 
 func _ready() -> void:
 	
-	area_entered.connect(_on_area_entered.bind())
+	area_entered.connect(_on_area_entered)
 	
 	set_collision_mask_value(projectile_data.collision_shape_mask, true)
 	$Sprite2D.texture = projectile_data.sprite_texture

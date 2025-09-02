@@ -2,7 +2,6 @@
 # - https://github.com/github/gitignore/blob/master/Godot.gitignore
 
 # Godot-specific ignores
-.import/
 .godot/
 
 # Builds/export directory
