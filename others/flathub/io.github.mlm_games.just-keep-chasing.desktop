@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Just Keep Chasing
+GenericName=JustKeepChasing
+Comment=A mini rougelite shooter
+Exec=just-keep-chasing
+Terminal=false
+Icon=io.github.mlm_games.just-keep-chasing
+Type=Application
+Categories=Game;Graphics;VectorGraphics;Amusement
