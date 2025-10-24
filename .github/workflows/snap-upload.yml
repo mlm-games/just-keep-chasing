@@ -35,17 +35,12 @@ jobs:
           
           mkdir -p snap/gui
           cp others/flathub/io.github.mlm_games.just-keep-chasing.desktop snap/gui/just-keep-chasing.desktop
-          cp icon.png snap/gui/icon.png
+          cp fastlane/metadata/android/en-US/icon.png snap/gui/icon.png
 
           set -e
           echo "Fetch 'just-keep-chasing.x86_64'..."
           curl -fL "https://github.com/${{ github.repository }}/releases/download/${{ inputs.version_name }}/just-keep-chasing.x86_64" -o snap/builds/just-keep-chasing
           chmod +x snap/builds/just-keep-chasing
-
-      - name: Prepare snap assets
-        run: |
-          mkdir -p snap/gui
-          cp icon.png snap/gui/icon.png
 
       - name: Update version in snapcraft.yml
         run: |
