@@ -1,0 +1,51 @@
+name: just-keep-chasing
+base: core22
+version: '0.12.2'
+summary: An open source WIP roguelite shooter
+description: |
+  A game where you play as a nanobot with futuristic pico guns which fire on their own. Survive for 5 mins to win
+
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+
+apps:
+  just-keep-chasing:
+    command: just-keep-chasing
+    extensions: [gnome]
+    plugs:
+      - home
+      - removable-media
+      - network
+      - opengl
+      - x11
+      - wayland
+      - desktop
+      - desktop-legacy
+      - unity7
+    desktop: just-keep-chasing.desktop
+
+parts:
+  imagot:
+    plugin: dump
+    source: ./builds/
+    source-type: local
+    stage-packages:
+      - libglu1-mesa
+      - libxcursor1
+      - libxinerama1
+      - libxrandr2
+      - libxi6
+      - libpulse0
+    override-build: |
+      craftctl default
+      install -Dm755 "$CRAFT_PART_SRC/just-keep-chasing" "$CRAFT_PART_INSTALL/just-keep-chasing"
+      install -Dm644 "$CRAFT_PROJECT_DIR/gui/just-keep-chasing.desktop" "$CRAFT_PART_INSTALL/just-keep-chasing.desktop"
+      chmod +x "$CRAFT_PART_INSTALL/just-keep-chasing"
+
+layout:
+  /usr/share/just-keep-chasing:
+    bind: $SNAP/usr/share/just-keep-chasing
