@@ -3,7 +3,7 @@ base: core22
 version: '0.12.2'
 summary: An open source WIP roguelite shooter
 description: |
-  A game where you play as a nanobot with futuristic pico guns which fire on their own. Survive for 5 mins to win
+  A game where you play as a nanobot with futuristic pico guns which fire on their own. Survive for 5 mins to win!
 
 grade: stable
 confinement: strict
