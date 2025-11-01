@@ -33,9 +33,9 @@ jobs:
         run: |
           mkdir -p snap/builds
           
-          mkdir -p snap/gui
-          cp others/flathub/io.github.mlm_games.just-keep-chasing.desktop snap/gui/just-keep-chasing.desktop
-          cp fastlane/metadata/android/en-US/icon.png snap/gui/icon.png
+          mkdir -p snap/snap/gui
+          cp others/flathub/io.github.mlm_games.just-keep-chasing.desktop snap/snap/gui/just-keep-chasing.desktop
+          cp fastlane/metadata/android/en-US/icon.png snap/snap/gui/icon.png
 
           set -e
           echo "Fetch 'just-keep-chasing.x86_64'..."
