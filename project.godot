@@ -20,6 +20,10 @@ resources_spreadsheet_view/context_menu_on_leftclick=false
 resources_spreadsheet_view/fold_docks=true
 resources_spreadsheet_view/resource_cell_label_mode=1
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Nanobot's Survival"
@@ -27,7 +31,7 @@ config/description="You are an advanced AI nanobot and are tasked to kill some v
 config/version="0.0.1"
 config/tags=PackedStringArray("roguelike")
 run/main_scene="res://scenes/UI/menu.tscn"
-config/features=PackedStringArray("4.4")
+config/features=PackedStringArray("4.6")
 config/icon="uid://duc0bvo61ljvv"
 
 [autoload]
@@ -41,11 +45,11 @@ TooltipManager="*res://resources/misc/tooltip_manager.gd"
 UiAudioM="*res://addons/my_ecosystem_template/autoloads/ui_audio_manager.gd"
 RunData="*res://scripts/autoloads/run_data.gd"
 UIManager="*res://scripts/autoloads/ui_manager.gd"
-SettingsManager="*res://addons/basic_settings_menu/settings_manager.gd"
+SettingsManager="*uid://wfehnu87uuxk"
 PauseMenu="*res://addons/my_ecosystem_template/pause-menu/pause_menu.tscn"
-SettingsApplier="*res://addons/basic_settings_menu/settings_applier.gd"
+SettingsApplier="*uid://b5jtf7dbnupqj"
 StaticAudioM="*res://addons/my_ecosystem_template/autoloads/autoload_audio_manager.gd"
-BasicAchievements="*res://addons/achievements/achievements.tscn"
+BasicAchievements="*uid://chbh7u3gaccwi"
 STransitions="*res://addons/my_ecosystem_template/transitions/screen_transitions.tscn"
 Initializer="*res://scripts/autoloads/initializer.gd"
 A="*res://addons/my_ecosystem_template/autoloads/autoload.tscn"
@@ -104,9 +108,9 @@ auto_rebuild=true
 
 [gui]
 
+theme/default_font_multichannel_signed_distance_field=true
 theme/custom="uid://d26u4ffjbtvf8"
 theme/custom_font="uid://cl7cmdn6sfwjb"
-theme/default_font_multichannel_signed_distance_field=true
 
 [input]
 

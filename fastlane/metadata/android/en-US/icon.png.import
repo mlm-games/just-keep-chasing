@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bogbptl8oh8pv"
-path="res://.godot/imported/shotgun-shell.png-3124430a935750b461551e4f2c2a827e.ctex"
+uid="uid://dkwt5v37cm14v"
+path="res://.godot/imported/icon.png-997015fb3e24cd86fb78cf940b0638f6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/shotgun-shell.png"
-dest_files=["res://.godot/imported/shotgun-shell.png-3124430a935750b461551e4f2c2a827e.ctex"]
+source_file="res://fastlane/metadata/android/en-US/icon.png"
+dest_files=["res://.godot/imported/icon.png-997015fb3e24cd86fb78cf940b0638f6.ctex"]
 
 [params]
 
