@@ -5,17 +5,15 @@ signal time_updated(seconds: int)
 signal mito_energy_updated(amount: int)
 signal in_shop_changed(is_in_shop: bool)
 
-var is_in_shop : bool = false:
+var is_in_shop: bool = false:
 	set(val):
 		is_in_shop = val
 		in_shop_changed.emit(is_in_shop)
 
+var projectile_root: Node2D
 
-var projectile_root : Node2D
-
-var spawnable_enemies: Dictionary[int, EnemyData] = {} #key: spawn_range, value: Enemydata
+var spawnable_enemies: Dictionary[int, EnemyData] = {}
 var enemy_spawn_type_range := Vector2i(1, 1)
-
 
 var elapsed_time: int = 0:
 	set(val):
@@ -33,7 +31,8 @@ var price_increase_rate: float = 0.07
 var powerups: Dictionary[StringName, int] = {}
 var upgrade_shop_spawn_divisor: float = 5.0
 
-func reset():
+
+func reset() -> void:
 	elapsed_time = 0
 	mito_energy = 0
 	upgrade_shop_spawn_divisor = 5.0
@@ -41,13 +40,36 @@ func reset():
 	price_increase_rate = 0.07
 	spawnable_enemies = {}
 	enemy_spawn_type_range = Vector2i(1, 1)
+	is_in_shop = false
+	
+	# Get projectile root safely
 	projectile_root = A.tree.get_first_node_in_group("ProjectilesNode")
-	for key:StringName in CollectionManager.all_powerups:
+	
+	# Initialize powerups dictionary
+	powerups.clear()
+	for key: StringName in CollectionManager.all_powerups:
 		powerups[key] = 0
-	print("RunState has been reset.")
-
+	
+	print("RunData has been reset.")
 
 
 func powerup_collected(powerup_type: StringName) -> void:
-	powerups[powerup_type] += 1
-	#HUD.I.update_hud_buttons()
+	if powerups.has(powerup_type):
+		powerups[powerup_type] += 1
+	else:
+		powerups[powerup_type] = 1
+	
+	if HUD.I:
+		HUD.I.update_powerup_buttons()
+
+
+func use_powerup(powerup_type: StringName) -> bool:
+	if not powerups.has(powerup_type) or powerups[powerup_type] <= 0:
+		return false
+	
+	powerups[powerup_type] -= 1
+	
+	if HUD.I:
+		HUD.I.update_powerup_buttons()
+	
+	return true

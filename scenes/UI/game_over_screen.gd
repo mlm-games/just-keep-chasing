@@ -8,3 +8,5 @@ func _on_retry_button_pressed() -> void:
 	STransitions.change_scene_with_transition(Menu.WorldScene)
 	
 	print(CountStats._all_stats)
+
+#TODO: pretty print stats on screen

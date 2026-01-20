@@ -3,10 +3,10 @@ extends Node
 ## Loads everything once at the start of the game.
 
 const COLLECTION_RESOURCE_PATH = "res://resources/collection_resource.tres"
-const AUGMENTS_DIR : String = "res://resources/augments/"
-const POWERUPS_DIR : String = "res://resources/powerups/"
-const ENEMY_DATA_DIR : String = "res://resources/enemies/"
-const GUN_DATA_DIR : String = "res://resources/guns/"
+const AUGMENTS_DIR: String = "res://resources/augments/"
+const POWERUPS_DIR: String = "res://resources/powerups/"
+const ENEMY_DATA_DIR: String = "res://resources/enemies/"
+const GUN_DATA_DIR: String = "res://resources/guns/"
 
 var all_enemies: Dictionary = {}
 var all_augments: Dictionary = {}
@@ -38,23 +38,23 @@ func _ready():
 
 
 static func get_resource_paths_in_directory(resources_dir: String, load_resource_paths: bool = false) -> Dictionary[StringName, Variant]:
-	var dir : DirAccess = DirAccess.open(resources_dir)
-	var res_list : Dictionary[StringName, Variant] = {}
+	var dir: DirAccess = DirAccess.open(resources_dir)
+	var res_list: Dictionary[StringName, Variant] = {}
 	if load_resource_paths:
-		for res:String in dir.get_files():
+		for res: String in dir.get_files():
 			if res.ends_with(".tres"):
-				res_list.get_or_add(res.trim_suffix(".tres"),resources_dir + res)
+				res_list.get_or_add(res.trim_suffix(".tres"), resources_dir + res)
 	else:
-		for res:String in dir.get_files():
+		for res: String in dir.get_files():
 			if res.ends_with(".tres"):
-				var loaded_res : Resource = load(resources_dir + res)
+				var loaded_res: Resource = load(resources_dir + res)
 				loaded_res.id = res.trim_suffix(".tres")
 				res_list.get_or_add(res.trim_suffix(".tres"), loaded_res)
 	return res_list
 
 func get_enemy_dict_by_spawn_order() -> Dictionary[int, EnemyData]:
-	var dict : Dictionary[int, EnemyData] = {}
-	for enemy:EnemyData in all_enemies.values():
+	var dict: Dictionary[int, EnemyData] = {}
+	for enemy: EnemyData in all_enemies.values():
 		dict.get_or_add(enemy.enemy_spawn_order, enemy)
 	return dict
 

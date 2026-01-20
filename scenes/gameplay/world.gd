@@ -14,7 +14,7 @@
 
 class_name World extends Node2D
 
-static var I : World
+static var I: World
 
 func _init() -> void:
 	I = self
@@ -26,7 +26,7 @@ const TRANSITION_DURATION = 0.3
 
 @onready var time_scale_tween: Tween
 
-@onready var animation_player : AnimationPlayer = %AnimationPlayer
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var out_of_view_spawn_location: PathFollow2D = %OutOfViewSpawnLocation
 @onready var player: Player = %Player
 @onready var enemies_node: Node2D = %EnemiesNode
@@ -36,34 +36,41 @@ const TRANSITION_DURATION = 0.3
 @onready var autoscroll_timer: Timer = %AutoscrollTimer
 
 var current_gun_index: int = 0
-var thrown_guns: Array[PackedScene] = []
+var thrown_guns: Array[GunData] = []
 var guns: Array[GunData] = []
 var random_autoscroll_speed: Vector2 = Vector2(randf_range(-500, 500), randf_range(-500, 500))
+
 
 func _ready() -> void:
 	RunData.reset()
 	RunData.time_updated.connect(_on_elapsed_time_updated)
 	RunData.mito_energy_updated.connect(_on_mito_energy_changed)
 	
-	A.tree.root.focus_exited.connect(UIManager.pause) #FIXME: Would still trigger the pause when game is over and in main menu
+	A.tree.root.focus_exited.connect(_on_focus_lost)
 	enemy_spawn_timer.timeout.connect(spawn_enemy)
 	powerup_spawn_timer.timeout.connect(spawn_powerup)
 	autoscroll_timer.timeout.connect(_on_autoscroll_timer_timeout)
 	
-	
 	RunData.spawnable_enemies = CollectionManager.get_enemy_dict_by_spawn_order()
 
 
-func _on_mito_energy_changed(new_amount: int):
+func _on_focus_lost() -> void:
+	# Only pause if we're in the world scene and not already paused
+	if is_inside_tree() and not A.tree.paused:
+		UIManager.pause()
+
+
+func _on_mito_energy_changed(new_amount: int) -> void:
 	# Check if it's time to show the upgrade shop
 	if new_amount >= RunData.upgrade_shop_spawn_divisor and not RunData.is_in_shop:
 		RunData.upgrade_shop_spawn_divisor += 10 + (10 * (RunData.elapsed_time * 0.001))
-		UIManager.push_layer(load("uid://24v2w4t8hgkl")) # Push UpgradesLayer scene
+		UIManager.push_layer(load("uid://24v2w4t8hgkl"))
 
-func _on_elapsed_time_updated(new_time: int):
+
+func _on_elapsed_time_updated(new_time: int) -> void:
 	time_based_enemy_type_changer()
 	# Win condition (temp)
-	if new_time == 300: #NOTE: Using >= causes it to show up every frame when continuing
+	if new_time == 300: # NOTE: Using >= causes it to show up every frame when continuing
 		STransitions.transition("circleIn")
 		await STransitions.transition_player.animation_finished
 		UIManager.push_layer(load("uid://degok78oygxw3"))
@@ -76,7 +83,7 @@ func _on_elapsed_time_updated(new_time: int):
 
 func _on_autoscroll_timer_timeout() -> void:
 	random_autoscroll_speed = Vector2(randf_range(-20, 20), randf_range(-20, 20))
-	var tween : Tween = create_tween().set_ease(Tween.EASE_IN)
+	var tween: Tween = create_tween().set_ease(Tween.EASE_IN)
 	tween.tween_property(%BackgroundParallax2D, "autoscroll", %BackgroundParallax2D.autoscroll + random_autoscroll_speed, 15)
 	#TODO: Make the bigger parts stay constant and the smaller things move? or just add a background layer that doesnt move so it doesnt cause dizzyness
 
@@ -88,7 +95,7 @@ func time_based_enemy_type_changer() -> void:
 		45:
 			RunData.enemy_spawn_type_range.y = 3
 			enemy_spawn_timer.wait_time = 3.5
-		75: 
+		75:
 			RunData.enemy_spawn_type_range.y = 4
 			enemy_spawn_timer.wait_time = 4
 		100:
@@ -109,127 +116,157 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("pick_up_weapon"):
 		pick_up_weapon()
 
+
 func spawn_enemy() -> void:
 	out_of_view_spawn_location.progress_ratio = randf()
-	
-	enemies_node.add_child(EnemySpawner.spawn_enemy(EnemySpawner.get_random_by_spawn_chance(), out_of_view_spawn_location.global_position))
+	var enemy_data = EnemySpawner.get_random_by_spawn_chance()
+	if enemy_data:
+		var enemy = EnemySpawner.spawn_enemy(enemy_data, out_of_view_spawn_location.global_position)
+		if enemy:
+			enemies_node.add_child(enemy)
+
 
 func spawn_powerup() -> void:
 	out_of_view_spawn_location.progress_ratio = randf()
 	
-	var powerup_data : PowerupData = get_random_powerup()
-	var powerup_instance : Powerup = Powerup.create_new_powerup(powerup_data)
-	powerup_instance.global_position = out_of_view_spawn_location.global_position
-	powerups_node.add_child(powerup_instance)
+	var powerup_data: PowerupData = get_random_powerup()
+	if powerup_data:
+		var powerup_instance: Powerup = Powerup.create_new_powerup(powerup_data)
+		powerup_instance.global_position = out_of_view_spawn_location.global_position
+		powerups_node.add_child(powerup_instance)
+
 
 func get_random_powerup() -> PowerupData:
-	#TODO: Replace randfs in the powertype scene or script (as a static fn?) itself or implement a better version
-	var powerup_data: PowerupData = CollectionManager.all_powerups.values().pick_random()
-	if powerup_data.spawn_chance_percent / 100 < randf():
-		powerup_data = get_random_powerup()
-	return powerup_data
+	var all_powerups = CollectionManager.all_powerups.values()
+	if all_powerups.is_empty():
+		return null
+	
+	#HACK: Try up to 10 times to get a powerup based on spawn chance
+	for _attempt in range(10):
+		var powerup_data: PowerupData = all_powerups.pick_random()
+		if is_nan(powerup_data.spawn_chance_percent) or randf() <= powerup_data.spawn_chance_percent / 100.0:
+			return powerup_data
+	
+	# else
+	return all_powerups.pick_random()
+
 
 func switch_weapon() -> void:
-	if guns.size() != 0:
+	if guns.size() > 1:
 		current_gun_index = (current_gun_index + 1) % guns.size()
-		player.base_gun.queue_free()
+		if is_instance_valid(player.base_gun):
+			player.base_gun.queue_free()
+		
 		var gun_instance: BaseGun = preload("uid://djr17spwfqlsu").instantiate()
 		gun_instance.gun_data = guns[current_gun_index]
 		player.base_gun = gun_instance
 		player.add_child(player.base_gun)
 
+
 func throw_or_remove_gun_from_player(throw: bool = true) -> void:
-	if guns.size() != 0:
-		var thrown_weapon : BaseGun = player.base_gun
-		var thrown_weapon_scene : GunData = guns[current_gun_index]
-		if thrown_weapon:
-			guns.erase(thrown_weapon_scene)
+	if guns.size() <= 1:
+		return
+	
+	var thrown_weapon: BaseGun = player.base_gun
+	var thrown_weapon_data: GunData = guns[current_gun_index]
+	
+	if thrown_weapon and thrown_weapon_data:
+		guns.erase(thrown_weapon_data)
+		
 		if throw:
-			thrown_guns.append(thrown_weapon_scene)
+			thrown_guns.append(thrown_weapon_data)
 			thrown_weapon.reparent(self)
 			thrown_weapon.remove_from_group("Weapons")
 			thrown_weapon.add_to_group("Dropped Weapons")
-		switch_weapon()
 		
+		switch_weapon()
+
 
 func pick_up_weapon() -> void:
-	#Todo: When near the gun, it is highlighted, so that it can be clicked.
-	print(thrown_guns.size())
+		#Todo: When near the gun, it is highlighted, so that it can be clicked.
 	if thrown_guns.size() > 0:
-		var weapon : BaseGun = A.tree.get_first_node_in_group("Dropped Weapons")
-		add_child(weapon)
-		weapon.remove_from_group("Dropped Weapons")
-		weapon.add_to_group("Weapons")
-		A.tree.call_group("Weapons", "queue_free")
+		var weapon: BaseGun = A.tree.get_first_node_in_group("Dropped Weapons")
+		if weapon:
+			weapon.reparent(player)
+			weapon.remove_from_group("Dropped Weapons")
+			weapon.add_to_group("Weapons")
 		guns.append(thrown_guns.pop_back())
 	else:
 		switch_weapon()
 
 
 func use_powerup(powerup_type: StringName) -> void:
-	if RunData.powerups[powerup_type] > 0:
-		RunData.powerups[powerup_type] -= 1
-		match powerup_type:
-			&"slow_time_powerup":
-				if Engine.time_scale == 1:
-					activate_slow_motion()
-				else:
-					RunData.powerups[powerup_type] += 1
-			&"screen_blast_powerup":
-				STransitions.transition("slightFlash")
-				A.tree.call_group("On Screen Enemies", "queue_free")
-				ScreenEffects.screen_shake(1, 2.5)
-			&"heal_powerup":
-				player.health_component.heal_or_damage(20)
-			&"temp_invincible_powerup":
+	if not RunData.powerups.has(powerup_type) or RunData.powerups[powerup_type] <= 0:
+		return
+	
+	RunData.powerups[powerup_type] -= 1
+	
+	match powerup_type:
+		&"slow_time_powerup":
+			if Engine.time_scale == 1:
+				activate_slow_motion()
+			else:
+				RunData.powerups[powerup_type] += 1
+		&"screen_blast_powerup":
+			STransitions.transition("slightFlash")
+			A.tree.call_group("On Screen Enemies", "queue_free")
+			ScreenEffects.screen_shake(1, 2.5)
+		&"heal_powerup":
+			if player and player.health_component:
+				player.health_component.heal_or_damage(20, HealthComponent.HealthModificationType.HEAL)
+		&"temp_invincible_powerup":
+			if player and player.health_component:
 				player.health_component.disable_for_secs(20)
-		#HUD.I.update_hud_buttons()
+
 
 func start_gun_trial(gun: GunData) -> void:
-	# Instance the trial scene
-	var trial_scene : Node = load("uid://b6gtyg4gve1j").instantiate()
+	var trial_scene: Node = load("uid://b6gtyg4gve1j").instantiate()
 	trial_scene.trial_gun = gun
 	trial_scene.trial_completed.connect(_on_trial_completed.bind(gun))
 	add_child(trial_scene)
+
 
 func _on_trial_completed(success: bool, gun: GunData) -> void:
 	if success:
 		GameState.unlock_gun(gun)
 		guns.append(gun)
-		# Show success message
 		print("Gun unlocked!")
 	else:
-		# Show failure message
 		print("Trial failed! Try again!")
 
+
 func activate_slow_motion() -> void:
-	if Engine.time_scale == NORMAL_TIME:
-		GameFeel.slow_motion()
-		time_scale_tween = create_tween()
-		time_scale_tween.tween_property(Engine, "time_scale", SLOW_TIME, TRANSITION_DURATION)\
-			.set_trans(Tween.TRANS_SINE)\
-			.set_ease(Tween.EASE_OUT)
-		
-		# Play visual effects
-		animation_player.play("slow_motion_start")
-		#vignette.visible = true
+	if Engine.time_scale != NORMAL_TIME:
+		return
+	
+	time_scale_tween = create_tween()
+	time_scale_tween.tween_property(Engine, "time_scale", SLOW_TIME, TRANSITION_DURATION)
+	time_scale_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	animation_player.play("slow_motion_start")
+	#vignette.visible = true
+
+	if player and player.base_gun:
 		player.base_gun.set_ignore_time_scale()
-		
 		#Fixme: Play sound effect
 		#play_slow_motion_sound()
 		
 		# Wait for duration then deactivate
-		await A.tree.create_timer(SLOW_DURATION).timeout
-		deactivate_slow_motion()
+	await A.tree.create_timer(SLOW_DURATION, true, false, true).timeout
+	deactivate_slow_motion()
+
 
 func deactivate_slow_motion() -> void:
-	if !GameState.is_in_shop:
-		time_scale_tween = create_tween()
-		time_scale_tween.tween_property(Engine, "time_scale", NORMAL_TIME, TRANSITION_DURATION)\
-			.set_trans(Tween.TRANS_SINE)\
-			.set_ease(Tween.EASE_IN)
-			
+	if RunData.is_in_shop:
+		return
+	
+	time_scale_tween = create_tween()
+	time_scale_tween.tween_property(Engine, "time_scale", NORMAL_TIME, TRANSITION_DURATION)
+	time_scale_tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	
+	if player and player.base_gun:
 		player.base_gun.unset_ignore_time_scale()
+	
 	animation_player.play("slow_motion_end")
 	#vignette.visible = false
 	

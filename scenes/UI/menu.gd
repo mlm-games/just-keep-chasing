@@ -20,7 +20,7 @@ func _ready() -> void:
 	
 	# Covert the assets to svg properly (human made if not)
 	
-	# TODO: Unlock rocket launcher last, then pump (bright-red) shotgun, then 
+	# TODO: Unlock rocket launcher last, then pump (bright-red) shotgun, second gun to unlock will the darker variant (5 big blasts), then sniper, and one shotter 
 	
 	%PlayButton.pressed.connect(_on_PlayButton_pressed)
 	%SettingsButton.pressed.connect(add_child.bind(preload(SettingsScene).instantiate()))
