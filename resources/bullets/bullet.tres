@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ProjectileData" load_steps=6 format=3 uid="uid://peywrjmws6bp"]
+[gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://peywrjmws6bp"]
 
 [ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_0t2kq"]
 [ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_yiikd"]
@@ -10,28 +10,10 @@ metadata/__load_path__ = "res://resources/bullets/bullet_data.gd"
 
 [resource]
 script = ExtResource("1_yiikd")
-projectile_speed = 750.0
-projectile_range = 1000
 projectile_damage = 2.0
-projectile_spread = 0.0
-projectile_dot = 0.0
-projectile_dot_duration = 0.0
-projectile_dot_type = 0
-projectile_max_pierce_count = 1
-projectile_knockback_force = 0.0
-projectile_stun_duration = 0.0
 sprite_scale = Vector2(0.12, 0.04)
 sprite_modulate = Color(1, 1, 0, 1)
 sprite_texture = ExtResource("2_xxnb8")
 sprite_rotation = 90.0
 sprite_offset = Vector2(-25, 0)
-collision_shape_radius = 9.0
-collision_shape_mask = 3
-base_scene = ExtResource("1_0t2kq")
-spawn_particles = ExtResource("3_qcp3t")
-lifespan_time = 100.0
-id = ""
-enabled = true
-unlocked = true
-local_to_scene = false
 metadata/_custom_type_script = SubResource("Resource_uq3rq")

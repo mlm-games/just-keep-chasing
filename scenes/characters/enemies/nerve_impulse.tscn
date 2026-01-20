@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkk7wewc51p0l"]
+[gd_scene format=3 uid="uid://dkk7wewc51p0l"]
 
 [ext_resource type="Script" uid="uid://bkr7t3fuf7xjj" path="res://scenes/characters/enemies/nerve_impulse.gd" id="1_frray"]
 [ext_resource type="Texture2D" uid="uid://cxnlpb6ei2d5g" path="res://assets/sprites/bg_static_particles.svg" id="2_6mflg"]
@@ -11,26 +11,26 @@ height = 60.0
 radius = 2.0
 height = 10.0
 
-[node name="NerveImpulse" type="CharacterBody2D"]
+[node name="NerveImpulse" type="CharacterBody2D" unique_id=1819353812]
 collision_layer = 4
 script = ExtResource("1_frray")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1846079669]
 shape = SubResource("CapsuleShape2D_210d3")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1572854810]
 modulate = Color(1, 1, 0.478431, 1)
 scale = Vector2(0.3, 0.1)
 texture = ExtResource("2_6mflg")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1541576504]
 position = Vector2(3.8147e-06, 0)
 scale = Vector2(3.2, 0.8)
 
-[node name="DamageArea" type="Area2D" parent="."]
+[node name="DamageArea" type="Area2D" parent="." unique_id=1380431676]
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=34146119]
 position = Vector2(0, -1)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_frray")

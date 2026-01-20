@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cp7bdncv26bbl"]
+[gd_scene format=3 uid="uid://cp7bdncv26bbl"]
 
 [ext_resource type="Script" uid="uid://dumdhlw2vgr6l" path="res://scenes/characters/wbc.gd" id="1_fqjm3"]
 [ext_resource type="Texture2D" uid="uid://diwwf4nywvgku" path="res://assets/sprites/cell-blockade.png" id="2_8v58f"]
@@ -49,40 +49,38 @@ _data = {
 &"normal": SubResource("Animation_p24hy")
 }
 
-[node name="WBC" type="CharacterBody2D"]
+[node name="WBC" type="CharacterBody2D" unique_id=694234701]
 collision_layer = 16
 collision_mask = 4
 script = ExtResource("1_fqjm3")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=665114245]
 rotation = 2.23053
 scale = Vector2(0.09, 0.09)
 texture = ExtResource("2_8v58f")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1980205962]
 shape = SubResource("CircleShape2D_02dif")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_kcudx")
-}
-autoplay = "normal"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1237725968]
+libraries/ = SubResource("AnimationLibrary_kcudx")
+autoplay = &"normal"
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachine" type="Node" parent="." unique_id=1860770198 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_jw08b")
 initial_state = NodePath("Idle")
 
-[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("friend")]
+[node name="Attack" type="Node" parent="StateMachine" unique_id=1170357694 node_paths=PackedStringArray("friend")]
 script = ExtResource("5_yvhbn")
 friend = NodePath("../..")
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("friend")]
+[node name="Idle" type="Node" parent="StateMachine" unique_id=86356058 node_paths=PackedStringArray("friend")]
 script = ExtResource("4_g8ut0")
 friend = NodePath("../..")
 move_speed = 50.0
 
-[node name="Follow" type="Node" parent="StateMachine" node_paths=PackedStringArray("friend")]
+[node name="Follow" type="Node" parent="StateMachine" unique_id=397424187 node_paths=PackedStringArray("friend")]
 script = ExtResource("3_fn5ni")
 friend = NodePath("../..")
 

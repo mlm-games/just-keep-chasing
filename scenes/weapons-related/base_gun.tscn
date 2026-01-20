@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://djr17spwfqlsu"]
+[gd_scene format=3 uid="uid://djr17spwfqlsu"]
 
 [ext_resource type="Script" uid="uid://0vqt2x8xwvgg" path="res://scenes/weapons-related/base_gun.gd" id="1_erppj"]
 [ext_resource type="Texture2D" uid="uid://dyus754xmr41s" path="res://assets/sprites/pistol.png" id="3_1ijls"]
@@ -44,17 +44,17 @@ _data = {
 &"reload": SubResource("Animation_mxhbq")
 }
 
-[node name="BaseGun" type="Area2D" groups=["Weapons"]]
+[node name="BaseGun" type="Area2D" unique_id=602063632 groups=["Weapons"]]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_erppj")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1235463489]
 shape = SubResource("CircleShape2D_we32q")
 
-[node name="PivotPoint" type="Marker2D" parent="."]
+[node name="PivotPoint" type="Marker2D" parent="." unique_id=1712425357]
 
-[node name="Sprite2D" type="Sprite2D" parent="PivotPoint"]
+[node name="Sprite2D" type="Sprite2D" parent="PivotPoint" unique_id=790445768]
 unique_name_in_owner = true
 texture_filter = 1
 position = Vector2(36, 5)
@@ -63,34 +63,32 @@ scale = Vector2(0.08, 0.08)
 texture = ExtResource("3_1ijls")
 flip_h = true
 
-[node name="BulletSpawnPoint" type="Marker2D" parent="PivotPoint/Sprite2D"]
+[node name="BulletSpawnPoint" type="Marker2D" parent="PivotPoint/Sprite2D" unique_id=278519965]
 unique_name_in_owner = true
 position = Vector2(300, -111.111)
 
-[node name="FireRateTimer" type="Timer" parent="."]
+[node name="FireRateTimer" type="Timer" parent="." unique_id=2050364955]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="ReloadTimer" type="Timer" parent="."]
+[node name="ReloadTimer" type="Timer" parent="." unique_id=1810772464]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="ShootAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+[node name="ShootAudioPlayer" type="AudioStreamPlayer2D" parent="." unique_id=2122441891]
 unique_name_in_owner = true
 
-[node name="ReloadAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+[node name="ReloadAudioPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1837047880]
 unique_name_in_owner = true
 
-[node name="ClosestEnemyScanTimer" type="Timer" parent="."]
+[node name="ClosestEnemyScanTimer" type="Timer" parent="." unique_id=1046724647]
 unique_name_in_owner = true
 wait_time = 0.8
 autostart = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=731428017]
 unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_b6q5x")
-}
+libraries/ = SubResource("AnimationLibrary_b6q5x")
 
 [connection signal="area_entered" from="." to="." method="_on_base_weapon_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_base_weapon_area_exited"]

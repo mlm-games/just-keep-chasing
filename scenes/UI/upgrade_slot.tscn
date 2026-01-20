@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dq2rptl6lv3tc"]
+[gd_scene format=3 uid="uid://dq2rptl6lv3tc"]
 
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="1_3i5ot"]
 [ext_resource type="Script" uid="uid://cqvofyt2rkhcc" path="res://scenes/UI/upgrade_slot.gd" id="1_dya2o"]
@@ -21,7 +21,7 @@ gradient = SubResource("Gradient_mw0f0")
 fill_from = Vector2(0.566038, 0.391509)
 fill_to = Vector2(0, 1)
 
-[node name="SlotContainer" type="MarginContainer"]
+[node name="SlotContainer" type="MarginContainer" unique_id=1082012552]
 process_mode = 3
 offset_right = 200.0
 offset_bottom = 260.0
@@ -29,28 +29,28 @@ focus_mode = 2
 theme = ExtResource("1_3i5ot")
 script = ExtResource("1_dya2o")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=676549683]
 layout_mode = 2
 
-[node name="Panel" type="PanelContainer" parent="VBoxContainer"]
+[node name="Panel" type="PanelContainer" parent="VBoxContainer" unique_id=1728169156]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 300)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Panel" unique_id=1947740110]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/Panel/MarginContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/Panel/MarginContainer" unique_id=49244969]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2" unique_id=981737578]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer" unique_id=946500682]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_unfms")
 custom_minimum_size = Vector2(200, 200)
@@ -60,7 +60,7 @@ size_flags_stretch_ratio = 5.0
 texture = ExtResource("2_3bwd0")
 expand_mode = 1
 
-[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer"]
+[node name="UpgradeLabel" type="Label" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer" unique_id=117445137]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
@@ -68,16 +68,16 @@ text = "Placeholder"
 label_settings = ExtResource("2_071u4")
 horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer" unique_id=387595236]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer/ScrollContainer" unique_id=484732897]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DescriptionLabel" type="RichTextLabel" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="DescriptionLabel" type="RichTextLabel" parent="VBoxContainer/Panel/MarginContainer/VBoxContainer2/VBoxContainer/ScrollContainer/VBoxContainer" unique_id=1416544002]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -85,21 +85,21 @@ theme_override_font_sizes/normal_font_size = 15
 text = "gibberish for now"
 fit_content = true
 
-[node name="PriceContainer" parent="VBoxContainer" instance=ExtResource("1_o3l4u")]
+[node name="PriceContainer" parent="VBoxContainer" unique_id=324236320 instance=ExtResource("1_o3l4u")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "5"
 horizontal_alignment = 1
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1681645042]
 unique_name_in_owner = true
 visible = false
 position = Vector2(142, 182)
 scale = Vector2(3.4375, 4.6875)
 texture = SubResource("GradientTexture2D_3i5ot")
 
-[node name="PopupAnimator" type="Node" parent="." node_paths=PackedStringArray("target_node")]
+[node name="PopupAnimator" type="Node" parent="." unique_id=280095786 node_paths=PackedStringArray("target_node")]
 script = ExtResource("7_unfms")
 target_node = NodePath("..")
 metadata/_custom_type_script = "uid://cnfh1rl7a17mv"

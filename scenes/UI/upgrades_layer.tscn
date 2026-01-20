@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://24v2w4t8hgkl"]
+[gd_scene format=3 uid="uid://24v2w4t8hgkl"]
 
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="1_etbkl"]
 [ext_resource type="Script" uid="uid://cdc8if22rnwsq" path="res://scenes/UI/upgrades_layer.gd" id="1_f2f6q"]
@@ -12,11 +12,11 @@ action = &"pause"
 [sub_resource type="Shortcut" id="Shortcut_giq6u"]
 events = [SubResource("InputEventAction_lxedb")]
 
-[node name="Upgrades" type="CanvasLayer"]
+[node name="Upgrades" type="CanvasLayer" unique_id=242190104]
 layer = 50
 script = ExtResource("1_f2f6q")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=1454947802]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
@@ -27,7 +27,7 @@ grow_vertical = 2
 theme = ExtResource("1_etbkl")
 metadata/_edit_use_anchors_ = true
 
-[node name="Panel" type="Panel" parent="Control"]
+[node name="Panel" type="Panel" parent="Control" unique_id=2122557350]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,7 +35,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=563430265]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,11 +43,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="Control/VBoxContainer"]
+[node name="Panel" type="Panel" parent="Control/VBoxContainer" unique_id=1329544685]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="ProphylacticsLabel" type="Label" parent="Control/VBoxContainer/Panel"]
+[node name="ProphylacticsLabel" type="Label" parent="Control/VBoxContainer/Panel" unique_id=958710781]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -63,36 +63,36 @@ grow_vertical = 2
 text = "Shop"
 label_settings = ExtResource("2_fr6u5")
 
-[node name="Panel2" type="Panel" parent="Control/VBoxContainer"]
+[node name="Panel2" type="Panel" parent="Control/VBoxContainer" unique_id=1324496678]
 layout_mode = 2
 
-[node name="OptionsContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="OptionsContainer" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=1385720307]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1
 
-[node name="SpacerControl2" type="Control" parent="Control/VBoxContainer/OptionsContainer"]
+[node name="SpacerControl2" type="Control" parent="Control/VBoxContainer/OptionsContainer" unique_id=1551700326]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SpacerControl" type="Control" parent="Control/VBoxContainer/OptionsContainer"]
+[node name="SpacerControl" type="Control" parent="Control/VBoxContainer/OptionsContainer" unique_id=1514647415]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="Control/VBoxContainer"]
+[node name="Control" type="Control" parent="Control/VBoxContainer" unique_id=1919386525]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=770250487]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer" unique_id=319504983]
 layout_mode = 2
 
-[node name="RefreshButton" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="RefreshButton" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=800057413]
 visible = false
 layout_mode = 2
 size_flags_vertical = 4
@@ -100,17 +100,17 @@ text = "UI_REFRESH"
 script = ExtResource("4_mqd2u")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/RefreshButton"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/RefreshButton" unique_id=400567870]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 bbcode_enabled = true
 
-[node name="Control2" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Control2" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1072511255]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CloseButton" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="CloseButton" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1732902547]
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "UI_CLOSE_SHOP"
@@ -119,11 +119,11 @@ text = "MENU_LABEL_CLOSE"
 script = ExtResource("4_mqd2u")
 metadata/_custom_type_script = "uid://cmo5qw3rubish"
 
-[node name="Control" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=44465045]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=29219440]
 offset_right = 774.0
 offset_bottom = 641.0
 texture = ExtResource("5_s041v")

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://5oulfv8ctux8"]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://5oulfv8ctux8"]
 
 [ext_resource type="PackedScene" uid="uid://c5sjgq60klnu6" path="res://scenes/characters/enemies/phage_enemy.tscn" id="1_ywe2e"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_un5l1"]
@@ -9,19 +9,11 @@
 script = ExtResource("3_ams2n")
 base_enemy_scene = ExtResource("1_ywe2e")
 base_contact_damage = 20.0
-enemy_knockback = 0.0
 mito_energy_value = 5
 enemy_spawn_chance = 0.3
 enemy_spawn_order = 6
-character_hitbox_shape_value = Vector2(44, 40)
-character_scale = Vector2(1, 1)
 sprite_texture = ExtResource("4_8f4yi")
 sprite_scale = Vector2(0.7, 0.7)
 sprite_color = Color(1, 0.529412, 0.164706, 1)
 base_health = 30.0
 base_speed = 50.0
-modifiers = Array[ExtResource("2_un5l1")]([])
-id = ""
-enabled = true
-unlocked = true
-local_to_scene = false

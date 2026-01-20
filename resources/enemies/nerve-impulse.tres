@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://bkydmcgrxwnyv"]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://bkydmcgrxwnyv"]
 
 [ext_resource type="PackedScene" uid="uid://dkk7wewc51p0l" path="res://scenes/characters/enemies/nerve_impulse.tscn" id="1_rc7su"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_w0lln"]
@@ -9,20 +9,12 @@
 script = ExtResource("3_bbl7t")
 base_enemy_scene = ExtResource("1_rc7su")
 base_contact_damage = 100.0
-enemy_knockback = 0.0
 mito_energy_value = 2
 enemy_spawn_chance = 0.67
 enemy_spawn_order = 5
-character_hitbox_shape_value = Vector2(44, 40)
-character_scale = Vector2(1, 1)
 sprite_texture = ExtResource("4_vvxly")
-sprite_scale = Vector2(1, 1)
 sprite_color = Color(0, 0, 0, 1)
 base_health = 2.0
 base_speed = 600.0
-modifiers = Array[ExtResource("2_w0lln")]([])
 id = "nerve-impulse"
-enabled = true
-unlocked = true
-local_to_scene = false
 metadata/_custom_type_script = "uid://bwk8dueikqaq0"

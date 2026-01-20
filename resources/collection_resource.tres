@@ -1,44 +1,48 @@
-[gd_resource type="Resource" script_class="CollectionResource" load_steps=36 format=3]
+[gd_resource type="Resource" script_class="CollectionResource" format=3 uid="uid://bgf32j8ftfgyl"]
 
-[ext_resource type="Resource" path="res://resources/augments/basic_repair.tres" id="1_51ty7"]
-[ext_resource type="Resource" path="res://resources/augments/bullet_buffer.tres" id="2_21i0v"]
-[ext_resource type="Resource" path="res://resources/augments/immuno_boosters.tres" id="3_18ovc"]
-[ext_resource type="Resource" path="res://resources/augments/material_lender.tres" id="4_ega57"]
-[ext_resource type="Resource" path="res://resources/augments/mito_attractor.tres" id="5_52q21"]
-[ext_resource type="Resource" path="res://resources/augments/range_enhancer.tres" id="5_f63db"]
-[ext_resource type="Resource" path="res://resources/augments/spreadlock.tres" id="6_5d78j"]
-[ext_resource type="Resource" path="res://resources/augments/texo_card.tres" id="7_hecn4"]
-[ext_resource type="Resource" path="res://resources/augments/revitalize.tres" id="7_uwrhl"]
-[ext_resource type="Resource" path="res://resources/augments/ultra_texo_card.tres" id="8_ohxkr"]
-[ext_resource type="Resource" path="res://resources/enemies/basic_bact.tres" id="9_131m2"]
-[ext_resource type="Resource" path="res://resources/enemies/evolved_bact.tres" id="10_52q21"]
-[ext_resource type="Resource" path="res://resources/enemies/gunner_bact.tres" id="11_uwrhl"]
-[ext_resource type="Resource" path="res://resources/enemies/phase_enemy.tres" id="12_18ovc"]
-[ext_resource type="Resource" path="res://resources/enemies/nerve-impulse.tres" id="12_hecn4"]
-[ext_resource type="Resource" path="res://resources/enemies/small_bact.tres" id="12_u2rfg"]
-[ext_resource type="Resource" path="res://resources/enemies/parasite.tres" id="13_ohxkr"]
-[ext_resource type="Resource" path="res://resources/enemies/spore_enemy.tres" id="14_ega57"]
-[ext_resource type="Resource" path="res://resources/guns/birdshot_shotgun.tres" id="14_g5768"]
-[ext_resource type="Resource" path="res://resources/enemies/prion.tres" id="15_131m2"]
-[ext_resource type="Resource" path="res://resources/enemies/tumor_cell.tres" id="15_ega57"]
-[ext_resource type="Resource" path="res://resources/guns/buckshot_shotgun.tres" id="15_j07jx"]
-[ext_resource type="Resource" path="res://resources/enemies/virus.tres" id="16_f63db"]
-[ext_resource type="Resource" path="res://resources/guns/double_barrel_shotgun.tres" id="16_ix4pa"]
-[ext_resource type="Resource" path="res://resources/guns/machine_gun.tres" id="17_m02nr"]
-[ext_resource type="Resource" path="res://resources/guns/pistol.tres" id="18_7l2tv"]
-[ext_resource type="Resource" path="res://resources/guns/pump_action_shotgun.tres" id="19_w56ut"]
-[ext_resource type="Resource" path="res://resources/guns/rocket_launcher.tres" id="20_lo8vq"]
-[ext_resource type="Resource" path="res://resources/guns/sniper.tres" id="21_lwfym"]
-[ext_resource type="Resource" path="res://resources/guns/debug_killer_action_shotgun.tres" id="22_ohxkr"]
-[ext_resource type="Resource" path="res://resources/powerups/heal_powerup.tres" id="22_twkyw"]
-[ext_resource type="Resource" path="res://resources/powerups/screen_blast_powerup.tres" id="23_3p302"]
-[ext_resource type="Resource" path="res://resources/powerups/slow_time_powerup.tres" id="24_hnllu"]
-[ext_resource type="Resource" path="res://resources/powerups/temp_invincible_powerup.tres" id="25_emn5t"]
-[ext_resource type="Script" path="res://resources/collection_resource.gd" id="26_4kn0p"]
+[ext_resource type="Resource" uid="uid://dwyjyfw01chxg" path="res://resources/augments/basic_repair.tres" id="1_51ty7"]
+[ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="1_g5768"]
+[ext_resource type="Resource" uid="uid://wp2hnmx1t1ox" path="res://resources/augments/bullet_buffer.tres" id="2_21i0v"]
+[ext_resource type="Resource" uid="uid://dbhqk1tq5grf8" path="res://resources/augments/immuno_boosters.tres" id="3_18ovc"]
+[ext_resource type="Resource" uid="uid://h6641yt2noof" path="res://resources/augments/material_lender.tres" id="4_ega57"]
+[ext_resource type="Resource" uid="uid://dgn4tk367k3q3" path="res://resources/augments/mito_attractor.tres" id="5_52q21"]
+[ext_resource type="Resource" uid="uid://vkrfjwuxjcky" path="res://resources/augments/range_enhancer.tres" id="5_f63db"]
+[ext_resource type="Resource" uid="uid://cpoybg7bupnm3" path="res://resources/augments/spreadlock.tres" id="6_5d78j"]
+[ext_resource type="Resource" uid="uid://dmqj0880bqma2" path="res://resources/augments/texo_card.tres" id="7_hecn4"]
+[ext_resource type="Resource" uid="uid://riwfdvrsfj8j" path="res://resources/augments/revitalize.tres" id="7_uwrhl"]
+[ext_resource type="Resource" uid="uid://dfa7mnmd8k67j" path="res://resources/augments/ultra_texo_card.tres" id="8_ohxkr"]
+[ext_resource type="Resource" uid="uid://c66ie0f07a5c6" path="res://resources/enemies/basic_bact.tres" id="9_131m2"]
+[ext_resource type="Resource" uid="uid://c41lhhdbpe2ut" path="res://resources/enemies/evolved_bact.tres" id="10_52q21"]
+[ext_resource type="Resource" uid="uid://l8x8gtjxk7r6" path="res://resources/enemies/gunner_bact.tres" id="11_uwrhl"]
+[ext_resource type="Resource" uid="uid://5oulfv8ctux8" path="res://resources/enemies/phase_enemy.tres" id="12_18ovc"]
+[ext_resource type="Resource" uid="uid://bkydmcgrxwnyv" path="res://resources/enemies/nerve-impulse.tres" id="12_hecn4"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="12_j07jx"]
+[ext_resource type="Resource" uid="uid://cvi416jal72s4" path="res://resources/enemies/small_bact.tres" id="12_u2rfg"]
+[ext_resource type="Resource" uid="uid://jviwk0181p3q" path="res://resources/enemies/parasite.tres" id="13_ohxkr"]
+[ext_resource type="Resource" uid="uid://rd770hmtsvti" path="res://resources/enemies/spore_enemy.tres" id="14_ega57"]
+[ext_resource type="Resource" uid="uid://ogus15l853w3" path="res://resources/guns/birdshot_shotgun.tres" id="14_g5768"]
+[ext_resource type="Resource" uid="uid://bsony4qi604re" path="res://resources/enemies/prion.tres" id="15_131m2"]
+[ext_resource type="Resource" uid="uid://c3jq1snnait57" path="res://resources/enemies/tumor_cell.tres" id="15_ega57"]
+[ext_resource type="Resource" uid="uid://ceex6yhxwxp8f" path="res://resources/guns/buckshot_shotgun.tres" id="15_j07jx"]
+[ext_resource type="Resource" uid="uid://caqgv7fmnrltj" path="res://resources/enemies/virus.tres" id="16_f63db"]
+[ext_resource type="Resource" uid="uid://bbkqomwace01i" path="res://resources/guns/double_barrel_shotgun.tres" id="16_ix4pa"]
+[ext_resource type="Resource" uid="uid://bqca7rart0qda" path="res://resources/guns/machine_gun.tres" id="17_m02nr"]
+[ext_resource type="Resource" uid="uid://doth1xd85xeyo" path="res://resources/guns/pistol.tres" id="18_7l2tv"]
+[ext_resource type="Resource" uid="uid://5lw04hrqi2kv" path="res://resources/guns/pump_action_shotgun.tres" id="19_w56ut"]
+[ext_resource type="Resource" uid="uid://bqdrridmtt4q1" path="res://resources/guns/rocket_launcher.tres" id="20_lo8vq"]
+[ext_resource type="Resource" uid="uid://p55oxm68od4p" path="res://resources/guns/sniper.tres" id="21_lwfym"]
+[ext_resource type="Resource" uid="uid://wukinift5u7f" path="res://resources/guns/debug_killer_action_shotgun.tres" id="22_ohxkr"]
+[ext_resource type="Resource" uid="uid://c4vkfrnhe7gn8" path="res://resources/powerups/heal_powerup.tres" id="22_twkyw"]
+[ext_resource type="Resource" uid="uid://ff18iggvak6h" path="res://resources/powerups/screen_blast_powerup.tres" id="23_3p302"]
+[ext_resource type="Resource" uid="uid://co1l4ykdh5yer" path="res://resources/powerups/slow_time_powerup.tres" id="24_hnllu"]
+[ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="24_ix4pa"]
+[ext_resource type="Resource" uid="uid://cw5xlfwubk72c" path="res://resources/powerups/temp_invincible_powerup.tres" id="25_emn5t"]
+[ext_resource type="Script" uid="uid://xa18m4l2sbl0" path="res://resources/collection_resource.gd" id="26_4kn0p"]
+[ext_resource type="Script" uid="uid://bctrrfit1c7va" path="res://resources/powerups/powerup_data.gd" id="34_m02nr"]
 
 [resource]
 script = ExtResource("26_4kn0p")
-enemies = Dictionary[StringName, Variant]({
+enemies = Dictionary[StringName, ExtResource("12_j07jx")]({
 &"basic_bact": ExtResource("9_131m2"),
 &"evolved_bact": ExtResource("10_52q21"),
 &"gunner_bact": ExtResource("11_uwrhl"),
@@ -51,7 +55,7 @@ enemies = Dictionary[StringName, Variant]({
 &"tumor_cell": ExtResource("15_ega57"),
 &"virus": ExtResource("16_f63db")
 })
-augments = Dictionary[StringName, Variant]({
+augments = Dictionary[StringName, ExtResource("1_g5768")]({
 &"basic_repair": ExtResource("1_51ty7"),
 &"bullet_buffer": ExtResource("2_21i0v"),
 &"immuno_boosters": ExtResource("3_18ovc"),
@@ -63,13 +67,13 @@ augments = Dictionary[StringName, Variant]({
 &"texo_card": ExtResource("7_hecn4"),
 &"ultra_texo_card": ExtResource("8_ohxkr")
 })
-powerups = Dictionary[StringName, Variant]({
+powerups = Dictionary[StringName, ExtResource("34_m02nr")]({
 &"heal_powerup": ExtResource("22_twkyw"),
 &"screen_blast_powerup": ExtResource("23_3p302"),
 &"slow_time_powerup": ExtResource("24_hnllu"),
 &"temp_invincible_powerup": ExtResource("25_emn5t")
 })
-guns = Dictionary[StringName, Variant]({
+guns = Dictionary[StringName, ExtResource("24_ix4pa")]({
 &"birdshot_shotgun": ExtResource("14_g5768"),
 &"buckshot_shotgun": ExtResource("15_j07jx"),
 &"debug_killer_action_shotgun": ExtResource("22_ohxkr"),

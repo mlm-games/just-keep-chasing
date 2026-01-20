@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cyaeykwntx0u0"]
+[gd_scene format=3 uid="uid://cyaeykwntx0u0"]
 
 [ext_resource type="Script" uid="uid://cbkm21ne5idhp" path="res://scenes/characters/base_melee_enemy.gd" id="1_np7gm"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/bact.svg" id="2_mcomt"]
@@ -57,46 +57,44 @@ shader_parameter/saturation = 0.8
 shader_parameter/contrast = 1.2
 shader_parameter/smoothing = 0.5
 
-[node name="BaseMeleeEnemy" type="CharacterBody2D" groups=["Enemies"]]
+[node name="BaseMeleeEnemy" type="CharacterBody2D" unique_id=166678765 groups=["Enemies"]]
 motion_mode = 1
 platform_on_leave = 2
 platform_floor_layers = 4294967292
 script = ExtResource("1_np7gm")
 
-[node name="HealthComponent" parent="." instance=ExtResource("4_f4fx4")]
+[node name="HealthComponent" parent="." unique_id=349344364 instance=ExtResource("4_f4fx4")]
 
-[node name="VelocityComponent" type="Node" parent="."]
+[node name="VelocityComponent" type="Node" parent="." unique_id=2034639623]
 script = ExtResource("9_uira5")
 metadata/_custom_type_script = "uid://bh62la2plrk8u"
 
-[node name="AnimationComponent" type="Node" parent="." node_paths=PackedStringArray("anim_player", "sprite")]
+[node name="AnimationComponent" type="Node" parent="." unique_id=1809525639 node_paths=PackedStringArray("anim_player", "sprite")]
 script = ExtResource("3_kvpyv")
 anim_player = NodePath("../AnimationPlayer")
 sprite = NodePath("../Sprite2D")
 metadata/_custom_type_script = "uid://cph1hb68v0xjn"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_u32s4"),
-&"reusable_anims": ExtResource("5_j1tbp")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=751579869]
+libraries/ = SubResource("AnimationLibrary_u32s4")
+libraries/reusable_anims = ExtResource("5_j1tbp")
 
-[node name="EnemyHitboxComponent" parent="." node_paths=PackedStringArray("health_component", "parent") instance=ExtResource("3_w61i0")]
+[node name="EnemyHitboxComponent" parent="." unique_id=1109701772 node_paths=PackedStringArray("health_component", "parent") instance=ExtResource("3_w61i0")]
 unique_name_in_owner = true
 collision_layer = 4
 collision_mask = 2
 health_component = NodePath("../HealthComponent")
 parent = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitboxComponent" unique_id=1174911706]
 shape = SubResource("RectangleShape2D_8pnp1")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1165027894]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1772981575]
 shape = SubResource("RectangleShape2D_mgdpr")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1891638234]
 material = SubResource("ShaderMaterial_u32s4")
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_mcomt")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c2gocuhw2o7py"]
+[gd_scene format=3 uid="uid://c2gocuhw2o7py"]
 
 [ext_resource type="Texture2D" uid="uid://cq4g2cewemic1" path="res://assets/sprites/bg_main.png" id="2_ny0ke"]
 [ext_resource type="Texture2D" uid="uid://b5wy5qam2nw48" path="res://assets/sprites/background_rbc.svg" id="3_svcqa"]
@@ -77,7 +77,7 @@ colors = PackedColorArray(0.601223, 0.601223, 0.601223, 1, 1, 1, 1, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ofy2k"]
 gradient = SubResource("Gradient_svcqa")
 
-[node name="Menu" type="Control"]
+[node name="Menu" type="Control" unique_id=522832432]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -89,7 +89,7 @@ size_flags_vertical = 3
 script = ExtResource("5")
 metadata/_edit_use_anchors_ = true
 
-[node name="BackgroundTextureRect" type="TextureRect" parent="."]
+[node name="BackgroundTextureRect" type="TextureRect" parent="." unique_id=126622267]
 modulate = Color(1, 1, 1, 0.513726)
 layout_mode = 0
 offset_right = 1152.0
@@ -97,19 +97,19 @@ offset_bottom = 896.0
 texture = ExtResource("2_ny0ke")
 stretch_mode = 1
 
-[node name="Parallax2D" type="Parallax2D" parent="."]
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=815218276]
 repeat_size = Vector2(1152, 896)
 
-[node name="TextureRect2" type="TextureRect" parent="Parallax2D"]
+[node name="TextureRect2" type="TextureRect" parent="Parallax2D" unique_id=1109158274]
 offset_right = 1155.0
 offset_bottom = 897.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = SubResource("GradientTexture1D_wav1i")
 
-[node name="BackgroundStaticParticles" parent="." instance=ExtResource("8_ofy2k")]
+[node name="BackgroundStaticParticles" parent="." unique_id=36180412 instance=ExtResource("8_ofy2k")]
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=200987397]
 position = Vector2(1551, 142)
 amount = 40
 texture = ExtResource("3_svcqa")
@@ -130,7 +130,7 @@ scale_amount_min = 0.02
 scale_amount_max = 0.25
 color_initial_ramp = SubResource("Gradient_ofy2k")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=593736302]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -139,14 +139,14 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Control" type="Control" parent="MarginContainer"]
+[node name="Control" type="Control" parent="MarginContainer" unique_id=1333032580]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="MarginContainer/Control"]
+[node name="Title" type="Label" parent="MarginContainer/Control" unique_id=2006798881]
 unique_name_in_owner = true
 modulate = Color(0.705882, 0.839216, 0.407843, 1)
 material = SubResource("ShaderMaterial_svcqa")
-layout_mode = 2
+layout_mode = 0
 offset_left = 577.0
 offset_top = 170.0
 offset_right = 975.0
@@ -155,7 +155,7 @@ text = "GAME_TITLE"
 label_settings = SubResource("LabelSettings_78n2u")
 uppercase = true
 
-[node name="Version" type="VBoxContainer" parent="MarginContainer/Control"]
+[node name="Version" type="VBoxContainer" parent="MarginContainer/Control" unique_id=641027014]
 visible = false
 layout_mode = 1
 anchors_preset = 2
@@ -165,24 +165,24 @@ offset_top = -50.0
 offset_right = 122.0
 grow_vertical = 0
 
-[node name="GameVersion" type="Label" parent="MarginContainer/Control/Version"]
+[node name="GameVersion" type="Label" parent="MarginContainer/Control/Version" unique_id=444425099]
 layout_mode = 2
 theme_type_variation = &"LabelSmall"
 text = "0.1.0"
 script = ExtResource("4_3hod2")
 
-[node name="GodotVersion" type="Label" parent="MarginContainer/Control/Version"]
+[node name="GodotVersion" type="Label" parent="MarginContainer/Control/Version" unique_id=1003184739]
 layout_mode = 2
 theme_type_variation = &"LabelSmall"
 theme_override_colors/font_color = Color(0.92549, 0.92549, 0.92549, 1)
 text = "<GodotVersion>"
 script = ExtResource("5_fdyjp")
 
-[node name="PanelContainer" type="NinePatchRect" parent="MarginContainer"]
+[node name="PanelContainer" type="NinePatchRect" parent="MarginContainer" unique_id=1805257471]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=585653838]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
@@ -201,58 +201,58 @@ size_flags_vertical = 8
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="ResumeButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
+[node name="ResumeButton" parent="MarginContainer/PanelContainer/ButtonsContainer" unique_id=1035460041 instance=ExtResource("8_aklih")]
 visible = false
 layout_mode = 2
 text = "MENU_LABEL_CONTINUE"
 
-[node name="PlayButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
+[node name="PlayButton" parent="MarginContainer/PanelContainer/ButtonsContainer" unique_id=85112692 instance=ExtResource("8_aklih")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_NEW_GAME"
 
-[node name="SettingsButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
+[node name="SettingsButton" parent="MarginContainer/PanelContainer/ButtonsContainer" unique_id=191009736 instance=ExtResource("8_aklih")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_SETTINGS"
 
-[node name="AchievementsButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
+[node name="AchievementsButton" parent="MarginContainer/PanelContainer/ButtonsContainer" unique_id=44484718 instance=ExtResource("8_aklih")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_ACHIEVEMENTS"
 
-[node name="CreditsButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
+[node name="CreditsButton" parent="MarginContainer/PanelContainer/ButtonsContainer" unique_id=1989345971 instance=ExtResource("8_aklih")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_CREDITS"
 
-[node name="ExitButton" parent="MarginContainer/PanelContainer/ButtonsContainer" instance=ExtResource("8_aklih")]
+[node name="ExitButton" parent="MarginContainer/PanelContainer/ButtonsContainer" unique_id=971599474 instance=ExtResource("8_aklih")]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MENU_LABEL_EXIT"
 
-[node name="Control" type="Control" parent="MarginContainer/PanelContainer/ButtonsContainer"]
+[node name="Control" type="Control" parent="MarginContainer/PanelContainer/ButtonsContainer" unique_id=1351542832]
 layout_mode = 2
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1902413887]
 environment = SubResource("Environment_78n2u")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1776497293]
 visible = false
 amount = 10
 lifetime = 2.0
 randomness = 0.5
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=799196071]
 visible = false
 energy = 0.8
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_ofy2k")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2125880197]
 color = Color(0.9, 1, 1.1, 1)
 
-[node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="." unique_id=1942666398]
 stream = ExtResource("10_wav1i")
 autoplay = true
 bus = &"Music"

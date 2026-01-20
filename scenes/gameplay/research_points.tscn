@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dva0ud3l80mos"]
+[gd_scene format=3 uid="uid://dva0ud3l80mos"]
 
-[ext_resource type="Script" uid="uid://cp1u1qlxvaksq" path="res://scenes/gameplay/mito_energy.gd" id="1_thgig"]
+[ext_resource type="Script" uid="uid://cp1u1qlxvaksq" path="res://scenes/gameplay/research_points.gd" id="1_thgig"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_faq61"]
 
@@ -9,19 +9,19 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_f7hnp"]
 radius = 23.0
 
-[node name="MitoEnergy" type="RigidBody2D"]
+[node name="MitoEnergy" type="RigidBody2D" unique_id=1826400596]
 script = ExtResource("1_thgig")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1495100571]
 modulate = Color(1, 0.2, 0.160784, 1)
 texture = SubResource("PlaceholderTexture2D_faq61")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1603816559]
 shape = SubResource("CircleShape2D_641rt")
 
-[node name="LifetimeTimer" type="Timer" parent="."]
+[node name="LifetimeTimer" type="Timer" parent="." unique_id=309238876]
 
-[node name="PickupArea" type="Area2D" parent="."]
+[node name="PickupArea" type="Area2D" parent="." unique_id=1199568978]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea" unique_id=761436141]
 shape = SubResource("CircleShape2D_f7hnp")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cnixhyyt6anqs"]
+[gd_scene format=3 uid="uid://cnixhyyt6anqs"]
 
 [ext_resource type="PackedScene" uid="uid://cyaeykwntx0u0" path="res://scenes/characters/base_melee_enemy.tscn" id="1_ymw04"]
 [ext_resource type="Script" uid="uid://ceq5w6sdlln73" path="res://scenes/characters/enemies/leech_enemy.gd" id="2_c6him"]
@@ -11,12 +11,12 @@ shader_parameter/bounce_height = 0.0
 shader_parameter/squash = 0.866
 shader_parameter/rotation = -0.11
 
-[node name="LeechEnemy" instance=ExtResource("1_ymw04")]
+[node name="LeechEnemy" unique_id=1456316570 instance=ExtResource("1_ymw04")]
 script = ExtResource("2_c6him")
 
-[node name="Sprite2D" parent="." index="7"]
+[node name="Sprite2D" parent="." index="7" unique_id=1891638234]
 material = SubResource("ShaderMaterial_awho7")
 
-[node name="LifestealAiComponent" type="Node" parent="." index="8"]
+[node name="LifestealAiComponent" type="Node" parent="." index="8" unique_id=456702866]
 script = ExtResource("2_tpt5d")
 metadata/_custom_type_script = "uid://dntbebw70xeap"

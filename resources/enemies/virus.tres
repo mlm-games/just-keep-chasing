@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://caqgv7fmnrltj"]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://caqgv7fmnrltj"]
 
 [ext_resource type="PackedScene" uid="uid://du2l151jbq78f" path="res://scenes/characters/enemies/virus.tscn" id="1_qnoou"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_ey1an"]
@@ -9,20 +9,12 @@
 script = ExtResource("3_xqyaw")
 base_enemy_scene = ExtResource("1_qnoou")
 base_contact_damage = 5.0
-enemy_knockback = 0.0
 mito_energy_value = 1
 enemy_spawn_chance = 0.67
 enemy_spawn_order = 5
-character_hitbox_shape_value = Vector2(44, 40)
-character_scale = Vector2(1, 1)
 sprite_texture = ExtResource("4_hm53l")
-sprite_scale = Vector2(1, 1)
 sprite_color = Color(0, 0.168627, 0, 1)
 base_health = 20.0
 base_speed = 250.0
-modifiers = Array[ExtResource("2_ey1an")]([])
 id = "virus"
-enabled = true
-unlocked = true
-local_to_scene = false
 metadata/_custom_type_script = "uid://bwk8dueikqaq0"

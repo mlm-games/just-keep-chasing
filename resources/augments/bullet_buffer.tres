@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AugmentsData" load_steps=5 format=3 uid="uid://wp2hnmx1t1ox"]
+[gd_resource type="Resource" script_class="AugmentsData" format=3 uid="uid://wp2hnmx1t1ox"]
 
 [ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="1_ahxqw"]
 [ext_resource type="Texture2D" uid="uid://qxnxnrjoe7x3" path="res://assets/sprites/trigger_eyepod.svg" id="1_cm1vo"]
@@ -8,8 +8,6 @@
 script = ExtResource("2_cm1vo")
 value = 1.0
 key = 5
-operation = 0
-duration = 0.0
 metadata/_custom_type_script = ExtResource("2_cm1vo")
 
 [resource]
@@ -18,9 +16,5 @@ augment_icon = ExtResource("1_cm1vo")
 augment_price = 25
 rarity = 1.0
 stats_to_modify = Array[ExtResource("2_cm1vo")]([SubResource("Resource_2ns1m")])
-auto_generate_description = true
-custom_description = ""
 id = "bullet_buffer"
-local_to_scene = false
-enabled = true
 metadata/_custom_type_script = "uid://clxsmndukf026"

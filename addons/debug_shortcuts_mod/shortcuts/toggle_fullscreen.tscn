@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctsbjmhftjw2e"]
+[gd_scene format=3 uid="uid://ctsbjmhftjw2e"]
 
 [sub_resource type="GDScript" id="GDScript_7flwt"]
 script/source = "extends Node
@@ -19,5 +19,5 @@ func _unhandled_input(event):
 					get_window().mode = Window.MODE_WINDOWED
 "
 
-[node name="ToggleFullscreen" type="Node"]
+[node name="ToggleFullscreen" type="Node" unique_id=372767590]
 script = SubResource("GDScript_7flwt")

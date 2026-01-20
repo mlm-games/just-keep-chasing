@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dyemx8h22argg"]
+[gd_scene format=3 uid="uid://dyemx8h22argg"]
 
 [ext_resource type="Script" uid="uid://dolj2uiojqvts" path="res://resources/misc/tooltip_display.gd" id="1_s3g6d"]
 
-[node name="TooltipDisplay" type="Control"]
+[node name="TooltipDisplay" type="Control" unique_id=1347840878]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_s3g6d")
 
-[node name="TooltipLabel" type="RichTextLabel" parent="."]
+[node name="TooltipLabel" type="RichTextLabel" parent="." unique_id=1468050152]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -22,14 +22,14 @@ grow_vertical = 2
 text = "tfdjgnfn"
 metadata/_edit_use_anchors_ = true
 
-[node name="IconTexture" type="TextureRect" parent="."]
+[node name="IconTexture" type="TextureRect" parent="." unique_id=1428906381]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Panel" type="PanelContainer" parent="."]
+[node name="Panel" type="PanelContainer" parent="." unique_id=1203964883]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1

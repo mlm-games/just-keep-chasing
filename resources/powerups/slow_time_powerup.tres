@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PowerupData" load_steps=3 format=3 uid="uid://co1l4ykdh5yer"]
+[gd_resource type="Resource" script_class="PowerupData" format=3 uid="uid://co1l4ykdh5yer"]
 
 [ext_resource type="Script" uid="uid://bctrrfit1c7va" path="res://resources/powerups/powerup_data.gd" id="1_68hos"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="1_ffv4k"]
@@ -6,10 +6,7 @@
 [resource]
 script = ExtResource("1_68hos")
 icon = ExtResource("1_ffv4k")
-icon_modulate = Color(1, 1, 1, 1)
 icon_scale = Vector2(0.069, 0.063)
 spawn_chance_percent = 100.0
-powerup_type = 0
 id = "slow_time"
-local_to_scene = false
 metadata/_custom_type_script = ExtResource("1_68hos")

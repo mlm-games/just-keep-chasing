@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ShotgunData" load_steps=8 format=3 uid="uid://wukinift5u7f"]
+[gd_resource type="Resource" script_class="ShotgunData" format=3 uid="uid://wukinift5u7f"]
 
 [ext_resource type="Resource" uid="uid://ccjjel7gxlyjx" path="res://resources/bullets/pellet.tres" id="1_etgea"]
 [ext_resource type="AudioStream" uid="uid://cir8eafb01hmv" path="res://assets/music/gun sounds by q009/shotgun.ogg" id="2_3jbr6"]
@@ -19,11 +19,8 @@ ammo = null
 targeting_range = 1000.0
 fire_rate = 0.5
 fire_audio = Array[AudioStream]([ExtResource("2_3jbr6"), ExtResource("3_affhh")])
-speed_dropoff_curve = ExtResource("5_3jbr6")
 sprite_scale = Vector2(0.105, 0.105)
 sprite_position = Vector2(46.8, 15.117)
-sprite_rotation_degrees = 0.0
-sprite_flip_h = false
 sprite_modulate = Color(1, 1, 0.309804, 1)
 bullet_spawn_offset = Vector2(525.513, -41.18)
 fire_animation_skew = 4.94764
@@ -31,9 +28,5 @@ fire_animation_duration = null
 bullets_per_shot = 7
 bullet_spread = 20.0
 screen_shake_frequency = 100.0
-screen_shake_amplitude = 0.5
 id = "double_barrel_shotgun"
-enabled = true
-unlocked = true
-local_to_scene = false
 metadata/_custom_type_script = "uid://d0a57wqy65ei8"

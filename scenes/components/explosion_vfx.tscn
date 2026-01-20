@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bk83oh4onda7n"]
+[gd_scene format=3 uid="uid://bk83oh4onda7n"]
 
 [ext_resource type="Shader" uid="uid://bum8djiq6xwm4" path="res://resources/bullets/vfx/explosion_ring.gdshader" id="1_7aqhp"]
 [ext_resource type="Texture2D" uid="uid://dcvutra05kbxb" path="res://resources/bullets/vfx/explosion_vfx_texture.tres" id="1_7rme3"]
@@ -10,7 +10,7 @@ shader = ExtResource("1_7aqhp")
 shader_parameter/ring_width = 0.5
 shader_parameter/feather = 0.02
 
-[node name="ExplosionVFX" type="GPUParticles2D"]
+[node name="ExplosionVFX" type="GPUParticles2D" unique_id=28031728]
 material = SubResource("ShaderMaterial_ati0o")
 emitting = false
 amount = 5

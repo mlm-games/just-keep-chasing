@@ -18,6 +18,10 @@ func _ready() -> void:
 	run_title_anim()
 	run_buttons_anim()
 	
+	# Covert the assets to svg properly (human made if not)
+	
+	# TODO: Unlock rocket launcher last, then pump (bright-red) shotgun, then 
+	
 	%PlayButton.pressed.connect(_on_PlayButton_pressed)
 	%SettingsButton.pressed.connect(add_child.bind(preload(SettingsScene).instantiate()))
 	%AchievementsButton.pressed.connect(STransitions.change_scene_with_transition.bind(AchievementsScene))

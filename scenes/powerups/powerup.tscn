@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://x2gb17exe2xq"]
+[gd_scene format=3 uid="uid://x2gb17exe2xq"]
 
 [ext_resource type="Script" uid="uid://buv40e5a827xo" path="res://scenes/powerups/powerup.gd" id="1_hl65c"]
 [ext_resource type="Shader" uid="uid://dkg0rxg12mlmn" path="res://scenes/characters/simple_polish_adder.gdshader" id="2_wb3hp"]
@@ -41,22 +41,22 @@ gradient = SubResource("Gradient_spd34")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Powerup" type="Area2D"]
+[node name="Powerup" type="Area2D" unique_id=829845493]
 collision_layer = 9
 collision_mask = 0
 monitoring = false
 script = ExtResource("1_hl65c")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1058177257]
 shape = SubResource("CircleShape2D_rxdp3")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1501036476]
 modulate = Color(0.347817, 0.347817, 0.347817, 1)
 material = SubResource("ShaderMaterial_w801e")
 texture = SubResource("PlaceholderTexture2D_7gkke")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1812596936]
 color = Color(0.716281, 0.712721, 0, 1)
 energy = 0.87
 texture = SubResource("GradientTexture2D_d6bl0")

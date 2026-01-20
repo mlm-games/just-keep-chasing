@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AugmentsData" load_steps=5 format=3 uid="uid://vkrfjwuxjcky"]
+[gd_resource type="Resource" script_class="AugmentsData" format=3 uid="uid://vkrfjwuxjcky"]
 
 [ext_resource type="Texture2D" uid="uid://c18bf3a6guoxf" path="res://assets/sprites/augments/range-enhancer.svg" id="1_33m5x"]
 [ext_resource type="Script" uid="uid://clxsmndukf026" path="res://resources/augments/augments_data.gd" id="1_xk0ku"]
@@ -9,7 +9,6 @@ script = ExtResource("2_33m5x")
 value = 1.1
 key = 7
 operation = 1
-duration = 0.0
 metadata/_custom_type_script = ExtResource("2_33m5x")
 
 [resource]
@@ -18,9 +17,4 @@ augment_icon = ExtResource("1_33m5x")
 augment_price = 24
 rarity = 1.0
 stats_to_modify = Array[ExtResource("2_33m5x")]([SubResource("Resource_xk0ku")])
-auto_generate_description = true
-custom_description = ""
-id = ""
-local_to_scene = false
-enabled = true
 metadata/_custom_type_script = "uid://clxsmndukf026"

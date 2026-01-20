@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://4fyoq8npekf0"]
+[gd_scene format=3 uid="uid://4fyoq8npekf0"]
 
 [ext_resource type="Script" uid="uid://lgsfy3lj2y0g" path="res://scenes/gameplay/world.gd" id="1_li0ht"]
 [ext_resource type="PackedScene" uid="uid://b3mf65fcnvmvu" path="res://scenes/characters/player.tscn" id="3_vhnxw"]
@@ -129,20 +129,20 @@ _data = {
 &"slow_motion_start": SubResource("Animation_k1kj5")
 }
 
-[node name="World" type="Node2D" groups=["World"]]
+[node name="World" type="Node2D" unique_id=1644376492 groups=["World"]]
 script = ExtResource("1_li0ht")
 
-[node name="HUD" parent="." groups=["PopupsRoot"] instance=ExtResource("6_vltvt")]
+[node name="HUD" parent="." unique_id=1166455182 groups=["PopupsRoot"] instance=ExtResource("6_vltvt")]
 unique_name_in_owner = true
 layer = 20
 
-[node name="BackgroundParallax2D" type="Parallax2D" parent="."]
+[node name="BackgroundParallax2D" type="Parallax2D" parent="." unique_id=406659520]
 unique_name_in_owner = true
 scroll_scale = Vector2(0.625, 0.625)
 scroll_offset = Vector2(1, 0)
 repeat_size = Vector2(1152, 896)
 
-[node name="BackgroundRect" type="TextureRect" parent="BackgroundParallax2D"]
+[node name="BackgroundRect" type="TextureRect" parent="BackgroundParallax2D" unique_id=1476838263]
 modulate = Color(0.859, 0.859, 0.859, 1)
 offset_left = 1.0
 offset_right = 1153.0
@@ -152,11 +152,11 @@ size_flags_vertical = 3
 texture = ExtResource("18_r7okl")
 stretch_mode = 1
 
-[node name="NoiseParallax2D" type="Parallax2D" parent="."]
+[node name="NoiseParallax2D" type="Parallax2D" parent="." unique_id=251715709]
 scroll_scale = Vector2(1.15, 1.15)
 repeat_size = Vector2(1152, 648)
 
-[node name="TextureRect" type="TextureRect" parent="NoiseParallax2D"]
+[node name="TextureRect" type="TextureRect" parent="NoiseParallax2D" unique_id=882827353]
 modulate = Color(1, 1, 1, 0.219608)
 material = SubResource("ShaderMaterial_y0ekr")
 anchors_preset = 15
@@ -168,24 +168,24 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("NoiseTexture2D_xyviv")
 
-[node name="Player" parent="." instance=ExtResource("3_vhnxw")]
+[node name="Player" parent="." unique_id=1837550719 instance=ExtResource("3_vhnxw")]
 unique_name_in_owner = true
 position = Vector2(581, 323)
 collision_layer = 3
 
-[node name="OutOfViewPath" type="Path2D" parent="Player"]
+[node name="OutOfViewPath" type="Path2D" parent="Player" unique_id=27118424]
 position = Vector2(-675.492, -306.529)
 scale = Vector2(1.07153, 1.07919)
 curve = SubResource("Curve2D_xsefa")
 
-[node name="OutOfViewSpawnLocation" type="PathFollow2D" parent="Player/OutOfViewPath"]
+[node name="OutOfViewSpawnLocation" type="PathFollow2D" parent="Player/OutOfViewPath" unique_id=1276601839]
 unique_name_in_owner = true
 position = Vector2(-77, -43)
-rotation = -0.229904
+rotation = -0.22990443
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=860066923]
 
-[node name="PointLight2D" type="PointLight2D" parent="Player"]
+[node name="PointLight2D" type="PointLight2D" parent="Player" unique_id=150824725]
 z_index = 11
 position = Vector2(-3, -6)
 scale = Vector2(4.6875, 4.28125)
@@ -193,75 +193,73 @@ energy = 0.15
 texture = SubResource("GradientTexture2D_xyviv")
 texture_scale = 6.13
 
-[node name="ProjectilesNode" type="Node2D" parent="." groups=["ProjectilesNode"]]
+[node name="ProjectilesNode" type="Node2D" parent="." unique_id=1764434041 groups=["ProjectilesNode"]]
 unique_name_in_owner = true
 
-[node name="EnemiesNode" type="Node2D" parent="."]
+[node name="EnemiesNode" type="Node2D" parent="." unique_id=117507368]
 unique_name_in_owner = true
 
-[node name="PowerupsNode" type="Node2D" parent="."]
+[node name="PowerupsNode" type="Node2D" parent="." unique_id=1075989606]
 unique_name_in_owner = true
 
-[node name="Powerup" parent="PowerupsNode" instance=ExtResource("8_k1kj5")]
+[node name="Powerup" parent="PowerupsNode" unique_id=1555476386 instance=ExtResource("8_k1kj5")]
 position = Vector2(238, 226)
 powerup_data = ExtResource("9_xyviv")
 
-[node name="CurrencyNode" type="Node2D" parent="."]
+[node name="CurrencyNode" type="Node2D" parent="." unique_id=1400669462]
 unique_name_in_owner = true
 
-[node name="EnemySpawnTimer" type="Timer" parent="."]
+[node name="EnemySpawnTimer" type="Timer" parent="." unique_id=385659726]
 unique_name_in_owner = true
 wait_time = 2.0
 autostart = true
 
-[node name="PowerupSpawnTimer" type="Timer" parent="."]
+[node name="PowerupSpawnTimer" type="Timer" parent="." unique_id=1214156053]
 unique_name_in_owner = true
 wait_time = 25.0
 autostart = true
 
-[node name="AutoscrollTimer" type="Timer" parent="."]
+[node name="AutoscrollTimer" type="Timer" parent="." unique_id=53098091]
 unique_name_in_owner = true
 wait_time = 2.0
 autostart = true
 
-[node name="Tree" parent="." instance=ExtResource("4_l562g")]
+[node name="Tree" parent="." unique_id=1249614304 instance=ExtResource("4_l562g")]
 visible = false
 position = Vector2(1002, 52)
 rotation = -0.401426
 
-[node name="Tree2" parent="." instance=ExtResource("4_l562g")]
+[node name="Tree2" parent="." unique_id=2104595667 instance=ExtResource("4_l562g")]
 visible = false
 position = Vector2(226, 469)
 rotation = 1.07687
 
-[node name="Tree3" parent="." instance=ExtResource("4_l562g")]
+[node name="Tree3" parent="." unique_id=2059195635 instance=ExtResource("4_l562g")]
 visible = false
 position = Vector2(227, 65)
 rotation = 0.122173
 scale = Vector2(1.775, 1.775)
 
-[node name="Tree4" parent="." instance=ExtResource("4_l562g")]
+[node name="Tree4" parent="." unique_id=1306084581 instance=ExtResource("4_l562g")]
 visible = false
 position = Vector2(903, 424)
 rotation = 1.50971
 scale = Vector2(3.21, 3.21)
 
-[node name="SaverLoader" type="Node" parent="."]
+[node name="SaverLoader" type="Node" parent="." unique_id=745784685]
 script = ExtResource("5_m8xuy")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1431296007]
 environment = SubResource("Environment_su07q")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1616312159]
 unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_22uad")
-}
+libraries/ = SubResource("AnimationLibrary_22uad")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1943111649]
 color = Color(0.695503, 0.695503, 0.695503, 1)
 
-[node name="BGMPlayer" type="AudioStreamPlayer" parent="."]
+[node name="BGMPlayer" type="AudioStreamPlayer" parent="." unique_id=1840032183]
 stream = ExtResource("10_22uad")
 volume_db = -2.035
 autoplay = true

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://cvlarwqili3qx"]
+[gd_resource type="Resource" script_class="Achievement" format=3 uid="uid://cvlarwqili3qx"]
 
 [ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_t3jr3"]
 
@@ -9,6 +9,4 @@ description = "Use screen blast 25 times"
 reward = "Increases screen blast radius by 20%"
 count_goal = 25.0
 stat_key = "screen_blast_powerup"
-is_secret = false
-is_active = true
 metadata/_custom_type_script = "uid://dtyklwbxenibb"

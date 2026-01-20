@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c53e5ffabqvci"]
+[gd_scene format=3 uid="uid://c53e5ffabqvci"]
 
 [ext_resource type="Script" uid="uid://bf8tgk53pdptr" path="res://scenes/characters/enemies/jumper_enemy.gd" id="1_3sin1"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/bact.svg" id="2_8846s"]
@@ -15,7 +15,7 @@ size = Vector2(44, 40)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8pnp1"]
 size = Vector2(56, 56)
 
-[node name="JumperVirus" type="CharacterBody2D" groups=["Enemies"]]
+[node name="JumperVirus" type="CharacterBody2D" unique_id=1198159807 groups=["Enemies"]]
 position = Vector2(363, 235)
 motion_mode = 1
 platform_on_leave = 2
@@ -23,29 +23,27 @@ platform_floor_layers = 4294967292
 script = ExtResource("1_3sin1")
 enemy_data_resource = SubResource("Resource_4rt4h")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2046614619]
 texture = ExtResource("2_8846s")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1745880334]
 shape = SubResource("RectangleShape2D_mgdpr")
 
-[node name="EnemyHitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_6vmuo")]
+[node name="EnemyHitboxComponent" parent="." unique_id=414694968 node_paths=PackedStringArray("health_component") instance=ExtResource("3_6vmuo")]
 unique_name_in_owner = true
 collision_layer = 4
 collision_mask = 3
 health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitboxComponent" unique_id=1902834638]
 shape = SubResource("RectangleShape2D_8pnp1")
 
-[node name="HealthComponent" parent="." instance=ExtResource("4_242sf")]
+[node name="HealthComponent" parent="." unique_id=1319938421 instance=ExtResource("4_242sf")]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=500878423]
 unique_name_in_owner = true
-libraries = {
-&"": ExtResource("5_m58gs")
-}
-autoplay = "follow-x"
+libraries/ = ExtResource("5_m58gs")
+autoplay = &"follow-x"
 speed_scale = 2.0
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2061291118]

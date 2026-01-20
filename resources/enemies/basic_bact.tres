@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://c66ie0f07a5c6"]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://c66ie0f07a5c6"]
 
 [ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="1_22qtp"]
 [ext_resource type="PackedScene" uid="uid://bt1shbbmu6uqi" path="res://scenes/characters/enemies/bact_enemy.tscn" id="1_w6r45"]
@@ -9,20 +9,12 @@
 script = ExtResource("1_22qtp")
 base_enemy_scene = ExtResource("1_w6r45")
 base_contact_damage = 10.0
-enemy_knockback = 0.0
 mito_energy_value = 3
-enemy_spawn_chance = 1.0
 enemy_spawn_order = 2
-character_hitbox_shape_value = Vector2(44, 40)
 character_scale = Vector2(1.4, 1.4)
 sprite_texture = ExtResource("2_w6r45")
-sprite_scale = Vector2(1, 1)
 sprite_color = Color(0.309804, 0.545098, 0.25098, 1)
 base_health = 25.0
 base_speed = 75.0
-modifiers = Array[ExtResource("3_2otlg")]([])
 id = "basic_slime"
-local_to_scene = false
-enabled = true
-unlocked = true
 metadata/_custom_type_script = "uid://bwk8dueikqaq0"

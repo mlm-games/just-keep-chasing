@@ -1,19 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwudswealbjw5"]
+[gd_scene format=3 uid="uid://dwudswealbjw5"]
 
 [ext_resource type="Script" uid="uid://c4rql3xe4ldnf" path="res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.gd" id="1_h8jbq"]
 [ext_resource type="PackedScene" uid="uid://gulo6hdwe6ug" path="res://addons/debug_shortcuts_mod/shortcuts/quit_game.tscn" id="2_pto5j"]
 [ext_resource type="PackedScene" uid="uid://ctsbjmhftjw2e" path="res://addons/debug_shortcuts_mod/shortcuts/toggle_fullscreen.tscn" id="3_o3see"]
 [ext_resource type="PackedScene" uid="uid://ce7ecoqd7usa0" path="res://addons/debug_shortcuts_mod/shortcuts/restart_scene.tscn" id="4_40m28"]
 
-[node name="DebugShortcuts" type="Node"]
+[node name="DebugShortcuts" type="Node" unique_id=860697807]
 process_mode = 3
 editor_description = "Node automatically removed on release builds."
 script = ExtResource("1_h8jbq")
 
-[node name="QuitGame" parent="." instance=ExtResource("2_pto5j")]
+[node name="QuitGame" parent="." unique_id=1259616229 instance=ExtResource("2_pto5j")]
 
-[node name="ToggleFullscreen" parent="." instance=ExtResource("3_o3see")]
+[node name="ToggleFullscreen" parent="." unique_id=574525534 instance=ExtResource("3_o3see")]
 
-[node name="RestartCurrentScene" parent="." instance=ExtResource("4_40m28")]
+[node name="RestartCurrentScene" parent="." unique_id=1981263122 instance=ExtResource("4_40m28")]
 
-[node name="FastForwardGame" type="Node" parent="."]
+[node name="FastForwardGame" type="Node" parent="." unique_id=1886788451]

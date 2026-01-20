@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Achievement" load_steps=2 format=3 uid="uid://b7nnjxwc4erur"]
+[gd_resource type="Resource" script_class="Achievement" format=3 uid="uid://b7nnjxwc4erur"]
 
 [ext_resource type="Script" uid="uid://dtyklwbxenibb" path="res://addons/achievements/achievement.gd" id="1_ay8iv"]
 
@@ -9,6 +9,4 @@ description = "Play 50 games"
 reward = "Increases max health by 10%"
 count_goal = 50.0
 stat_key = "games_played"
-is_secret = false
-is_active = true
 metadata/_custom_type_script = "uid://dtyklwbxenibb"

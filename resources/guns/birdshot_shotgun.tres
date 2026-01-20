@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ShotgunData" load_steps=9 format=3 uid="uid://ogus15l853w3"]
+[gd_resource type="Resource" script_class="ShotgunData" format=3 uid="uid://ogus15l853w3"]
 
 [ext_resource type="Resource" uid="uid://cvll3ruomryrf" path="res://resources/bullets/birdshot.tres" id="1_3jueo"]
 [ext_resource type="Script" uid="uid://d0a57wqy65ei8" path="res://resources/guns/shotgun_data.gd" id="1_t0yg6"]
@@ -20,12 +20,7 @@ ammo = null
 targeting_range = 600.0
 fire_rate = 0.1
 fire_audio = Array[AudioStream]([ExtResource("2_2gt81"), ExtResource("3_ngjl0"), ExtResource("4_1d402")])
-speed_dropoff_curve = ExtResource("6_1d402")
-sprite_scale = Vector2(0.08, 0.08)
 sprite_position = Vector2(0.111, 0.158)
-sprite_rotation_degrees = 0.0
-sprite_flip_h = false
-sprite_modulate = Color(1, 1, 1, 1)
 bullet_spawn_offset = Vector2(388.5, -19.661)
 fire_animation_skew = 5.0
 fire_animation_duration = null
@@ -34,7 +29,5 @@ bullet_spread = 45.0
 screen_shake_frequency = 100.0
 screen_shake_amplitude = 0.25
 id = "birdshot_shotgun"
-enabled = true
 unlocked = false
-local_to_scene = false
 metadata/_custom_type_script = "uid://d0a57wqy65ei8"

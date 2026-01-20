@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dqnb688fw4wpi"]
+[gd_scene format=3 uid="uid://dqnb688fw4wpi"]
 
 [ext_resource type="Script" uid="uid://covleijnl8iu0" path="res://scenes/UI/currency_label.gd" id="1_7m8bs"]
 
-[node name="CurrencyLabel" type="RichTextLabel"]
+[node name="CurrencyLabel" type="RichTextLabel" unique_id=1255690719]
 process_mode = 3
 offset_right = 111.0
 offset_bottom = 29.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://6vdpux1qk7u6"]
+[gd_scene format=3 uid="uid://6vdpux1qk7u6"]
 
 [ext_resource type="Script" uid="uid://dfktp8rfc4hsi" path="res://scenes/gameplay/hazards/toxic_pool.gd" id="1_7nngg"]
 [ext_resource type="Texture2D" uid="uid://diwwf4nywvgku" path="res://assets/sprites/cell-blockade.png" id="2_61186"]
@@ -6,19 +6,19 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_7020s"]
 radius = 45.0
 
-[node name="ToxicPool" type="Area2D"]
+[node name="ToxicPool" type="Area2D" unique_id=40194729]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_7nngg")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=734591697]
 modulate = Color(0.458824, 1, 0.364706, 1)
 scale = Vector2(0.12, 0.12)
 texture = ExtResource("2_61186")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1697647365]
 shape = SubResource("CircleShape2D_7020s")
 
-[node name="LifetimeTimer" type="Timer" parent="."]
+[node name="LifetimeTimer" type="Timer" parent="." unique_id=837132328]
 
-[node name="DamageTickTimer" type="Timer" parent="."]
+[node name="DamageTickTimer" type="Timer" parent="." unique_id=405292050]

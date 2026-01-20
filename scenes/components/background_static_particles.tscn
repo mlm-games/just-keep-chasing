@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dafuydxct5f01"]
+[gd_scene format=3 uid="uid://dafuydxct5f01"]
 
 [ext_resource type="Texture2D" uid="uid://cxnlpb6ei2d5g" path="res://assets/sprites/bg_static_particles.svg" id="1_bkjun"]
 
@@ -18,7 +18,7 @@ scale_min = 0.05
 scale_max = 0.25
 scale_curve = SubResource("CurveTexture_bfvva")
 
-[node name="BackgroundStaticParticles" type="GPUParticles2D"]
+[node name="BackgroundStaticParticles" type="GPUParticles2D" unique_id=1875468698]
 position = Vector2(551, 300)
 amount = 50
 texture = ExtResource("1_bkjun")

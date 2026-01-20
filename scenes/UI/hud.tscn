@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://p3ijv0nq3035"]
+[gd_scene format=3 uid="uid://p3ijv0nq3035"]
 
 [ext_resource type="Script" uid="uid://cvt3rh70tefcl" path="res://scenes/UI/HUD.gd" id="1_ldp5k"]
 [ext_resource type="Texture2D" uid="uid://cq3yp3qmnhg2v" path="res://assets/sprites/stop_time_powerup_icon.png" id="2_vgwca"]
@@ -41,16 +41,16 @@ action = &"switch-weapon"
 [sub_resource type="Shortcut" id="Shortcut_7wvwv"]
 events = [SubResource("InputEventAction_h03ao")]
 
-[node name="HUD" type="CanvasLayer" groups=["HUD"]]
+[node name="HUD" type="CanvasLayer" unique_id=168625405 groups=["HUD"]]
 process_mode = 3
 script = ExtResource("1_ldp5k")
 
-[node name="GameTimer" type="Timer" parent="."]
+[node name="GameTimer" type="Timer" parent="." unique_id=1714602150]
 unique_name_in_owner = true
 process_mode = 1
 autostart = true
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=359930006]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,7 +59,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="TimerLabel" type="Label" parent="Control"]
+[node name="TimerLabel" type="Label" parent="Control" unique_id=66813508]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 5
@@ -74,7 +74,7 @@ text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="Control"]
+[node name="PanelContainer" type="PanelContainer" parent="Control" unique_id=60921815]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -87,11 +87,11 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_co5na")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer" unique_id=1322172504]
 layout_direction = 3
 layout_mode = 2
 
-[node name="InvincibleButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
+[node name="InvincibleButton" type="Button" parent="Control/PanelContainer/HBoxContainer" unique_id=1529928054]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -104,7 +104,7 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="HealButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
+[node name="HealButton" type="Button" parent="Control/PanelContainer/HBoxContainer" unique_id=1839844111]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -117,7 +117,7 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="ScreenBlastButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
+[node name="ScreenBlastButton" type="Button" parent="Control/PanelContainer/HBoxContainer" unique_id=1954136626]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -130,7 +130,7 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="SlowTimeButton" type="Button" parent="Control/PanelContainer/HBoxContainer"]
+[node name="SlowTimeButton" type="Button" parent="Control/PanelContainer/HBoxContainer" unique_id=419459000]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -143,21 +143,21 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="SpacerControl" type="Control" parent="Control/PanelContainer/HBoxContainer"]
+[node name="SpacerControl" type="Control" parent="Control/PanelContainer/HBoxContainer" unique_id=1635084424]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="CurrencyLabel" parent="Control/PanelContainer/HBoxContainer" instance=ExtResource("7_7wvwv")]
+[node name="CurrencyLabel" parent="Control/PanelContainer/HBoxContainer" unique_id=1433262042 instance=ExtResource("7_7wvwv")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SpacerControl2" type="Control" parent="Control/PanelContainer/HBoxContainer"]
+[node name="SpacerControl2" type="Control" parent="Control/PanelContainer/HBoxContainer" unique_id=1959383626]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
 
-[node name="NextUpgradeBar" type="ProgressBar" parent="."]
+[node name="NextUpgradeBar" type="ProgressBar" parent="." unique_id=1447348533]
 unique_name_in_owner = true
 modulate = Color(0.773698, 0.69661, 0.451105, 1)
 anchors_preset = 12
@@ -171,14 +171,14 @@ max_value = 1.0
 step = 0.001
 show_percentage = false
 
-[node name="ShootingJoystickSprite2D" parent="." groups=["ShootingJoystick"] instance=ExtResource("9_7wvwv")]
+[node name="ShootingJoystickSprite2D" parent="." unique_id=634200886 groups=["ShootingJoystick"] instance=ExtResource("9_7wvwv")]
 unique_name_in_owner = true
 visible = false
 
-[node name="MovementJoystickSprite2D" parent="." groups=["MovementJoystick"] instance=ExtResource("9_7wvwv")]
+[node name="MovementJoystickSprite2D" parent="." unique_id=1389901656 groups=["MovementJoystick"] instance=ExtResource("9_7wvwv")]
 unique_name_in_owner = true
 
-[node name="GunsButton" type="TextureButton" parent="."]
+[node name="GunsButton" type="TextureButton" parent="." unique_id=278615110]
 unique_name_in_owner = true
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
 custom_minimum_size = Vector2(125, 125)

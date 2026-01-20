@@ -1,24 +1,16 @@
-[gd_resource type="Resource" script_class="ProjectileData" load_steps=3 format=3 uid="uid://bljhro5a2wk67"]
+[gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://bljhro5a2wk67"]
 
+[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="1_amktq"]
 [ext_resource type="Script" uid="uid://cr3s7huv3l64s" path="res://resources/bullets/projectile_data.gd" id="1_k47vs"]
 [ext_resource type="Texture2D" uid="uid://bogbptl8oh8pv" path="res://assets/sprites/shotgun-shell.png" id="2_ltcgv"]
+[ext_resource type="PackedScene" uid="uid://rhergnlmde1y" path="res://scenes/components/bullet_spawn_particles.tscn" id="3_r6nth"]
 
 [resource]
 script = ExtResource("1_k47vs")
 projectile_speed = 500.0
-projectile_range = 1000
 projectile_damage = 5.0
-projectile_spread = 0.0
-projectile_dot = 0.0
-projectile_dot_duration = 0.0
-projectile_dot_type = 0
-projectile_max_pierce_count = 1
 sprite_scale = Vector2(0.065, 0.186)
 sprite_modulate = Color(0.65098, 0.65098, 0.65098, 1)
 sprite_texture = ExtResource("2_ltcgv")
-sprite_rotation = 0.0
-sprite_offset = Vector2(0, 0)
 collision_shape_radius = 9.85
-collision_shape_mask = 3
-lifespan_time = 100.0
 metadata/_custom_type_script = ExtResource("1_k47vs")

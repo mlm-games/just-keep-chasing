@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ShotgunData" load_steps=8 format=3 uid="uid://ceex6yhxwxp8f"]
+[gd_resource type="Resource" script_class="ShotgunData" format=3 uid="uid://ceex6yhxwxp8f"]
 
 [ext_resource type="Resource" uid="uid://bljhro5a2wk67" path="res://resources/bullets/buckshot.tres" id="1_adtgj"]
 [ext_resource type="Script" uid="uid://d0a57wqy65ei8" path="res://resources/guns/shotgun_data.gd" id="1_ebba0"]
@@ -19,12 +19,8 @@ ammo = null
 targeting_range = 1000.0
 fire_rate = 0.5
 fire_audio = Array[AudioStream]([ExtResource("2_5fon4"), ExtResource("3_h0dv1")])
-speed_dropoff_curve = ExtResource("5_h0dv1")
 sprite_scale = Vector2(0.1, 0.1)
 sprite_position = Vector2(73.3, 15.12)
-sprite_rotation_degrees = 0.0
-sprite_flip_h = false
-sprite_modulate = Color(1, 1, 1, 1)
 bullet_spawn_offset = Vector2(407.188, -61.189)
 fire_animation_skew = 4.94764
 fire_animation_duration = null
@@ -33,7 +29,4 @@ bullet_spread = 45.0
 screen_shake_frequency = 20.0
 screen_shake_amplitude = 0.75
 id = "buckshot_shotgun"
-enabled = true
-unlocked = true
-local_to_scene = false
 metadata/_custom_type_script = "uid://d0a57wqy65ei8"

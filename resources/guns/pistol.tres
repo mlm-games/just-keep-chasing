@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GunData" load_steps=9 format=3 uid="uid://doth1xd85xeyo"]
+[gd_resource type="Resource" script_class="GunData" format=3 uid="uid://doth1xd85xeyo"]
 
 [ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="1_6ux22"]
 [ext_resource type="Resource" uid="uid://peywrjmws6bp" path="res://resources/bullets/bullet.tres" id="1_h5tx8"]
@@ -20,21 +20,11 @@ ammo = null
 targeting_range = 600.0
 fire_rate = 0.25
 fire_audio = Array[AudioStream]([ExtResource("2_d4lei"), ExtResource("3_mj0qn"), ExtResource("4_7clvo")])
-speed_dropoff_curve = ExtResource("6_mj0qn")
-sprite_scale = Vector2(0.08, 0.08)
 sprite_position = Vector2(45, 5)
-sprite_rotation_degrees = 0.0
 sprite_flip_h = true
-sprite_modulate = Color(1, 1, 1, 1)
 bullet_spawn_offset = Vector2(300, -111)
 fire_animation_skew = 0.0
 fire_animation_duration = 0.15
-bullets_per_shot = 1
-bullet_spread = 0.0
 screen_shake_frequency = 75.0
-screen_shake_amplitude = 0.5
 id = "pistol"
-enabled = true
-unlocked = true
-local_to_scene = false
 metadata/_custom_type_script = "uid://cvb1dimncgicl"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b3mf65fcnvmvu"]
+[gd_scene format=3 uid="uid://b3mf65fcnvmvu"]
 
 [ext_resource type="Script" uid="uid://crf18oy3oc75j" path="res://scenes/characters/player.gd" id="1_cvyhv"]
 [ext_resource type="Texture2D" uid="uid://brk1vhy0k5ah2" path="res://assets/sprites/player.svg" id="2_atpat"]
@@ -41,7 +41,7 @@ shader_parameter/saturation = 1.1
 shader_parameter/contrast = 1.1
 shader_parameter/smoothing = 0.5
 
-[node name="Player" type="CharacterBody2D" groups=["Player"]]
+[node name="Player" type="CharacterBody2D" unique_id=967402282 groups=["Player"]]
 position = Vector2(0, -40)
 collision_layer = 9
 collision_mask = 9
@@ -50,55 +50,53 @@ platform_on_leave = 2
 platform_floor_layers = 4294967292
 script = ExtResource("1_cvyhv")
 
-[node name="HealthComponent" parent="." instance=ExtResource("6_bedk8")]
+[node name="HealthComponent" parent="." unique_id=1358458279 instance=ExtResource("6_bedk8")]
 unique_name_in_owner = true
 
-[node name="VelocityComponent" type="Node" parent="."]
+[node name="VelocityComponent" type="Node" parent="." unique_id=2135310686]
 script = ExtResource("8_eojnx")
 metadata/_custom_type_script = "uid://bh62la2plrk8u"
 
-[node name="PlayerInputComponent" type="Node" parent="."]
+[node name="PlayerInputComponent" type="Node" parent="." unique_id=1652207909]
 script = ExtResource("7_6eyoc")
 metadata/_custom_type_script = "uid://bvb2hxpdk5tde"
 
-[node name="AnimationComponent" type="Node" parent="." node_paths=PackedStringArray("anim_player", "sprite")]
+[node name="AnimationComponent" type="Node" parent="." unique_id=1209727696 node_paths=PackedStringArray("anim_player", "sprite")]
 script = ExtResource("10_2l4js")
 anims_prefix = ""
 anim_player = NodePath("../AnimationPlayer")
 sprite = NodePath("../Sprite2D")
 metadata/_custom_type_script = "uid://cph1hb68v0xjn"
 
-[node name="InventoryComponent" type="Node" parent="."]
+[node name="InventoryComponent" type="Node" parent="." unique_id=1139681183]
 script = ExtResource("10_7vyk4")
 metadata/_custom_type_script = "uid://dcm4p61vcyfim"
 
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_pwyjt")]
+[node name="HitboxComponent" parent="." unique_id=1501619234 node_paths=PackedStringArray("health_component") instance=ExtResource("4_pwyjt")]
 unique_name_in_owner = true
 collision_layer = 2
 collision_mask = 12
 health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=272120225]
 position = Vector2(-2, -20)
 shape = SubResource("CircleShape2D_8iqyn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1665500049]
 position = Vector2(-4, -15)
 shape = SubResource("CircleShape2D_d6keb")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": ExtResource("9_2l4js")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1004277479]
+libraries/ = ExtResource("9_2l4js")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1804382118]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_xhtjm")
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_atpat")
 flip_h = true
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1518293570]
 unique_name_in_owner = true
 offset_left = -38.0
 offset_top = 42.0
@@ -108,7 +106,7 @@ theme = ExtResource("6_8qvmc")
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 
-[node name="PickupsCheckerComponent" type="Node2D" parent="." node_paths=PackedStringArray("hitbox_area")]
+[node name="PickupsCheckerComponent" type="Node2D" parent="." unique_id=991177659 node_paths=PackedStringArray("hitbox_area")]
 unique_name_in_owner = true
 script = ExtResource("4_kqtwu")
 hitbox_area = NodePath("../HitboxComponent")
