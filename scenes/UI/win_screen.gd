@@ -5,7 +5,7 @@ func _ready():
 	%ContinueButton.grab_focus()
 
 func _on_menu_button_pressed() -> void:
-	STransitions.change_scene_with_transition(Menu.WorldScene)
+	STransitions.change_scene_with_transition(Menu.MenuScene)
 
 
 func _on_continue_button_pressed() -> void:

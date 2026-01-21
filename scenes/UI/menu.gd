@@ -3,6 +3,7 @@ class_name Menu extends Control
 const WorldScene = "uid://4fyoq8npekf0"
 const SettingsScene = "uid://dp42fom7cc3n0"
 const AchievementsScene = "uid://ckqthyukac8wf"
+const MenuScene = "uid://degok78oygxw3"
 
 @onready var buttons_container: VBoxContainer = %ButtonsContainer
 
