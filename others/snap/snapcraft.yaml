@@ -1,0 +1,39 @@
+name: just-keep-chasing
+base: core22
+version: '0.8.13'
+summary: <PlaceHolderShortDesc>
+description: |
+  <PlaceHolderLongDesc>
+
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+
+apps:
+  just-keep-chasing:
+    command: just-keep-chasing
+    extensions: [gnome]
+    plugs: [home, network, removable-media, unity7]
+
+parts:
+  just-keep-chasing:
+    plugin: dump
+    source: ./builds/
+    source-type: local
+    stage-packages:
+      - libglu1-mesa
+      - libxcursor1
+      - libxinerama1
+      - libxrandr2
+      - libxi6
+      - libpulse0
+    override-build: |
+      craftctl build
+      chmod +x $SNAPCRAFT_PART_INSTALL/just-keep-chasing
+
+layout:
+  /usr/share/just-keep-chasing:
+    bind: $SNAP/usr/share/just-keep-chasing

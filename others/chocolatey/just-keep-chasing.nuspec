@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>just-keep-chasing</id>
+    <version>0.8.13</version>
+    <title>Just Keep Chasing</title>
+    <authors>mlmstudios</authors>
+    <projectUrl>https://github.com/mlm-games/just-keep-chasing</projectUrl>
+    <licenseUrl>https://github.com/mlm-games/just-keep-chasing/blob/main/LICENSE</licenseUrl>
+    <iconUrl>https://cdn.statically.io/gh/mlm-games/just-keep-chasing/0.8.13/fastlane/metadata/android/en-US/images/icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description><PlaceHolderLongDesc></description>
+    <summary><PlaceHolderShortDesc></summary>
+    <tags><PlaceHolderChocoTags></tags>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

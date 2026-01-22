@@ -1,7 +1,6 @@
-#TODO: ADD ICONS SAYING ESC FOR BACK, ENTER FOR SELECT
+#TODO: ADD ICONS SAYING ESC FOR BACK, ENTER FOR SELECT (or maybe just use the controller icons addon)
 #TODO: ADD pause_on_alt_tab
-#TODO: VolumeSliders makes sound when changed indicating the sound change
-#FIXME: resoultion items not being applied properly, check if lazy mode works
+#TODO: VolumeSliders makes sound when changed indicating the sound change (not the awful sound, maybe something better like until then's)
 #const BUS_MASTER = "Master"
 #const BUS_MUSIC = "Music"
 #const BUS_SFX = "SFX"
@@ -21,7 +20,7 @@ const INT_CONTAINER = preload("res://addons/basic_settings_menu/templates/int_co
 const TYPE_TO_TEMPLATE_MAP: Dictionary = {
 	TYPE_BOOL: BOOL_CONTAINER,
 	TYPE_INT: INT_CONTAINER,
-	TYPE_FLOAT: SLIDER_CONTAINER,
+	TYPE_FLOAT: INT_CONTAINER,
 }
 
 @onready var _tabs: Dictionary = {
@@ -43,9 +42,9 @@ func _ready() -> void:
 	confirmation_dialog.confirmed.connect(_on_dialog_confirmed)
 	confirmation_dialog.canceled.connect(_on_dialog_dismissed)
 	
-	%SaveButton.pressed.connect(_on_save_button_pressed)
-	%ResetButton.pressed.connect(func(): DirAccess.remove_absolute(ProjectSettings.globalize_path(SettingsManager.SETTINGS_SAVE_PATH)))
-	%BackButton.pressed.connect(_on_back_button_pressed)
+	# %SaveButton.pressed.connect(_on_save_button_pressed)
+	# %ResetButton.pressed.connect(func(): DirAccess.remove_absolute(ProjectSettings.globalize_path(SettingsManager.SETTINGS_SAVE_PATH)))
+	# %BackButton.pressed.connect(_on_back_button_pressed)
 	
 	
 	_build_ui_from_settings_profile()
@@ -55,8 +54,6 @@ func _ready() -> void:
 	
 	#HACK: To prevent the initial focus button sound
 	A.tree.create_timer(0.1, false).timeout.connect(func(): can_play_focus_sfx = true)
-
-
 	
 	# Adding a new setting in GameSettingsSave.gd,
 	# will make it appear here automatically if a rule is added to the functions below.
@@ -82,8 +79,6 @@ func _create_setting_control(parent: Container, category: String, setting_name: 
 
 	# Determine which template and options to use based on setting name or type
 	match setting_name:
-		"max_fps":
-			template = INT_CONTAINER
 		"resolution":
 			template = OPTION_CONTAINER
 			for res in SettingsConstants.RESOLUTIONS_ARRAY:
@@ -93,6 +88,9 @@ func _create_setting_control(parent: Container, category: String, setting_name: 
 		"current_locale":
 			template = OPTION_CONTAINER
 			options = SettingsConstants.LOCALES
+		
+		setting_name when setting_name in ["Master", "Music", "Sfx"]:
+			template = SLIDER_CONTAINER
 		_:
 			# Default to a template based on the value's data type
 			template = TYPE_TO_TEMPLATE_MAP.get(typeof(value))
