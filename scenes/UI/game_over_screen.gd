@@ -5,7 +5,7 @@ func _ready() -> void:
 	%RetryButton.pressed.connect(_on_retry_button_pressed)
 
 func _on_retry_button_pressed() -> void:
-	STransitions.change_scene_with_transition(Menu.WorldScene)
+	ScreenTransitions.change_scene_with_transition(C.SCREENS.WORLD)
 	
 	print(CountStats._all_stats)
 

@@ -1,11 +1,11 @@
 class_name WinScreen extends Control
 
 func _ready():
-	STransitions.transition("circleOut")
+	ScreenTransitions.transition("circleOut")
 	%ContinueButton.grab_focus()
 
 func _on_menu_button_pressed() -> void:
-	STransitions.change_scene_with_transition(Menu.MenuScene)
+	ScreenTransitions.change_scene_with_transition(C.SCREENS.MENU)
 
 
 func _on_continue_button_pressed() -> void:

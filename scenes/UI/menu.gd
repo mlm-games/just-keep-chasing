@@ -1,10 +1,5 @@
 class_name Menu extends Control
 
-const WorldScene = "uid://4fyoq8npekf0"
-const SettingsScene = "uid://dp42fom7cc3n0"
-const AchievementsScene = "uid://ckqthyukac8wf"
-const MenuScene = "uid://degok78oygxw3"
-
 @onready var buttons_container: VBoxContainer = %ButtonsContainer
 
 #Hack: hold r to restart, press r to reload
@@ -24,23 +19,23 @@ func _ready() -> void:
 	# TODO: Unlock rocket launcher last, then pump (bright-red) shotgun, second gun to unlock will the darker variant (5 big blasts), then sniper, and one shotter 
 	
 	%PlayButton.pressed.connect(_on_PlayButton_pressed)
-	%SettingsButton.pressed.connect(add_child.bind(preload(SettingsScene).instantiate()))
-	%AchievementsButton.pressed.connect(STransitions.change_scene_with_transition.bind(AchievementsScene))
+	%SettingsButton.pressed.connect(add_child.bind(preload(C.SCREENS.SETTINGS).instantiate()))
+	%AchievementsButton.pressed.connect(ScreenTransitions.change_scene_with_transition.bind(C.SCREENS.ACHIEVEMENTS))
 	%CreditsButton.pressed.connect(add_child.bind(preload("uid://bq0gelfcjnqvg").instantiate()))
 	%ExitButton.pressed.connect(_on_ExitButton_pressed)
 
 func _on_PlayButton_pressed() -> void:
-	STransitions.transition("fadeToBlack", true)
-	await STransitions.transition_player.animation_finished
-	STransitions.transition("circleOut", false, 1.5)
-	A.tree.change_scene_to_file(WorldScene)
+	ScreenTransitions.transition("fadeToBlack", true)
+	await ScreenTransitions.transition_player.animation_finished
+	ScreenTransitions.transition("circleOut", false, 1.5)
+	A.tree.change_scene_to_file(C.SCREENS.WORLD)
 	#await A.tree.create_timer(0.01).timeout
 
 
 func _on_ExitButton_pressed() -> void:
 	# gently shutdown the game
-	STransitions.transition()
-	await STransitions.transition_player.animation_finished
+	ScreenTransitions.transition()
+	await ScreenTransitions.transition_player.animation_finished
 	A.tree.quit()
 
 

@@ -56,7 +56,7 @@ func _on_scan_for_closest_enemy_timer_timeout() -> void:
 func spawn_bullet() -> void:
 	if ammo > 0:
 		CountStats.increment_stat(CountStats.get_stat_key(gun_data))
-		StaticAudioM.play_random_sound(gun_data.fire_audio)
+		StaticAudioManager.play_random_sound(gun_data.fire_audio)
 		
 		%Sprite2D.rotation_degrees = 0
 		for _i in range(gun_data.bullets_per_shot):
@@ -71,7 +71,7 @@ func spawn_bullet() -> void:
 
 func reload() -> void:
 	# Use similar anim for shooting
-	#StaticAudioM.play_sound_varied(preload("res://assets/music/gun sounds by q009/outofammo.ogg"))
+	#StaticAudioManager.play_sound_varied(preload("res://assets/music/gun sounds by q009/outofammo.ogg"))
 	play_reload_animation()
 	if not reload_timer.is_stopped():
 		return

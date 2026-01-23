@@ -2,3 +2,5 @@
 extends Node
 
 static var tree : SceneTree = Engine.get_main_loop()
+
+static var root : Node = tree.root

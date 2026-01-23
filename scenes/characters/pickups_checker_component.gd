@@ -7,6 +7,6 @@ func _on_hitbox_component_area_entered(area: Area2D) -> void:
 		var tween : Tween = Juice.create_global_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
 		tween.parallel().tween_property(area, "global_position", global_position, 0.15)
 		tween.parallel().tween_property(area, "scale", Vector2.ZERO, 0.15)
-		tween.tween_callback(AudioManager.play_sound_varied.bind(C.CommonSounds.CurrencyCollected))
+		tween.tween_callback(StaticAudioManager.play_sound_varied.bind(C.CommonSounds.CurrencyCollected))
 		tween.tween_callback(area.collect)
 		

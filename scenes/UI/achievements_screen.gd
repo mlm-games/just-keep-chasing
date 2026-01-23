@@ -16,4 +16,4 @@ func _ready() -> void:
 
 
 func _on_back_button_pressed() -> void:
-	STransitions.change_scene_with_transition(ProjectSettings.get_setting("application/run/main_scene"))
+	ScreenTransitions.change_scene_with_transition(ProjectSettings.get_setting("application/run/main_scene"))

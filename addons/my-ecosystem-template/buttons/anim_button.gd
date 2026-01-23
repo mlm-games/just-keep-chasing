@@ -1,7 +1,7 @@
 @tool
 class_name AnimButton extends Button
 
-#NOTE: the hover and click audio is configured from UiAudioM
+#NOTE: the hover and click audio is configured from UiAudioManager
 
 var tween: Tween
 
@@ -23,7 +23,7 @@ func _on_mouse_entered() -> void:
 	reset_tween()
 	tween.tween_property(self, "scale", Vector2.ONE * 1.1, 0.1)
 	if !Engine.is_editor_hint():
-		UiAudioM.play_hover_sound()
+		UiAudioManager.play_hover_sound()
 
 func _on_mouse_exited() -> void:
 	reset_tween()
@@ -40,7 +40,7 @@ func _on_button_up() -> void:
 
 func _on_pressed() -> void:
 	if !Engine.is_editor_hint():
-		UiAudioM.play_click_sound()
+		UiAudioManager.play_click_sound()
 
 
 #FIXME: Doesnt work due to the timers not being syncronised properly, hence looking bad.

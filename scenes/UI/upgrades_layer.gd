@@ -7,7 +7,7 @@ const UPGRADES_LAYER = "uid://24v2w4t8hgkl"
 func _ready() -> void:
 	RunData.is_in_shop = true
 	
-	StaticAudioM.play_sound_varied(preload("res://assets/sfx/hover.ogg"), -0.4, +10)
+	StaticAudioManager.play_sound_varied(preload("res://assets/sfx/hover.ogg"), -0.4, +10)
 	
 	var tween : Tween = Juice.create_global_tween().set_parallel(true).set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_ignore_time_scale()
 	#tween.tween_property(Engine, "time_scale", 0.01, 0.25)

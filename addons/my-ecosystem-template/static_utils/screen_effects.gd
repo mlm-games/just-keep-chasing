@@ -99,7 +99,7 @@ static func flash_white(node: Node, duration: float = 0.1) -> Tween:
 ## [/codeblock]
 static func freeze_frame(duration: float = 0.05) -> void:
 	Engine.time_scale = 0.0
-	await A.create_timer(duration, true, false, true).timeout
+	await A.tree.create_timer(duration, true, false, true).timeout
 	Engine.time_scale = 1.0
 
 
@@ -128,7 +128,7 @@ static func hit_shake(amount: float = 10.0, duration: float = 0.2, camera: Camer
 	_screen_shake_tween.chain().tween_property(camera, "offset", Vector2.ZERO, duration * 0.75).set_trans(Tween.TRANS_CUBIC)
 
 # For smoother screen shakes
-static func camera_shake(intensity: float = 1.5, duration: float = 1.5, decay: float = 3.0, camera: Camera2D =  A.root.get_viewport().get_camera_2d()) -> void:
+static func camera_shake(intensity: float = 1.5, duration: float = 1.5, decay: float = 3.0, camera: Camera2D =  A.tree.root.get_viewport().get_camera_2d()) -> void:
 	# Stop any existing shake tweens
 	
 	_screen_shake_tween = A.create_tween()

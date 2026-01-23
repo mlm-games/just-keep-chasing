@@ -53,9 +53,9 @@ static func typewriter_effect(label: RichTextLabel, speed: float = 0.05) -> Twee
 ## [param to]: The integer value to count to.
 ##[br]
 ## [param duration]: The total time in seconds for the count animation.
-static func animate_number(label: Label, from: int, to: int, duration: float = 1.0) -> Tween:
+static func animate_number(label: CanvasItem, from: int, to: int,  prefix_text: String = "" , duration: float = 1.0) -> Tween:
 	var tween = label.create_tween()
-	tween.tween_method(func(value): label.text = str(int(value)), float(from), float(to), duration)
+	tween.tween_method(func(value): label.text = prefix_text + str(int(value)), float(from), float(to), duration)
 	return tween
 
 

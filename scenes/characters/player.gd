@@ -65,7 +65,7 @@ func _on_health_component_entity_died() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
 	
 	await A.tree.create_timer(0.5).timeout
-	STransitions.change_scene_with_transition("uid://oqyl6r1j4383", "circleIn")
+	ScreenTransitions.change_scene_with_transition("uid://oqyl6r1j4383", "circleIn")
 
 func _on_health_component_taking_damage(_dmg) -> void:
 	taking_damage = true

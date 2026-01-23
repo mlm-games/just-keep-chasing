@@ -10,6 +10,8 @@ const MAX_POOL_SIZE = 50
 var _player_pool: ObjectPool
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	# The pool needs a scene to instantiate. Since AudioStreamPlayer is a built-in
 	# type, we can't provide a .tscn file. Instead, we create a script that
 	# generates the scene on the fly.
@@ -46,7 +48,7 @@ func play_random_sound(sounds: Array[AudioStream], volume_db: float = 0.0, bus: 
 	if sounds.is_empty(): return
 	play_sound_varied(sounds.pick_random(), 0.1, volume_db, bus)
 
-static func crossfade_music(from_player: AudioStreamPlayer, to_player: AudioStreamPlayer, duration: float = 1.0) -> Tween:
+static func crossfade_music(from_player: AudioStreamPlayer, to_player: AudioStreamPlayer, duration: float = 1.0) -> void:
 	if not from_player or not to_player: return
 
 	to_player.volume_db = -80.0
@@ -57,4 +59,3 @@ static func crossfade_music(from_player: AudioStreamPlayer, to_player: AudioStre
 	tween.tween_property(from_player, "volume_db", -80.0, duration)
 	tween.tween_property(to_player, "volume_db", 0.0, duration)
 	tween.finished.connect(from_player.stop)
-	return tween

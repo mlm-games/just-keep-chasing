@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c5dyub3hyvbo5" path="res://scenes/UI/win_screen.gd" id="1_8e61f"]
 [ext_resource type="Theme" uid="uid://ducfept6pmkkm" path="res://resources/theme/theme-main.tres" id="2_dfho5"]
-[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://addons/my_ecosystem_template/buttons/anim_button.gd" id="3_c1oj8"]
+[ext_resource type="Script" uid="uid://cmo5qw3rubish" path="res://addons/my-ecosystem-template/buttons/anim_button.gd" id="3_c1oj8"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_rkvi0"]
 

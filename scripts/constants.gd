@@ -106,5 +106,23 @@ enum BusNames {
 	SFX
 }
 
+const SCREENS = {
+	CREDITS = "uid://bq0gelfcjnqvg",
+	SETTINGS = "uid://dp42fom7cc3n0",
+	MENU = "uid://degok78oygxw3",
+	ACHIEVEMENTS = "uid://ckqthyukac8wf",
+	WORLD = "uid://4fyoq8npekf0"
+}
+
+const RESOURCES = {
+	SHADERS = {
+		CIRCULAR_ENGULF = preload("uid://dnms5hsmipkyv")
+	}
+}
+
+const PATHS = {
+	
+}
+
 static func get_bus_type(key: BusNames) -> StringName:
 	return BusNames.keys()[key].capitalize()

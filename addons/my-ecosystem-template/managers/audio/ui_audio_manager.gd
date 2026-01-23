@@ -23,12 +23,12 @@ func _ready():
 # Public API
 
 func play_click_sound():
-	_play_ui_sound(default_click_sound)
+	play_ui_sound(default_click_sound)
 
 func play_hover_sound():
-	_play_ui_sound(default_hover_sound)
+	play_ui_sound(default_hover_sound)
 
-func _play_ui_sound(stream: AudioStream):
+func play_ui_sound(stream: AudioStream):
 	if not stream: return
 
 	var player: AudioStreamPlayer = _player_pool.get_object()

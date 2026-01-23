@@ -71,10 +71,10 @@ func _on_elapsed_time_updated(new_time: int) -> void:
 	time_based_enemy_type_changer()
 	# Win condition (temp)
 	if new_time == 300: # NOTE: Using >= causes it to show up every frame when continuing
-		STransitions.transition("circleIn")
-		await STransitions.transition_player.animation_finished
+		ScreenTransitions.transition("circleIn")
+		await ScreenTransitions.transition_player.animation_finished
 		UIManager.push_layer(load("uid://degok78oygxw3"))
-		STransitions.transition("circleOut")
+		ScreenTransitions.transition("circleOut")
 		
 		## Stop timers so this only happens once
 		#%EnemySpawnTimer.stop()
@@ -208,7 +208,7 @@ func use_powerup(powerup_type: StringName) -> void:
 			else:
 				RunData.powerups[powerup_type] += 1
 		&"screen_blast_powerup":
-			STransitions.transition("slightFlash")
+			ScreenTransitions.transition("slightFlash")
 			A.tree.call_group("On Screen Enemies", "queue_free")
 			ScreenEffects.screen_shake(1, 2.5)
 		&"heal_powerup":

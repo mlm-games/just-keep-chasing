@@ -52,4 +52,4 @@ func _on_settings_button_pressed() -> void:
 func _on_quit_button_pressed() -> void:
 	hide()
 	A.tree.paused = false
-	STransitions.change_scene_with_transition(C.PATHS.MENU_SCENE)
+	ScreenTransitions.change_scene_with_transition(C.SCREENS.MENU)

@@ -38,17 +38,17 @@ DebugShortcuts="*res://addons/debug_shortcuts_mod/autoloads/debug_shortcuts.tscn
 CharacterStats="*res://scripts/autoloads/character_stats.gd"
 CountStats="*res://scripts/autoloads/count_stats.gd"
 TooltipManager="*res://resources/misc/tooltip_manager.gd"
-UiAudioM="*res://addons/my_ecosystem_template/autoloads/ui_audio_manager.gd"
+UiAudioManager="*uid://bfbrl34e7ugqb"
 RunData="*res://scripts/autoloads/run_data.gd"
 UIManager="*res://scripts/autoloads/ui_manager.gd"
+StaticAudioManager="*uid://civ6yp5ghceif"
 SettingsManager="*uid://wfehnu87uuxk"
-PauseMenu="*res://addons/my_ecosystem_template/pause-menu/pause_menu.tscn"
 SettingsApplier="*uid://b5jtf7dbnupqj"
-StaticAudioM="*res://addons/my_ecosystem_template/autoloads/autoload_audio_manager.gd"
 BasicAchievements="*uid://chbh7u3gaccwi"
-STransitions="*res://addons/my_ecosystem_template/transitions/screen_transitions.tscn"
 Initializer="*res://scripts/autoloads/initializer.gd"
-A="*res://addons/my_ecosystem_template/autoloads/autoload.tscn"
+PauseMenu="*uid://d1e2f3g4h5i6j"
+A="*uid://dbmnbn0w62mn6"
+ScreenTransitions="*uid://c7j5jqynag4uw"
 
 [basic_achievements]
 

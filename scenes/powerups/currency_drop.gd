@@ -22,7 +22,7 @@ func _ready() -> void:
 	loop_tween.parallel().tween_property(%Sprite2D, "rotation", 0.0, 5)
 
 func collect() -> void:
-	StaticAudioM.play_sound_varied(preload("res://assets/sfx/hover.ogg"))
+	StaticAudioManager.play_sound_varied(preload("res://assets/sfx/hover.ogg"))
 	RunData.mito_energy += currency_value
 	
 	CountStats.increment_stat("mito_energy_collected")

@@ -113,7 +113,7 @@ func _on_panel_mouse_entered() -> void:
 	hover_tween = create_tween().set_ignore_time_scale().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	hover_tween.tween_property(self, "scale", hover_scale, 0.1)
 	
-	UiAudioM.play_hover_sound()
+	UiAudioManager.play_hover_sound()
 
 
 func _on_panel_mouse_exited() -> void:
@@ -139,7 +139,7 @@ func buy_if_rich_enough() -> void:
 		bought = true
 		
 		CountStats.increment_stat(CountStats.get_stat_key(augment))
-		UiAudioM.play_ui_sound(preload("res://assets/sfx/open_002.ogg"))
+		UiAudioManager.play_ui_sound(preload("res://assets/sfx/open_002.ogg"))
 		
 		_play_purchase_animation()
 
@@ -164,7 +164,7 @@ func _input(event: InputEvent) -> void:
 			click_tween.tween_property(self, "scale", original_scale * 0.95, 0.1)
 			click_tween.tween_property(self, "scale", hover_scale, 0.1)
 			
-			UiAudioM.play_click_sound()
+			UiAudioManager.play_click_sound()
 			
 			slot_clicked.emit()
 			panel_entered = false

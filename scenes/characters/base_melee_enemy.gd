@@ -79,7 +79,7 @@ func _on_hitbox_component_area_exited(area: Area2D) -> void:
 func _on_health_component_entity_died() -> void:
 	DropsSpawner.emit_mito_energy(global_position, mito_energy_value)
 	CountStats.increment_stat(CountStats.get_stat_key(enemy_data_resource))
-	AudioManager.play_sound_varied(C.CommonSounds.EnemyHit)
+	StaticAudioManager.play_sound_varied(C.CommonSounds.EnemyHit)
 	ScreenEffects.freeze_frame(0.07)
 
 	$CollisionShape2D.set_deferred("disabled", true)

@@ -55,7 +55,7 @@ func update_timer_label(time: int) -> void:
 
 func update_currency_label(val: int) -> void:
 	var current_val = int(currency_label.text.trim_prefix(GameState.get_currency_bbcode()))
-	UIEffects.animate_number(currency_label, current_val, val, GameState.get_currency_bbcode(), 0.1)
+	UIEffects.animate_number(currency_label, current_val, val, GameState.get_currency_bbcode(), 0.1).set_ease(Tween.EASE_IN)
 
 
 func update_powerup_buttons() -> void:
@@ -92,7 +92,7 @@ func _on_invincible_button_pressed() -> void:
 
 
 func _on_guns_button_pressed() -> void:
-	UiAudioM.play_ui_sound(preload("res://assets/music/gun sounds by q009/weapswitch.ogg"))
+	UiAudioManager.play_ui_sound(preload("res://assets/music/gun sounds by q009/weapswitch.ogg"))
 	if Player.I:
 		Player.I.inventory_component.switch_to_next_gun()
 
