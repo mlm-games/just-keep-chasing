@@ -5,6 +5,7 @@ func _ready():
 	%ContinueButton.grab_focus()
 
 func _on_menu_button_pressed() -> void:
+	A.tree.paused = false
 	ScreenTransitions.change_scene_with_transition(C.SCREENS.MENU)
 
 

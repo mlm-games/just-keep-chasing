@@ -1,6 +1,6 @@
 extends Node
 
-const PAUSE_MENU_SCENE = preload("uid://d1e2f3g4h5i6j")
+const PAUSE_MENU_SCENE = preload("uid://3a2awiowcyww")
 
 var ui_stack: Array[Node] = []
 var pause_menu_instance: CanvasLayer = null
@@ -9,6 +9,7 @@ var pause_menu_instance: CanvasLayer = null
 func _ready() -> void:
 	# Pre-instantiate pause menu but don't add to tree yet
 	pause_menu_instance = PAUSE_MENU_SCENE.instantiate()
+	#FIXME: retry doesn't reset, and go to home doesn't work from winscreen?
 
 
 func push_layer(scene: PackedScene) -> Node:

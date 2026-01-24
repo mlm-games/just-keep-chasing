@@ -35,7 +35,7 @@ func play_ui_sound(stream: AudioStream):
 	if not player: return # Pool exhausted, do nothing.
 
 	player.stream = stream
-	player.bus = &"Sfx" # UI sounds typically go to the Sfx bus
+	player.bus = "Sfx" # UI sounds typically go to the Sfx bus
 	player.play()
 	
 	# Release the player back to the pool when finished.

@@ -1,4 +1,7 @@
-class_name PickUp extends Area2D #Abstract?
+@abstract class_name PickUp extends Area2D #Abstract?
 
 signal picked_up(pickup_type: StringName)
-#@abstract func collect() Use when upgrading to Godot 4.5
+
+@abstract func collect()
+
+#TODO: 2 min mark -> dark shotter, win 1 game -> next gun 

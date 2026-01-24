@@ -1,7 +1,5 @@
 extends Control
 
-const SETTINGS_MENU_SCENE = preload("res://addons/basic_settings_menu/settings_menu.tscn")
-
 @onready var page_animator: PopupAnimator = $PopupAnimator
 @onready var resume_button: Button = %ResumeButton
 
@@ -43,8 +41,8 @@ func _on_resume_button_pressed() -> void:
 func _on_settings_button_pressed() -> void:
 	#hide()
 	
-	var settings_instance = SETTINGS_MENU_SCENE.instantiate()
-	add_child(settings_instance)
+	var settings_instance = load(C.SCREENS.SETTINGS)
+	UIManager.push_layer(settings_instance)
 	
 	# When the settings menu closes, we want the pause menu to reappear.
 	#settings_instance.tree_exited.connect(show.bind(), CONNECT_ONE_SHOT)

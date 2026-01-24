@@ -46,7 +46,6 @@ SettingsManager="*uid://wfehnu87uuxk"
 SettingsApplier="*uid://b5jtf7dbnupqj"
 BasicAchievements="*uid://chbh7u3gaccwi"
 Initializer="*res://scripts/autoloads/initializer.gd"
-PauseMenu="*uid://d1e2f3g4h5i6j"
 A="*uid://dbmnbn0w62mn6"
 ScreenTransitions="*uid://c7j5jqynag4uw"
 
