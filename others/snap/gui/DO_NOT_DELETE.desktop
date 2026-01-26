@@ -1,6 +1,6 @@
 [Desktop Entry] (TEMP FILE - WILL NOT BE USED)
 Name=Just Keep Chasing
-Comment=<PlaceholderShortDesc>
+Comment=A wave-based shooter (and wannabe rougelite)
 Exec=just-keep-chasing %F
 Icon=${SNAP}/meta/gui/icon.png
 Terminal=false

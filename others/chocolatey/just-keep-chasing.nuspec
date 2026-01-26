@@ -10,7 +10,7 @@
     <iconUrl>https://cdn.statically.io/gh/mlm-games/just-keep-chasing/0.8.13/fastlane/metadata/android/en-US/images/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description><PlaceHolderLongDesc></description>
-    <summary><PlaceHolderShortDesc></summary>
+    <summary>A wave-based shooter (and wannabe rougelite)</summary>
     <tags><PlaceHolderChocoTags></tags>
   </metadata>
   <files>

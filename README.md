@@ -1,6 +1,6 @@
 # Just Keep Chasing (on a hiatus wrt the repo due to other tasks)
 
-A wave-based shooter game where survival is key. Fight through endless waves of enemies while collecting upgrades and managing resources.
+A wave-based shooter (and wannabe rougelite) game. Fight through endless waves of enemies while collecting upgrades and managing resources.
 
 ## 🎮 Current Features
 
