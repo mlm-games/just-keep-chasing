@@ -25,6 +25,7 @@ func _ready() -> void:
 	%ExitButton.pressed.connect(_on_ExitButton_pressed)
 
 func _on_PlayButton_pressed() -> void:
+	UIManager.pop_all_layers()
 	ScreenTransitions.transition("fadeToBlack", true)
 	await ScreenTransitions.transition_player.animation_finished
 	ScreenTransitions.transition("circleOut", false, 1.5)

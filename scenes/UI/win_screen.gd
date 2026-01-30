@@ -6,6 +6,7 @@ func _ready():
 
 func _on_menu_button_pressed() -> void:
 	A.tree.paused = false
+	UIManager.pop_all_layers()
 	ScreenTransitions.change_scene_with_transition(C.SCREENS.MENU)
 
 

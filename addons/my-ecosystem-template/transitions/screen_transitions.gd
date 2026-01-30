@@ -77,17 +77,17 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if !single_transition:
 		match anim_name:
 				"fadeToBlack":
-						screen_covered.emit()
-						transition_player.play("fadeToNormal")
+					screen_covered.emit()
+					transition_player.play("fadeToNormal")
 				"fadeToNormal":
-						transition_rect.hide()
+					transition_rect.hide()
 				"slightFlash":
-						white_rect.hide()
+					white_rect.hide()
 				"circleIn":
-						screen_covered.emit()
-						transition_player.play("circleOut")
+					screen_covered.emit()
+					transition_player.play("circleOut")
 				"circleOut":
-						transition_rect.hide()
+					transition_rect.hide()
 	single_transition = false
 
 func _input(_event: InputEvent) -> void:

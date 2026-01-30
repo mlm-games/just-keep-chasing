@@ -109,7 +109,7 @@ enum BusNames {
 const SCREENS = {
 	CREDITS = "uid://bq0gelfcjnqvg",
 	SETTINGS = "uid://dp42fom7cc3n0",
-	MENU = "uid://degok78oygxw3",
+	MENU = "res://scenes/UI/menu.tscn",
 	ACHIEVEMENTS = "uid://ckqthyukac8wf",
 	WORLD = "uid://4fyoq8npekf0"
 }
