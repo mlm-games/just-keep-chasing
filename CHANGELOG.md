@@ -1,29 +1,58 @@
-## v0.8.13
 
-- rm redundant #hacks, base_shotgun files, bullets inherit from base_data, Performance improvement for android (hopefully) by @mlm-games
-- add lighting, speed dropoff for bullets; reduce gun scan timer, add an instance manager to handle spawns by @mlm-games
+## [0.8.13] - 2025-06-08
 
+### Changed
+- Performance improvements for Android
+- Bullets now inherit from base_data for better code organization
+- Reduced gun scan timer for more responsive shooting
+- Added instance manager to handle spawns more efficiently
 
-## v0.8.11
+### Added
+- Lighting effects for bullets
+- Bullet speed dropoff over distance
 
-- use proper export presets by @mlm-studios
-- use a simple looks improving shader, rename slime to bact by @mlm-studios
-- pause only when game ui_stack is empty by @mlm-studios
-- add stat keys by @mlm-studios
+### Removed
+- Redundant #hacks comments
+- base_shotgun files (consolidated into base gun system)
 
+## [0.8.11] - 2025-05-20
 
-## v0.8.10
+### Changed
+- Use proper export presets for all platforms
+- Renamed "slime" enemy to "bact" for consistency with theme
+- Pause game only when UI stack is empty (prevents accidental pauses)
 
+### Added
+- Stat tracking keys for achievements
+- Simple visual improvement shader
 
+## [0.8.10] - 2025-05-15
 
+(No significant changes)
+
+## [0.8.9] - 2025-05-10
+
+### Changed
+- Improved object pooling system
+- Better saving of achievement progress
+- Fixed stat updating logic
+- Reduced code complexity in menu system
+
+### Fixed
+- Audio settings not persisting
+- Unlock manager issues
+- Explosion effects improved
+
+### Added
+- Initial unlocking system setup
+- Stats tracking improvements
+
+---
+
+For older versions, see [GitHub releases](https://github.com/mlm-games/just-keep-chasing/releases).
 
 # Changelog
 
-## v0.8.9
+All notable changes to this project will be documented in this file.
 
-- object pool improvement , fix audio settings by @mlm-studios
-- fix unlock_manager, reduce code in menu, misc object pool changes by @mlm-studios
-- try adding unlocking (initial setup) by @mlm-studios
-- Better saving of achievement progress, fix stat updation by @mlm-studios
-- improve explosions, stats tracking improvements by @mlm-studios
-
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).

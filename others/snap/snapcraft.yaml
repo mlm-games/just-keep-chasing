@@ -1,9 +1,20 @@
 name: just-keep-chasing
 base: core22
 version: '0.8.13'
-summary: A wave-based shooter (and wannabe rougelite)
+summary: A wave-based 2D shooter with roguelite elements (in the future)
 description: |
-  <PlaceHolderLongDesc>
+  Play as a nanobot fighting viruses, bacteria, and pathogens inside a human body.
+  
+  Features:
+    - Wave-based combat with 30+ enemy types
+    - 10+ weapons including shotguns, snipers, and rocket launchers
+    - Power-ups: slow time, heal, screen blast, invincibility
+    - Augment system for upgrading between waves
+    - 30+ language localizations
+    - 5-minute runs perfect for quick sessions
+  
+  Controls: WASD or arrow keys to move, Space to switch weapons,
+  1-4 for power-ups, R to reload, E to pick up weapons.
 
 grade: stable
 confinement: strict

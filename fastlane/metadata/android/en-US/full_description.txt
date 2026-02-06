@@ -1,0 +1,18 @@
+A wave-based 2D shooter with roguelite elements. Play as a nanobot fighting pathogens inside a human body.
+
+Features:
+• Wave-based combat with 30+ enemy types (viruses, bacteria, parasites)
+• 10+ weapons: pistols, shotguns, sniper rifles, rocket launchers
+• Power-ups: slow time, heal, screen blast, invincibility
+• Upgrade system with augments between waves
+• Touch controls with virtual joysticks
+• 30+ language localizations
+• Achievement tracking
+• 5-minute runs perfect for mobile play
+
+Controls:
+• Left joystick: Move
+• Right joystick: Aim (auto-fires)
+• Buttons: Power-ups, weapon switch
+
+Survive for 5 minutes to win!

@@ -2,54 +2,80 @@
 <component type="desktop-application">
   <id>io.github.mlm_games.just-keep-chasing</id>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>GPL-3.0-or-later</project_license>
+  <project_license>GPL-3.0-only</project_license>
   <name>Just Keep Chasing</name>
-  <summary>A rougelike prototype shooter</summary>
+  <summary>A wave-based 2D shooter with roguelite elements</summary>
   <description>
-    <p><PlaceHolderLongDesc></p>
+    <p>Play as a nanobot fighting viruses, bacteria, and other pathogens inside a human body. Survive endless waves for 5 minutes to win.</p>
+    <p>Features:</p>
+    <ul>
+      <li>Wave-based combat with 30+ enemy types</li>
+      <li>10+ weapons including shotguns, sniper rifles, and rocket launchers</li>
+      <li>Power-ups: slow time, heal, screen blast, invincibility</li>
+      <li>Augment system for upgrading between waves</li>
+      <li>Ally support (White Blood Cell companion)</li>
+      <li>30+ language localizations</li>
+      <li>Touch controls for mobile devices</li>
+      <li>Achievement tracking</li>
+    </ul>
+    <p>Controls: WASD or arrow keys to move, Space to switch weapons, 1-4 for power-ups.</p>
   </description>
   <launchable type="desktop-id">io.github.mlm_games.just-keep-chasing.desktop</launchable>
   <url type="homepage">https://github.com/mlm-games/just-keep-chasing</url>
+  <url type="bugtracker">https://github.com/mlm-games/just-keep-chasing/issues</url>
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/mlm-games/just-keep-chasing/refs/tags/0.8.13/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png</image>
-      <caption>Main Menu Screenshot</caption>
+      <caption>Main Menu</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/mlm-games/just-keep-chasing/refs/tags/0.8.13/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png</image>
-      <caption>Settings screenshot 1</caption>
+      <caption>Settings Menu</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/mlm-games/just-keep-chasing/refs/tags/0.8.13/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png</image>
-      <caption>Settings screenshot 2</caption>
+      <caption>Graphics Settings</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/mlm-games/just-keep-chasing/refs/tags/0.8.13/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png</image>
-      <caption>Another screenshot</caption>
+      <caption>Gameplay Screenshot 1</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/mlm-games/just-keep-chasing/refs/tags/0.8.13/fastlane/metadata/android/en-US/images/phoneScreenshots/5.png</image>
-      <caption>Another screenshot</caption>
+      <caption>Gameplay Screenshot 2</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/mlm-games/just-keep-chasing/refs/tags/0.8.13/fastlane/metadata/android/en-US/images/phoneScreenshots/6.png</image>
-      <caption>Another screenshot</caption>
+      <caption>Upgrade Shop</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/mlm-games/just-keep-chasing/refs/tags/0.8.13/fastlane/metadata/android/en-US/images/phoneScreenshots/7.png</image>
-      <caption>Another screenshot</caption>
+      <caption>Achievements Screen</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/mlm-games/just-keep-chasing/refs/tags/0.8.13/fastlane/metadata/android/en-US/images/phoneScreenshots/8.png</image>
-      <caption>Another screenshot</caption>
+      <caption>Credits Screen</caption>
     </screenshot>
   </screenshots>
   <releases>
     <release version="0.8.13" date="2025-06-08">
       <url type="details">https://github.com/mlm-games/just-keep-chasing/releases</url>
+      <description>
+        <p>Changes in this version:</p>
+        <ul>
+          <li>Performance improvements for Android</li>
+          <li>Added lighting effects and bullet speed dropoff</li>
+          <li>Reduced gun scan timer for better responsiveness</li>
+          <li>Added instance manager for better spawn handling</li>
+          <li>Code cleanup and refactoring</li>
+        </ul>
+      </description>
     </release>
   </releases>
-  <content_rating type="oars-1.1"></content_rating>
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">mild</content_attribute>
+    <content_attribute id="violence-fantasy">mild</content_attribute>
+  </content_rating>
   <developer id="io.github.mlm_games">
     <name>MLM Games</name>
   </developer>
