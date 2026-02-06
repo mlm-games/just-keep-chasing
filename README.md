@@ -104,11 +104,9 @@ Collect power-ups during combat:
 
 Wanted to make an open-source rougelike that is similar to brotato (initially, has diverged), but didnt guage the difficulty then. Had to create most parts from scratch or forks, due to most libs not being aligned for my project, or extra complexity-inducing, for an already heavy project. 
 
-Nanobot theme was due to, wanting to have an educational wordbase for items that helps you remember the medical terms, but not sticking to it, as there are too many exceptions for being able to easily replicate enemy types (would work if this was built like Thrive, but its not)
+Nanobot theme was due to, wanting to have an educational wordbase for items that helps you remember the medical terms (with icon recognition too), but not sticking to it, as there are too many exceptions for being able to easily replicate enemy types (would work if this was built like Thrive, but its not)
 
 ## Development Status
-
-**Current version:** 0.8.13
 
 **On hiatus** due to other tasks. The core gameplay loop is functional but:
 - Artwork is placeholder (needs replacement)
