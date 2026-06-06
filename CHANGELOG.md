@@ -1,3 +1,42 @@
+## v0.8.20
+
+- gunfire particles appear properly
+- fix nerve_impulse err
+- fix explosion anim
+- fix nerve impulse and parasite art
+- Cleanup common issues
+- misc readme changes
+- change the readme
+- fix few reset glitches
+- update short desc, and descs
+- fix snap
+- pause layer renaming
+- fix few migr
+- switch the the my-ecosystem-template's recent changes
+- Actually go to the menuScreen, in win screen
+- Win screen focus
+- refactor, and add lifesteal proper hanlding, and other refactors
+- upgrade project files for 4.6
+- test 4.6-rc1
+- Rename snapcraft.yml to snapcraft.yaml
+- Rename star_powerup.svg to icon.svg
+- Rename star_powerup.png to icon.png
+- add icon to fastlane
+- Create io.github.mlm_games.just-keep-chasing.desktop
+- Create snap-upload.yml
+- Create snapcraft.yml
+- Delete scenes/digest.txt
+- rem unused plugin (or very minor)
+- rm unused extension
+- rm temp files and add test utils
+- Fix on screen powerup not working
+- looks pretty well until you get to the upgrade screen
+- remove a lot of get_tree requests by using a var, other template improvments, particles for currency_drop
+- remove a lot of get_tree requests by using a var, other template improvments
+- go bananas on screen shak, fix enemy flash -> brightness flash, other misc changes
+- slight perf. improvement
+
+
 
 ## [0.8.13] - 2025-06-08
 
