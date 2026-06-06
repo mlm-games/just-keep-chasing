@@ -4,9 +4,6 @@ class_name Parasite extends BaseEnemy
 @export var drop_interval: float = 1.5
 @export var move_change_interval: float = 2.0
 
-@onready var health_component: HealthComponent = $HealthComponent
-@onready var velocity_component: VelocityComponent = $VelocityComponent
-@onready var animation_component: AnimationComponent = $AnimationComponent
 @onready var move_timer: Timer = $MoveTimer
 @onready var drop_pool_timer: Timer = $DropPoolTimer
 

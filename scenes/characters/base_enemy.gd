@@ -26,6 +26,22 @@ func _ready() -> void:
 	
 	if is_instance_valid(sprite_2d.material):
 		sprite_2d.material = sprite_2d.material.duplicate()
+	
+	_apply_enemy_data()
+
+
+func _apply_enemy_data() -> void:
+	if not enemy_data_resource:
+		return
+	
+	health_component.initialize(enemy_data_resource.base_health)
+	mito_energy_value = enemy_data_resource.mito_energy_value
+	scale = enemy_data_resource.character_scale
+	
+	if sprite_2d:
+		sprite_2d.texture = enemy_data_resource.sprite_texture
+		sprite_2d.scale = enemy_data_resource.sprite_scale
+		sprite_2d.modulate = enemy_data_resource.sprite_color
 
 func shake(amount: float, duration: float):
 	ScreenEffects.hit_shake()

@@ -10,14 +10,22 @@ var target_point: Vector2
 @onready var damage_area: Area2D = $DamageArea
 
 func _ready() -> void:
-	# This enemy is fire-and-forget. It does not track.
-	if target_point == Vector2.ZERO:
-		push_warning("NerveImpulse spawned without a target_point. Will not move.")
-		return
-		
-	velocity = global_position.direction_to(target_point) * speed
+	super._ready()
+
+	velocity_component.set_physics_process(false)
+
+	var target := target_point
+	if target == Vector2.ZERO:
+		var player := A.tree.get_first_node_in_group("Player")
+		if not is_instance_valid(player):
+			push_warning("NerveImpulse: No target_point and no player found. Disabling.")
+			set_physics_process(false)
+			return
+		target = player.global_position
+
+	velocity = global_position.direction_to(target) * speed
 	rotation = velocity.angle()
-	
+
 	$VisibleOnScreenNotifier2D.screen_exited.connect(queue_free)
 	damage_area.area_entered.connect(_on_damage_area_entered)
 

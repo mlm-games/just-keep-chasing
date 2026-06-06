@@ -7,7 +7,6 @@ class_name Prion extends BaseEnemy
 @export var aim_duration: float = 0.7
 
 @onready var fire_cooldown_timer: Timer = $FireCooldownTimer
-@onready var sprite: Sprite2D = $Sprite2D
 
 @onready var player : Player = A.tree.get_first_node_in_group("Player")
 
@@ -79,6 +78,6 @@ func _on_fire_cooldown_timer_timeout():
 		# Start the aiming "tell" animation
 		var tween = create_tween()
 		var original_color = enemy_data_resource.sprite_color if enemy_data_resource else Color.WHITE
-		tween.tween_property(sprite, "modulate", Color.CYAN, aim_duration * 0.8).set_ease(Tween.EASE_IN)
+		tween.tween_property(sprite_2d, "modulate", Color.CYAN, aim_duration * 0.8).set_ease(Tween.EASE_IN)
 		tween.tween_callback(_fire_shot)
-		tween.tween_property(sprite, "modulate", original_color, aim_duration * 0.2).set_ease(Tween.EASE_OUT)
+		tween.tween_property(sprite_2d, "modulate", original_color, aim_duration * 0.2).set_ease(Tween.EASE_OUT)
