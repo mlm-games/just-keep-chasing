@@ -91,7 +91,7 @@ func unlock_gun(gun: GunData) -> void:
 	
 	var gun_name = CollectionManager.get_resource_name(gun)
 	
-	CountStats._all_stats.unlocked_guns[gun_name] = true
+	CountStats.set_stat(gun_name, true)
 	
 	var collection_gun = CollectionManager.all_guns.get(gun_name)
 	if collection_gun:

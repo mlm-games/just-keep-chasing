@@ -87,8 +87,9 @@ func pick_augment_by_affordability() -> AugmentsData:
 	if all_augments.is_empty():
 		return null
 	
+	var threshold = CharacterStats.get_stat(CharacterStats.Stats.ITEM_LEND_THRESHOLD)
 	var valid_augments = all_augments.filter(func(aug: AugmentsData):
-		return aug.augment_price * RunData.price_multiplier <= RunData.mito_energy
+		return RunData.mito_energy - threshold >= int(aug.augment_price * RunData.price_multiplier)
 	)
 	
 	if valid_augments.is_empty():

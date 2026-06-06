@@ -1,8 +1,7 @@
 class_name HitboxComponent extends Area2D
 
 @export var health_component: HealthComponent
-
-@export var parent : CharacterBody2D
+@export var velocity_component: VelocityComponent
 
 func _ready() -> void:
 	if not health_component:
@@ -20,5 +19,7 @@ func dot(attack: Attack) -> void:
 		health_component.dot(attack)
 
 func apply_knockback(direction: Vector2, force: float, stun_duration: float) -> void:
-	if !parent: parent = get_parent()
-	parent.apply_knockback(direction, force, stun_duration)
+	if not velocity_component:
+		velocity_component = get_parent().get_node_or_null("VelocityComponent")
+	if velocity_component:
+		velocity_component.apply_knockback(direction * force, stun_duration)

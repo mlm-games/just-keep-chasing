@@ -56,7 +56,8 @@ func _on_character_stat_changed(stat_key: CharacterStats.Stats, new_value: float
 	if stat_key == CharacterStats.Stats.PLAYER_MAX_HEALTH:
 		update_max_health(new_value)
 	if stat_key == CharacterStats.Stats.PLAYER_HEALTH:
-		update_max_health(health_component.max_health)
+		health_component.current_health = clampf(new_value, 0.0, health_component.max_health)
+		health_component.health_changed.emit(health_component.current_health)
 
 func _on_health_component_entity_died() -> void:
 	hide()

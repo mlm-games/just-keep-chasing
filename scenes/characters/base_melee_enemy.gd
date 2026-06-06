@@ -72,7 +72,7 @@ func _on_hitbox_component_area_entered(area: Area2D) -> void:
 		can_deal_damage = true
 
 func _on_hitbox_component_area_exited(area: Area2D) -> void:
-	if area == player_hitbox or (area.owner is Player and area == player_hitbox):
+	if area == player_hitbox:
 		player_hitbox = null
 		can_deal_damage = false
 

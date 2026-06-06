@@ -2,7 +2,6 @@ class_name BaseProjectile extends Area2D
 
 var projectile_data: ProjectileData
 
-var attack := Attack.new()
 var travelled_distance := 0.0
 var direction: Vector2
 
@@ -71,8 +70,9 @@ func _physics_process(delta: float) -> void:
 		animate_free()
 
 
-func _on_area_entered(body: Node2D) -> void:
-	if body is HitboxComponent:
+func _on_area_entered(area: Area2D) -> void:
+	if area is HitboxComponent:
+		var attack := Attack.new()
 		attack.attack_damage = projectile_data.projectile_damage
 		attack.knockback_force = projectile_data.projectile_knockback_force
 		attack.stun_duration = projectile_data.projectile_stun_duration
@@ -83,7 +83,7 @@ func _on_area_entered(body: Node2D) -> void:
 			attack.dot_duration = projectile_data.projectile_dot_duration
 			attack.damage_over_time = projectile_data.projectile_dot
 		
-		body.damage(attack)
+		area.damage(attack)
 		
 		_pierced_enemies += 1
 		if _pierced_enemies >= projectile_data.projectile_max_pierce_count:

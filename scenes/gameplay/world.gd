@@ -183,16 +183,24 @@ func throw_or_remove_gun_from_player(throw: bool = true) -> void:
 
 
 func pick_up_weapon() -> void:
-		#Todo: When near the gun, it is highlighted, so that it can be clicked.
-	if thrown_guns.size() > 0:
-		var weapon: BaseGun = A.tree.get_first_node_in_group("Dropped Weapons")
-		if weapon:
-			weapon.reparent(player)
-			weapon.remove_from_group("Dropped Weapons")
-			weapon.add_to_group("Weapons")
-		guns.append(thrown_guns.pop_back())
-	else:
+	if thrown_guns.is_empty():
 		switch_weapon()
+		return
+
+	var weapon: BaseGun = A.tree.get_first_node_in_group("Dropped Weapons")
+	if not weapon:
+		return
+
+	var weapon_data := weapon.gun_data
+	if not weapon_data:
+		return
+
+	weapon.reparent(player)
+	weapon.remove_from_group("Dropped Weapons")
+	weapon.add_to_group("Weapons")
+
+	guns.append(weapon_data)
+	thrown_guns.erase(weapon_data)
 
 
 func use_powerup(powerup_type: StringName) -> void:
