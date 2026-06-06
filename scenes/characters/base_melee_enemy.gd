@@ -41,11 +41,12 @@ func set_data_values() -> void:
 	sprite.scale = enemy_data_resource.sprite_scale
 	sprite.modulate = enemy_data_resource.sprite_color
 	
-	if enemy_data_resource.gun: 
-		var enemy_gun: BaseGun = enemy_data_resource.gun.weapon_scene.instantiate()
-		enemy_data_resource.gun.bullet = enemy_data_resource.gun.bullet.duplicate_with_res_name()
-		enemy_data_resource.gun.bullet.collision_shape_mask = 2 ## Target player
-		enemy_gun.gun_data = enemy_data_resource.gun
+	if enemy_data_resource.gun:
+		var gun_copy := enemy_data_resource.gun.duplicate_with_res_name()
+		gun_copy.bullet = gun_copy.bullet.duplicate_with_res_name()
+		gun_copy.bullet.collision_shape_mask = 2
+		var enemy_gun: BaseGun = gun_copy.weapon_scene.instantiate()
+		enemy_gun.gun_data = gun_copy
 		add_child(enemy_gun)
 		enemy_gun.set_collision_mask_value(3, false)
 		enemy_gun.set_collision_mask_value(2, true)

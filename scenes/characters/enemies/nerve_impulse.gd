@@ -16,7 +16,7 @@ func _ready() -> void:
 
 	var target := target_point
 	if target == Vector2.ZERO:
-		var player := A.tree.get_first_node_in_group("Player")
+		var player : Player = A.tree.get_first_node_in_group("Player")
 		if not is_instance_valid(player):
 			push_warning("NerveImpulse: No target_point and no player found. Disabling.")
 			set_physics_process(false)

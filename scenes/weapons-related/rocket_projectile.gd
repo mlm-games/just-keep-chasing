@@ -1,10 +1,10 @@
 class_name RocketProjectile extends BaseProjectile
 
 
-func _on_area_entered(body: Node2D) -> void:
-	# Instead of dealing damage directly, we create an explosion
+func _on_area_entered(area: Area2D) -> void:
+	if not area is HitboxComponent:
+		return
 	explode()
-	# The explosion will deal the damage, so the rocket itself doesn't need to a lot.
 	queue_free()
 
 func explode():
