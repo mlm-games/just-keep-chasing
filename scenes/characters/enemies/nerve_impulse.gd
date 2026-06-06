@@ -12,7 +12,8 @@ var target_point: Vector2
 func _ready() -> void:
 	super._ready()
 
-	velocity_component.set_physics_process(false)
+	if velocity_component:
+		velocity_component.set_physics_process(false)
 
 	var target := target_point
 	if target == Vector2.ZERO:

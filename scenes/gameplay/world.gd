@@ -132,8 +132,8 @@ func spawn_powerup() -> void:
 	var powerup_data: PowerupData = get_random_powerup()
 	if powerup_data:
 		var powerup_instance: Powerup = Powerup.create_new_powerup(powerup_data)
-		powerup_instance.global_position = out_of_view_spawn_location.global_position
 		powerups_node.add_child(powerup_instance)
+		powerup_instance.global_position = out_of_view_spawn_location.global_position
 
 
 func get_random_powerup() -> PowerupData:

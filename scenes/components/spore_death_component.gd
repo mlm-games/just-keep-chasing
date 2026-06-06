@@ -18,7 +18,6 @@ func _on_entity_died():
 		var angle = (float(i) / burst_count) * TAU
 		
 		projectile.projectile_data.projectile_speed = burst_speed
+		projectiles_container.add_child(projectile)
 		projectile.global_position = owner.global_position
 		projectile.rotation = angle
-		
-		projectiles_container.add_child(projectile)
