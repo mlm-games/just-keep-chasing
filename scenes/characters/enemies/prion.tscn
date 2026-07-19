@@ -2,10 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://gj4jr1kbpr1k" path="res://scenes/characters/enemies/chaser_enemy.tscn" id="1_e3jeo"]
 [ext_resource type="Script" uid="uid://cdtwm0hegbhe3" path="res://scenes/characters/enemies/prion.gd" id="2_vycx7"]
+[ext_resource type="PackedScene" uid="uid://b5x54mjk1mls0" path="res://scenes/weapons-related/base_projectile.tscn" id="3_proj"]
 
 [node name="Prion" unique_id=1837608400 instance=ExtResource("1_e3jeo")]
 script = ExtResource("2_vycx7")
-projectile_scene = null
+projectile_scene = ExtResource("3_proj")
 min_distance = 500.0
 max_distance = 700.0
 fire_cooldown = 2.5

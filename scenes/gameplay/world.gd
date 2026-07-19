@@ -99,14 +99,17 @@ func time_based_enemy_type_changer() -> void:
 			RunData.enemy_spawn_type_range.y = 4
 			enemy_spawn_timer.wait_time = 4
 		100:
-			RunData.enemy_spawn_type_range.y = 4
-			enemy_spawn_timer.wait_time = 2.5
-		125:
 			RunData.enemy_spawn_type_range.y = 5
-		#_:
-			#enemy_spawn_timer.wait_time = max(enemy_spawn_timer.wait_time - 0.01, 0.5)
-			#if enemy_spawn_timer.wait_time == 0.5:
-				#CharacterStats.modify_stat(CharacterStats.Stats.FLAT_ENEMY_HEALTH_REDUCTION, CharacterStats.Operation.ADD, -0.1)
+			enemy_spawn_timer.wait_time = 2.5
+		140:
+			RunData.enemy_spawn_type_range.y = 6
+			enemy_spawn_timer.wait_time = 2.2
+		180:
+			RunData.enemy_spawn_type_range.y = 7
+			enemy_spawn_timer.wait_time = 2.0
+		220:
+			RunData.enemy_spawn_type_range.y = 8
+			enemy_spawn_timer.wait_time = 1.8
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("switch-weapon"):

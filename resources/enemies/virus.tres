@@ -8,13 +8,15 @@
 [resource]
 script = ExtResource("3_xqyaw")
 base_enemy_scene = ExtResource("1_qnoou")
-base_contact_damage = 5.0
-mito_energy_value = 1
-enemy_spawn_chance = 0.67
+base_contact_damage = 8.0
+mito_energy_value = 2
+enemy_spawn_chance = 0.7
 enemy_spawn_order = 5
+character_scale = Vector2(0.95, 0.95)
 sprite_texture = ExtResource("4_hm53l")
-sprite_color = Color(0, 0.168627, 0, 1)
-base_health = 20.0
-base_speed = 250.0
+sprite_scale = Vector2(1, 1)
+sprite_color = Color(0.72, 0.28, 0.88, 1)
+base_health = 18.0
+base_speed = 240.0
 id = "virus"
 metadata/_custom_type_script = "uid://bwk8dueikqaq0"

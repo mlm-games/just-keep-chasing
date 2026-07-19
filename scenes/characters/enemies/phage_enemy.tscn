@@ -5,12 +5,14 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y1pxk"]
 shader = ExtResource("2_xcbqo")
-shader_parameter/primary_color = Color(0, 0.6, 1, 1)
-shader_parameter/secondary_color = Color(0, 0.2, 0.5, 1)
-shader_parameter/accent_color = Color(1, 1, 1, 0.5)
+shader_parameter/primary_color = Color(0.2, 0.85, 1, 1)
+shader_parameter/secondary_color = Color(0.05, 0.35, 0.7, 1)
+shader_parameter/accent_color = Color(1, 1, 1, 0.55)
 shader_parameter/line_thickness = 0.003
 shader_parameter/animation_speed = 1.0
 shader_parameter/pattern_scale = 3.0
 
 [node name="PhageEnemy" unique_id=604246242 instance=ExtResource("1_rts86")]
+
+[node name="Sprite2D" parent="." index="7"]
 material = SubResource("ShaderMaterial_y1pxk")

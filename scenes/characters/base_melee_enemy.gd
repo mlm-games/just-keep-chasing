@@ -14,14 +14,14 @@ var can_deal_damage := false
 
 func _ready() -> void:
 	super._ready()
-	
+
 	health_component.entity_died.connect(_on_health_component_entity_died)
 	health_component.taking_damage.connect(animation_component.on_taking_damage)
 	health_component.knockback_requested.connect(velocity_component.apply_knockback)
-	
+
 	hitbox_component.area_entered.connect(_on_hitbox_component_area_entered)
 	hitbox_component.area_exited.connect(_on_hitbox_component_area_exited)
-	
+
 	set_data_values()
 
 
@@ -29,18 +29,23 @@ func set_data_values() -> void:
 	if not enemy_data_resource:
 		push_warning("Enemy has no EnemyData resource assigned.")
 		return
-		
+
 	health_component.initialize(enemy_data_resource.base_health)
 	contact_attack_damage = enemy_data_resource.base_contact_damage
 	mito_energy_value = enemy_data_resource.mito_energy_value
-	#velocity_component.max_speed = enemy_data_resource.base_speed
-	
+
 	scale = enemy_data_resource.character_scale
-	$CollisionShape2D.shape.size = enemy_data_resource.character_hitbox_shape_value
-	sprite.texture = enemy_data_resource.sprite_texture
-	sprite.scale = enemy_data_resource.sprite_scale
+	var col := $CollisionShape2D
+	if col and col.shape is RectangleShape2D:
+		col.shape = col.shape.duplicate()
+		col.shape.size = enemy_data_resource.character_hitbox_shape_value
+
+	if enemy_data_resource.sprite_texture:
+		sprite.texture = enemy_data_resource.sprite_texture
+	base_sprite_scale = enemy_data_resource.sprite_scale
+	sprite.scale = base_sprite_scale
 	sprite.modulate = enemy_data_resource.sprite_color
-	
+
 	if enemy_data_resource.gun:
 		var gun_copy := enemy_data_resource.gun.duplicate_with_res_name()
 		gun_copy.bullet = gun_copy.bullet.duplicate_with_res_name()
@@ -86,6 +91,6 @@ func _on_health_component_entity_died() -> void:
 	$CollisionShape2D.set_deferred("disabled", true)
 	hitbox_component.get_node("CollisionShape2D").set_deferred("disabled", true)
 	set_physics_process(false)
-	
+
 	animation_component.on_entity_died()
 	## NOTE: The AnimationComponent now handles the queue_free() after the death anim.

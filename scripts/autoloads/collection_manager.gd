@@ -52,10 +52,14 @@ static func get_resource_paths_in_directory(resources_dir: String, load_resource
 				res_list.get_or_add(res.trim_suffix(".tres"), loaded_res)
 	return res_list
 
-func get_enemy_dict_by_spawn_order() -> Dictionary[int, EnemyData]:
-	var dict: Dictionary[int, EnemyData] = {}
+func get_enemy_dict_by_spawn_order() -> Dictionary[int, Array]:
+	var dict: Dictionary[int, Array] = {}
 	for enemy: EnemyData in all_enemies.values():
-		dict.get_or_add(enemy.enemy_spawn_order, enemy)
+		if enemy == null:
+			continue
+		if not dict.has(enemy.enemy_spawn_order):
+			dict[enemy.enemy_spawn_order] = []
+		dict[enemy.enemy_spawn_order].append(enemy)
 	return dict
 
 static func get_resource_name(res: Resource) -> StringName:

@@ -1,19 +1,22 @@
 [gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://jviwk0181p3q"]
 
-[ext_resource type="PackedScene" uid="uid://cdjopw1nw1odb" path="res://scenes/characters/enemies/prion.tscn" id="1_od5y5"]
+[ext_resource type="PackedScene" uid="uid://dov78p71w2v4" path="res://scenes/characters/enemies/parasite.tscn" id="1_para"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_pqgr4"]
 [ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="3_esi3u"]
 [ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/bact.svg" id="4_7nvo8"]
 
 [resource]
 script = ExtResource("3_esi3u")
-base_enemy_scene = ExtResource("1_od5y5")
-mito_energy_value = 4
-enemy_spawn_chance = 0.67
-enemy_spawn_order = 5
+base_enemy_scene = ExtResource("1_para")
+base_contact_damage = 4.0
+mito_energy_value = 5
+enemy_spawn_chance = 0.4
+enemy_spawn_order = 6
+character_scale = Vector2(1.15, 1.15)
 sprite_texture = ExtResource("4_7nvo8")
-sprite_color = Color(0, 0.168627, 0.909804, 1)
-base_health = 11.0
-base_speed = 120.0
-id = "prion"
+sprite_scale = Vector2(1, 1)
+sprite_color = Color(0.2, 0.78, 0.85, 1)
+base_health = 22.0
+base_speed = 110.0
+id = "parasite"
 metadata/_custom_type_script = "uid://bwk8dueikqaq0"

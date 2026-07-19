@@ -24,13 +24,15 @@ func update_movement(current_velocity: Vector2):
 	if not anim_player:
 		return
 	
+	var base_scale := Vector2.ONE
+	if owner is BaseEnemy and owner.base_sprite_scale:
+		base_scale = owner.base_sprite_scale
+	
 	if current_velocity.length_squared() > 0.01:
-		# Play move animation if not already playing
 		var move_anim = anims_prefix + "moving"
 		if anim_player.has_animation(move_anim) and anim_player.current_animation != move_anim:
 			anim_player.play(move_anim)
 		
-		# Flip the sprite based on horizontal movement direction
 		if sprite:
 			if current_velocity.x > 0.1:
 				sprite.flip_h = true
@@ -40,7 +42,6 @@ func update_movement(current_velocity: Vector2):
 			var target_skew = clamp(current_velocity.x * 0.00025, -0.1, 0.1)
 			sprite.skew = lerp(sprite.skew, target_skew, 0.1)
 	else:
-		# Play idle animation if not already playing
 		var idle_anim = anims_prefix + "idle"
 		if anim_player.has_animation(idle_anim) and anim_player.current_animation != idle_anim:
 			anim_player.play(idle_anim)

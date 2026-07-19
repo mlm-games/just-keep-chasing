@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://bleech001enemy"]
+
+[ext_resource type="PackedScene" uid="uid://cnixhyyt6anqs" path="res://scenes/characters/enemies/leech_enemy.tscn" id="1_leech"]
+[ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="2_data"]
+[ext_resource type="Texture2D" uid="uid://dntulsjg1nmmr" path="res://assets/sprites/enemies/leech.svg" id="3_tex"]
+
+[resource]
+script = ExtResource("2_data")
+base_enemy_scene = ExtResource("1_leech")
+base_contact_damage = 12.0
+mito_energy_value = 6
+enemy_spawn_chance = 0.4
+enemy_spawn_order = 5
+character_scale = Vector2(1.5, 1.5)
+sprite_texture = ExtResource("3_tex")
+sprite_scale = Vector2(1, 1)
+sprite_color = Color(1, 0.55, 0.35, 1)
+base_health = 35.0
+base_speed = 140.0
+id = "leech"

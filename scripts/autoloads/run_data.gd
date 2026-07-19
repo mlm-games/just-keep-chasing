@@ -12,7 +12,7 @@ var is_in_shop: bool = false:
 
 var projectile_root: Node2D
 
-var spawnable_enemies: Dictionary[int, EnemyData] = {}
+var spawnable_enemies: Dictionary[int, Array] = {}
 var enemy_spawn_type_range := Vector2i(1, 1)
 
 var elapsed_time: int = 0:

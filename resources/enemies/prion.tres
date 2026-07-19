@@ -1,20 +1,22 @@
 [gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://bsony4qi604re"]
 
-[ext_resource type="PackedScene" uid="uid://du2l151jbq78f" path="res://scenes/characters/enemies/virus.tscn" id="1_33kv0"]
+[ext_resource type="PackedScene" uid="uid://cdjopw1nw1odb" path="res://scenes/characters/enemies/prion.tscn" id="1_prion"]
 [ext_resource type="Script" uid="uid://d2sqcjy2gnmwg" path="res://resources/stats_modifier_base.gd" id="2_vi4h2"]
 [ext_resource type="Script" uid="uid://bwk8dueikqaq0" path="res://resources/enemies/enemy_data.gd" id="3_mxre4"]
-[ext_resource type="Texture2D" uid="uid://duc0bvo61ljvv" path="res://assets/sprites/bact.svg" id="4_t3wqs"]
+[ext_resource type="Texture2D" uid="uid://c1ha00rayxdkb" path="res://assets/sprites/enemies/prion.svg" id="4_prion"]
 
 [resource]
 script = ExtResource("3_mxre4")
-base_enemy_scene = ExtResource("1_33kv0")
-base_contact_damage = 5.0
-mito_energy_value = 1
-enemy_spawn_chance = 0.67
-enemy_spawn_order = 5
-sprite_texture = ExtResource("4_t3wqs")
-sprite_color = Color(0, 0.168627, 0, 1)
-base_health = 20.0
-base_speed = 250.0
-id = "virus"
+base_enemy_scene = ExtResource("1_prion")
+base_contact_damage = 6.0
+mito_energy_value = 4
+enemy_spawn_chance = 0.45
+enemy_spawn_order = 6
+character_scale = Vector2(1.4, 1.4)
+sprite_texture = ExtResource("4_prion")
+sprite_scale = Vector2(1, 1)
+sprite_color = Color(1, 0.72, 0.45, 1)
+base_health = 28.0
+base_speed = 90.0
+id = "prion"
 metadata/_custom_type_script = "uid://bwk8dueikqaq0"

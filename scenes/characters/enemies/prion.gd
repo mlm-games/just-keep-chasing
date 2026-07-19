@@ -55,20 +55,32 @@ func _state_aiming() -> void:
 	velocity_component.accelerate_to(Vector2.ZERO, 0)
 
 func _fire_shot() -> void:
-	if not projectile_scene or health_component.is_dead() or not is_instance_valid(player): return
+	if not projectile_scene or health_component.is_dead() or not is_instance_valid(player):
+		return
 
 	var projectile_container = A.tree.get_first_node_in_group("ProjectilesContainer")
-	if not projectile_container: 
-		push_warning("Prion: Could not find a 'ProjectilesContainer' node group to spawn projectile in.")
+	if not projectile_container:
+		projectile_container = A.tree.get_first_node_in_group("ProjectilesNode")
+	if not projectile_container:
+		push_warning("Prion: No projectiles container")
 		return
-		
+
 	var projectile = projectile_scene.instantiate()
+	if projectile is BaseProjectile:
+		var pdata := ProjectileData.new()
+		pdata.projectile_damage = 12.0
+		pdata.projectile_speed = 320.0
+		pdata.projectile_range = 900.0
+		pdata.lifespan_time = 3.0
+		pdata.collision_shape_mask = 2
+		pdata.sprite_modulate = Color(1.0, 0.6, 0.2, 1)
+		pdata.sprite_scale = Vector2(0.12, 0.04)
+		projectile.projectile_data = pdata
+
 	projectile_container.add_child(projectile)
-	
 	projectile.global_position = global_position
 	projectile.rotation = global_position.direction_to(player.global_position).angle()
 
-	# Restart the cooldown timer to fire again later
 	fire_cooldown_timer.start()
 	current_state = SelfState.REPOSITIONING
 

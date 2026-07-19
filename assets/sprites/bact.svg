@@ -39,11 +39,11 @@
        id="linearGradient40"
        inkscape:collect="always">
       <stop
-         style="stop-color:#ff6600;stop-opacity:0.89857727;"
+         style="stop-color:#e8e8e8;stop-opacity:0.89857727;"
          offset="0"
          id="stop41" />
       <stop
-         style="stop-color:#ff6600;stop-opacity:1;"
+         style="stop-color:#e8e8e8;stop-opacity:1;"
          offset="1"
          id="stop42" />
     </linearGradient>
@@ -51,11 +51,11 @@
        id="linearGradient25"
        inkscape:collect="always">
       <stop
-         style="stop-color:#21e81a;stop-opacity:1;"
+         style="stop-color:#f0f0f0;stop-opacity:1;"
          offset="0"
          id="stop25" />
       <stop
-         style="stop-color:#16ab11;stop-opacity:1;"
+         style="stop-color:#c0c0c0;stop-opacity:1;"
          offset="1"
          id="stop26" />
     </linearGradient>
@@ -139,8 +139,8 @@
          rx="9.7080164"
          ry="7.5970864" />
       <rect
-         style="opacity:0.665;mix-blend-mode:normal;fill:#47af1a;fill-opacity:1;stroke-width:0.0738365"
-         id="rect1"
+style="opacity:0.665;mix-blend-mode:normal;fill:#d8d8d8;fill-opacity:1;stroke-width:0.0738365"
+          id="rect1"
          width="65.960678"
          height="55.869682"
          x="216.88426"
@@ -241,8 +241,8 @@
          rx="9.7080164"
          ry="7.5970864" />
       <rect
-         style="opacity:0.665;mix-blend-mode:normal;fill:#47af1a;fill-opacity:1;stroke-width:0.0738365"
-         id="rect6"
+style="opacity:0.665;mix-blend-mode:normal;fill:#d8d8d8;fill-opacity:1;stroke-width:0.0738365"
+          id="rect6"
          width="65.960678"
          height="55.869682"
          x="216.88426"

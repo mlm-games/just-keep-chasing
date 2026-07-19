@@ -28,27 +28,27 @@ static func get_random_by_spawn_chance() -> EnemyData:
 	if RunData.spawnable_enemies.is_empty():
 		push_warning("EnemySpawner: No spawnable enemies available")
 		return null
-	
+
 	var spawn_range = RunData.enemy_spawn_type_range
-	var valid_spawn_orders: Array[int] = []
-	
-	# Collect valid spawn orders within range
+	var candidates: Array[EnemyData] = []
+
 	for spawn_order in RunData.spawnable_enemies.keys():
 		if spawn_order >= spawn_range.x and spawn_order <= spawn_range.y:
-			valid_spawn_orders.append(spawn_order)
-	
-	if valid_spawn_orders.is_empty():
+			var bucket = RunData.spawnable_enemies[spawn_order]
+			if bucket is Array:
+				for e in bucket:
+					if e is EnemyData:
+						candidates.append(e)
+			elif bucket is EnemyData:
+				candidates.append(bucket)
+
+	if candidates.is_empty():
 		push_warning("EnemySpawner: No enemies in current spawn range")
-		return RunData.spawnable_enemies.values()[0] if not RunData.spawnable_enemies.is_empty() else null
-	
-	# Try to get an enemy based on spawn chance
+		return null
+
 	for _attempt in range(MAX_SPAWN_ATTEMPTS):
-		var random_order = valid_spawn_orders.pick_random()
-		var enemy_data: EnemyData = RunData.spawnable_enemies.get(random_order)
-		
+		var enemy_data: EnemyData = candidates.pick_random()
 		if enemy_data and randf() <= enemy_data.enemy_spawn_chance:
 			return enemy_data
-	
-	# Fallback: return any valid enemy
-	var fallback_order = valid_spawn_orders.pick_random()
-	return RunData.spawnable_enemies.get(fallback_order)
+
+	return candidates.pick_random()
