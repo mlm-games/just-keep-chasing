@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://ccjjel7gxlyjx" path="res://resources/bullets/pellet.tres" id="1_rodho"]
 [ext_resource type="AudioStream" uid="uid://cir8eafb01hmv" path="res://assets/music/gun sounds by q009/shotgun.ogg" id="2_88epx"]
 [ext_resource type="AudioStream" uid="uid://ct65f68ja8e6j" path="res://assets/music/gun sounds by q009/shotgun2.ogg" id="3_0skti"]
-[ext_resource type="Texture2D" uid="uid://12vyrpw3wdmj" path="res://assets/sprites/shotgun.png" id="3_84eyl"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/double_barrel_shotgun.svg" id="3_84eyl"]
 [ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="4_84eyl"]
 [ext_resource type="Curve" uid="uid://bhoafm7ej7set" path="res://resources/misc/base_enemy_speed_dropoff_curve.tres" id="5_0skti"]
 
@@ -19,9 +19,9 @@ ammo = null
 targeting_range = 1000.0
 fire_rate = 0.5
 fire_audio = Array[AudioStream]([ExtResource("2_88epx"), ExtResource("3_0skti")])
-sprite_scale = Vector2(0.105, 0.105)
-sprite_position = Vector2(46.8, 15.117)
-bullet_spawn_offset = Vector2(525.513, -41.18)
+sprite_scale = Vector2(0.06, 0.06)
+sprite_position = Vector2(45, 5)
+bullet_spawn_offset = Vector2(950, -33)
 fire_animation_skew = 4.94764
 fire_animation_duration = null
 bullets_per_shot = 7

@@ -73,6 +73,7 @@ func apply_augment(augment: AugmentsData) -> void:
 func update_highest_game_time(time: float) -> void:
 	if time > highest_game_time:
 		highest_game_time = time
+		save_game()
 
 
 func update_achievements() -> void:
@@ -110,14 +111,37 @@ func is_gun_unlocked(gun_path_or_name: String) -> bool:
 
 #region Save/Load
 
-func save_game() -> void:
-	# TODO: Implement saving game state
-	pass
+const SAVE_PATH := "user://game_state.save"
 
+func save_game() -> void:
+	var data := {
+		"highest_game_time": highest_game_time,
+		"unlocked_guns": unlocked_guns.keys(),
+		"unlocked_enemies": unlocked_enemies.keys(),
+		"unlocked_augments": unlocked_augments.keys(),
+	}
+	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if file:
+		file.store_var(data)
+		file.close()
+		print("GameState saved.")
+	CountStats.request_save()
 
 func load_game() -> void:
-	# TODO: Implement loading game state
-	pass
-	
+	if not FileAccess.file_exists(SAVE_PATH):
+		print("No GameState save found.")
+		return
+	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
+	if not file:
+		return
+	var data = file.get_var()
+	file.close()
+	if data is Dictionary:
+		highest_game_time = data.get("highest_game_time", 0.0)
+		for gun_name in data.get("unlocked_guns", []):
+			var g = CollectionManager.all_guns.get(gun_name)
+			if g:
+				unlock_gun(g)
+		print("GameState loaded. Highest time: ", highest_game_time)
 
 #endregion

@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://bljhro5a2wk67" path="res://resources/bullets/buckshot.tres" id="1_lktsu"]
 [ext_resource type="AudioStream" uid="uid://c8rp0wvwgdvox" path="res://assets/music/gun sounds by q009/shotgun3.ogg" id="2_t6sxg"]
 [ext_resource type="AudioStream" uid="uid://cir8eafb01hmv" path="res://assets/music/gun sounds by q009/shotgun.ogg" id="3_2ldja"]
-[ext_resource type="Texture2D" uid="uid://cuhe3wefntcuq" path="res://assets/sprites/pump_shotgun.png" id="3_lldrk"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/pump_action_shotgun.svg" id="3_lldrk"]
 [ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="4_lldrk"]
 [ext_resource type="Curve" uid="uid://bhoafm7ej7set" path="res://resources/misc/base_enemy_speed_dropoff_curve.tres" id="5_2ldja"]
 
@@ -19,10 +19,10 @@ ammo = null
 targeting_range = 1000.0
 fire_rate = 1.25
 fire_audio = Array[AudioStream]([ExtResource("2_t6sxg"), ExtResource("3_2ldja")])
-sprite_scale = Vector2(0.102, 0.139)
-sprite_position = Vector2(61.8, 15.11)
+sprite_scale = Vector2(0.12, 0.12)
+sprite_position = Vector2(45, 5)
 sprite_modulate = Color(0, 1, 1, 1)
-bullet_spawn_offset = Vector2(406.187, 20.724)
+bullet_spawn_offset = Vector2(425, -16)
 fire_animation_skew = 4.94764
 fire_animation_duration = null
 bullets_per_shot = 4

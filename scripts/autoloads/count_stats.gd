@@ -75,6 +75,8 @@ func request_save() -> void:
 func increment_stat(stat_key: StringName, amount: Variant = 1) -> void:
 	for category in _all_stats.values():
 		if category is Dictionary and category.has(stat_key):
+			if typeof(category[stat_key]) == TYPE_BOOL:
+				continue
 			category[stat_key] += amount
 			stat_updated.emit(stat_key, category[stat_key])
 			_is_dirty = true
@@ -86,6 +88,8 @@ func increment_stat(stat_key: StringName, amount: Variant = 1) -> void:
 func set_stat(stat_key: StringName, value: Variant) -> void:
 	for category in _all_stats.values():
 		if category is Dictionary and category.has(stat_key):
+			if typeof(category[stat_key]) != typeof(value):
+				continue
 			if category[stat_key] != value:
 				category[stat_key] = value
 				stat_updated.emit(stat_key, value)

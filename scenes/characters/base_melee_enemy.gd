@@ -15,7 +15,6 @@ var can_deal_damage := false
 func _ready() -> void:
 	super._ready()
 
-	health_component.entity_died.connect(_on_health_component_entity_died)
 	health_component.taking_damage.connect(animation_component.on_taking_damage)
 	health_component.knockback_requested.connect(velocity_component.apply_knockback)
 
@@ -82,15 +81,4 @@ func _on_hitbox_component_area_exited(area: Area2D) -> void:
 		player_hitbox = null
 		can_deal_damage = false
 
-func _on_health_component_entity_died() -> void:
-	DropsSpawner.emit_mito_energy(global_position, mito_energy_value)
-	CountStats.increment_stat(CountStats.get_stat_key(enemy_data_resource))
-	StaticAudioManager.play_sound_varied(C.CommonSounds.EnemyHit)
-	ScreenEffects.freeze_frame(0.07)
 
-	$CollisionShape2D.set_deferred("disabled", true)
-	hitbox_component.get_node("CollisionShape2D").set_deferred("disabled", true)
-	set_physics_process(false)
-
-	animation_component.on_entity_died()
-	## NOTE: The AnimationComponent now handles the queue_free() after the death anim.

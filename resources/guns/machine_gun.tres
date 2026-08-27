@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cvb1dimncgicl" path="res://resources/guns/gun_data.gd" id="1_0yvqv"]
 [ext_resource type="Resource" uid="uid://peywrjmws6bp" path="res://resources/bullets/bullet.tres" id="1_ir5rt"]
 [ext_resource type="AudioStream" uid="uid://df1muoe714h1e" path="res://assets/music/gun sounds by q009/minigun2.ogg" id="2_xrjfr"]
-[ext_resource type="Texture2D" uid="uid://cqnmxanph02hs" path="res://assets/sprites/mini-smg.png" id="3_jkhum"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/mini_smg.svg" id="3_jkhum"]
 [ext_resource type="AudioStream" uid="uid://k7n68ivaj575" path="res://assets/music/gun sounds by q009/minigun3.ogg" id="3_xse0u"]
 [ext_resource type="PackedScene" uid="uid://djr17spwfqlsu" path="res://scenes/weapons-related/base_gun.tscn" id="4_jkhum"]
 [ext_resource type="Curve" uid="uid://bhoafm7ej7set" path="res://resources/misc/base_enemy_speed_dropoff_curve.tres" id="5_xse0u"]
@@ -19,9 +19,9 @@ ammo = null
 targeting_range = 600.0
 fire_rate = 0.15
 fire_audio = Array[AudioStream]([ExtResource("2_xrjfr"), ExtResource("3_xse0u")])
-sprite_scale = Vector2(0.09, 0.09)
-sprite_position = Vector2(44, 10)
-bullet_spawn_offset = Vector2(322.219, -111.12)
+sprite_scale = Vector2(0.12, 0.12)
+sprite_position = Vector2(45, 5)
+bullet_spawn_offset = Vector2(310, 0)
 fire_animation_skew = 4.94764
 fire_animation_duration = 0.1
 screen_shake_frequency = 50.0

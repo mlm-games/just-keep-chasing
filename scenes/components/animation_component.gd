@@ -24,9 +24,9 @@ func update_movement(current_velocity: Vector2):
 	if not anim_player:
 		return
 	
-	var base_scale := Vector2.ONE
-	if owner is BaseEnemy and owner.base_sprite_scale:
-		base_scale = owner.base_sprite_scale
+	#var base_scale := Vector2.ONE
+	#if owner is BaseEnemy and owner.base_sprite_scale:
+		#base_scale = owner.base_sprite_scale
 	
 	if current_velocity.length_squared() > 0.01:
 		var move_anim = anims_prefix + "moving"

@@ -193,7 +193,7 @@ energy = 0.15
 texture = SubResource("GradientTexture2D_xyviv")
 texture_scale = 6.13
 
-[node name="ProjectilesNode" type="Node2D" parent="." unique_id=1764434041 groups=["ProjectilesNode"]]
+[node name="ProjectilesNode" type="Node2D" parent="." unique_id=1764434041 groups=["ProjectilesNode", "ProjectilesContainer"]]
 unique_name_in_owner = true
 
 [node name="EnemiesNode" type="Node2D" parent="." unique_id=117507368]

@@ -1,4 +1,10 @@
 extends CharacterBody2D
-#FIXME: While dying, if the enemy also dies, causes an error, but dont know hwat happens if u continue instead of quitting
+
+var velocity_component: VelocityComponent
+
+func _ready() -> void:
+	velocity_component = VelocityComponent.new()
+	add_child(velocity_component)
+
 func _physics_process(_delta: float) -> void:
 	move_and_slide()

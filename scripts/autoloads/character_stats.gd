@@ -134,12 +134,19 @@ func save_stats() -> Dictionary:
 
 
 func load_stats(save_data: Dictionary) -> void:
-	for stat_key:Stats in save_data:
-		if _stats.has(stat_key):
-			var stat_data : StatDefinition = save_data[stat_key]
-			_stats[stat_key] = StatDefinition.new(
-				stat_data.base_value,
-				stat_data.min_value,
-				stat_data.max_value
+	for stat_key in save_data:
+		if _stats.has(stat_key) and save_data[stat_key] is Dictionary:
+			var stat_data: Dictionary = save_data[stat_key]
+			var def := StatDefinition.new(
+				stat_data.get("base_value", _stats[stat_key].base_value),
+				stat_data.get("min_value", _stats[stat_key].min_value),
+				stat_data.get("max_value", _stats[stat_key].max_value)
 			)
-			_stats[stat_key].current_value = stat_data.current_value
+			def.current_value = stat_data.get("current_value", def.base_value)
+			_stats[stat_key] = def
+			stat_changed.emit(stat_key, def.current_value)
+
+func reset_to_base() -> void:
+	for key in _stats:
+		_stats[key].current_value = _stats[key].base_value
+		stat_changed.emit(key, _stats[key].current_value)

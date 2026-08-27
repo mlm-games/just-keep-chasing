@@ -11,6 +11,12 @@ func _ready():
 	for gun_data: GunData in CollectionManager.all_guns.values():
 		if gun_data.unlocked:
 			add_gun(gun_data)
+	# Fallback: if no guns unlocked, force-add the first gun
+	if available_guns.is_empty():
+		var first_gun = CollectionManager.all_guns.values()[0] if not CollectionManager.all_guns.is_empty() else null
+		if first_gun:
+			add_gun(first_gun)
+			first_gun.unlocked = true
 
 func add_gun(gun_data: GunData):
 	if not available_guns.has(gun_data):

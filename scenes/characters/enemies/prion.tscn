@@ -15,5 +15,9 @@ aim_duration = 0.7
 [node name="EnemyHitboxComponent" parent="." index="5" unique_id=1109701772]
 collision_mask = 3
 
+[node name="FireCooldownTimer" type="Timer" parent="." index="9"]
+wait_time = 2.5
+one_shot = true
+
 [node name="Sprite2D" parent="." index="8" unique_id=1891638234]
 scale = Vector2(0.06, 0.057)

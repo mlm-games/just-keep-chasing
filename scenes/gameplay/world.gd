@@ -69,16 +69,28 @@ func _on_mito_energy_changed(new_amount: int) -> void:
 
 func _on_elapsed_time_updated(new_time: int) -> void:
 	time_based_enemy_type_changer()
-	# Win condition (temp)
-	if new_time == 300: # NOTE: Using >= causes it to show up every frame when continuing
+	if new_time == 300:
+		CountStats.increment_stat(C.COUNT_STAT_KEYS.games_won)
+		CountStats.increment_stat(C.COUNT_STAT_KEYS.games_played)
+		CountStats.update_longest_run_time(new_time)
+		GameState.update_highest_game_time(new_time)
+		GameState.save_game()
+		GameState.update_achievements()
+		
+		enemy_spawn_timer.stop()
+		powerup_spawn_timer.stop()
+		
 		ScreenTransitions.transition("circleIn")
 		await ScreenTransitions.transition_player.animation_finished
-		UIManager.push_layer(load("uid://degok78oygxw3"))
+		var win_screen = UIManager.push_layer(load("uid://degok78oygxw3"))
+		if win_screen:
+			win_screen.continue_pressed.connect(_on_win_continue_pressed)
 		ScreenTransitions.transition("circleOut")
-		
-		## Stop timers so this only happens once
-		#%EnemySpawnTimer.stop()
-		#%PowerupSpawnTimer.stop()
+
+
+func _on_win_continue_pressed() -> void:
+	enemy_spawn_timer.start()
+	powerup_spawn_timer.start()
 
 
 func _on_autoscroll_timer_timeout() -> void:
@@ -118,6 +130,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		throw_or_remove_gun_from_player(true)
 	elif event.is_action_pressed("pick_up_weapon"):
 		pick_up_weapon()
+	elif event.is_action_pressed("reload") and player and player.base_gun:
+		player.base_gun.reload()
 
 
 func spawn_enemy() -> void:
@@ -155,15 +169,8 @@ func get_random_powerup() -> PowerupData:
 
 
 func switch_weapon() -> void:
-	if guns.size() > 1:
-		current_gun_index = (current_gun_index + 1) % guns.size()
-		if is_instance_valid(player.base_gun):
-			player.base_gun.queue_free()
-		
-		var gun_instance: BaseGun = preload("uid://djr17spwfqlsu").instantiate()
-		gun_instance.gun_data = guns[current_gun_index]
-		player.base_gun = gun_instance
-		player.add_child(player.base_gun)
+	if player and player.inventory_component:
+		player.inventory_component.switch_to_next_gun()
 
 
 func throw_or_remove_gun_from_player(throw: bool = true) -> void:
@@ -207,27 +214,34 @@ func pick_up_weapon() -> void:
 
 
 func use_powerup(powerup_type: StringName) -> void:
-	if not RunData.powerups.has(powerup_type) or RunData.powerups[powerup_type] <= 0:
+	if not RunData.use_powerup(powerup_type):
 		return
 	
-	RunData.powerups[powerup_type] -= 1
+	CountStats.increment_stat(C.COUNT_STAT_KEYS.powerups_used)
 	
 	match powerup_type:
 		&"slow_time_powerup":
-			if Engine.time_scale == 1:
+			if Engine.time_scale == NORMAL_TIME:
 				activate_slow_motion()
 			else:
 				RunData.powerups[powerup_type] += 1
 		&"screen_blast_powerup":
 			ScreenTransitions.transition("slightFlash")
-			A.tree.call_group("On Screen Enemies", "queue_free")
+			for enemy in A.tree.get_nodes_in_group("On Screen Enemies"):
+				if enemy.has_node("HealthComponent"):
+					var atk := Attack.new()
+					atk.attack_damage = 9999
+					enemy.get_node("HealthComponent").damage(atk)
 			ScreenEffects.screen_shake(1, 2.5)
 		&"heal_powerup":
 			if player and player.health_component:
-				player.health_component.heal_or_damage(20, HealthComponent.HealthModificationType.HEAL)
+				player.health_component.heal_or_damage(player.health_component.max_health * 0.5, HealthComponent.HealthModificationType.HEAL)
 		&"temp_invincible_powerup":
 			if player and player.health_component:
-				player.health_component.disable_for_secs(20)
+				player.health_component.disable_for_secs(5.0)
+		&"multi_wield_powerup":
+			if player and not player.multi_wield_active:
+				player.activate_multi_wield()
 
 
 func start_gun_trial(gun: GunData) -> void:

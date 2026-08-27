@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PowerupData" format=3 uid="uid://dm206h0ymh5f8"]
+
+[ext_resource type="Script" uid="uid://bctrrfit1c7va" path="res://resources/powerups/powerup_data.gd" id="1_86i64"]
+[ext_resource type="Texture2D" uid="uid://cp0t1chdvtylb" path="res://assets/sprites/change_gun.png" id="2_w112t"]
+
+[resource]
+script = ExtResource("1_86i64")
+icon = ExtResource("2_w112t")
+icon_modulate = Color(0.9, 0.5, 0.0, 1)
+icon_scale = Vector2(0.09, 0.09)
+spawn_chance_percent = 20.0
+id = "multi_wield"
+metadata/_custom_type_script = ExtResource("1_86i64")

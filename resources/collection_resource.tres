@@ -36,6 +36,7 @@
 [ext_resource type="Resource" path="res://resources/powerups/slow_time_powerup.tres" id="24_hnllu"]
 [ext_resource type="Resource" path="res://resources/powerups/temp_invincible_powerup.tres" id="25_emn5t"]
 [ext_resource type="Script" path="res://resources/collection_resource.gd" id="26_4kn0p"]
+[ext_resource type="Resource" path="res://resources/powerups/multi_wield_powerup.tres" id="33_u2rfg"]
 
 [resource]
 script = ExtResource("26_4kn0p")
@@ -67,6 +68,7 @@ augments = Dictionary[StringName, Variant]({
 })
 powerups = Dictionary[StringName, Variant]({
 &"heal_powerup": ExtResource("22_twkyw"),
+&"multi_wield_powerup": ExtResource("33_u2rfg"),
 &"screen_blast_powerup": ExtResource("23_3p302"),
 &"slow_time_powerup": ExtResource("24_hnllu"),
 &"temp_invincible_powerup": ExtResource("25_emn5t")

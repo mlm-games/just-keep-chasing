@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://djr17spwfqlsu"]
 
 [ext_resource type="Script" uid="uid://0vqt2x8xwvgg" path="res://scenes/weapons-related/base_gun.gd" id="1_erppj"]
-[ext_resource type="Texture2D" uid="uid://dyus754xmr41s" path="res://assets/sprites/pistol.png" id="3_1ijls"]
+[ext_resource type="Texture2D" path="res://assets/sprites/weapons/pistol.svg" id="3_1ijls"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_we32q"]
 radius = 600.053
@@ -57,15 +57,15 @@ shape = SubResource("CircleShape2D_we32q")
 [node name="Sprite2D" type="Sprite2D" parent="PivotPoint" unique_id=790445768]
 unique_name_in_owner = true
 texture_filter = 1
-position = Vector2(36, 5)
+position = Vector2(45, 5)
 rotation = 12.5664
-scale = Vector2(0.08, 0.08)
+scale = Vector2(1, 1)
 texture = ExtResource("3_1ijls")
 flip_h = true
 
 [node name="BulletSpawnPoint" type="Marker2D" parent="PivotPoint/Sprite2D" unique_id=278519965]
 unique_name_in_owner = true
-position = Vector2(300, -111.111)
+position = Vector2(60, -5)
 
 [node name="FireRateTimer" type="Timer" parent="." unique_id=2050364955]
 unique_name_in_owner = true

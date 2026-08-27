@@ -18,7 +18,10 @@ func _init() -> void:
 
 var taking_damage := false
 var base_gun: BaseGun
-#TODO: A sound for reloading weapons
+var _regen_timer: float = 0.0
+var _gun_instances: Dictionary = {}
+var multi_wield_active := false
+var _processing_multi_wield := false
 
 func _ready() -> void:
 	input_component.direction_changed.connect(_on_input_direction_changed)
@@ -45,8 +48,14 @@ func _ready() -> void:
 func _on_input_direction_changed(direction: Vector2) -> void:
 	velocity_component.accelerate_to(direction, CharacterStats.get_stat(CharacterStats.Stats.PLAYER_SPEED))
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	animation_component.update_movement(velocity_component.velocity)
+	var regen := CharacterStats.get_stat(CharacterStats.Stats.HEALTH_REGEN)
+	if regen > 0 and health_component and health_component.is_alive():
+		_regen_timer += delta
+		if _regen_timer >= 1.0:
+			_regen_timer = 0.0
+			health_component.heal_or_damage(regen, HealthComponent.HealthModificationType.HEAL)
 
 
 # NOTE: Knockback is now handled by the VelocityComponent.
@@ -64,6 +73,11 @@ func _on_health_component_entity_died() -> void:
 	input_component.set_physics_process(false)
 	velocity_component.set_physics_process(false)
 	process_mode = Node.PROCESS_MODE_DISABLED
+	
+	CountStats.increment_stat(C.COUNT_STAT_KEYS.games_played)
+	CountStats.update_longest_run_time(RunData.elapsed_time)
+	GameState.update_highest_game_time(RunData.elapsed_time)
+	GameState.save_game()
 	
 	await A.tree.create_timer(0.5).timeout
 	ScreenTransitions.change_scene_with_transition("uid://oqyl6r1j4383", "circleIn")
@@ -87,16 +101,62 @@ func update_max_health(new_max_health: float) -> void:
 
 
 func _equip_gun(gun_data: GunData):
-	if is_instance_valid(base_gun):
-		base_gun.queue_free()
-
-	#if gun_data is ShotgunData:
-		#base_gun = preload("uid://d12y6fhvtdlct").instantiate()
-	#else:
-	base_gun = preload("uid://djr17spwfqlsu").instantiate()
+	var key := gun_data.resource_path
 	
+	if _gun_instances.has(key):
+		if is_instance_valid(base_gun):
+			base_gun.gun_fired.disconnect(_on_base_gun_fired)
+			if base_gun.reload_tween:
+				base_gun.reload_tween.kill()
+			base_gun.hide()
+			base_gun.fire_rate_timer.stop()
+			base_gun.reload_timer.stop()
+		base_gun = _gun_instances[key]
+		if base_gun.get_parent() != self:
+			base_gun.reparent(self)
+		base_gun.show()
+		base_gun.gun_fired.connect(_on_base_gun_fired)
+		if base_gun.ammo > 0 and base_gun.fire_rate_timer.is_stopped() and base_gun.reload_timer.is_stopped():
+			base_gun.fire_rate_timer.start()
+		elif base_gun.ammo <= 0 and base_gun.reload_timer.is_stopped():
+			base_gun.reset_reload_visual()
+			base_gun.play_reload_animation()
+			base_gun.reload_timer.start()
+			base_gun.fire_rate_timer.stop()
+		return
+	
+	if is_instance_valid(base_gun):
+		base_gun.gun_fired.disconnect(_on_base_gun_fired)
+		base_gun.hide()
+		base_gun.fire_rate_timer.stop()
+		base_gun.reload_timer.stop()
+	
+	base_gun = preload("uid://djr17spwfqlsu").instantiate()
 	base_gun.gun_data = gun_data
 	add_child(base_gun)
+	base_gun.gun_fired.connect(_on_base_gun_fired)
+	_gun_instances[key] = base_gun
+
+func _on_base_gun_fired() -> void:
+	if not multi_wield_active or _processing_multi_wield:
+		return
+	_processing_multi_wield = true
+	for key in _gun_instances:
+		var gun: BaseGun = _gun_instances[key]
+		if gun != base_gun and is_instance_valid(gun) and gun.ammo > 0:
+			gun.spawn_bullet()
+	_processing_multi_wield = false
+
+func activate_multi_wield(duration: float = 8.0) -> void:
+	multi_wield_active = true
+	await A.tree.create_timer(duration).timeout
+	multi_wield_active = false
 
 func _on_gun_switched(new_gun_data: GunData):
 	_equip_gun(new_gun_data)
+
+func collect_mito_energy(amount: int = 1) -> void:
+	var mult := CharacterStats.get_stat(CharacterStats.Stats.DROP_VALUE_MULTIPLIER)
+	var final_amt := int(amount * mult)
+	RunData.mito_energy += final_amt
+	CountStats.increment_stat(C.COUNT_STAT_KEYS.mito_energy_collected, final_amt)

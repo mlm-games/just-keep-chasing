@@ -12,4 +12,5 @@ projectile_damage = 10.0
 projectile_max_pierce_count = 3
 projectile_knockback_force = 2.0
 projectile_stun_duration = 1.0
+sprite_rotation = 90.0
 metadata/_custom_type_script = "uid://cr3s7huv3l64s"

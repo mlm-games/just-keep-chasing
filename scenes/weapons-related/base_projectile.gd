@@ -29,7 +29,10 @@ func _ready() -> void:
 	set_collision_mask_value(projectile_data.collision_shape_mask, true)
 	
 	# Setup sprite
-	sprite.texture = projectile_data.sprite_texture
+	if not projectile_data.sprite_texture:
+		push_error("BaseProjectile: projectile_data.sprite_texture is null")
+	else:
+		sprite.texture = projectile_data.sprite_texture
 	sprite.modulate = projectile_data.sprite_modulate
 	sprite.scale = projectile_data.sprite_scale
 	sprite.offset = projectile_data.sprite_offset

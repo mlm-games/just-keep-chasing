@@ -1,5 +1,7 @@
 class_name BaseGun extends Area2D
 
+signal gun_fired
+
 const RELOAD_LOOP_TIME = 0.5
 
 #@export var unlocked: bool = false
@@ -19,6 +21,9 @@ var reload_tween: Tween
 @export var gun_data: GunData
 
 func _ready() -> void:
+	if not gun_data:
+		push_error("BaseGun has no gun_data")
+		return
 	%Sprite2D.texture = gun_data.sprite
 	%Sprite2D.scale = gun_data.sprite_scale
 	%Sprite2D.position = gun_data.sprite_position
@@ -27,17 +32,24 @@ func _ready() -> void:
 	
 	%BulletSpawnPoint.position = gun_data.bullet_spawn_offset
 	
-	$CollisionShape2D.shape.radius = gun_data.targeting_range
-	#%ReloadAudioPlayer.stream = gun_data.fire_audio #TODO
+	var range_mult := CharacterStats.get_stat(CharacterStats.Stats.TARGETTING_RANGE_MULT)
+	$CollisionShape2D.shape.radius = gun_data.targeting_range * range_mult
 	
-	reload_timer.wait_time = gun_data.reload_time
+	ammo = int(gun_data.max_ammo + CharacterStats.get_stat(CharacterStats.Stats.RAW_AMMO_INC))
+	ammo = int(ammo * CharacterStats.get_stat(CharacterStats.Stats.AMMO_INC_MULT))
+	
+	var reload_mult := CharacterStats.get_stat(CharacterStats.Stats.RELOAD_SPEED_REDUCTION_MULT)
+	reload_timer.wait_time = maxf(0.1, gun_data.reload_time * reload_mult)
 	reload_timer.timeout.connect(_on_reload_timer_timeout)
 	
-	fire_rate_timer.wait_time = gun_data.fire_rate
+	var fire_mult := CharacterStats.get_stat(CharacterStats.Stats.FIRE_SPEED_REDUCTION_MULT)
+	fire_rate_timer.wait_time = maxf(0.05, gun_data.fire_rate * fire_mult)
 	fire_rate_timer.start()
 	fire_rate_timer.timeout.connect(_on_fire_rate_timer_timeout)
 	
 	closest_enemy_scan_timer.timeout.connect(_on_scan_for_closest_enemy_timer_timeout)
+	
+	CharacterStats.stat_changed.connect(_on_stat_changed)
 	
 
 func _physics_process(_delta: float) -> void:
@@ -56,6 +68,8 @@ func _on_scan_for_closest_enemy_timer_timeout() -> void:
 func spawn_bullet() -> void:
 	if ammo > 0:
 		CountStats.increment_stat(CountStats.get_stat_key(gun_data))
+		CountStats.increment_stat(C.COUNT_STAT_KEYS.bullets_fired)
+		gun_fired.emit()
 		StaticAudioManager.play_random_sound(gun_data.fire_audio)
 		
 		%Sprite2D.rotation_degrees = 0
@@ -68,17 +82,18 @@ func spawn_bullet() -> void:
 			bullet_instance.global_rotation_degrees = bullet_spawn_point.global_rotation_degrees + randf_range(-gun_data.bullet_spread, gun_data.bullet_spread)
 			RunData.projectile_root.add_child(bullet_instance)
 		ammo -= 1
+		gun_fired.emit()
 
 func reload() -> void:
-	# Use similar anim for shooting
-	#StaticAudioManager.play_sound_varied(preload("res://assets/music/gun sounds by q009/outofammo.ogg"))
-	play_reload_animation()
 	if not reload_timer.is_stopped():
 		return
+	play_reload_animation()
 	reload_timer.start()
+	fire_rate_timer.stop()
 
 func _on_reload_timer_timeout() -> void:
-	ammo = gun_data.max_ammo
+	var base_ammo := gun_data.max_ammo + CharacterStats.get_stat(CharacterStats.Stats.RAW_AMMO_INC)
+	ammo = int(base_ammo * CharacterStats.get_stat(CharacterStats.Stats.AMMO_INC_MULT))
 	fire_rate_timer.start()
 
 
@@ -132,14 +147,20 @@ func _on_fire_rate_timer_timeout() -> void:
 
 func play_fire_animation() -> void:
 	fire_tween = Juice.create_global_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-	#tween.tween_property(%Sprite2D, "skew", rad_to_deg(gun_data.fire_animation_skew), gun_data.reload_time/2)
-	fire_tween.tween_property(%Sprite2D, "offset:x", -250 * gun_data.fire_rate, gun_data.fire_rate / 2)
-	#fire_tween.tween_property(%Sprite2D, "skew", 0, gun_data.fire_rate/2)
-	fire_tween.tween_property(%Sprite2D, "offset:x", 0, gun_data.fire_rate / 2)
+	var recoil_local := 14.0 / maxf(absf(%Sprite2D.scale.x), 0.001)
+	fire_tween.tween_property(%Sprite2D, "offset:x", -recoil_local, gun_data.fire_rate / 2.0)
+	fire_tween.tween_property(%Sprite2D, "offset:x", 0.0, gun_data.fire_rate / 2.0)
 
 func play_reload_animation() -> void:
+	if reload_tween:
+		reload_tween.kill()
 	reload_tween = Juice.create_global_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CIRC)
 	reload_tween.tween_property(%Sprite2D, "rotation_degrees", snappedf(720 * gun_data.reload_time / RELOAD_LOOP_TIME, 360), gun_data.reload_time)
+
+func reset_reload_visual() -> void:
+	if reload_tween:
+		reload_tween.kill()
+	%Sprite2D.rotation_degrees = 0.0
 
 
 func set_ignore_time_scale() -> void:
@@ -153,3 +174,17 @@ func unset_ignore_time_scale() -> void:
 	fire_rate_timer.ignore_time_scale = false
 	if fire_tween: fire_tween.set_ignore_time_scale(false)
 	if reload_tween: reload_tween.set_ignore_time_scale(false)
+
+func _on_stat_changed(stat_key: CharacterStats.Stats, _new_value: float) -> void:
+	if not gun_data or not is_inside_tree():
+		return
+	match stat_key:
+		CharacterStats.Stats.TARGETTING_RANGE_MULT:
+			var range_mult := CharacterStats.get_stat(CharacterStats.Stats.TARGETTING_RANGE_MULT)
+			$CollisionShape2D.shape.radius = gun_data.targeting_range * range_mult
+		CharacterStats.Stats.RELOAD_SPEED_REDUCTION_MULT:
+			var reload_mult := CharacterStats.get_stat(CharacterStats.Stats.RELOAD_SPEED_REDUCTION_MULT)
+			reload_timer.wait_time = maxf(0.1, gun_data.reload_time * reload_mult)
+		CharacterStats.Stats.FIRE_SPEED_REDUCTION_MULT:
+			var fire_mult := CharacterStats.get_stat(CharacterStats.Stats.FIRE_SPEED_REDUCTION_MULT)
+			fire_rate_timer.wait_time = maxf(0.05, gun_data.fire_rate * fire_mult)

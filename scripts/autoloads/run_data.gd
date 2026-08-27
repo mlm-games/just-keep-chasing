@@ -41,6 +41,7 @@ func reset() -> void:
 	spawnable_enemies = {}
 	enemy_spawn_type_range = Vector2i(1, 1)
 	is_in_shop = false
+	CharacterStats.reset_to_base()
 	
 	# Get projectile root safely
 	projectile_root = A.tree.get_first_node_in_group("ProjectilesNode")

@@ -70,7 +70,7 @@ func _fire_shot() -> void:
 		var pdata := ProjectileData.new()
 		pdata.projectile_damage = 12.0
 		pdata.projectile_speed = 320.0
-		pdata.projectile_range = 900.0
+		pdata.projectile_range = 900
 		pdata.lifespan_time = 3.0
 		pdata.collision_shape_mask = 2
 		pdata.sprite_modulate = Color(1.0, 0.6, 0.2, 1)

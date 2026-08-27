@@ -44,6 +44,8 @@ func damage(attack: Attack) -> void:
 	var final_damage: float = attack.attack_damage
 	if parent_node is Player:
 		final_damage *= (1.0 - CharacterStats.get_stat(CharacterStats.Stats.PLAYER_DAMAGE_REDUCTION))
+	elif not parent_node is Player:
+		final_damage *= (1.0 - CharacterStats.get_stat(CharacterStats.Stats.ENEMY_DAMAGE_REDUCTION))
 
 	current_health = max(0.0, current_health - final_damage)
 	

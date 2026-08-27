@@ -99,9 +99,3 @@ func _on_guns_button_pressed() -> void:
 #endregion
 
 
-func check_time_condition(time: int) -> void:
-	#FIXME: Temp Upgrade condition, fix it later
-	if RunData.mito_energy / RunData.upgrade_shop_spawn_divisor > 1.0 and RunData.mito_energy != 0 and !GameState.is_in_shop:
-		RunData.upgrade_shop_spawn_divisor += 10 + (10 * (RunData.elapsed_time * 0.001))
-		#Hack: also some kind of sound for sure (in layer only)
-		add_child(UpgradesLayer.new_upgrade_layer())

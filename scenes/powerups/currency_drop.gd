@@ -2,9 +2,7 @@ class_name CurrencyDrop extends PickUp
 
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
-var currency_value : int = 1:
-	get:
-		return currency_value * int(CharacterStats.get_stat(CharacterStats.Stats.DROP_VALUE_MULTIPLIER))
+var currency_value : int = 1
 
 var spawn_tween : Tween
 var loop_tween : Tween
@@ -23,8 +21,10 @@ func _ready() -> void:
 
 func collect() -> void:
 	StaticAudioManager.play_sound_varied(preload("res://assets/sfx/hover.ogg"))
-	RunData.mito_energy += currency_value
-	
-	CountStats.increment_stat("mito_energy_collected")
+	if Player.I:
+		Player.I.collect_mito_energy(currency_value)
+	else:
+		RunData.mito_energy += currency_value
+		CountStats.increment_stat(C.COUNT_STAT_KEYS.mito_energy_collected, currency_value)
 	
 	queue_free()
