@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuhe3wefntcuq"
-path="res://.godot/imported/pump_shotgun.png-fb52644e5e7b599b2205628a371de734.ctex"
+uid="uid://dbhj2u2lfp7ou"
+path="res://.godot/imported/pistol.svg-e0ec6bfdaddcbbc2cd6dbd1783407491.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pump_shotgun.png"
-dest_files=["res://.godot/imported/pump_shotgun.png-fb52644e5e7b599b2205628a371de734.ctex"]
+source_file="res://assets/sprites/weapons/pistol.svg"
+dest_files=["res://.godot/imported/pistol.svg-e0ec6bfdaddcbbc2cd6dbd1783407491.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
